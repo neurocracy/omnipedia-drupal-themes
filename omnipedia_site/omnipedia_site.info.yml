@@ -1,0 +1,23 @@
+name: Omnipedia - Site theme
+description: The theme for https://omnipedia.app.
+type: theme
+base theme: ambientimpact_base
+package: Omnipedia
+screenshot: omnipedia_site.screenshot.png
+core: 8.x
+
+# These are identitical to those in ambientimpact_base, duplicated here because
+# Drupal doesn't seem to allow inheriting regions.
+#
+# @see https://www.drupal.org/project/drupal/issues/301295
+regions:
+  header: 'Header'
+  primary_menu: 'Primary menu'
+  secondary_menu: 'Secondary menu'
+  breadcrumb: 'Breadcrumb'
+  highlighted: 'Highlighted'
+  help: 'Help'
+  content: 'Content'
+  sidebar_first: 'First sidebar'
+  sidebar_second: 'Second sidebar'
+  footer: 'Footer'
