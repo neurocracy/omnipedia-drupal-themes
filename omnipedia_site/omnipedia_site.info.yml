@@ -3,7 +3,7 @@ description: The theme for https://omnipedia.app.
 type: theme
 base theme: ambientimpact_base
 package: Omnipedia
-screenshot: omnipedia_site.screenshot.png
+screenshot: images/screenshot.png
 logo: images/logo.svg
 core: 8.x
 
