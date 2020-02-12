@@ -6,6 +6,7 @@ package: Omnipedia
 screenshot: images/screenshot.png
 logo: images/logo.svg
 core: 8.x
+core_version_requirement: ^8 || ^9
 
 # These are identitical to those in ambientimpact_base, duplicated here because
 # Drupal doesn't seem to allow inheriting regions.
