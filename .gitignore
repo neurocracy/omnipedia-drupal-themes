@@ -1,0 +1,9 @@
+# Ignore any Node modules, as they're downloaded via NPM.
+node_modules
+
+# Ignore generated CSS files and their associated map files.
+**/*.css
+**/*.css.map
+
+# Ignore generated icons.
+omnipedia_site/images/icons/generated/*
