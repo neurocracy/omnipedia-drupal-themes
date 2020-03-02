@@ -5,6 +5,9 @@ base theme: ambientimpact_base
 package: Omnipedia
 screenshot: images/screenshot.png
 logo: images/logo.svg
+logo_alt: 'The Omnipedia logo: a checkered globe with several squares missing at the top.'
+logo_width: 128
+logo_height: 128
 core: 8.x
 core_version_requirement: ^8 || ^9
 
