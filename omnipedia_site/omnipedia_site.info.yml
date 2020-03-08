@@ -4,7 +4,7 @@ type: theme
 base theme: ambientimpact_base
 package: Omnipedia
 screenshot: images/screenshot.png
-logo: images/logo.svg
+logo: images/site_logo.svg?v=1
 logo_alt: 'The Omnipedia logo: a checkered globe with several squares missing at the top.'
 logo_width: 128
 logo_height: 128
