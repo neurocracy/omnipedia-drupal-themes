@@ -8,6 +8,12 @@ logo: images/site_logo.svg?v=1
 logo_alt: 'The Omnipedia logo: a checkered globe with several squares missing at the top.'
 logo_width: 128
 logo_height: 128
+site_name: images/site_name.svg?v=1
+site_name_width: 128
+site_name_height: 20
+site_slogan: images/site_slogan.svg?v=1
+site_slogan_width: 128
+site_slogan_height: 13
 core: 8.x
 core_version_requirement: ^8 || ^9
 
