@@ -2,6 +2,8 @@
 //   Omnipedia - Site theme - Master stylesheet
 // -----------------------------------------------------------------------------
 
+@import 'variables/_variables.scss';
+
 // This imports all the partials from the base theme and ambientimpact_*
 // modules.
 @import '../../../ambientimpact/ambientimpact_base/stylesheets/_base.scss';

@@ -1,6 +1,9 @@
 // -----------------------------------------------------------------------------
-//   Global master partial
+//   Site layout
 // -----------------------------------------------------------------------------
 
-@import '_layout.scss';
-@import '_site_branding.scss';
+@include media('<layout-with-both-sidebars') {
+  .layout-container {
+    margin-top: $layout-gutter;
+  }
+}

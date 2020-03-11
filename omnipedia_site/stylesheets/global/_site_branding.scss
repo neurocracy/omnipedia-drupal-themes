@@ -8,3 +8,54 @@
     filter: invert(100%);
   }
 }
+
+@include use-grid {
+  .block-system-branding-block {
+    display: grid;
+
+    grid-template-areas:    'logo name'
+                            'logo slogan';
+    grid-template-columns:  minmax(2em, 3em) minmax(9em, 1fr);
+    grid-gap:               $branding-spacing;
+
+    // When sidebars are beside the content column, display as block. This will
+    // invalidate all grid-*/align-*/justify-* properties, allowing the branding
+    // to be stacked vertically and saving us a lot of work.
+    @include media('>=layout-with-both-sidebars') {
+      display: block;
+    }
+  }
+
+  .site-logo {
+    grid-area: logo;
+
+    // This centers the logo verticall in cases of a really narrow viewport,
+    // which would cause the 'logo' grid area to shrink horizontally and thus
+    // shrink the logo to a point where it doesn't occupy the full height of the
+    // grid area.
+    display:        grid;
+    align-content:  center;
+  }
+
+  .site-name {
+    grid-area: name;
+
+    // This aligns the site name to the bottom of the row so that both the site
+    // name and slogan are hugging the vertical centre of the overall grid, to
+    // align them in a visually pleasing way with the logo.
+    display:        grid;
+    align-content:  end;
+  }
+
+  .site-slogan {
+    grid-area: slogan;
+  }
+
+  // Add margins between the logo, name, and slogan when stacked vertically.
+  @include media('>=layout-with-both-sidebars') {
+    .site-name,
+    .site-slogan {
+      margin-top: $branding-spacing;
+    }
+  }
+}

@@ -1,6 +1,8 @@
 // -----------------------------------------------------------------------------
-//   Global master partial
+//   Variables - General
 // -----------------------------------------------------------------------------
 
-@import '_layout.scss';
-@import '_site_branding.scss';
+///
+/// Spacing used between and around site branding elements.
+///
+$branding-spacing: 0.5em;
