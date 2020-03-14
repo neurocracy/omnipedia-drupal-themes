@@ -51,11 +51,19 @@
     grid-area: slogan;
   }
 
-  // Add margins between the logo, name, and slogan when stacked vertically.
   @include media('>=layout-with-both-sidebars') {
+    // Add margins between the logo, name, and slogan when stacked vertically.
     .site-name,
     .site-slogan {
       margin-top: $branding-spacing;
+    }
+
+    // Disable the intrinsic ratio max-width on the branding elements so that
+    // they can roam free (expand to full width of sidebar).
+    .site-logo a,
+    .site-name a,
+    .site-slogan {
+      @include disable-intrinsic-ratio-max-width;
     }
   }
 }
