@@ -6,3 +6,20 @@
 /// Spacing used between and around site branding elements.
 ///
 $branding-spacing: 0.5em;
+
+///
+/// The maximum width of the site layout when both sidebars are present.
+///
+/// This is increased from the default value.
+///
+$layout-with-both-sidebars-max-width: 80em;
+
+///
+/// The sidebar column widths, as a grid-template-columns value.
+///
+/// The maximum value is decreased from the default value.
+///
+/// @link https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns
+///   Lists valid values.
+///
+$layout-sidebar-column-width: minmax(8em, 10em);
