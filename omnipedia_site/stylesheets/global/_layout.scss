@@ -7,3 +7,41 @@
     margin-top: $layout-gutter;
   }
 }
+
+@include media('>=layout-with-both-sidebars') {
+  .layout-container {
+    // This has to be placed outside of the @include use-grid because
+    // layout-max-width also uses the mixin and double nesting would cause two
+    // nested body.use-grid selectors which would never match.
+    @include layout-max-width;
+  }
+
+  header[role='banner'] {
+    @include layout-grid {
+      position: absolute;
+    }
+  }
+
+  @include use-grid {
+    .layout-container {
+      position: relative;
+
+      margin-left:  auto;
+      margin-right: auto;
+    }
+
+    .layout-sidebar-first {
+      &::before {
+        content: '';
+        display: block;
+
+        // This creates an intrinsic ratio with the heights of the site logo,
+        // name, and slogan, all divided by the width of the column.
+        padding-top: (128 + 20 + 13) / 128 * 100%;
+
+        // Don't forget the spacing between elements!
+        margin-bottom: $branding-spacing * 2 + $layout-gap;
+      }
+    }
+  }
+}
