@@ -8,7 +8,89 @@
   }
 }
 
-@include media('>=layout-with-both-sidebars') {
+// If subgrid is supported, use it to lay out the site layout, allowing the grid
+// to be inherited into the main content area.
+//
+// @todo Add support for other regions, such as highlighted and help. These are
+// currently not accounted for due to the difficulty of correctly placing all
+// regions while also maintaining the branding and sidebar locations.
+//
+// @link https://gridbyexample.com/examples/
+// @link https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Subgrid
+@supports (grid-template-columns: subgrid) {
+  @include use-grid {
+    @include on-sidebar-beside-content(both) {
+      .layout-container {
+        grid-template-areas:
+          '....           menu-primary  ....'
+          'branding       main-content  sidebar-second'
+          'sidebar-first  main-content  sidebar-second'
+          '....           footer        ....';
+        grid-template-rows:
+          min-content
+          min-content
+          1fr
+          min-content;
+      }
+
+      header[role='banner'] {
+        grid-area: branding;
+      }
+
+      main[role='main'] {
+        grid-template-rows: subgrid;
+        grid-row-start: main-content;
+        grid-row-end:   main-content;
+      }
+
+      footer[role='contentinfo'] {
+        grid-area: footer;
+      }
+
+      // Not working stuff follows:
+
+      // .layout-container {
+      //   grid-template-areas:
+      //     '....           menu-primary  ....'
+      //     'branding       main-content  sidebar-second'
+      //     'branding       main-content  sidebar-second'
+      //     'branding       main-content  sidebar-second'
+      //     'sidebar-first  main-content  sidebar-second'
+      //     'footer         footer        footer';
+      //   grid-template-rows: repeat(6, min-content);
+      // }
+
+      // header[role='banner'] {
+      //   grid-area: branding;
+      // }
+
+      // .region-highlighted {
+      //   grid-column-start:  main-content;
+      //   grid-column-end:    main-content;
+      //   grid-row-start:     main-content;
+      // }
+
+      // main[role='main'] {
+      //   grid-template-rows: subgrid;
+      //   grid-row-start:     main-content;
+      //   grid-row-end:       main-content;
+
+      //   .layout-content {
+      //     grid-column-start:  main-content;
+      //     grid-column-end:    main-content;
+      //     grid-row-end:       main-content;
+      //   }
+      // }
+
+      // /Not working ends.
+    }
+  }
+}
+
+// If subgrid is not supported, absolutely position the header "in" the first
+// sidebar, while shifting the actual sidebar contents down by the size of the
+// branding plus any spacing.
+@supports not (grid-template-columns: subgrid) {
   .layout-container {
     // This has to be placed outside of the @include use-grid because
     // layout-max-width also uses the mixin and double nesting would cause two
@@ -19,6 +101,15 @@
   header[role='banner'] {
     @include layout-grid {
       position: absolute;
+    }
+  }
+
+  // Limit the footer to the content column to match the subgrid version.
+  footer[role='contentinfo'] {
+    @include layout-grid {
+      .region-footer {
+        grid-area: main-content;
+      }
     }
   }
 
