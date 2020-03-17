@@ -1,0 +1,34 @@
+// -----------------------------------------------------------------------------
+//   Variables - Typography partial
+// -----------------------------------------------------------------------------
+
+///
+/// Document font size when on large screens, i.e. when sidebars beside content.
+///
+/// This matches the desktop Wikipedia size.
+///
+$font-size-big-screen: 87%;
+
+///
+/// Font weight for normal (non-bold) text.
+///
+$font-weight-normal:  400;
+
+///
+/// Font weight for bold text.
+///
+$font-weight-strong:  700;
+
+///
+/// The heading font stack.
+///
+/// This is Wikipedia's heading font-family, but with Exo 2 as the first choice.
+///
+$heading-font-stack: 'Exo2', 'Linux Libertine', 'Georgia', 'Times', serif;
+
+///
+/// The heading font weight.
+///
+/// Bold is too heavy so we use the normal weight.
+///
+$heading-font-weight: $font-weight-normal;

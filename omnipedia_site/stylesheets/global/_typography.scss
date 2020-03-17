@@ -1,0 +1,51 @@
+// -----------------------------------------------------------------------------
+//   Typography partial
+// -----------------------------------------------------------------------------
+
+body {
+  @include on-sidebar-beside-content(any) {
+    font-size: $font-size-big-screen;
+  }
+
+  hyphens: auto;
+}
+
+body,
+.content-popup {
+  // This more or less matches both the mobile and traditional versions of
+  // Wikipedia. This is the default.
+  line-height: 1.7;
+}
+
+h3 {
+  // Better match Wikipedia.
+  margin-top:     1em;
+  margin-bottom:  0.25em;
+}
+
+h4, h5, h6 {
+  // Better match Wikipedia.
+  margin-top:     0.7em;
+  margin-bottom:  0.2em;
+
+  // Match Wikipedia's typography for these headings.
+  font-family: $font-stack;
+  font-weight: $font-weight-strong;
+}
+
+h5 {
+  font-style: italic;
+}
+
+blockquote {
+  // This helps the quote stand out from the surrounding text.
+  font-style: italic;
+}
+
+.block h2 {
+  font-size: 130%;
+}
+
+.references__list {
+  font-size:  90%;
+}

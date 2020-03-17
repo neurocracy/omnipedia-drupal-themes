@@ -1,0 +1,20 @@
+// -----------------------------------------------------------------------------
+//  Font definitions partial
+// -----------------------------------------------------------------------------
+
+$fonts-path: '../fonts';
+
+// Exo 2 font, converted from original TTF to WOFF/WOFF2 files.
+//
+// @link https://fonts.google.com/specimen/Exo+2
+@font-face {
+  font-family: 'Exo2';
+
+  // Tell the browser to not make the text invisible while this font is
+  // loading, see: https://tabatkins.github.io/specs/css-font-display/
+  font-display: swap;
+
+  src:  url('#{$fonts-path}/Exo2/Exo2-Medium.woff2')  format('woff2'),
+        url('#{$fonts-path}/Exo2/Exo2-Medium.woff')   format('woff');
+        // url('#{$fonts-path}/Exo2/Exo2-Medium.ttf')    format('truetype');
+}
