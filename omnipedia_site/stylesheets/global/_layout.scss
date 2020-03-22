@@ -8,6 +8,22 @@
   }
 }
 
+///
+/// The Omnipedia grid definition.
+///
+@mixin omnipedia-layout-grid {
+  grid-template-areas:
+    'branding       menu-primary  ....'
+    'branding       main-content  sidebar-second'
+    'sidebar-first  main-content  sidebar-second'
+    '....           footer        ....';
+  grid-template-rows:
+    min-content
+    min-content
+    1fr
+    min-content;
+}
+
 // If subgrid is supported, use it to lay out the site layout, allowing the grid
 // to be inherited into the main content area.
 //
@@ -21,16 +37,7 @@
   @include use-grid {
     @include on-sidebar-beside-content(both) {
       .layout-container {
-        grid-template-areas:
-          'branding       menu-primary  ....'
-          'branding       main-content  sidebar-second'
-          'sidebar-first  main-content  sidebar-second'
-          '....           footer        ....';
-        grid-template-rows:
-          min-content
-          min-content
-          1fr
-          min-content;
+        @include omnipedia-layout-grid;
       }
 
       .region-primary-menu {
@@ -91,38 +98,54 @@
   }
 }
 
-// If subgrid is not supported, absolutely position the header "in" the first
-// sidebar, while shifting the actual sidebar contents down by the size of the
-// branding plus any spacing.
+// If subgrid is not supported, this approximates the subgrid layout by nesting
+// two grids, one on .layout-container, and the pre-existing one on
+// main[role='main'].
 @supports not (grid-template-columns: subgrid) {
   .layout-container {
-    // This has to be placed outside of the @include use-grid because
-    // layout-max-width also uses the mixin and double nesting would cause two
-    // nested body.use-grid selectors which would never match.
+    // These have to be placed outside of the @include use-grid because they
+    // also use the mixin and double nesting would cause two nested
+    // body.use-grid selectors which would never match.
+    @include layout-grid;
     @include layout-max-width;
   }
 
   header[role='banner'] {
-    @include layout-grid {
-      position: absolute;
-    }
+    grid-area: branding;
   }
 
-  // Limit the footer to the content column to match the subgrid version.
+  .region-primary-menu {
+    grid-area: menu-primary;
+  }
+
+  // This must span the full width of the parent's grid and the full rows of the
+  // main-content column.
+  main[role='main'] {
+    grid-column-start:  sidebar-first;
+    grid-column-end:    sidebar-second;
+    grid-row-start:     main-content;
+    grid-row-end:       main-content;
+  }
+
   footer[role='contentinfo'] {
-    @include layout-grid {
-      .region-footer {
-        grid-area: main-content;
-      }
-    }
+    grid-area: footer;
   }
 
   @include use-grid {
     .layout-container {
-      position: relative;
+      @include on-sidebar-beside-content(both) {
+        @include omnipedia-layout-grid;
+      }
 
       margin-left:  auto;
       margin-right: auto;
+
+      > * {
+        // Remove these added in ambientimpact_base' global/_layout.scss so that
+        // they don't squish the columns.
+        margin-left:  0;
+        margin-right: 0;
+      }
     }
 
     .layout-sidebar-first {
