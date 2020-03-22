@@ -33,6 +33,10 @@
           min-content;
       }
 
+      .region-primary-menu {
+        grid-area: menu-primary;
+      }
+
       header[role='banner'] {
         grid-area: branding;
       }
