@@ -22,7 +22,7 @@
     @include on-sidebar-beside-content(both) {
       .layout-container {
         grid-template-areas:
-          '....           menu-primary  ....'
+          'branding       menu-primary  ....'
           'branding       main-content  sidebar-second'
           'sidebar-first  main-content  sidebar-second'
           '....           footer        ....';
