@@ -1,0 +1,91 @@
+// -----------------------------------------------------------------------------
+//   Page revision history block partial
+// -----------------------------------------------------------------------------
+
+///
+/// Omnipedia page revisions block line colour on light backgrounds.
+///
+$omnipedia-page-revisions-block-line-colour-on-light:
+  mix($foreground-colour-on-light, $background-colour-light, 30%);
+
+///
+/// Omnipedia page revisions block line colour on dark backgrounds.
+///
+$omnipedia-page-revisions-block-line-colour-on-dark:
+  mix($foreground-colour-on-dark, $background-colour-dark, 20%);
+
+///
+/// Omnipedia page revisions block line thickness.
+///
+$omnipedia-page-revisions-block-line-thickness: 1px;
+
+///
+/// Omnipedia page revisions block item spacing.
+///
+$omnipedia-page-revisions-block-item-spacing: $general-spacing * 2;
+
+///
+/// Omnipedia page revisions block item padding.
+///
+$omnipedia-page-revisions-block-item-padding: $general-spacing;
+
+.omnipedia-wiki-page-revisions {
+  @include unlisted-list;
+
+  // This is the vertical lines that's meant to represent the time axis. On LTR
+  // the line is on the left, while on RTL it's on the right.
+  @include root-conditions(('[dir=ltr]'), 'html') {
+    border-left:
+      $omnipedia-page-revisions-block-line-thickness
+      solid
+      $omnipedia-page-revisions-block-line-colour-on-light;
+
+    @include on-dark-colour-scheme {
+      border-left-color: $omnipedia-page-revisions-block-line-colour-on-dark;
+    }
+  }
+  @include root-conditions(('[dir=rtl]'), 'html') {
+    border-right:
+      $omnipedia-page-revisions-block-line-thickness
+      solid
+      $omnipedia-page-revisions-block-line-colour-on-light;
+
+    @include on-dark-colour-scheme {
+      border-right-color: $omnipedia-page-revisions-block-line-colour-on-dark;
+    }
+  }
+
+  &__item {
+    // .item-list is for specificity.
+    .item-list & {
+      margin-bottom:  0;
+    }
+
+    // Spacing between items. .item-list is for specificity.
+    .item-list * + & {
+      margin-top:     $omnipedia-page-revisions-block-item-spacing;
+    }
+
+    @include root-conditions(('[dir=ltr]'), 'html') {
+      padding-left:   $omnipedia-page-revisions-block-item-padding;
+    }
+    @include root-conditions(('[dir=rtl]'), 'html') {
+      padding-right:  $omnipedia-page-revisions-block-item-padding;
+    }
+
+    // This horizontal line is meant to represent individual revisions branching
+    // off of the time axis.
+    border-bottom:
+      $omnipedia-page-revisions-block-line-thickness
+      solid
+      $omnipedia-page-revisions-block-line-colour-on-light;
+
+    @include on-dark-colour-scheme {
+      border-bottom-color: $omnipedia-page-revisions-block-line-colour-on-dark;
+    }
+  }
+
+  &__item-status {
+    font-size: 85%;
+  }
+}
