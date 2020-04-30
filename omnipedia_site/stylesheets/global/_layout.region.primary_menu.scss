@@ -1,0 +1,32 @@
+// -----------------------------------------------------------------------------
+//   Site layout - primary menu region
+// -----------------------------------------------------------------------------
+
+.region-primary-menu {
+  @include use-grid {
+    display: grid;
+
+    align-items:      center;
+    grid-column-gap:  $branding-spacing;
+    grid-auto-flow:   column;
+
+    @include on-sidebar-beside-content(any) {
+      // Items should be pushed apart to opposite ends if we're displaying one
+      // or more sidebars beside the content column.
+      justify-content: space-between;
+    }
+
+    .block {
+      // Align block contents to the centre vertical axis and the end on the
+      // horizontal.
+      display: grid;
+
+      align-items:    center;
+      justify-items:  end;
+
+      @include on-sidebar-beside-content(any) {
+        justify-items: stretch;
+      }
+    }
+  }
+}
