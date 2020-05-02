@@ -1,0 +1,30 @@
+<?php
+
+use Drupal\Core\Url;
+
+/**
+ * Prepares variables for the 'system_branding_block' block template.
+ *
+ * This sets the 'front_page_url' to the current date's main page, so that the
+ * logo and site name links reflect the site's current state.
+ *
+ * @see \Drupal\omnipedia_menu\EventSubscriber\Block\SystemBrandingBlockDateCacheEventSubscriber
+ *   Alters the block build array to add Omnipedia date cache context and cache
+ *   tags as doing so elsewhere would be too late.
+ */
+function omnipedia_site_preprocess_block__system_branding_block(
+  array &$variables
+) {
+  /** @var \Drupal\omnipedia_core\Service\WikiInterface */
+  $wiki = \Drupal::service('omnipedia.wiki');
+
+  /** @var \Drupal\omnipedia_core\Service\TimelineInterface */
+  $timeline = \Drupal::service('omnipedia.timeline');
+
+  $variables['front_page_url'] = Url::fromRoute(
+    $wiki->getMainPageRouteName(),
+    $wiki->getMainPageRouteParameters(
+      $timeline->getDateFormatted('current', 'storage')
+    )
+  );
+}
