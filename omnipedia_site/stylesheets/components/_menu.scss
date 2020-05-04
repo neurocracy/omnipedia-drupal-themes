@@ -1,0 +1,22 @@
+// -----------------------------------------------------------------------------
+//   Menu partial
+// -----------------------------------------------------------------------------
+
+// This primarily removes margins and padding set by the Classy CSS in:;
+// core/themes/classy/css/components/menu.css
+
+ul.menu {
+  margin-top: 0;
+  margin-bottom: 0;
+
+  @include root-conditions(('[dir=ltr]'), 'html') {
+    margin-left: 0;
+  }
+  @include root-conditions(('[dir=rtl]'), 'html') {
+    margin-right: 0;
+  }
+}
+
+.menu-item {
+  padding-top: 0;
+}
