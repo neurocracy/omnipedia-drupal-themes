@@ -32,3 +32,10 @@ $heading-font-stack: 'Exo2', 'Linux Libertine', 'Georgia', 'Times', serif;
 /// Bold is too heavy so we use the normal weight.
 ///
 $heading-font-weight: $font-weight-normal;
+
+///
+/// The text underline thickness.
+///
+/// This overrides the default of 2px.
+///
+$text-underline-thickness: 1px;
