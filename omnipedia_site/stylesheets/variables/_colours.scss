@@ -13,3 +13,35 @@ $omnipedia-blue: #0d47a1;
 /// Material Design primary colour; using Omnipedia blue.
 ///
 $material-primary-colour: $omnipedia-blue;
+
+///
+/// Divider colour on light backgrounds.
+///
+/// This is applied to various things, including the border around the main
+/// content area when the user has not specified dark mode.
+///
+$divider-colour-on-light: hsl(0, 0, 75%);
+
+///
+/// Divider colour on dark backgrounds.
+///
+/// This is applied to various things, including the border around the main
+/// content area when the user has specified dark mode.
+///
+$divider-colour-on-dark: hsl(0, 0, 25%);
+
+///
+/// Material Design line colour on light backgrounds.
+///
+/// This overrides the default to ensure it's consistent with other content
+/// dividers.
+///
+$material-line-colour-on-light: $divider-colour-on-light;
+
+///
+/// Material Design line colour on dark backgrounds.
+///
+/// This overrides the default to ensure it's consistent with other content
+/// dividers.
+///
+$material-line-colour-on-dark: $divider-colour-on-dark;

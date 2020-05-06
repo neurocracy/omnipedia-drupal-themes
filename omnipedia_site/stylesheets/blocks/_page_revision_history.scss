@@ -5,19 +5,23 @@
 ///
 /// Omnipedia page revisions block line colour on light backgrounds.
 ///
-$omnipedia-page-revisions-block-line-colour-on-light:
-  mix($foreground-colour-on-light, $background-colour-light, 30%);
+/// @require {variable} $divider-colour-on-light
+///
+$omnipedia-page-revisions-block-line-colour-on-light: $divider-colour-on-light;
 
 ///
 /// Omnipedia page revisions block line colour on dark backgrounds.
 ///
-$omnipedia-page-revisions-block-line-colour-on-dark:
-  mix($foreground-colour-on-dark, $background-colour-dark, 20%);
+/// @require {variable} $divider-colour-on-dark
+///
+$omnipedia-page-revisions-block-line-colour-on-dark: $divider-colour-on-dark;
 
 ///
 /// Omnipedia page revisions block line thickness.
 ///
-$omnipedia-page-revisions-block-line-thickness: 1px;
+/// @require {variable} $divider-thickness
+///
+$omnipedia-page-revisions-block-line-thickness: $divider-thickness;
 
 ///
 /// Omnipedia page revisions block item spacing.

@@ -23,3 +23,28 @@ $layout-with-both-sidebars-max-width: 80em;
 ///   Lists valid values.
 ///
 $layout-sidebar-column-width: minmax(8em, 10em);
+
+///
+/// Divider thickness.
+///
+$divider-thickness: 1px;
+
+///
+/// Material tabs container underline thickness.
+///
+/// This overrides the default to ensure it's consistent with any divider
+/// changes.
+///
+/// @require {variable} $divider-thickness
+///
+$material-tabs-underline-thickness: $divider-thickness;
+
+///
+/// Material tabs active indicator underline thickness.
+///
+/// This overrides the default to ensure it's consistent with any divider
+/// changes.
+///
+/// @require {variable} $divider-thickness
+///
+$material-tabs-indicator-thickness: $divider-thickness * 2;
