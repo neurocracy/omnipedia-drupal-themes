@@ -22,3 +22,19 @@
     padding-right:  $layout-gap;
   }
 }
+
+// This re-orders the content region so that the local tasks tabs are at the
+// top, above the page title. This matches Wikipedia's layout.
+.region-content {
+  display: flex;
+
+  flex-direction: column;
+
+  .block-local-tasks-block {
+    order: -1;
+
+    @supports (order: -1) {
+      margin-bottom: 1.5em;
+    }
+  }
+}
