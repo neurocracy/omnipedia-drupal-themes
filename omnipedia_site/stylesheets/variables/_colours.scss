@@ -12,6 +12,8 @@ $omnipedia-blue: #0d47a1;
 ///
 /// Material Design primary colour; using Omnipedia blue.
 ///
+/// @require {variable} $omnipedia-blue
+///
 $material-primary-colour: $omnipedia-blue;
 
 ///
@@ -82,6 +84,8 @@ $divider-colour-on-dark: hsl(0, 0, 25%);
 /// This overrides the default to ensure it's consistent with other content
 /// dividers.
 ///
+/// @require {variable} $divider-colour-on-light
+///
 $material-line-colour-on-light: $divider-colour-on-light;
 
 ///
@@ -89,5 +93,7 @@ $material-line-colour-on-light: $divider-colour-on-light;
 ///
 /// This overrides the default to ensure it's consistent with other content
 /// dividers.
+///
+/// @require {variable} $divider-colour-on-dark
 ///
 $material-line-colour-on-dark: $divider-colour-on-dark;

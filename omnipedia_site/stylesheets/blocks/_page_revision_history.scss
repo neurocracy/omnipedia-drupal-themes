@@ -26,10 +26,14 @@ $omnipedia-page-revisions-block-line-thickness: $divider-thickness;
 ///
 /// Omnipedia page revisions block item spacing.
 ///
+/// @require {variable} $general-spacing
+///
 $omnipedia-page-revisions-block-item-spacing: $general-spacing * 2;
 
 ///
 /// Omnipedia page revisions block item padding.
+///
+/// @require {variable} $general-spacing
 ///
 $omnipedia-page-revisions-block-item-padding: $general-spacing;
 
