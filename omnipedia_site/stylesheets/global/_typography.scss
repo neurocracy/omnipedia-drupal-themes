@@ -17,6 +17,14 @@ body,
   line-height: 1.7;
 }
 
+.page-title {
+  // This negative margin roughly accounts for the line-height of the first
+  // (top) line so that it appears to have the same spacing on the left, right,
+  // and top with respect to the content box.
+  margin-top:     -0.4em;
+  margin-bottom:  0.6em;
+}
+
 h3 {
   // Better match Wikipedia.
   margin-top:     1em;

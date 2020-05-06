@@ -1,0 +1,12 @@
+// -----------------------------------------------------------------------------
+//   Headings partial
+// -----------------------------------------------------------------------------
+
+.page-title {
+  // Add a divider under the page title to match Wikipedia.
+  border-bottom: $divider-thickness solid $divider-colour-on-light;
+
+  @include on-dark-colour-scheme {
+    border-bottom-color: $divider-colour-on-dark;
+  }
+}
