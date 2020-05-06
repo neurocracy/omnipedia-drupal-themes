@@ -1,0 +1,15 @@
+// -----------------------------------------------------------------------------
+//   Variables - Colours
+// -----------------------------------------------------------------------------
+
+///
+/// Omnipedia blue.
+///
+/// @link https://www.materialui.co/colors/blue/900
+///
+$omnipedia-blue: #0d47a1;
+
+///
+/// Material Design primary colour; using Omnipedia blue.
+///
+$material-primary-colour: $omnipedia-blue;
