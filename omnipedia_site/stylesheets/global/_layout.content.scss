@@ -1,0 +1,24 @@
+// -----------------------------------------------------------------------------
+//   Site layout - content
+// -----------------------------------------------------------------------------
+
+.layout-content {
+  // On narrow screens the horizontal padding matches the layout gutter.
+  padding: $layout-gap $layout-gutter;
+
+  @include media('<layout-with-both-sidebars') {
+    // Cancel out the default horizontal padding set in the
+    // layout-container-base-horizontal mixin, as this conflicts with the
+    // background and borders we set around the content area.
+    //
+    // @see {mixin} layout-container-base-horizontal
+    margin-left:  -$layout-gutter;
+    margin-right: -$layout-gutter;
+  }
+
+  @include on-sidebar-beside-content(any) {
+    // On wider screens the horizontal padding matches the vertical padding.
+    padding-left:   $layout-gap;
+    padding-right:  $layout-gap;
+  }
+}

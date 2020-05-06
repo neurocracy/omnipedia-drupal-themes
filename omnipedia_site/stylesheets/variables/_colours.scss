@@ -15,6 +15,52 @@ $omnipedia-blue: #0d47a1;
 $material-primary-colour: $omnipedia-blue;
 
 ///
+/// Primary content light background colour.
+///
+/// This is used for the main content area when the user has not specified dark
+/// mode.
+///
+$primary-content-background-colour-light: white;
+
+///
+/// Primary content dark background colour.
+///
+/// This is used for the main content area when the user has specified dark
+/// mode.
+///
+$primary-content-background-colour-dark: black;
+
+///
+/// Secondary content light background colour.
+///
+/// This is used for secondary content areas and is applied to the viewport when
+/// the user has not specified dark mode.
+///
+$secondary-content-background-colour-light: hsl(0, 0, 95%);
+
+///
+/// Secondary content dark background colour.
+///
+/// This is used for secondary content areas and is applied to the viewport when
+/// the user has specified dark mode.
+///
+$secondary-content-background-colour-dark: hsl(0, 0, 4%);
+
+///
+/// Light background colour.
+///
+/// @require {variable} $secondary-content-background-colour-light
+///
+$background-colour-light: $secondary-content-background-colour-light;
+
+///
+/// Dark background colour.
+///
+/// @require {variable} $secondary-content-background-colour-dark
+///
+$background-colour-dark: $secondary-content-background-colour-dark;
+
+///
 /// Divider colour on light backgrounds.
 ///
 /// This is applied to various things, including the border around the main
