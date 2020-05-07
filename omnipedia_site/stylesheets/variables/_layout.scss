@@ -23,3 +23,10 @@ $layout-with-both-sidebars-max-width: 100em;
 ///   Lists valid values.
 ///
 $layout-sidebar-column-width: minmax(8em, 10em);
+
+///
+/// The gap between layout columns.
+///
+/// This is increased over the default value.
+///
+$layout-gap: 1.5em;
