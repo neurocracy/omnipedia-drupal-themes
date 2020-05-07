@@ -1,0 +1,13 @@
+// -----------------------------------------------------------------------------
+//   Site layout - Sidebars
+// -----------------------------------------------------------------------------
+
+.region-sidebar-second {
+  @include on-sidebar-beside-content(both) {
+    // This adjusts the top of the first block's title with the adjacent main
+    // content box .
+    .block:first-child .block__title {
+      margin-top: -0.55em;
+    }
+  }
+}
