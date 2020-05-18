@@ -23,8 +23,8 @@
   }
 }
 
-// This re-orders the content region so that the local tasks tabs are at the
-// top, above the page title. This matches Wikipedia's layout.
+// This re-orders the content region so that the local tasks tabs and messages
+// are at the top, above the page title. This matches Wikipedia's layout.
 .region-content {
   display: flex;
 
@@ -34,6 +34,14 @@
     order: -1;
 
     @supports (order: -1) {
+      margin-bottom: 1.5em;
+    }
+  }
+
+  [data-drupal-messages] {
+    order: -2;
+
+    @supports (order: -2) {
       margin-bottom: 1.5em;
     }
   }
