@@ -8,7 +8,7 @@ use Drupal\Core\Url;
  * This sets the 'front_page_url' to the current date's main page, so that the
  * logo and site name links reflect the site's current state.
  *
- * @see \Drupal\omnipedia_menu\EventSubscriber\Block\SystemBrandingBlockDateCacheEventSubscriber
+ * @see \Drupal\omnipedia_block\EventSubscriber\Block\SystemBrandingBlockDateCacheEventSubscriber
  *   Alters the block build array to add Omnipedia date cache context and cache
  *   tags as doing so elsewhere would be too late.
  */
