@@ -15,15 +15,15 @@ use Drupal\Core\Url;
 function omnipedia_site_preprocess_block__system_branding_block(
   array &$variables
 ) {
-  /** @var \Drupal\omnipedia_core\Service\WikiInterface */
-  $wiki = \Drupal::service('omnipedia.wiki');
+  /** @var \Drupal\omnipedia_core\Service\WikiNodeMainPageInterface */
+  $wikiNodeMainPage = \Drupal::service('omnipedia.wiki_node_main_page');
 
   /** @var \Drupal\omnipedia_core\Service\TimelineInterface */
   $timeline = \Drupal::service('omnipedia.timeline');
 
   $variables['front_page_url'] = Url::fromRoute(
-    $wiki->getMainPageRouteName(),
-    $wiki->getMainPageRouteParameters(
+    $wikiNodeMainPage->getMainPageRouteName(),
+    $wikiNodeMainPage->getMainPageRouteParameters(
       $timeline->getDateFormatted('current', 'storage')
     )
   );
