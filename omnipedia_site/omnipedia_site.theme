@@ -21,10 +21,19 @@ function omnipedia_site_preprocess_block__system_branding_block(
   /** @var \Drupal\omnipedia_core\Service\TimelineInterface */
   $timeline = \Drupal::service('omnipedia.timeline');
 
+  /** @var string */
+  $currentDate = $timeline->getDateFormatted('current', 'storage');
+
+  /** @var \Drupal\omnipedia_core\Entity\NodeInterface|null */
+  $currentMainPage = $wikiNodeMainPage->getMainPage($currentDate);
+
+  // Don't alter the URL if the user does not have access to the main page.
+  if (!$currentMainPage->access('view')) {
+    return;
+  }
+
   $variables['front_page_url'] = Url::fromRoute(
     $wikiNodeMainPage->getMainPageRouteName(),
-    $wikiNodeMainPage->getMainPageRouteParameters(
-      $timeline->getDateFormatted('current', 'storage')
-    )
+    $wikiNodeMainPage->getMainPageRouteParameters($currentDate)
   );
 }
