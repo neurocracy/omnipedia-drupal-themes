@@ -1,0 +1,15 @@
+// -----------------------------------------------------------------------------
+//   Page title block partial
+// -----------------------------------------------------------------------------
+
+.block-page-title-block {
+  // Hide the page title visually on main pages as it's not really needed.
+  .omnipedia--is-main-page & {
+    @include hide-me;
+
+    // Completely remove contextual links so that they cannot be focused.
+    .contextual {
+      display: none;
+    }
+  }
+}
