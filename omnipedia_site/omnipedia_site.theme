@@ -3,14 +3,54 @@
 use Drupal\Core\Url;
 
 /**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ *
+ * This adds 'html__extended' as a template suggestion so that we can extend
+ * html.html.twig without re-implementing the whole template.
+ */
+function omnipedia_site_theme_suggestions_html_alter(
+  array &$suggestions, array $variables
+) {
+  $suggestions[] = 'html__extended';
+}
+
+/**
+ * Prepares variables for HTML document templates.
+ *
+ * This adds the 'omnipedia_is_main_page' variable.
+ *
+ * Default template: html.html.twig.
+ */
+function omnipedia_site_preprocess_html(array &$variables) {
+  $variables['omnipedia_is_main_page'] = false;
+
+  /** @var \Drupal\Core\Routing\StackedRouteMatchInterface */
+  $currentRouteMatch = \Drupal::service('current_route_match');
+
+  // Bail if this is not a node page to avoid false positives.
+  if ($currentRouteMatch->getRouteName() !== 'entity.node.canonical') {
+    return;
+  }
+
+  /** @var \Drupal\omnipedia_core\Entity\NodeInterface|null */
+  $node = $currentRouteMatch->getParameter('node');
+
+  if ($node === null) {
+    return;
+  }
+
+  $variables['omnipedia_is_main_page'] = $node->isMainPage();
+}
+
+/**
  * Prepares variables for the 'system_branding_block' block template.
  *
  * This sets the 'front_page_url' to the current date's main page, so that the
  * logo and site name links reflect the site's current state.
  *
  * @see \Drupal\omnipedia_block\EventSubscriber\Block\SystemBrandingBlockDateCacheEventSubscriber
- *   Alters the block build array to add Omnipedia date cache context and cache
- *   tags as doing so elsewhere would be too late.
+ *   Alters the block build array to add Omnipedia date and main pages cache
+ *   contexts and cache tags as doing so elsewhere would be too late.
  */
 function omnipedia_site_preprocess_block__system_branding_block(
   array &$variables

@@ -1,0 +1,30 @@
+{#
+/**
+ * @file
+ * Theme override for the basic structure of a single Drupal page.
+ *
+ * This adds either 'omnipedia--is-main-page' or 'omnipedia--is-not-main-page'
+ * to the body classes if the current page is or is not a main page.
+ *
+ * Additional variables:
+ *   - omnipedia_is_main_page: A flag indicating whether the current page is
+ *     an Omnipedia main page.
+ *
+ * @see template_preprocess_html()
+ *
+ * @see omnipedia_site_preprocess_html()
+ *   Adds the 'omnipedia_is_main_page' variable.
+ *
+ * @see omnipedia_site_theme_suggestions_html_alter()
+ *   Adds the theme suggestion so that this template can be implemented without
+ *   having to copy the entirety of html.html.twig.
+ */
+#}
+{% extends "html.html.twig" %}
+
+{# @todo Should we even output this at all on on 403 pages to reduce information
+   being leaked about how the site works? #}
+{% set attributes = attributes.addClass([
+  omnipedia_is_main_page ?
+    'omnipedia--is-main-page' : 'omnipedia--is-not-main-page',
+]) %}
