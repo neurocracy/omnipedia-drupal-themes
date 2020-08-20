@@ -1,0 +1,18 @@
+// -----------------------------------------------------------------------------
+//   Omnipedia <main-page> element partial
+// -----------------------------------------------------------------------------
+
+.omnipedia-main-page {
+  &__item {
+    @include media('>=omnipedia-main-page-dual-column') {
+      border-width:   $divider-thickness;
+      border-style:   solid;
+      border-color:   $divider-colour-on-light;
+      border-radius:  $material-border-radius;
+
+      @include on-dark-colour-scheme {
+        border-color: $divider-colour-on-dark;
+      }
+    }
+  }
+}

@@ -8,6 +8,9 @@
 // modules.
 @import '../../../ambientimpact/ambientimpact_base/stylesheets/_base.scss';
 
+@import '../../../../modules/omnipedia/omnipedia_content/components/_components.scss';
+
 @import 'global/_global.scss';
 @import 'components/_components.scss';
 @import 'blocks/_blocks.scss';
+@import 'omnipedia_elements/_omnipedia_elements.scss';
