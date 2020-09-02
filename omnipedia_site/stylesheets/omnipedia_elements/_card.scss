@@ -1,0 +1,63 @@
+// -----------------------------------------------------------------------------
+//   Omnipedia card element partial
+// -----------------------------------------------------------------------------
+
+///
+/// Omnipedia card border colour on light backgrounds.
+///
+/// @require {variable} $divider-colour-on-light
+///
+$omnipedia-card-border-colour-on-light: $divider-colour-on-light !default;
+
+///
+/// Omnipedia card border colour on dark backgrounds.
+///
+/// @require {variable} $divider-colour-on-dark
+///
+$omnipedia-card-border-colour-on-dark: $divider-colour-on-dark !default;
+
+///
+/// Omnipedia card border width.
+///
+/// @require {variable} $divider-thickness
+///
+$omnipedia-card-border-width: $divider-thickness !default;
+
+///
+/// Omnipedia card border radius.
+///
+/// @require {variable} $material-border-radius
+///
+$omnipedia-card-border-radius: $material-border-radius !default;
+
+// $omnipedia-card-margin: $general-spacing !default;
+
+///
+/// Omnipedia card default padding.
+///
+$omnipedia-card-padding: 0.5em !default;
+
+///
+/// Omnipedia card base styles.
+///
+/// @param {Number} $padding [$omnipedia-card-padding]
+///   The padding to apply to the card element.
+///
+/// @require {variable} $omnipedia-card-padding
+/// @require {variable} $omnipedia-card-border-width
+/// @require {variable} $omnipedia-card-border-colour-on-light
+/// @require {variable} $omnipedia-card-border-colour-on-dark
+/// @require {variable} $omnipedia-card-border-radius
+///
+@mixin omnipedia-card($padding: $omnipedia-card-padding) {
+  padding: $padding;
+
+  border-width:   $omnipedia-card-border-width;
+  border-style:   solid;
+  border-color:   $omnipedia-card-border-colour-on-light;
+  border-radius:  $omnipedia-card-border-radius;
+
+  @include on-dark-colour-scheme {
+    border-color: $omnipedia-card-border-colour-on-dark;
+  }
+}
