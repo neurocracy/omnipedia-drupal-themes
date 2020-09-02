@@ -1,0 +1,15 @@
+// -----------------------------------------------------------------------------
+//   Omnipedia <infobox> element partial
+// -----------------------------------------------------------------------------
+
+.omnipedia-infobox {
+  @include omnipedia-card($padding: $omnipedia-infobox-outer-spacing);
+
+  @include set-colours($background: $secondary-content-background-colour-light);
+
+  @include on-dark-colour-scheme {
+    @include set-colours(
+      $background: $secondary-content-background-colour-dark
+    );
+  }
+}
