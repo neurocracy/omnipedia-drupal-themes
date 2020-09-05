@@ -1,6 +1,8 @@
 // -----------------------------------------------------------------------------
-//   Components partial
+//   Field partial
 // -----------------------------------------------------------------------------
 
-@import '_menu.scss';
-@import '_field.scss';
+.field--type-image .field__item {
+  // This prevents the intrinsic ratio wrappers collapsing to zero width.
+  width: 100000px;
+}
