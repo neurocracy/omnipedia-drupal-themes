@@ -1,0 +1,46 @@
+// -----------------------------------------------------------------------------
+//   Omnipedia <media> element partial
+// -----------------------------------------------------------------------------
+
+.omnipedia-media {
+  @include omnipedia-card($padding: $omnipedia-infobox-outer-spacing);
+
+  @include set-colours($background: $secondary-content-background-colour-light);
+
+  @include on-dark-colour-scheme {
+    @include set-colours(
+      $background: $secondary-content-background-colour-dark
+    );
+  }
+
+  .media {
+    @include omnipedia-card($padding: 0);
+
+    img {
+      // This provides a background colour when images haven't loaded yet or
+      // they have transparency, which helps contrast and stand out from the
+      // media element frame.
+      @include set-colours(
+        $background: $primary-content-background-colour-light
+      );
+
+      @include on-dark-colour-scheme {
+        @include set-colours(
+          $background: $primary-content-background-colour-dark
+        );
+      }
+    }
+  }
+
+  figure {
+    // Override normalize.css.
+    margin: 0;
+  }
+
+  figcaption {
+    padding-top:    0.5em;
+    margin-bottom: -0.5em;
+
+    font-size: 92%;
+  }
+}

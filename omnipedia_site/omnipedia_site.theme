@@ -1,6 +1,7 @@
 <?php
 
 use Drupal\Core\Url;
+use Drupal\Core\Render\Element;
 
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
@@ -77,4 +78,34 @@ function omnipedia_site_preprocess_block__system_branding_block(
     $wikiNodeMainPage->getMainPageRouteName(),
     $wikiNodeMainPage->getMainPageRouteParameters($currentDate)
   );
+}
+
+/**
+ * Prepares variables for media entities.
+ *
+ * This switches field_media_image from image_caption_formatter back to
+ * image_formatter.
+ *
+ * @todo Remove this once image_caption_formatter is no longer used by
+ *   ambientimpact_media.
+ *
+ * @see \Drupal\ambientimpact_media\Plugin\Field\FieldFormatter\ImageFormatter::viewElements()
+ *   image_caption_formatter set here.
+ */
+function omnipedia_site_preprocess_media(array &$variables) {
+  if (
+    !isset($variables['elements']['#embed']) ||
+    $variables['elements']['#embed'] !== true ||
+    empty($variables['content']['field_media_image'])
+  ) {
+    return;
+  }
+
+  $imageField = &$variables['content']['field_media_image'];
+
+  foreach (Element::children($imageField) as $key) {
+    if ($imageField[$key]['#theme'] === 'image_caption_formatter') {
+      $imageField[$key]['#theme'] = 'image_formatter';
+    }
+  }
 }
