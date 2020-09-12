@@ -3,14 +3,18 @@
 // -----------------------------------------------------------------------------
 
 .omnipedia-media {
-  @include omnipedia-card($padding: $omnipedia-infobox-outer-spacing);
+  &--style-framed {
+    @include omnipedia-card($padding: $omnipedia-infobox-outer-spacing);
 
-  @include set-colours($background: $secondary-content-background-colour-light);
-
-  @include on-dark-colour-scheme {
     @include set-colours(
-      $background: $secondary-content-background-colour-dark
+      $background: $secondary-content-background-colour-light
     );
+
+    @include on-dark-colour-scheme {
+      @include set-colours(
+        $background: $secondary-content-background-colour-dark
+      );
+    }
   }
 
   .media {
