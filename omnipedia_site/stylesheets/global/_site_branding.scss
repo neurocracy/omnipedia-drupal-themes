@@ -4,7 +4,7 @@
 
 @include on-dark-colour-scheme {
   // Invert the slogan image on dark theme since it's black text.
-  .site-slogan .intrinsic-ratio {
+  .site-slogan {
     filter: invert(100%);
   }
 }
@@ -58,12 +58,23 @@
       margin-top: $branding-spacing;
     }
 
-    // Disable the intrinsic ratio max-width on the branding elements so that
-    // they can roam free (expand to full width of sidebar).
-    .site-logo a,
-    .site-name a,
-    .site-slogan {
-      @include disable-intrinsic-ratio-max-width;
+    // Ensure that the site logo and name images expand to the full width of
+    // sidebar. They're also displayed as block rather than the default inline
+    // to remove any vertical space due to the inline model.
+    .site-logo,
+    .site-name {
+      img {
+        display:  block;
+        width:    100%;
+      }
+    }
+
+    // The slogan is left to its default width, but is centred if the sidebar is
+    // wider than the slogan.
+    .site-slogan img {
+      display:      block;
+      margin-left:  auto;
+      margin-right: auto;
     }
   }
 }

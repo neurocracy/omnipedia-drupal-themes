@@ -2,7 +2,12 @@
 //   Field partial
 // -----------------------------------------------------------------------------
 
-.field--type-image .field__item {
-  // This prevents the intrinsic ratio wrappers collapsing to zero width.
-  width: 100000px;
+.field--type-image .field__item img {
+  // Why is this required to prevent layout jumps when images start to load?
+  // Hell if I know. They correctly reserve space in Firefox and Chrome before
+  // they start to load according to their aspect ratio, but as soon as the alt
+  // text disappears, the image's box collapses and causes layout jumps until
+  // the image begins to load in. Removing the floating on media elements
+  // doesn't seem to make a difference.
+  width: 100vw;
 }
