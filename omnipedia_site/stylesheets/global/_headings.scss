@@ -2,7 +2,8 @@
 //   Headings partial
 // -----------------------------------------------------------------------------
 
-.page-title {
+.page-title,
+.layout-content h3 {
   // Add a divider under the page title to match Wikipedia.
   border-bottom: $divider-thickness solid $divider-colour-on-light;
 
