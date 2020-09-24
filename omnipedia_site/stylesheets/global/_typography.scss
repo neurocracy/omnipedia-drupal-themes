@@ -57,3 +57,11 @@ blockquote {
 .references__list {
   font-size:  90%;
 }
+
+// This reduces the base theme's space before paragraphs to better match
+// Wikipedia.
+@include vertical-spacing-against-previous(
+  'p',
+  $spacing-small: $general-spacing * 0.8,
+  $spacing-large: $general-spacing * 0.8
+);
