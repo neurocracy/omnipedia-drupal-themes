@@ -11,11 +11,3 @@
     border-bottom-color: $divider-colour-on-dark;
   }
 }
-
-.layout-content {
-  // Headings in the content always denote a new section, so they have to clear
-  // any preceding floated elements, such as media or infoboxes.
-  @include headings {
-    clear: both;
-  }
-}
