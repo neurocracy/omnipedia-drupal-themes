@@ -10,4 +10,9 @@
   @include on-dark-colour-scheme {
     border-bottom-color: $divider-colour-on-dark;
   }
+
+  // This crops the border to the area that the heading text can actually flow
+  // in, minus any floated items to the side such as infoboxes. Without this,
+  // the border would extend all the way into and under floated items.
+  overflow: hidden;
 }
