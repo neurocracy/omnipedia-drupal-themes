@@ -1,0 +1,98 @@
+// -----------------------------------------------------------------------------
+//   Omnipedia founder message partial
+// -----------------------------------------------------------------------------
+
+///
+/// Founder block background logo URL.
+///
+$founder-block-background-logo-url: '../images/logo_faded_greyscale.svg?v=1';
+
+///
+/// Set the background for the founder block.
+///
+/// This includes a faded version of the Omnipedia logo and a greyscale gradient
+/// from side to side.
+///
+/// @param {String} $direction [ltr]
+///   The text direction, either ltr or rtl.
+///
+@mixin founder-block-background($direction: ltr) {
+  background-image:
+    // Faded Omnipedia logo.
+    url($founder-block-background-logo-url),
+    // Gradient going between the primary content background colour and a
+    // slightly darker version of the primary content background colour.
+    linear-gradient(
+      to if($direction == ltr, right, left),
+      scale-color($primary-content-background-colour-light, $lightness: -20%),
+      $primary-content-background-colour-light
+    );
+
+  @include on-dark-colour-scheme {
+    background-image:
+      // Faded Omnipedia logo.
+      url($founder-block-background-logo-url),
+      // Gradient going between the primary content background colour and a
+      // slightly light version of the primary content background colour.
+      linear-gradient(
+        to if($direction == ltr, right, left),
+        scale-color($primary-content-background-colour-dark, $lightness: +15%),
+        $primary-content-background-colour-dark
+      );
+  }
+
+  background-repeat:    no-repeat, no-repeat;
+  background-position:  if($direction == ltr, 100%, 0) 20%, center;
+}
+
+.block-omnipedia-founder-message {
+  // Vertical padding always uses the full padding value.
+  padding-top:    $founder-block-padding;
+  padding-bottom: $founder-block-padding;
+
+  // On smaller screen widths, we use the $layout-gutter since the content
+  // columm is flush with the sides of the viewport and this matches the rest of
+  // the content.
+  padding-left:   $layout-gutter;
+  padding-right:  $layout-gutter;
+
+  // This pulls the block flush with the edges of the viewport.
+  margin-left:   -$layout-gutter;
+  margin-right:  -$layout-gutter;
+  max-width:      none;
+
+  // On smaller screen widths, we just set vertical padding to match the card
+  // styles, without horizontal borders.
+  border-top:
+    $omnipedia-card-border-width solid $omnipedia-card-border-colour-on-light;
+  border-bottom:
+    $omnipedia-card-border-width solid $omnipedia-card-border-colour-on-light;
+
+  @include on-dark-colour-scheme {
+    border-top-color:     $omnipedia-card-border-colour-on-dark;
+    border-bottom-color:  $omnipedia-card-border-colour-on-dark;
+  }
+
+  // When we're using the layout with sidebars on either side of the content
+  // column, switch to using the full card styles and set larger padding on all
+  // sides.
+  @include on-sidebar-beside-content('any') {
+    @include omnipedia-card;
+
+    margin-left:  0;
+    margin-right: 0;
+
+    padding: $founder-block-padding;
+  }
+
+  @include root-conditions(('[dir=ltr]'), 'html') {
+    @include founder-block-background($direction: ltr);
+  }
+  @include root-conditions(('[dir=rtl]'), 'html') {
+    @include founder-block-background($direction: rtl);
+  }
+
+  .block__title {
+    margin-top: -0.5em;
+  }
+}
