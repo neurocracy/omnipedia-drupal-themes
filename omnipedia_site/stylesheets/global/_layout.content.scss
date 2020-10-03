@@ -23,26 +23,11 @@
   }
 }
 
-// This re-orders the content region so that the local tasks tabs and messages
-// are at the top, above the page title. This matches Wikipedia's layout.
 .region-content {
-  display: flex;
-
-  flex-direction: column;
-
-  .block-local-tasks-block {
-    order: -1;
-
-    @supports (order: -1) {
-      margin-bottom: 1.5em;
-    }
-  }
-
-  [data-drupal-messages] {
-    order: -2;
-
-    @supports (order: -2) {
-      margin-bottom: 1.5em;
-    }
+  // Add space between blocks (other than main content block) using the
+  // $layout-gap variable.
+  .block + .block:not(.block-system-main-block),
+  [data-drupal-messages] + .block:not(.block-system-main-block) {
+    margin-top: $layout-gap;
   }
 }
