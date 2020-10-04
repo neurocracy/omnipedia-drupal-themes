@@ -48,3 +48,19 @@
     font-size: 92%;
   }
 }
+
+// This adds dark colour scheme support to the Drupal core media embed error
+// element, which the Omnipedia media element uses if there's an error building
+// the media element.
+.media-embed-error {
+  // This inverts the background colour and background image on dark colour
+  // schemes, while undoing the invert in child elements so text still
+  // contrasts with the background.
+  @include on-dark-colour-scheme {
+    filter: invert(100%);
+
+    > * {
+      filter: invert(100%);
+    }
+  }
+}
