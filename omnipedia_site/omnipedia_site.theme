@@ -49,6 +49,8 @@ function omnipedia_site_preprocess_html(array &$variables) {
  * This sets the 'front_page_url' to the current date's main page, so that the
  * logo and site name links reflect the site's current state.
  *
+ * This also changes the 'title' attribute on the links to 'Main Page'.
+ *
  * @see \Drupal\omnipedia_block\EventSubscriber\Block\SystemBrandingBlockDateCacheEventSubscriber
  *   Alters the block build array to add Omnipedia date and main pages cache
  *   contexts and cache tags as doing so elsewhere would be too late.
@@ -78,6 +80,11 @@ function omnipedia_site_preprocess_block__system_branding_block(
     $wikiNodeMainPage->getMainPageRouteName(),
     $wikiNodeMainPage->getMainPageRouteParameters($currentDate)
   );
+
+  foreach (['site_logo', 'site_name'] as $key) {
+    $variables[$key . '_link_attributes']
+      ->setAttribute('title', \t('Main Page'));
+  }
 }
 
 /**
