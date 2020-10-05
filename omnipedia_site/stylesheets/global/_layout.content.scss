@@ -24,10 +24,9 @@
 }
 
 .region-content {
-  // Add space between blocks (other than main content block) using the
-  // $layout-gap variable.
-  .block + .block:not(.block-system-main-block),
-  [data-drupal-messages] + .block:not(.block-system-main-block) {
+  // Add space between blocks using the $layout-gap variable.
+  .block + .block,
+  [data-drupal-messages] + .block {
     margin-top: $layout-gap;
   }
 }
