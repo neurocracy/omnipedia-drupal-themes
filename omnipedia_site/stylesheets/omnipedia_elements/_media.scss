@@ -49,17 +49,58 @@
   }
 }
 
-// This adds dark colour scheme support to the Drupal core media embed error
-// element, which the Omnipedia media element uses if there's an error building
-// the media element.
-.media-embed-error {
-  // This inverts the background colour and background image on dark colour
-  // schemes, while undoing the invert in child elements so text still
-  // contrasts with the background.
-  @include on-dark-colour-scheme {
-    filter: invert(100%);
+// This replaces the Classy CSS for the Drupal core media embed error element
+// and adds dark colour scheme support. The Omnipedia media element generates it
+// if there's an error building the media element.
+//
+// @see core/themes/classy/css/components/media-embed-error.css
+//   Based on this Classy CSS file.
+//
+// @todo Convert the icon to a vector (SVG) and convert the media embed error
+//   sizing to ems or rems.
+.media-embed-error,
+.caption > .media-embed-error {
+  $error-icon-size: 100px;
 
-    > * {
+  position: relative;
+
+  max-width:  200px;
+  padding:    $error-icon-size 20px 20px;
+
+  @include set-colours(
+    $background: $secondary-content-background-colour-light
+  );
+
+  @include on-dark-colour-scheme {
+    @include set-colours(
+      $background: $secondary-content-background-colour-dark
+    );
+  }
+
+  &::before {
+    content: '';
+
+    display: block;
+
+    position: absolute;
+
+    top:  0;
+    left: 50%;
+
+    width:  $error-icon-size;
+    height: $error-icon-size;
+
+    margin-left: -($error-icon-size / 2);
+
+    background-image:     url(
+      '../../../../core/modules/media/images/icons/no-thumbnail.png'
+    );
+    background-repeat:    no-repeat;
+    background-position:  center top;
+    background-size:      $error-icon-size $error-icon-size;
+
+    // This inverts the icon on dark colour schemes so that it contrasts better.
+    @include on-dark-colour-scheme {
       filter: invert(100%);
     }
   }
