@@ -1,0 +1,28 @@
+// -----------------------------------------------------------------------------
+//   Links partial
+// -----------------------------------------------------------------------------
+
+// This styles Wikimedia <a> elements without an href attribute that have
+// attached data to appear as links, albeit with a dashed underline.
+a[data-is-wikimedia-link][data-omnipedia-attached-data-title][data-omnipedia-attached-data-content]:not([href]) {
+  @include link;
+
+  @include on-dark-colour-scheme {
+    @include link-colours($background-colour-dark);
+  }
+
+  cursor: pointer;
+
+  text-decoration: dashed underline;
+
+  @if $use-fancy-link-underlines == true {
+    @include fancy-link-underlines($underline-style: dashed);
+
+    // Links inside the PhotoSwipe caption need special handling as fancy
+    // underlines are currently disabled for them. See
+    // ../../../../ambientimpact/ambientimpact_base/stylesheets/elements/_link.scss
+    .#{$photoswipe-root-class}__caption__center & {
+      text-decoration: dashed underline !important;
+    }
+  }
+}
