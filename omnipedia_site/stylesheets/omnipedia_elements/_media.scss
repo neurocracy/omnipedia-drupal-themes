@@ -17,6 +17,16 @@
     }
   }
 
+  @at-root {
+    // This uses the same vertical spacing as other content elements, and
+    // specifically the same as <p> elements.
+    @include vertical-spacing-against-previous(
+      '.omnipedia-media',
+      $spacing-small: $content-item-vertical-spacing-small,
+      $spacing-large: $content-item-vertical-spacing-large
+    );
+  }
+
   .media {
     @include omnipedia-card($padding: 0);
 
