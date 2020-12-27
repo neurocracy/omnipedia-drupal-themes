@@ -30,8 +30,6 @@ $omnipedia-card-border-width: $divider-thickness !default;
 ///
 $omnipedia-card-border-radius: $material-border-radius !default;
 
-// $omnipedia-card-margin: $general-spacing !default;
-
 ///
 /// Omnipedia card default padding.
 ///
@@ -60,4 +58,18 @@ $omnipedia-card-padding: 0.5em !default;
   @include on-dark-colour-scheme {
     border-color: $omnipedia-card-border-colour-on-dark;
   }
+}
+
+///
+/// Omnipedia card caption styles.
+///
+/// @require {variable} $omnipedia-card-padding
+///
+@mixin omnipedia-card-caption {
+  margin-top:     0 !important;
+  margin-bottom: -0.3em;
+
+  padding-top: $omnipedia-card-padding / 2;
+
+  font-size: 92%;
 }
