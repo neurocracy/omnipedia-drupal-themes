@@ -4,7 +4,7 @@
 
 .omnipedia-media {
   &--style-framed {
-    @include omnipedia-card($padding: $omnipedia-infobox-outer-spacing);
+    @include omnipedia-card;
 
     @include set-colours(
       $background: $secondary-content-background-colour-light
