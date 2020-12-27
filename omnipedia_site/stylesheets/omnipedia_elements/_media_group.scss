@@ -1,0 +1,50 @@
+// -----------------------------------------------------------------------------
+//   Omnipedia <media-group> element partial
+// -----------------------------------------------------------------------------
+
+.omnipedia-media-group {
+  @include omnipedia-card();
+
+  @include set-colours(
+    $background: $secondary-content-background-colour-light
+  );
+
+  @include on-dark-colour-scheme {
+    @include set-colours(
+      $background: $secondary-content-background-colour-dark
+    );
+  }
+
+  @at-root {
+    // This uses the same vertical spacing as other content elements, and
+    // specifically the same as <p> elements.
+    @include vertical-spacing-against-previous(
+      '.omnipedia-media',
+      $spacing-small: $content-item-vertical-spacing-small,
+      $spacing-large: $content-item-vertical-spacing-large
+    );
+  }
+
+  &__list {
+    @include unlisted-list;
+
+    @include use-grid {
+      display: grid;
+
+      grid-auto-flow: column;
+      grid-gap:       $omnipedia-card-padding;
+
+      li + li {
+        margin-top: 0 !important;
+      }
+    }
+  }
+
+  .omnipedia-media {
+    margin-bottom: 0;
+  }
+
+  &__caption {
+    @include omnipedia-card-caption;
+  }
+}
