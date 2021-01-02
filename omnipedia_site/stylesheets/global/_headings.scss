@@ -16,3 +16,24 @@
   // the border would extend all the way into and under floated items.
   overflow: hidden;
 }
+
+.heading-permalink {
+  display: inline-block;
+
+  position: relative;
+
+  // Vertical alignment adjustment.
+  top: 0.2em;
+
+  // Space between the heading text and the permalink.
+  @include root-conditions(('[dir=ltr]'), 'html') {
+    left: 0.3em;
+  }
+  @include root-conditions(('[dir=rtl]'), 'html') {
+    right: 0.3em;
+  }
+
+  // Set this to rems to bypass the variable font size of the heading that this
+  // is a child of.
+  font-size: 1rem;
+}
