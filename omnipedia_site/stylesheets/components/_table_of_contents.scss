@@ -1,0 +1,45 @@
+// -----------------------------------------------------------------------------
+//   Table of contents partial
+// -----------------------------------------------------------------------------
+
+// Nested table of contents lists have their parent list item's number prepended
+// like so:
+//
+// 1
+// 2
+// 3
+//   3.1
+//   3.2
+// 4
+//
+// @see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Lists_and_Counters/Using_CSS_counters#Nesting_counters
+
+.table-of-contents {
+  &, ol {
+    counter-reset: table-of-contents-item;
+  }
+
+  li {
+    // This must be here rather than in the ::marker rule because ::marker only
+    // accepts a small subset of properties which does not include
+    // counter-increment.
+    //
+    // @see https://developer.mozilla.org/en-US/docs/Web/CSS/::marker
+    counter-increment: table-of-contents-item;
+
+    @include root-conditions(('[dir=ltr]'), 'html') {
+      padding-left: 0.3em;
+    }
+    @include root-conditions(('[dir=rtl]'), 'html') {
+      padding-right: 0.3em;
+    }
+
+    &::marker {
+      content: counter(table-of-contents-item);
+    }
+  }
+
+  ol li::marker {
+    content: counters(table-of-contents-item, ".")" ";
+  }
+}
