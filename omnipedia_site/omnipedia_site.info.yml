@@ -14,7 +14,6 @@ site_name_height: 20
 site_slogan: images/site_slogan.svg?v=1
 site_slogan_width: 128
 site_slogan_height: 13
-core: 8.x
 core_version_requirement: ^8 || ^9
 
 # These are identitical to those in ambientimpact_base, duplicated here because
