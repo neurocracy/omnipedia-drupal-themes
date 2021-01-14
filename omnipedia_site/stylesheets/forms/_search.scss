@@ -1,0 +1,36 @@
+// -----------------------------------------------------------------------------
+//   Search forms partial
+// -----------------------------------------------------------------------------
+
+.block-views-exposed-filter-blockwiki-search-page {
+  @include search-form-container;
+
+  .form--inline {
+    // Don't wrap the search button to a new line when the screen is narrow, but
+    // force it all on one line. Note that this assumes only a search field and
+    // the search button are present. This will need revisiting if more form
+    // elements are later added.
+    flex-wrap: nowrap;
+  }
+
+  form {
+    width: 100%;
+  }
+
+  .form-item-terms {
+    @include search-form-field-container;
+
+    // Remove the default margins the plain button provides enough visual
+    // spacing between it and the terms field.
+    margin-left:  0;
+    margin-right: 0;
+  }
+
+  .form-submit {
+    @include search-form-submit;
+
+    @include on-icon-container {
+      @include set-icon-display(block);
+    }
+  }
+}
