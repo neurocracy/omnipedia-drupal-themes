@@ -44,6 +44,48 @@ function omnipedia_site_preprocess_html(array &$variables) {
 }
 
 /**
+ * Prepares variables for the 'views_exposed_filter_block' block template.
+ *
+ * This alters the submit button for the 'wiki_search-page' block plug-in
+ * derivative:
+ *
+ * - Sets '#use_button_element' to true so that the ambientimpact_base theme
+ *   replaces the <input> with a <button> element as the latter can contain
+ *   markup.
+ *
+ * - Wraps the button content in an icon, with visually hidden text. This is
+ *   dependent on the previous point.
+ *
+ * - Sets the 'plain-button' class on the button.
+ *
+ * @see ambientimpact_base/templates/form/input--button-element.html.twig
+ *   Template suggestion that outputs a <button> element rather than an <input>.
+ *   Also documents rationale and links.
+ */
+function omnipedia_site_preprocess_block__views_exposed_filter_block(
+  array &$variables
+) {
+  if ($variables['derivative_plugin_id'] !== 'wiki_search-page') {
+    return;
+  }
+
+  /** @var array */
+  $submit = &$variables['content']['actions']['submit'];
+
+  $submit['#use_button_element'] = true;
+
+  $submit['content'] = [
+    '#type'         => 'ambientimpact_icon',
+    '#bundle'       => 'libricons',
+    '#icon'         => 'loupe',
+    '#text'         => $submit['#value'],
+    '#textDisplay'  => 'visuallyHidden',
+  ];
+
+  $submit['#attributes']['class'][] = 'plain-button';
+}
+
+/**
  * Prepares variables for the 'system_branding_block' block template.
  *
  * This sets the 'front_page_url' to the current date's main page, so that the
