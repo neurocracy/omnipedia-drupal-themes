@@ -11,44 +11,64 @@
 
 @include use-grid {
   .block-system-branding-block {
+    $logo-min:  2em;
+    $logo-max:  3em;
+
     display: grid;
 
     grid-template-areas:    'logo name'
                             'logo slogan';
-    grid-template-columns:  minmax(2em, 3em) minmax(9em, 1fr);
+    grid-template-columns:  minmax($logo-min, $logo-max) minmax(9em, 1fr);
     grid-gap:               $branding-spacing;
+
+    // This is to prevent any potential layout shifting during page load.
+    height: $logo-max;
 
     // When sidebars are beside the content column, display as block. This will
     // invalidate all grid-*/align-*/justify-* properties, allowing the branding
     // to be stacked vertically and saving us a lot of work.
     @include media('>=layout-with-both-sidebars') {
       display: block;
+
+      height: auto;
     }
   }
 
   .site-logo {
     grid-area: logo;
 
-    // This centers the logo verticall in cases of a really narrow viewport,
-    // which would cause the 'logo' grid area to shrink horizontally and thus
-    // shrink the logo to a point where it doesn't occupy the full height of the
-    // grid area.
-    display:        grid;
-    align-content:  center;
+    &, &__link {
+      // This centers the logo vertically in cases of a really narrow viewport,
+      // which would cause the 'logo' grid area to shrink horizontally and thus
+      // shrink the logo to a point where it doesn't occupy the full height of
+      // the grid area.
+      display:        grid;
+      align-content:  center;
+    }
   }
 
   .site-name {
     grid-area: name;
 
     // This aligns the site name to the bottom of the row so that both the site
-    // name and slogan are hugging the vertical centre of the overall grid, to
-    // align them in a visually pleasing way with the logo.
+    // name and slogan are hugging the vertical centre of the overall grid.
     display:        grid;
     align-content:  end;
+    // Shrinks the link to just the width of the image so there's no phantom
+    // clickable area.
+    justify-content: start;
   }
 
   .site-slogan {
     grid-area: slogan;
+  }
+
+  .site-name__link, .site-slogan {
+    img {
+      // This prevents extra vertical spacing below the <img> elements due to
+      // inline layout.
+      display: block;
+    }
   }
 
   @include media('>=layout-with-both-sidebars') {
