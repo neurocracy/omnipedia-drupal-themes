@@ -1,0 +1,34 @@
+// -----------------------------------------------------------------------------
+//   Omnipedia site header block partial
+// -----------------------------------------------------------------------------
+
+.omnipedia-header {
+  @include use-grid {
+    display: grid;
+
+    align-items:        center;
+    grid-column-gap:    $branding-spacing;
+    grid-auto-flow:     column;
+    grid-template-rows: 1.25em;
+
+    @include on-sidebar-beside-content(any) {
+      // Items should be pushed apart to opposite ends if we're displaying one
+      // or more sidebars beside the content column.
+      justify-content: space-between;
+    }
+
+    &__current-date,
+    &__search-form {
+      // Align contents to the centre vertical axis and the end on the
+      // horizontal.
+      display: grid;
+
+      align-items:    center;
+      justify-items:  end;
+
+      @include on-sidebar-beside-content(any) {
+        justify-items: stretch;
+      }
+    }
+  }
+}

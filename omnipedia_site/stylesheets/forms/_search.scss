@@ -2,7 +2,8 @@
 //   Search forms partial
 // -----------------------------------------------------------------------------
 
-.block-views-exposed-filter-blockwiki-search-page {
+.omnipedia-header__search-form,
+.view-wiki-search .view-filters {
   @include search-form-container;
 
   .form--inline {

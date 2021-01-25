@@ -1,5 +1,6 @@
 <?php
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Render\Element;
 
@@ -44,10 +45,9 @@ function omnipedia_site_preprocess_html(array &$variables) {
 }
 
 /**
- * Prepares variables for the 'views_exposed_filter_block' block template.
+ * Implements hook_form_FORM_ID_alter().
  *
- * This alters the submit button for the 'wiki_search-page' block plug-in
- * derivative:
+ * This alters the submit button for the wiki search view exposed form:
  *
  * - Sets '#use_button_element' to true so that the ambientimpact_base theme
  *   replaces the <input> with a <button> element as the latter can contain
@@ -62,15 +62,15 @@ function omnipedia_site_preprocess_html(array &$variables) {
  *   Template suggestion that outputs a <button> element rather than an <input>.
  *   Also documents rationale and links.
  */
-function omnipedia_site_preprocess_block__views_exposed_filter_block(
-  array &$variables
+function omnipedia_site_form_views_exposed_form_alter(
+  array &$form, FormStateInterface $formState, string $formId
 ) {
-  if ($variables['derivative_plugin_id'] !== 'wiki_search-page') {
+  if ($form['#id'] !== 'views-exposed-form-wiki-search-page') {
     return;
   }
 
   /** @var array */
-  $submit = &$variables['content']['actions']['submit'];
+  $submit = &$form['actions']['submit'];
 
   $submit['#use_button_element'] = true;
 
