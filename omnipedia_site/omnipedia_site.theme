@@ -83,6 +83,19 @@ function omnipedia_site_form_views_exposed_form_alter(
   ];
 
   $submit['#attributes']['class'][] = 'plain-button';
+
+  // Set the HTML required attribute on the field. Note that using '#required'
+  // here causes Views/Drupal to output an empty error message for some strange
+  // reason when generating the form, so we're setting the attribute directly.
+  // We're primarily doing this for UX reasons: so that browsers refuse to
+  // submit the form if terms are empty and thus avoiding a page load, and not
+  // for data validation, which must be server-side. If the browser is really
+  // old and doesn't support the required attribute, users just get the empty
+  // search results page.
+  if (isset($form['terms']['#type'])) {
+    // $form['terms']['#required'] = true;
+    $form['terms']['#attributes']['required'] = 'required';
+  }
 }
 
 /**
