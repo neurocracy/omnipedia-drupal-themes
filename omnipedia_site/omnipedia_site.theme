@@ -171,3 +171,15 @@ function omnipedia_site_preprocess_media(array &$variables) {
     }
   }
 }
+
+/**
+ * Prepares variables for the omnipedia-header.html.twig template.
+ *
+ * This adds a 'button-placeholder' class to the 'menu_link' element.
+ *
+ * @see \Drupal\omnipedia_block\Plugin\Block\Header
+ *   Used by this block.
+ */
+function omnipedia_site_preprocess_omnipedia_header(array &$variables) {
+  $variables['menu_link']['#attributes']['class'][] = 'button-placeholder';
+}
