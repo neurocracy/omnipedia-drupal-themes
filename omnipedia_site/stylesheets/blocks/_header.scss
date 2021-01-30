@@ -6,10 +6,9 @@
   @include use-grid {
     display: grid;
 
-    align-items:        center;
-    grid-column-gap:    $branding-spacing;
-    grid-auto-flow:     column;
-    grid-template-rows: 1.25em;
+    align-items:      center;
+    grid-gap:         $branding-spacing;
+    grid-auto-flow:   column;
 
     @include on-sidebar-beside-content(any) {
       // Items should be pushed apart to opposite ends if we're displaying one
@@ -17,8 +16,7 @@
       justify-content: space-between;
     }
 
-    &__current-date,
-    &__search-form {
+    > * {
       // Align contents to the centre vertical axis and the end on the
       // horizontal.
       display: grid;
@@ -29,6 +27,26 @@
       @include on-sidebar-beside-content(any) {
         justify-items: stretch;
       }
+    }
+
+    &__menu-link {
+      margin-left:  0;
+      margin-right: 0;
+
+      // The menu link is hidden if sidebars are beside the content column.
+      //
+      // @todo Could showing this still be useful for keyboard navigation on
+      //   wide screens?
+      @include on-sidebar-beside-content(both) {
+        display: none;
+      }
+    }
+
+    &__search-form {
+      // This attempts to better align the search form field with the other
+      // header elements.
+      position: relative;
+      top:      0.2em;
     }
   }
 }

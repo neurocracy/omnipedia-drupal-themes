@@ -8,6 +8,32 @@
 $branding-spacing: 0.5em;
 
 ///
+/// Branding minimum size in compact (narrow screen) layout.
+///
+/// This is used as the minimum width of the site logo.
+///
+$branding-compact-size-min: 2em;
+
+///
+/// Branding maximum size in compact (narrow screen) layout.
+///
+/// This is used as both the maximum width and height of the site logo, and as
+/// the height of the branding block to prevent layout shifting during page
+/// load.
+///
+$branding-compact-size-max: 3em;
+
+///
+/// The height of the header row
+///
+/// The header row contains the search, menu link/button, and current date.
+///
+/// This limits the height, both to prevent layout shifting during load and to
+/// fit the otherwise much taller search field within the limited space.
+///
+$header-row-height: 1.25em;
+
+///
 /// The maximum width of the site layout when both sidebars are present.
 ///
 /// This is increased from the default value.

@@ -2,60 +2,111 @@
 //   Site layout
 // -----------------------------------------------------------------------------
 
-@include media('<layout-with-both-sidebars') {
-  .layout-container {
-    margin-top: $layout-gutter;
-  }
+///
+/// The Omnipedia grid definition in compact layout (narrow screens).
+///
+@mixin omnipedia-layout-grid-compact {
+  grid-template-areas:
+    'branding       menu-primary'
+    'main-content   main-content'
+    'sidebar-first  sidebar-first'
+    'sidebar-second sidebar-second'
+    'footer         footer';
+
+  grid-template-rows:
+    minmax($branding-compact-size-min, $branding-compact-size-max)
+    1fr
+    min-content
+    min-content
+    min-content;
+
+  grid-template-columns: minmax(10em, 1fr) 2fr;
 }
 
 ///
-/// The Omnipedia grid definition.
+/// The Omnipedia grid definition on wider screens.
 ///
-@mixin omnipedia-layout-grid {
+@mixin omnipedia-layout-grid-wide {
   grid-template-areas:
     'branding       menu-primary  ....'
     'branding       main-content  sidebar-second'
     'sidebar-first  main-content  sidebar-second'
     '....           footer        ....';
+
   grid-template-rows:
-    min-content
+    $header-row-height
     min-content
     1fr
     min-content;
+}
+
+// Common stuff regardless of whether subgrid is supported.
+.layout-container {
+  @include media('<layout-with-both-sidebars') {
+    margin-top: $layout-gutter;
+  }
+
+  header[role='banner'] {
+    grid-area: branding;
+  }
+
+  .region-primary-menu {
+    grid-area: menu-primary;
+
+    // Required to override ambientimpact_base/stylesheets/global/_layout.scss
+    // when that applies its wider screen layout grid.
+    @include on-sidebar-beside-content(both) {
+      grid-area: menu-primary;
+    }
+  }
+
+  footer[role='contentinfo'] {
+    grid-area: footer;
+  }
 }
 
 // If subgrid is supported, use it to lay out the site layout, allowing the grid
 // to be inherited into the main content area.
 //
 // @todo Add support for other regions, such as highlighted and help. These are
-// currently not accounted for due to the difficulty of correctly placing all
-// regions while also maintaining the branding and sidebar locations.
+//   currently not accounted for due to the difficulty of correctly placing all
+//   regions while also maintaining the branding and sidebar locations.
 //
 // @link https://gridbyexample.com/examples/
 // @link https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Subgrid
 @supports (grid-template-columns: subgrid) {
+  // Matches specificity in ambientimpact_base and not any higher.
+  .layout-container > * {
+    grid-column-start:  main-content;
+    grid-column-end:    main-content;
+  }
   @include use-grid {
+    .layout-container {
+      display: grid;
+
+      grid-gap: $layout-gutter;
+
+      @include omnipedia-layout-grid-compact;
+    }
+
+    main[role='main'] {
+      display: grid;
+
+      grid-template-rows: subgrid;
+      grid-row-start:     main-content;
+      grid-row-end:       sidebar-second;
+
+      grid-template-columns: subgrid;
+    }
+
     @include on-sidebar-beside-content(both) {
       .layout-container {
-        @include omnipedia-layout-grid;
-      }
-
-      .region-primary-menu {
-        grid-area: menu-primary;
-      }
-
-      header[role='banner'] {
-        grid-area: branding;
+        @include omnipedia-layout-grid-wide;
       }
 
       main[role='main'] {
-        grid-template-rows: subgrid;
         grid-row-start: main-content;
         grid-row-end:   main-content;
-      }
-
-      footer[role='contentinfo'] {
-        grid-area: footer;
       }
 
       // Not working stuff follows:
@@ -110,14 +161,6 @@
     @include layout-max-width;
   }
 
-  header[role='banner'] {
-    grid-area: branding;
-  }
-
-  .region-primary-menu {
-    grid-area: menu-primary;
-  }
-
   // This must span the full width of the parent's grid and the full rows of the
   // main-content column.
   main[role='main'] {
@@ -127,14 +170,16 @@
     grid-row-end:       main-content;
   }
 
-  footer[role='contentinfo'] {
-    grid-area: footer;
-  }
-
   @include use-grid {
     .layout-container {
+      display: grid;
+
+      grid-gap: $layout-gutter;
+
+      @include omnipedia-layout-grid-compact;
+
       @include on-sidebar-beside-content(both) {
-        @include omnipedia-layout-grid;
+        @include omnipedia-layout-grid-wide;
       }
 
       margin-left:  auto;

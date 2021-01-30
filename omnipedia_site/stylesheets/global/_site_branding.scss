@@ -11,18 +11,17 @@
 
 @include use-grid {
   .block-system-branding-block {
-    $logo-min:  2em;
-    $logo-max:  3em;
-
     display: grid;
 
-    grid-template-areas:    'logo name'
-                            'logo slogan';
-    grid-template-columns:  minmax($logo-min, $logo-max) minmax(9em, 1fr);
-    grid-gap:               $branding-spacing;
+    grid-template-areas:  'logo name'
+                          'logo slogan';
+    grid-template-columns:
+      minmax($branding-compact-size-min, $branding-compact-size-max)
+      minmax(7em, 1fr);
+    grid-gap: $branding-spacing;
 
     // This is to prevent any potential layout shifting during page load.
-    height: $logo-max;
+    height: $branding-compact-size-max;
 
     // When sidebars are beside the content column, display as block. This will
     // invalidate all grid-*/align-*/justify-* properties, allowing the branding
