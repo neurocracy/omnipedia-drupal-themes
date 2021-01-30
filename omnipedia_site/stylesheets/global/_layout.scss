@@ -21,6 +21,11 @@
     min-content;
 
   grid-template-columns: minmax(10em, 1fr) 2fr;
+
+  grid-row-gap:     $layout-gutter;
+  // This adds a bigger gap between the site branding and header items to ensure
+  // they read as separate elements.
+  grid-column-gap:  $header-distinct-gap;
 }
 
 ///
@@ -83,8 +88,6 @@
   @include use-grid {
     .layout-container {
       display: grid;
-
-      grid-gap: $layout-gutter;
 
       @include omnipedia-layout-grid-compact;
     }
@@ -173,8 +176,6 @@
   @include use-grid {
     .layout-container {
       display: grid;
-
-      grid-gap: $layout-gutter;
 
       @include omnipedia-layout-grid-compact;
 

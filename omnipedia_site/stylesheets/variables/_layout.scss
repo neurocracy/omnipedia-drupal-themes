@@ -34,6 +34,14 @@ $branding-compact-size-max: 3em;
 $header-row-height: 1.25em;
 
 ///
+/// Header column gap used to make elements distinct from neighbours.
+///
+/// This is primarily used as a larger gap between the branding and header on
+/// narrow screens and in between header elements on wider screens.
+///
+$header-distinct-gap: 1.5em;
+
+///
 /// The maximum width of the site layout when both sidebars are present.
 ///
 /// This is increased from the default value.
