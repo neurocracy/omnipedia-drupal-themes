@@ -25,6 +25,13 @@
     // spacing between it and the terms field.
     margin-left:  0;
     margin-right: 0;
+
+    // This ensures the label cannot wrap to a second line and is instead
+    // clipped. This is mostly useful as a fallback for the header search form.
+    label {
+      overflow:     hidden;
+      white-space:  nowrap;
+    }
   }
 
   .form-submit {
