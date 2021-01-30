@@ -2,3 +2,10 @@
 //   Site layout - Primary menu region
 // -----------------------------------------------------------------------------
 
+.region-primary-menu {
+  @include use-grid {
+    // This aligns any blocks vertically along the X axis.
+    display:        grid;
+    align-content:  center;
+  }
+}
