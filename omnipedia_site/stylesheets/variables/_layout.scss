@@ -42,6 +42,13 @@ $header-row-height: 1.25em;
 $header-distinct-gap: 1.5em;
 
 ///
+/// The minimum width of the layout to display both sidebars beside content.
+///
+/// This is increased from the default value.
+///
+$layout-with-both-sidebars-min-width: 52em;
+
+///
 /// The maximum width of the site layout when both sidebars are present.
 ///
 /// This is increased from the default value.
