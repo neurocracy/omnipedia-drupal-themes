@@ -10,6 +10,8 @@
     grid-gap:         $branding-spacing;
     grid-auto-flow:   column;
 
+    justify-content:  end;
+
     @include on-sidebar-beside-content(any) {
       // Items should be pushed apart to opposite ends if we're displaying one
       // or more sidebars beside the content column.
