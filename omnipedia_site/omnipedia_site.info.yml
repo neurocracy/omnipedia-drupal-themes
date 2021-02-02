@@ -40,3 +40,16 @@ libraries:
 libraries-override:
   # This is removed as we provide our own styling.
   classy/media_embed_error: false
+
+libraries-extend:
+  # This adds the displace component to the Gin toolbar libraries as a
+  # dependency so that the --displace-* CSS custom properties are automatically
+  # set on the <body> element whenever the toolbar allocates space. This is
+  # important so that sticky elements can set a top value that doesn't cause
+  # them to be covered by the toolbar along the top, for example.
+  gin/gin_toolbar:
+    - ambientimpact_ux/component.displace
+  gin/gin_classic_toolbar:
+    - ambientimpact_ux/component.displace
+  gin/gin_horizontal_toolbar:
+    - ambientimpact_ux/component.displace

@@ -1,0 +1,125 @@
+// -----------------------------------------------------------------------------
+//   Site layout - Header
+// -----------------------------------------------------------------------------
+
+// This positions the header and primary menu region as sticky elements along
+// the top of the viewport. Despite them being separate elements, generated
+// content on .region-primary-menu is used to create the illusion of a shared
+// container on narrow screens.
+
+header[role='banner'],
+.region-primary-menu {
+  position: sticky;
+
+  // This takes viewport top displacement into account, if there is any, and
+  // falls back to a value of 0 displacement if the custom property is not
+  // defined.
+  top: calc(var(--displace-top, 0) + #{$layout-gutter});
+}
+.region-primary-menu {
+  @include on-sidebar-beside-content(both) {
+    // Same as above, but on wide screens.
+    top: calc(var(--displace-top, 0) + #{$layout-gap});
+  }
+}
+
+// @todo Can we create explicit z-index keywords that allow layering these
+//   together correctly?
+header[role='banner'] {
+  // This must be higher than the primary menu region, as the latter provides
+  // the background.
+  @include z-index(floating);
+}
+.region-primary-menu {
+  // This must be lower than the header, as the background this provides would
+  // otherwise be on top of the header.
+  @include z-index(page-floating);
+}
+
+header[role='banner'] {
+  // The header is reverted to static positioning on wider screens.
+  @include on-sidebar-beside-content(both) {
+    position: static;
+  }
+}
+
+.region-primary-menu {
+  $local-stacking-order:  background, content;
+
+  // The ::before generated content provides the shared background for the
+  // header and primary menu region, while the ::after generated content
+  // provides the bottom border; see lower down for explanation of the latter.
+  &::before,
+  &::after {
+    content: '';
+
+    position: absolute;
+
+    @include root-conditions(('[dir=ltr]'), 'html') {
+      right:  -$layout-gutter;
+    }
+    @include root-conditions(('[dir=rtl]'), 'html') {
+      left:   -$layout-gutter;
+    }
+
+    // These are the full viewport width on narrow screens.
+    width:  100vw;
+
+    @include on-sidebar-beside-content(both) {
+      // ...which is reverted on wider screens, where we use left and right
+      // properties.
+      width:  auto;
+    }
+
+    z-index: index($local-stacking-order, background);
+  }
+
+  &::before {
+    top:    -$layout-gutter;
+    bottom: -$layout-gutter;
+
+    @include on-sidebar-beside-content(both) {
+      left:   0;
+      right:  0;
+      top:    -$layout-gap;
+      bottom: -$layout-gap;
+    }
+
+    @include set-colours($background: $background-colour-light);
+
+    @include on-dark-colour-scheme {
+      @include set-colours($background: $background-colour-dark);
+    }
+  }
+
+  // Rather than use a bottom border on &::before, we're creating the border as
+  // its own element so that we can set its left and right to $divider-thickness
+  // on wider screens, which helps avoiding obliterating the small border-radius
+  // in the top corners of .layout-content. It would eventually be ideal to find
+  // some way of creating concave ("scooped") corners to keep the border-radius
+  // even when scrolled down the page; this would also make this effect more
+  // future-proof than removing the divider thickness to fake it, which only
+  // works because of the small border-radius.
+  &::after {
+    height: $divider-thickness;
+
+    bottom: calc(-#{$layout-gutter} - #{$divider-thickness});
+
+    @include on-sidebar-beside-content(both) {
+      left:   $divider-thickness;
+      right:  $divider-thickness;
+      bottom: calc(-#{$layout-gap} - #{$divider-thickness});
+    }
+
+    background-color: $divider-colour-on-light;
+
+    @include on-dark-colour-scheme {
+      background-color: $divider-colour-on-dark;
+    }
+  }
+
+  > * {
+    position: relative;
+    z-index:  index($local-stacking-order, content);
+  }
+}
