@@ -4,16 +4,16 @@
 
 // This creates the box that the main site content lives in. On narrow screens
 // where the sidebars are not placed beside the content column, the content
-// column is flush with the horizontal edges of the viewport and only has a
-// bottom border (the top border is handled by the header and primary menu
-// region). On wider screens where the sidebars are placed beside the content
-// column, the content column has borders on all four sides.
+// column is flush with the horizontal edges of the viewport and only has a top
+// and bottom border. On wider screens where the sidebars are placed beside the
+// content column, the content column has borders on all four sides.
 //
 // @see ./_layout.content.scss
 //   Sets padding for this element.
 .layout-content {
-  // Only apply bottom border on narrow screens.
-  border-width: 0 0 $divider-thickness 0;
+
+  // Only apply top and bottom borders on narrow screens.
+  border-width: $divider-thickness 0;
   border-style: solid;
   border-color: $divider-colour-on-light;
 

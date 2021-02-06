@@ -14,13 +14,24 @@ header[role='banner'],
   // This takes viewport top displacement into account, if there is any, and
   // falls back to a value of 0 displacement if the custom property is not
   // defined.
-  top: calc(var(--displace-top, 0) + #{$layout-gutter});
+  top: calc(var(--displace-top, 0) + #{$layout-gutter}) !important;
+
+  --headroom-translate-unpinned: calc(
+    -100% - #{$layout-gutter * 2} - #{$divider-thickness}
+  );
 }
 .region-primary-menu {
   @include on-sidebar-beside-content(both) {
     // Same as above, but on wide screens.
-    top: calc(var(--displace-top, 0) + #{$layout-gap});
+    top: calc(var(--displace-top, 0) + #{$layout-gap}) !important;
+
+    // Because Chrome is being dumb with rounding errors on the right edge.
+    width: calc(100% + #{$divider-thickness});
   }
+
+  --headroom-translate-unpinned: calc(
+    -100% - #{$layout-gap * 2} - #{$divider-thickness}
+  );
 }
 
 // @todo Can we create explicit z-index keywords that allow layering these
@@ -37,23 +48,31 @@ header[role='banner'] {
 }
 
 header[role='banner'] {
-  // The header is reverted to static positioning on wider screens.
+  // The header is reverted to static positioning on wider screens and Headroom
+  // transforms are set to zero.
   @include on-sidebar-beside-content(both) {
     position: static;
+
+    --headroom-translate-pinned:    0;
+    --headroom-translate-unpinned:  0;
   }
 }
 
 .region-primary-menu {
+  ///
+  /// Local stacking order. Later in the list means a higher z-index.
+  ///
   $local-stacking-order:  background, content;
 
   // The ::before generated content provides the shared background for the
-  // header and primary menu region, while the ::after generated content
-  // provides the bottom border; see lower down for explanation of the latter.
-  &::before,
-  &::after {
+  // header and primary menu region.
+  &::before {
     content: '';
 
     position: absolute;
+
+    top:      -$layout-gutter;
+    bottom:   -$layout-gutter;
 
     @include root-conditions(('[dir=ltr]'), 'html') {
       right:  -$layout-gutter;
@@ -66,55 +85,21 @@ header[role='banner'] {
     width:  100vw;
 
     @include on-sidebar-beside-content(both) {
-      // ...which is reverted on wider screens, where we use left and right
-      // properties.
-      width:  auto;
-    }
-
-    z-index: index($local-stacking-order, background);
-  }
-
-  &::before {
-    top:    -$layout-gutter;
-    bottom: -$layout-gutter;
-
-    @include on-sidebar-beside-content(both) {
       left:   0;
       right:  0;
       top:    -$layout-gap;
       bottom: -$layout-gap;
+
+      // On wider screens, we use left and right properties to set the width.
+      width:  auto;
     }
+
+    z-index: index($local-stacking-order, background);
 
     @include set-colours($background: $background-colour-light);
 
     @include on-dark-colour-scheme {
       @include set-colours($background: $background-colour-dark);
-    }
-  }
-
-  // Rather than use a bottom border on &::before, we're creating the border as
-  // its own element so that we can set its left and right to $divider-thickness
-  // on wider screens, which helps avoiding obliterating the small border-radius
-  // in the top corners of .layout-content. It would eventually be ideal to find
-  // some way of creating concave ("scooped") corners to keep the border-radius
-  // even when scrolled down the page; this would also make this effect more
-  // future-proof than removing the divider thickness to fake it, which only
-  // works because of the small border-radius.
-  &::after {
-    height: $divider-thickness;
-
-    bottom: calc(-#{$layout-gutter} - #{$divider-thickness});
-
-    @include on-sidebar-beside-content(both) {
-      left:   $divider-thickness;
-      right:  $divider-thickness;
-      bottom: calc(-#{$layout-gap} - #{$divider-thickness});
-    }
-
-    background-color: $divider-colour-on-light;
-
-    @include on-dark-colour-scheme {
-      background-color: $divider-colour-on-dark;
     }
   }
 
