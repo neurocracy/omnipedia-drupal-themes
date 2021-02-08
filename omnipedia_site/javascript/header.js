@@ -23,6 +23,26 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
       for (var i = 0; i < $elements.length; i++) {
         aiHeadroom.init($elements[i]);
       }
+
+      // Synchronize pin, freeze, and unfreeze between the elements. This is
+      // needed so that both elements are pinned and frozen at the same time
+      // when focus is inside one of them.
+      $elements
+        .on('headroomPin.OmnipediaSiteThemeHeader', function(event) {
+          for (var i = 0; i < $elements.length; i++) {
+            $elements[i].headroom.pin();
+          }
+        })
+        .on('headroomFreeze.OmnipediaSiteThemeHeader', function(event) {
+          for (var i = 0; i < $elements.length; i++) {
+            $elements[i].headroom.freeze();
+          }
+        })
+        .on('headroomUnfreeze.OmnipediaSiteThemeHeader', function(event) {
+          for (var i = 0; i < $elements.length; i++) {
+            $elements[i].headroom.unfreeze();
+          }
+        });
     },
     function(context, settings, trigger) {
       /**
@@ -31,6 +51,12 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
        * @type {jQuery}
        */
       var $elements = $('header[role="banner"], .region-primary-menu', context);
+
+      $elements.off([
+        'headroomPin.OmnipediaSiteThemeHeader',
+        'headroomFreeze.OmnipediaSiteThemeHeader',
+        'headroomUnfreeze.OmnipediaSiteThemeHeader',
+      ].join(' '));
 
       // Destroy Headroom.js instances if found.
       for (var i = 0; i < $elements.length; i++) {
