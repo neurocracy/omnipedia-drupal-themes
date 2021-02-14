@@ -2,7 +2,18 @@
 //   Omnipedia site header block partial
 // -----------------------------------------------------------------------------
 
+// This partial handles most of the internal layout and functionality of the
+// site header element.
+//
+// @see ../global/_layout.header.scss
+//   Partial that handles layout stuff between the header and branding.
+
 .omnipedia-header {
+  ///
+  /// Local stacking order. Later in the list means a higher z-index.
+  ///
+  $local-stacking-order: other, search;
+
   @include use-grid {
     display: grid;
 
@@ -10,16 +21,24 @@
     grid-gap:         $branding-spacing;
     grid-auto-flow:   column;
 
-    justify-content:  end;
+    // Narrow screen layout when the site branding is in the header.
+    grid-template-columns: 1fr min-content calc(
+      #{$search-button-icon-size} + #{$search-button-spacing}
+    );
+
+    justify-items: end;
 
     @include on-sidebar-beside-content(any) {
-      // Items should be pushed apart to opposite ends if we're displaying one
-      // or more sidebars beside the content column.
-      justify-content:  space-between;
-
       // This adds a bigger gap between the header items to ensure they read as
       // separate elements.
       grid-column-gap:  $header-distinct-gap;
+
+      // Remove the columns when the site branding is in the sidebar.
+      grid-template-columns: auto;
+
+      // Items should be pushed apart to opposite ends if we're displaying one
+      // or more sidebars beside the content column.
+      justify-content:  space-between;
     }
 
     > * {
@@ -30,12 +49,24 @@
       align-items:    center;
       justify-items:  end;
 
+      grid-row: 1;
+
       @include on-sidebar-beside-content(any) {
         justify-items: stretch;
       }
     }
 
-    &__menu-link {
+    &__current-date {
+      grid-column: 1;
+
+      @include on-sidebar-beside-content(any) {
+        grid-column: auto;
+      }
+    }
+
+    &__menu {
+      grid-column: 2;
+
       margin-left:  0;
       margin-right: 0;
 
@@ -49,10 +80,131 @@
     }
 
     &__search-form {
-      // This attempts to better align the search form field with the other
-      // header elements.
-      position: relative;
-      top:      0.2em;
+      // If subgrid is not supported, position this absolutely across the
+      // entire container.
+      @supports not (grid-template-columns: subgrid) {
+        position: absolute;
+        top:    0;
+        bottom: 0;
+        left:   0;
+        right:  0;
+
+        @include on-sidebar-beside-content(any) {
+          position: static;
+        }
+      }
+
+      &,
+      .form--inline {
+        grid-column-start:  1;
+        grid-column-end:    -1;
+      }
+
+      justify-items: stretch;
+
+      max-width: none;
+
+      @include on-sidebar-beside-content(any) {
+        grid-column: auto;
+
+        max-width: $search-form-container-max-width;
+      }
+
+      .form-item-terms,
+      .form-actions {
+        // This attempts to better align the search form field with the other
+        // header elements.
+        position: relative;
+        top:      -0.4em;
+
+        @include on-sidebar-beside-content(any) {
+          top:    0.3em;
+        }
+
+        margin-top:     0;
+        margin-bottom:  0;
+      }
+    }
+  }
+
+  // Everything past this point enables the search field to be shown and the
+  // current date and menu to be hidden on narrow screens (i.e. when the site
+  // branding is in the header) under the following criteria:
+  //
+  // - The .search-target element is the current location target (i.e. :target).
+  //
+  // - Anything within the search form gains focus (i.e. :focus-within).
+
+  &__current-date,
+  &__menu,
+  &__search-form .form--inline::before,
+  &__search-form .form-item-terms {
+    transition-property:  transform;
+    transition-duration:  var(--headroom-duration, #{$headroom-duration});
+
+    will-change: transform;
+
+    @include on-sidebar-beside-content(any) {
+      transition-property: none;
+
+      will-change: none;
+    }
+  }
+
+  &__current-date,
+  &__menu {
+    transform: translateY(0);
+
+    transition-timing-function: $easing-decelerate;
+
+    z-index: index($local-stacking-order, other);
+  }
+
+  &__search-form {
+    z-index: index($local-stacking-order, search);
+  }
+
+  .search-target:target ~ * & {
+    &__current-date,
+    &__menu {
+      transform: translateY(calc(
+        -#{$header-row-height} - #{$layout-gap} - #{$layout-gap} - 0.2em
+      ));
+
+      transition-timing-function: $easing-accelerate;
+
+      @include on-sidebar-beside-content(any) {
+        transform: none;
+      }
+    }
+  }
+
+  &__search-form {
+    &::before,
+    .form--inline::before,
+    .form-item-terms {
+      transform: translateY(100%);
+
+      transition-timing-function: $easing-accelerate;
+
+      @include on-sidebar-beside-content(any) {
+        transform: none;
+      }
+    }
+
+    &:focus-within::before,
+    &:focus-within .form--inline::before,
+    &:focus-within .form-item-terms,
+    .search-target:target ~ * & .form--inline::before,
+    .search-target:target ~ * & .form-item-terms {
+      // -1px rather than 0 to avoid potential rounding errors causing a gap.
+      transform: translateY(-1px);
+
+      transition-timing-function: $easing-decelerate;
+
+      @include on-sidebar-beside-content(any) {
+        transform: none;
+      }
     }
   }
 }

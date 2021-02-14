@@ -8,4 +8,24 @@
     display:        grid;
     align-content:  center;
   }
+
+  // The following makes the region as a whole ignore pointer clicks/taps, which
+  // is then restored on individual descendents. This is to allow the primary
+  // menu region to layer itself above the site branding while also allowing
+  // pointer clicks/taps to register on the branding.
+  pointer-events: none;
+
+  // Revert back to auto when the site branding is in the sidebar.
+  @include on-sidebar-beside-content(any) {
+    pointer-events: auto;
+  }
+
+  &::before,
+  .contextual,
+  .omnipedia-header__current-date,
+  .omnipedia-header__menu,
+  .omnipedia-header__search-form .form-item-terms,
+  .omnipedia-header__search-form .form-actions {
+    pointer-events: auto;
+  }
 }

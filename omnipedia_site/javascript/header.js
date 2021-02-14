@@ -8,6 +8,22 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
 ) {
   'use strict';
 
+  /**
+   * The selector to match elements to apply Headroom.js to.
+   *
+   * The first two should be self explanatory. The reason we also apply to
+   * .search-anchor is that we need that element to also hide when the primary
+   * menu region does, so that the clickable space isn't on screen but
+   * invisible.
+   *
+   * @type {String}
+   */
+  var elementSelector = [
+    'header[role="banner"]',
+    '.region-primary-menu',
+    '.search-anchor',
+  ].join(',');
+
   this.addBehaviour(
     'OmnipediaSiteThemeHeaderHeadroom',
     'omnipedia-site-theme-header-headroom',
@@ -18,7 +34,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
        *
        * @type {jQuery}
        */
-      var $elements = $('header[role="banner"], .region-primary-menu', context);
+      var $elements = $(elementSelector, context);
 
       for (var i = 0; i < $elements.length; i++) {
         aiHeadroom.init($elements[i]);
@@ -50,7 +66,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
        *
        * @type {jQuery}
        */
-      var $elements = $('header[role="banner"], .region-primary-menu', context);
+      var $elements = $(elementSelector, context);
 
       $elements.off([
         'headroomPin.OmnipediaSiteThemeHeader',

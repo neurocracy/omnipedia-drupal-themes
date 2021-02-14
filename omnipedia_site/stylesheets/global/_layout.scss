@@ -56,7 +56,15 @@
   }
 
   .region-primary-menu {
-    grid-area: menu-primary;
+    @include media('<layout-with-both-sidebars') {
+      &,
+      .block,
+      .omnipedia-header {
+        grid-column-start:  branding;
+        grid-column-end:    menu-primary;
+        grid-row:           branding;
+      }
+    }
 
     // Required to override ambientimpact_base/stylesheets/global/_layout.scss
     // when that applies its wider screen layout grid.
@@ -100,6 +108,24 @@
       grid-row-end:       sidebar-second;
 
       grid-template-columns: subgrid;
+    }
+
+    .region-primary-menu {
+      @include media('<layout-with-both-sidebars') {
+        &,
+        .block,
+        .omnipedia-header,
+        .omnipedia-header__search-form {
+          display: grid;
+
+          grid-template-rows:     subgrid;
+        }
+        &,
+        .block,
+        .omnipedia-header__search-form {
+          grid-template-columns:  subgrid;
+        }
+      }
     }
 
     @include on-sidebar-beside-content(both) {
@@ -191,6 +217,19 @@
         // they don't squish the columns.
         margin-left:  0;
         margin-right: 0;
+      }
+    }
+
+    .region-primary-menu {
+      @include media('<layout-with-both-sidebars') {
+        &,
+        .block {
+          display: grid;
+
+          @include omnipedia-layout-grid-compact;
+
+          grid-row-gap: 0;
+        }
       }
     }
 
