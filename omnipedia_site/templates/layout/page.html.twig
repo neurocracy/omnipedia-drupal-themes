@@ -6,6 +6,8 @@
  * This is copied from the ambientimpact_base theme with the following changes:
  *
  * - Added .search-target and .search-anchor elements. See elements for details.
+ *   Note that these elements are only added if the 'omnipedia_is_search_page'
+ *   variable is false.
  *
  * Available variables:
  *
@@ -57,6 +59,9 @@
  *
  * @see \template_preprocess_page()
  *
+ * @see \omnipedia_site_preprocess_page()
+ *   Adds the 'omnipedia_is_search_page' variable.
+ *
  * @see html.html.twig
  */
 #}
@@ -88,27 +93,31 @@
   ) %}
 {% endif %}
 
-{% set search_target_attributes = create_attribute({
-  'id':     'search',
-  'class':  ['search-target'],
-}) %}
+{% if not omnipedia_is_search_page %}
+  {% set search_target_attributes = create_attribute({
+    'id':     'search',
+    'class':  ['search-target'],
+  }) %}
 
-{# Note that the 'plain-button' class is needed to ensure the search anchor has
-   the same size and layout as the search button. #}
-{% set search_anchor_attributes = create_attribute({
-  'href':         '#' ~ search_target_attributes.offsetGet('id'),
-  'class':        ['search-anchor', 'plain-button'],
-  'hidden':       'true',
-  'aria-hidden':  'true',
-  'tabindex':     '-1',
-}) %}
+  {# Note that the 'plain-button' class is needed to ensure the search anchor
+     has the same size and layout as the search button. #}
+  {% set search_anchor_attributes = create_attribute({
+    'href':         '#' ~ search_target_attributes.offsetGet('id'),
+    'class':        ['search-anchor', 'plain-button'],
+    'hidden':       'true',
+    'aria-hidden':  'true',
+    'tabindex':     '-1',
+  }) %}
+{% endif %}
 
 <div{{ layout_container_attributes }}>
 
   {# This provides the target element for the search anchor. This is position:
      fixed to ensure no scrolling is done by the browser as the target element
      is on-screen at all times. #}
-  <div {{ search_target_attributes }}></div>
+  {% if search_target_attributes %}
+    <div {{ search_target_attributes }}></div>
+  {% endif %}
 
   {# This provides an anchor that is layered on top of the primary menu region
      search button to toggle the search form even when JavaScript has not
@@ -117,7 +126,9 @@
      @todo Should we include some text? It's hidden from screen readers, so it
        shouldn't matter?
      #}
-  <a {{ search_anchor_attributes }}></a>
+  {% if search_anchor_attributes %}
+    <a {{ search_anchor_attributes }}></a>
+  {% endif %}
 
   <header role="banner">
     {{ page.header }}

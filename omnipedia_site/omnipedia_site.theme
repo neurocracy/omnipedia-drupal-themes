@@ -45,6 +45,22 @@ function omnipedia_site_preprocess_html(array &$variables) {
 }
 
 /**
+ * Prepares variables for the page template.
+ *
+ * This adds the 'omnipedia_is_search_page' variable.
+ *
+ * Default template: page.html.twig.
+ */
+function omnipedia_site_preprocess_page(array &$variables) {
+  /** @var \Drupal\omnipedia_search\Service\WikiSearchInterface */
+  $wikiSearch = \Drupal::service('omnipedia.wiki_search');
+
+  /** @var bool */
+  $variables['omnipedia_is_search_page'] =
+    $wikiSearch->isCurrentRouteSearchPage();
+}
+
+/**
  * Implements hook_form_FORM_ID_alter().
  *
  * This alters the submit button for the wiki search view exposed form:

@@ -22,9 +22,14 @@
     grid-auto-flow:   column;
 
     // Narrow screen layout when the site branding is in the header.
-    grid-template-columns: 1fr min-content calc(
-      #{$search-button-icon-size} + #{$search-button-spacing}
-    );
+    &--has-search {
+      grid-template-columns: 1fr min-content calc(
+        #{$search-button-icon-size} + #{$search-button-spacing}
+      );
+    }
+    &--no-search {
+      grid-template-columns: 1fr min-content;
+    }
 
     justify-items: end;
 
