@@ -37,7 +37,11 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
       var $elements = $(elementSelector, context);
 
       for (var i = 0; i < $elements.length; i++) {
-        aiHeadroom.init($elements[i]);
+        aiHeadroom.init($elements[i], {
+          // The headroom component has trouble setting a correct top offset, so
+          // this ensures that the top/not top classes get set when expected.
+          offset: 0
+        });
       }
 
       // Synchronize pin, freeze, and unfreeze between the elements. This is
