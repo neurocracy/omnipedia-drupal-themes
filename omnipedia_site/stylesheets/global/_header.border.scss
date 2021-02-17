@@ -1,0 +1,21 @@
+// -----------------------------------------------------------------------------
+//   Site header - Border
+// -----------------------------------------------------------------------------
+
+.omnipedia-header,
+.region-primary-menu {
+  &::before {
+    border-bottom: $divider-thickness solid $divider-colour-on-light;
+
+    @include on-dark-colour-scheme {
+      border-bottom-color: $divider-colour-on-dark;
+    }
+  }
+}
+
+.region-primary-menu {
+  &:not(.headroom)::before,
+  &.headroom--top::before {
+    border-bottom-color: transparent !important;
+  }
+}

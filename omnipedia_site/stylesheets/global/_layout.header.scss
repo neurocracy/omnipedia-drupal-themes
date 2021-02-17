@@ -121,16 +121,19 @@ header[role='banner']::before {
   }
 }
 
-.region-primary-menu::before {
-  margin-top:     -$layout-gutter;
-  margin-bottom:  -$layout-gutter;
-
+.region-primary-menu::before,
+.region-primary-menu::after {
   @include root-conditions(('[dir=ltr]'), 'html') {
     margin-right: -$layout-gutter;
   }
   @include root-conditions(('[dir=rtl]'), 'html') {
     margin-left:  -$layout-gutter;
   }
+}
+
+.region-primary-menu::before {
+  margin-top:     -$layout-gutter;
+  margin-bottom:  -$layout-gutter;
 
   grid-area: menu-primary;
 
@@ -299,6 +302,53 @@ header[role='banner']::before {
     // This has no use when the site branding is in the sidebar.
     @include on-sidebar-beside-content(both) {
       display: none;
+    }
+  }
+}
+
+.omnipedia-header {
+  // The ::before generated content provides the header bottom border on narrow
+  // screens, while the ::after provides the shadow.
+  &::before,
+  &::after {
+    content: '';
+
+    position: absolute;
+
+    top:    -$layout-gutter;
+    bottom: -$layout-gutter;
+    left:   -$layout-gutter;
+    right:  -$layout-gutter;
+
+    @include on-sidebar-beside-content(any) {
+      display: none;
+    }
+  }
+
+  &::before {
+    z-index: index($layout-header-stacking-order, border);
+  }
+
+  &::after {
+    z-index: index($layout-header-stacking-order, shadow);
+  }
+}
+
+.region-primary-menu {
+  // The ::before generated content provides the header bottom border on wider
+  // screens (where sidebars are beside the content column, while the ::after
+  // provides the shadow.
+  @include on-sidebar-beside-content(any) {
+    &::before,
+    &::after {
+      content: '';
+
+      position: absolute;
+
+      left:   0;
+      right:  0;
+      top:    -$layout-gap;
+      bottom: -$layout-gap;
     }
   }
 }

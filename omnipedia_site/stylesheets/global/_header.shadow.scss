@@ -1,0 +1,45 @@
+// -----------------------------------------------------------------------------
+//   Site header - Shadow
+// -----------------------------------------------------------------------------
+
+///
+/// Header shadow on light backgrounds.
+///
+$header-shadow-on-light: 0 2px 3px rgba(0, 0, 0, 0.3);
+
+///
+/// Header shadow on dark backgrounds.
+///
+$header-shadow-on-dark: 0 1px 3px rgba(0, 0, 0, 0.8);
+
+.omnipedia-header,
+.region-primary-menu {
+  &::after {
+    box-shadow: $header-shadow-on-light;
+
+    @include on-dark-colour-scheme {
+      box-shadow: $header-shadow-on-dark;
+    }
+
+    transition-property:        opacity;
+    transition-duration:        200ms;
+    // Opacity transitions look more natural with linear easing.
+    transition-timing-function: linear;
+  }
+}
+
+.omnipedia-header {
+  &::after {
+    .headroom--top &,
+    .headroom--unpinned & {
+      opacity: 0;
+    }
+  }
+}
+
+.region-primary-menu {
+  &.headroom--top::after,
+  &.headroom--unpinned::after {
+    opacity: 0;
+  }
+}
