@@ -1,0 +1,18 @@
+// -----------------------------------------------------------------------------
+//   Site header - Backgrounds
+// -----------------------------------------------------------------------------
+
+header[role='banner'],
+.region-primary-menu,
+.region-primary-menu .omnipedia-header__search-form .form--inline {
+  // The ::before generated content provides backgrounds for the header, primary
+  // menu region, and the search form. Note that in the case of the primary menu
+  // region, ::before is also used for the bottom border on wider screens.
+  &::before {
+    @include set-colours($background: $background-colour-light);
+
+    @include on-dark-colour-scheme {
+      @include set-colours($background: $background-colour-dark);
+    }
+  }
+}
