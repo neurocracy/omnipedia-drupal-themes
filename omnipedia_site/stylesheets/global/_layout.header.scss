@@ -202,15 +202,6 @@ header[role='banner']::before {
   // areas around the border of the button where rounding errors may allow the
   // pointer to briefly be considered over the button rather than the anchor.
   padding: $search-button-spacing * 1.05;
-
-  @include material-ripple;
-
-  // Remove fancy underlines as we neither need them nor do they work correctly
-  // here due to the fact that they use a carefully positioned background
-  // gradient.
-  @if $use-fancy-link-underlines == true {
-    @include remove-fancy-link-underlines;
-  }
 }
 
 .search-target:target ~ header[role='banner'] {

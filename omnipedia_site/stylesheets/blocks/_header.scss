@@ -56,6 +56,11 @@
       }
     }
 
+    &__current-date,
+    &__menu {
+      z-index: index($local-stacking-order, other);
+    }
+
     &__current-date {
       grid-column: 1;
 
@@ -80,6 +85,8 @@
     }
 
     &__search-form {
+      z-index: index($local-stacking-order, search);
+
       // If subgrid is not supported, position this absolutely across the
       // entire container.
       @supports not (grid-template-columns: subgrid) {
@@ -123,87 +130,6 @@
 
         margin-top:     0;
         margin-bottom:  0;
-      }
-    }
-  }
-
-  // Everything past this point enables the search field to be shown and the
-  // current date and menu to be hidden on narrow screens (i.e. when the site
-  // branding is in the header) under the following criteria:
-  //
-  // - The .search-target element is the current location target (i.e. :target).
-  //
-  // - Anything within the search form gains focus (i.e. :focus-within).
-
-  &__current-date,
-  &__menu,
-  &__search-form .form--inline::before,
-  &__search-form .form-item-terms {
-    transition-property:  transform;
-    transition-duration:  var(--headroom-duration, #{$headroom-duration});
-
-    will-change: transform;
-
-    @include on-sidebar-beside-content(any) {
-      transition-property: none;
-
-      will-change: none;
-    }
-  }
-
-  &__current-date,
-  &__menu {
-    transform: translateY(0);
-
-    transition-timing-function: $easing-decelerate;
-
-    z-index: index($local-stacking-order, other);
-  }
-
-  &__search-form {
-    z-index: index($local-stacking-order, search);
-  }
-
-  .search-target:target ~ * & {
-    &__current-date,
-    &__menu {
-      transform: translateY(calc(
-        -#{$header-row-height} - #{$layout-gap} - #{$layout-gap} - 0.2em
-      ));
-
-      transition-timing-function: $easing-accelerate;
-
-      @include on-sidebar-beside-content(any) {
-        transform: none;
-      }
-    }
-  }
-
-  &__search-form {
-    &::before,
-    .form--inline::before,
-    .form-item-terms {
-      transform: translateY(100%);
-
-      transition-timing-function: $easing-accelerate;
-
-      @include on-sidebar-beside-content(any) {
-        transform: none;
-      }
-    }
-
-    &:focus-within::before,
-    &:focus-within .form--inline::before,
-    &:focus-within .form-item-terms,
-    .search-target:target ~ * & .form--inline::before,
-    .search-target:target ~ * & .form-item-terms {
-      // -1px rather than 0 to avoid potential rounding errors causing a gap.
-      transform: translateY(-1px);
-
-      transition-timing-function: $easing-decelerate;
-
-      @include on-sidebar-beside-content(any) {
-        transform: none;
       }
     }
   }
