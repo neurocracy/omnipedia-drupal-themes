@@ -44,7 +44,8 @@
     transition-timing-function: $easing-decelerate;
   }
 
-  .search-target:target ~ * & {
+  .search-target:target ~ * &,
+  .search-target--form-has-focus ~ * & {
     &__current-date,
     &__menu {
       transform: translateY(calc(

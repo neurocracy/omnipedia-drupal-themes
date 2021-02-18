@@ -204,7 +204,8 @@ header[role='banner']::before {
   padding: $search-button-spacing * 1.05;
 }
 
-.search-target:target ~ header[role='banner'] {
+.search-target:target ~ header[role='banner'],
+.search-target--form-has-focus ~ header[role='banner'] {
   // This hides the branding region when .search-target is the ID in the
   // location, i.e. the in-page anchor target.
   @include headroom-unpinned;

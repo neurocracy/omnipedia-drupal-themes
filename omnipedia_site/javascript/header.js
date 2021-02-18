@@ -89,5 +89,55 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
       }
     }
   );
+
+  // This adds a class to the search target if the search form gains focus so
+  // that the site branding and other header items can be transitioned out of
+  // view.
+  this.addBehaviour(
+    'OmnipediaSiteThemeHeaderFocus',
+    'omnipedia-site-theme-header-focus',
+    '.layout-container',
+    function(context, settings) {
+      /**
+       * The header search form, if any, wrapped in a jQuery collection.
+       *
+       * @type {jQuery}
+       */
+      var $searchForm = $('.omnipedia-header__search-form');
+
+      // Bail if no search form was found.
+      if ($searchForm.length === 0) {
+        return;
+      }
+
+      /**
+       * The search target element, if any, wrapped in a jQuery collection.
+       *
+       * @type {jQuery}
+       */
+      var $searchTarget = $('.search-target');
+
+      // Bail in the unlikely case the search target isn't found.
+      if ($searchTarget.length === 0) {
+        return;
+      }
+
+      $searchForm
+        .on('focusin.OmnipediaSiteThemeHeaderFocus', function(event) {
+          $searchTarget.addClass('search-target--form-has-focus');
+        })
+        .on('focusout.OmnipediaSiteThemeHeaderFocus', function(event) {
+          $searchTarget.removeClass('search-target--form-has-focus');
+        });
+    },
+    function(context, settings, trigger) {
+      $('.search-target').removeClass('search-target--form-has-focus');
+
+      $('.omnipedia-header__search-form').off([
+        'focusin.OmnipediaSiteThemeHeaderFocus',
+        'focusout.OmnipediaSiteThemeHeaderFocus',
+      ].join(' '));
+    }
+  );
 });
 });
