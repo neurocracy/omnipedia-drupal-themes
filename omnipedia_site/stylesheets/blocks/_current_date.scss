@@ -2,18 +2,31 @@
 //   Current date block partial
 // -----------------------------------------------------------------------------
 
-.omnipedia-current-date {
-  display:      block;
+@include add-breakpoints((
+  'omnipedia-current-date-visible':           32em,
+  'omnipedia-current-date-font-size-larger':  40em,
+));
 
-  font-size:    120%;
+.omnipedia-current-date {
+  display: block;
+
+  @include media('<omnipedia-current-date-visible') {
+    @include hide-me;
+  }
+
+  font-size:    100%;
   font-style:   italic;
   line-height:  1;
   text-align:   right;
   white-space:  nowrap;
 
-  opacity:      0.6;
+  opacity: 0.6;
 
-  @include on-sidebar-beside-content(both) {
+  @include media('>=omnipedia-current-date-font-size-larger') {
+    font-size: 120%;
+  }
+
+  @include on-sidebar-beside-content(any) {
     font-size:  150%;
   }
 }
