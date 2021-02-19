@@ -103,7 +103,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
        *
        * @type {jQuery}
        */
-      var $searchForm = $('.omnipedia-header__search-form');
+      var $searchForm = $('.omnipedia-header__search-form', context);
 
       // Bail if no search form was found.
       if ($searchForm.length === 0) {
@@ -115,7 +115,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
        *
        * @type {jQuery}
        */
-      var $searchTarget = $('.search-target');
+      var $searchTarget = $('.search-target', context);
 
       // Bail in the unlikely case the search target isn't found.
       if ($searchTarget.length === 0) {
@@ -131,9 +131,9 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
         });
     },
     function(context, settings, trigger) {
-      $('.search-target').removeClass('search-target--form-has-focus');
+      $('.search-target', context).removeClass('search-target--form-has-focus');
 
-      $('.omnipedia-header__search-form').off([
+      $('.omnipedia-header__search-form', context).off([
         'focusin.OmnipediaSiteThemeHeaderFocus',
         'focusout.OmnipediaSiteThemeHeaderFocus',
       ].join(' '));
