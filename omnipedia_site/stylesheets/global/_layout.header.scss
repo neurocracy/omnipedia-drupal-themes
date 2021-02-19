@@ -163,6 +163,9 @@ header[role='banner']::before {
 .search-anchor {
   display:  block;
 
+  // Indicate to the header JavaScript that the anchor is visible.
+  --omnipedia-search-anchor-state: visible;
+
   // When the search target is in fact the target in the location hash, prevent
   // any pointer events on the anchor so that the search button can be clicked/
   // tapped.
@@ -173,6 +176,9 @@ header[role='banner']::before {
   // This has no use when the site branding is in the sidebar.
   @include on-sidebar-beside-content(both) {
     display: none;
+
+    // Indicate to the header JavaScript that the anchor is hidden.
+    --omnipedia-search-anchor-state: hidden;
   }
 
   // This tries to align the anchor correctly over the vertically-centred search
