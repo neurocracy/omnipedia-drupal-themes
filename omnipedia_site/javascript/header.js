@@ -29,6 +29,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
     'omnipedia-site-theme-header-headroom',
     '.layout-container',
     function(context, settings) {
+
       /**
        * Elements to have Headroom.js applied, wrapped in a jQuery collection.
        *
@@ -63,8 +64,10 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
             $elements[i].headroom.unfreeze();
           }
         });
+
     },
     function(context, settings, trigger) {
+
       /**
        * Elements to have Headroom.js applied, wrapped in a jQuery collection.
        *
@@ -87,6 +90,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
           $elements[i].headroom.destroy();
         }
       }
+
     }
   );
 
@@ -98,6 +102,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
     'omnipedia-site-theme-header-focus',
     '.layout-container',
     function(context, settings) {
+
       /**
        * The header search form, if any, wrapped in a jQuery collection.
        *
@@ -129,14 +134,17 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
         .on('focusout.OmnipediaSiteThemeHeaderFocus', function(event) {
           $searchTarget.removeClass('search-target--form-has-focus');
         });
+
     },
     function(context, settings, trigger) {
+
       $('.search-target', context).removeClass('search-target--form-has-focus');
 
       $('.omnipedia-header__search-form', context).off([
         'focusin.OmnipediaSiteThemeHeaderFocus',
         'focusout.OmnipediaSiteThemeHeaderFocus',
       ].join(' '));
+
     }
   );
 
@@ -148,6 +156,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
     'omnipedia-site-theme-header-hash-focus',
     '.layout-container',
     function(context, settings) {
+
       /**
        * The search anchor, if any, wrapped in a jQuery collection.
        *
@@ -276,7 +285,9 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
         'hashchange.OmnipediaSiteThemeHeaderHashFocus',
         $searchForm[0].OmnipediaSiteThemeHeaderHashFocus
       );
+
     }
   );
+
 });
 });
