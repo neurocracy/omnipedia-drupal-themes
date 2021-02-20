@@ -24,6 +24,8 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
     '.search-anchor',
   ].join(',');
 
+  // This initializes Headroom.js instances for all the elements in
+  // headroomElementsSelector, and handles syncing various events between them.
   this.addBehaviour(
     'OmnipediaSiteThemeHeaderHeadroom',
     'omnipedia-site-theme-header-headroom',
@@ -69,7 +71,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
     function(context, settings, trigger) {
 
       /**
-       * Elements to have Headroom.js applied, wrapped in a jQuery collection.
+       * Elements that have Headroom.js applied, wrapped in a jQuery collection.
        *
        * @type {jQuery}
        */
