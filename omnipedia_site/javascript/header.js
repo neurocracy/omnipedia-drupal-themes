@@ -239,6 +239,10 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
 
           $searchField.focus();
 
+          // Trigger an 'omnipediaSearchActive' event. This is primarily used by
+          // the overlay.
+          $searchForm.trigger('omnipediaSearchActive');
+
         // Otherwise, if the location hash is not the search anchor's href, and
         // the currently focused element is within the search form, focus the
         // search anchor. Note that the check for where focus is located is very
@@ -260,6 +264,11 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
             $searchField.blur();
 
           }
+
+          // Trigger an 'omnipediaSearchInactive' event. This is primarily used
+          // by the overlay.
+          $searchForm.trigger('omnipediaSearchInactive');
+
         }
       };
 
@@ -287,6 +296,54 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
         'hashchange.OmnipediaSiteThemeHeaderHashFocus',
         $searchForm[0].OmnipediaSiteThemeHeaderHashFocus
       );
+
+    }
+  );
+
+  // This adds a one off click handler to the <main> element (which the overlay
+  // is generated content of) when the search field is active, allowing a click
+  // or tap on the overlay to close the search field and overlay by invoking
+  // history.back().
+  this.addBehaviour(
+    'OmnipediaSiteThemeHeaderOverlay',
+    'omnipedia-site-theme-header-overlay',
+    '.layout-container',
+    function(context, settings) {
+
+      /**
+       * The site content <main> element, wrapped in a jQuery collection.
+       *
+       * @type {jQuery}
+       */
+      var $main = $('main[role="main"]', context);
+
+      $(this).on(
+        'omnipediaSearchActive.OmnipediaSiteThemeHeaderOverlay',
+      function(event) {
+
+        $main.one('click.OmnipediaSiteThemeHeaderOverlay', function(event) {
+          history.back();
+        });
+
+      }).on(
+        'omnipediaSearchInactive.OmnipediaSiteThemeHeaderOverlay',
+      function(event) {
+
+        $main.off('click.OmnipediaSiteThemeHeaderOverlay');
+
+      });
+
+    },
+    function(context, settings, trigger) {
+
+      $('main[role="main"]', context).off(
+        'click.OmnipediaSiteThemeHeaderOverlay'
+      );
+
+      $(this).off([
+        'omnipediaSearchActive.OmnipediaSiteThemeHeaderOverlay',
+        'omnipediaSearchInactive.OmnipediaSiteThemeHeaderOverlay',
+      ].join(' '));
 
     }
   );

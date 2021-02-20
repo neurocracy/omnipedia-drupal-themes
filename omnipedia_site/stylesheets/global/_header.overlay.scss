@@ -1,0 +1,74 @@
+// -----------------------------------------------------------------------------
+//   Site header - Overlay
+// -----------------------------------------------------------------------------
+
+main[role="main"]::before {
+  content: '';
+
+  @include on-sidebar-beside-content(any) {
+    content: none;
+
+    will-change: none;
+  }
+
+  position: fixed;
+
+  top:    0;
+  bottom: 0;
+  left:   0;
+  right:  0;
+
+  @include set-colours(
+    $background: rgba($background-colour-light, 0.8)
+  );
+
+  @include on-dark-colour-scheme {
+    @include set-colours(
+      $background: rgba($background-colour-dark, 0.8)
+    );
+  }
+
+  // We don't need as high opacity if backdrop-filter is supported. If we used
+  // the same opacity as above, the blurring would make the background far
+  // fainter perceptually than intended.
+  @supports (backdrop-filter: blur(4px)) {
+    @include set-colours(
+      $background: rgba($background-colour-light, 0.6)
+    );
+
+    @include on-dark-colour-scheme {
+      @include set-colours(
+        $background: rgba($background-colour-dark, 0.6)
+      );
+    }
+  }
+
+  opacity: 0;
+
+  // Blur the background if the browser supports backdrop-filter. Note that at
+  // the time of writing (2021-02-19), Chromium and WebKit support it, but
+  // Firefox still has it behind a flag.
+  //
+  // @see https://caniuse.com/css-backdrop-filter
+  //
+  // @see https://bugzilla.mozilla.org/show_bug.cgi?id=1578503
+  backdrop-filter: blur(4px);
+
+  .search-target:target ~ &,
+  .search-target--form-has-focus ~ & {
+    opacity: 1;
+
+    pointer-events: auto;
+  }
+
+  transition-property:        opacity, pointer-events;
+  transition-duration:        200ms;
+  // Opacity transitions look more natural with linear easing.
+  transition-timing-function: linear;
+
+  pointer-events: none;
+
+  will-change: opacity;
+
+  @include z-index(floating-below);
+}
