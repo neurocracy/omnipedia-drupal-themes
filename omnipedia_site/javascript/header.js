@@ -18,7 +18,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
    *
    * @type {String}
    */
-  var elementSelector = [
+  var headroomElementsSelector = [
     'header[role="banner"]',
     '.region-primary-menu',
     '.search-anchor',
@@ -35,7 +35,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
        *
        * @type {jQuery}
        */
-      var $elements = $(elementSelector, context);
+      var $elements = $(headroomElementsSelector, context);
 
       for (var i = 0; i < $elements.length; i++) {
         aiHeadroom.init($elements[i], {
@@ -73,7 +73,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeader', function(
        *
        * @type {jQuery}
        */
-      var $elements = $(elementSelector, context);
+      var $elements = $(headroomElementsSelector, context);
 
       $elements.off([
         'headroomPin.OmnipediaSiteThemeHeader',
