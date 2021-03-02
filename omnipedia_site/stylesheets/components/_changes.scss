@@ -1,0 +1,10 @@
+// -----------------------------------------------------------------------------
+//   Wiki node changes partial
+// -----------------------------------------------------------------------------
+
+.omnipedia-changes {
+  &__diff {
+    // This makes the space above and below the text feel more equal.
+    padding-bottom: 0.15em;
+  }
+}
