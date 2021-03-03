@@ -13,3 +13,46 @@
     }
   }
 }
+
+// This lays out the page title as two sections if the appropriate wrappers are
+// present: the primary section, and a de-emphasized secondary section, the
+// latter wrapping to a new line if it can't fit after the primary section, and
+// having reduced font size and opacity.
+//
+// @see \Drupal\omnipedia_content\Controller\OmnipediaWikiNodeChangesController::title()
+//   Example usage.
+.page-title {
+  display: flex;
+
+  flex-wrap: wrap;
+  align-items: baseline;
+
+  // This is usually a colon (:) or dash (-), and provided for when the title
+  // is displayed as text-only, such as in the <title> element and when copied
+  // by a user, but is otherwise invisible.
+  &__glue {
+    opacity: 0;
+
+    // This adds a bit of extra space between the primary and secondary
+    // sections.
+    @include root-conditions(('[dir=ltr]'), 'html') {
+      padding-right: 0.4em;
+    }
+    @include root-conditions(('[dir=rtl]'), 'html') {
+      padding-left: 0.4em;
+    }
+  }
+
+  &__secondary {
+    opacity: 0.6;
+
+    font-size: 85%;
+
+    // Only apply a more significant font size reduction on wider screens, as
+    // this would otherwise make the text uncomfortably small due to the
+    // responsive font size higher up the tree.
+    @include on-sidebar-beside-content(any) {
+      font-size: 70%;
+    }
+  }
+}
