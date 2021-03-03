@@ -9,6 +9,9 @@
  *   Note that these elements are only added if the 'omnipedia_is_search_page'
  *   variable is false.
  *
+ * - Moved page.highlighted, page.help, and page.breadcrumb into
+ *   .layout-content.
+ *
  * Available variables:
  *
  * General utility variables:
@@ -137,16 +140,16 @@
   {{ page.primary_menu }}
   {{ page.secondary_menu }}
 
-  {{ page.breadcrumb }}
-
-  {{ page.highlighted }}
-
-  {{ page.help }}
-
   <main role="main">
     <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
 
     <div class="layout-content">
+      {{ page.highlighted }}
+
+      {{ page.help }}
+
+      {{ page.breadcrumb }}
+
       {{ page.content }}
     </div>{# /.layout-content #}
 

@@ -21,6 +21,10 @@
     padding-left:   $layout-gap;
     padding-right:  $layout-gap;
   }
+
+  .region + .region {
+    margin-top: $layout-gap;
+  }
 }
 
 .region-content {
