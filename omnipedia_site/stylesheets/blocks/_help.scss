@@ -1,0 +1,43 @@
+// -----------------------------------------------------------------------------
+//   Help block partial
+// -----------------------------------------------------------------------------
+
+///
+/// Help block base colour.
+///
+$help-block-colour-base: #006ce4;
+
+///
+/// Help block background colour on light backgrounds.
+///
+$help-block-background-colour-on-light: adjust-color(
+  $help-block-colour-base, $saturation: -40%, $lightness: 45%
+);
+
+///
+/// Help block background colour on dark backgrounds.
+///
+$help-block-background-colour-on-dark: adjust-color(
+  $help-block-colour-base, $saturation: -60%, $lightness: -20%
+);
+
+///
+/// Help block padding.
+///
+$help-block-padding: ($layout-gap / 3) ($layout-gap / 2);
+
+.block-help {
+  padding: $help-block-padding;
+
+  border-radius: $material-border-radius;
+
+  @include set-colours(
+    $background: $help-block-background-colour-on-light
+  );
+
+  @include on-dark-colour-scheme {
+    @include set-colours(
+      $background: $help-block-background-colour-on-dark
+    );
+  }
+}
