@@ -69,6 +69,4 @@ main[role="main"]::before {
   pointer-events: none;
 
   will-change: opacity;
-
-  @include z-index(floating-below);
 }

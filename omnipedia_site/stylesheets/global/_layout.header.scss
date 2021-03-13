@@ -53,19 +53,6 @@ header[role='banner'],
   );
 }
 
-// @todo Can we create explicit z-index keywords that allow layering these
-//   together correctly?
-header[role='banner'] {
-  // This must be lower than the primary menu region so that the search form can
-  // be layered on top of this when it gains focus.
-  @include z-index(page-floating);
-}
-.region-primary-menu {
-  // This must be higher than the branding region to be able to layer the search
-  // form on top of it when the form gains focus.
-  @include z-index(floating);
-}
-
 header[role='banner'] {
   // The header is reverted to static positioning on wider screens and Headroom
   // transforms are set to zero.
@@ -186,8 +173,6 @@ header[role='banner']::before {
   // justify-* properties set on this element and the container overall
   // font-size.
   top: calc(var(--displace-top, 0em) + #{$layout-gutter} + 0.3em);
-
-  @include z-index('floating-above');
 
   grid-area:    menu-primary;
   align-self:   center;

@@ -1,0 +1,37 @@
+// -----------------------------------------------------------------------------
+//   Site layout - Global z-index values
+// -----------------------------------------------------------------------------
+
+// Branding and primary menu regions.
+//
+// @todo Can we create explicit z-index keywords that allow layering these
+//   together correctly?
+header[role='banner'] {
+  // This must be lower than the primary menu region so that the search form can
+  // be layered on top of this when it gains focus.
+  @include z-index(page-floating);
+}
+.region-primary-menu {
+  // This must be higher than the branding region to be able to layer the search
+  // form on top of it when the form gains focus.
+  @include z-index(floating);
+}
+
+.search-anchor {
+  @include z-index('floating-above');
+}
+
+// Header overlay.
+//
+// @see ./_header.overlay.scss
+main[role="main"]::before {
+  @include z-index(floating-below);
+}
+
+// Site reveal overlay.
+//
+// @see ./_reveal.scss
+.layout-container::before {
+  // This must be higher than any sticky elements such as the header.
+  @include z-index(floating-above);
+}
