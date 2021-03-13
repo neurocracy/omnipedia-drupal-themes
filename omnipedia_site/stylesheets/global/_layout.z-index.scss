@@ -21,6 +21,12 @@ header[role='banner'] {
   @include z-index('floating-above');
 }
 
+// This needs to be increased over the value in ambientimpact_base or it'll be
+// placed below parts of the header on narrow screens.
+.skip-link-container {
+  @include z-index('floating-above');
+}
+
 // Header overlay.
 //
 // @see ./_header.overlay.scss
