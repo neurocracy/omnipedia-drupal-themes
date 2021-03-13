@@ -13,5 +13,7 @@ global-scripts:
     javascript/header.form_has_focus.js: {}
     javascript/header.hash_focus.js: {}
     javascript/header.overlay.js: {}
+    javascript/header.keyboard.js: {}
   dependencies:
+    - ambientimpact_core/ally.js
     - ambientimpact_ux/component.headroom
