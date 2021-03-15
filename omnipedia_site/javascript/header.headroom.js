@@ -7,8 +7,11 @@
 // between them.
 
 AmbientImpact.on('headroom', function(aiHeadroom, $) {
+AmbientImpact.on(
+  'OmnipediaSiteThemeHeaderElements',
+function(headerElements, $) {
 AmbientImpact.addComponent('OmnipediaSiteThemeHeaderHeadroom', function(
-  OmnipediaSiteThemeHeaderHeadroom, $
+  headerHeadroom, $
 ) {
   'use strict';
 
@@ -31,7 +34,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderHeadroom', function(
   this.addBehaviour(
     'OmnipediaSiteThemeHeaderHeadroom',
     'omnipedia-site-theme-header-headroom',
-    '.layout-container',
+    headerElements.getHeaderBehaviourSelector(),
     function(context, settings) {
 
       /**
@@ -98,5 +101,6 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderHeadroom', function(
     }
   );
 
+});
 });
 });

@@ -9,9 +9,10 @@ global-styling:
 
 global-scripts:
   js:
+    javascript/header.elements.js: {}
     javascript/header.headroom.js: {}
-    javascript/header.form_has_focus.js: {}
-    javascript/header.hash_focus.js: {}
+    javascript/header.state.js: {}
+    javascript/header.focus.js: {}
     javascript/header.overlay.js: {}
     javascript/header.keyboard.js: {}
   dependencies:

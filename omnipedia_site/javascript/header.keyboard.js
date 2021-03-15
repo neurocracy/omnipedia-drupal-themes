@@ -6,11 +6,12 @@
 // and overlay on narrow screens.
 
 AmbientImpact.onGlobals('ally.when.key', function() {
-AmbientImpact.on('OmnipediaSiteThemeHeaderHashFocus', function(
-  OmnipediaSiteThemeHeaderHashFocus, $
-) {
+AmbientImpact.on([
+  'OmnipediaSiteThemeHeaderElements',
+  'OmnipediaSiteThemeHeaderState',
+], function(headerElements, headerState, $) {
 AmbientImpact.addComponent('OmnipediaSiteThemeHeaderKeyboard', function(
-  OmnipediaSiteThemeHeaderKeyboard, $
+  headerKeyboard, $
 ) {
   'use strict';
 
@@ -24,7 +25,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderKeyboard', function(
   this.addBehaviour(
     'OmnipediaSiteThemeHeaderKeyboard',
     'omnipedia-site-theme-header-keyboard',
-    '.layout-container',
+    headerElements.getHeaderBehaviourSelector(),
     function(context, settings) {
 
       $(this).on(
@@ -33,7 +34,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderKeyboard', function(
 
         allyWhenKeyHandle = ally.when.key({
           escape: function(event, disengage) {
-            history.back();
+            headerState.hideSearch();
 
             disengage();
           }

@@ -4,21 +4,21 @@
 
 // This adds a one off click handler to the <main> element (which the overlay is
 // generated content of) when the search field is active, allowing a click or
-// tap on the overlay to close the search field and overlay by invoking
-// history.back().
+// tap on the overlay to close the search field and overlay.
 
-AmbientImpact.on('OmnipediaSiteThemeHeaderHashFocus', function(
-  OmnipediaSiteThemeHeaderHashFocus, $
-) {
+AmbientImpact.on([
+  'OmnipediaSiteThemeHeaderElements',
+  'OmnipediaSiteThemeHeaderState',
+], function(headerElements, headerState, $) {
 AmbientImpact.addComponent('OmnipediaSiteThemeHeaderOverlay', function(
-  OmnipediaSiteThemeHeaderOverlay, $
+  headerOverlay, $
 ) {
   'use strict';
 
   this.addBehaviour(
     'OmnipediaSiteThemeHeaderOverlay',
     'omnipedia-site-theme-header-overlay',
-    '.layout-container',
+    headerElements.getHeaderBehaviourSelector(),
     function(context, settings) {
 
       /**
@@ -33,7 +33,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderOverlay', function(
       function(event) {
 
         $main.one('click.OmnipediaSiteThemeHeaderOverlay', function(event) {
-          history.back();
+          headerState.hideSearch();
         });
 
       }).on(
