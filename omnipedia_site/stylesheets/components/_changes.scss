@@ -9,3 +9,13 @@
     padding-bottom: 0.15em;
   }
 }
+
+.omnipedia-changes {
+  ins, del {
+    p {
+      // Something is adding <p> elements and these are breaking <ins> and <del>
+      // so force them to inline.
+      display: inline;
+    }
+  }
+}
