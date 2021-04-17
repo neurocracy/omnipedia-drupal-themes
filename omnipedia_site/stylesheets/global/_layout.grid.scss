@@ -51,6 +51,13 @@
     margin-top: $layout-gutter;
   }
 
+  @include on-sidebar-beside-content(any) {
+    // On wider screens, the horizontal padding on either side of the layout
+    // matches the layout gap between columns.
+    padding-left:   $layout-gap;
+    padding-right:  $layout-gap;
+  }
+
   header[role='banner'] {
     grid-area: branding;
   }
