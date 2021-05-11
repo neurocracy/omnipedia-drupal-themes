@@ -6,6 +6,44 @@
 a[data-is-wikimedia-link][data-omnipedia-attached-data-title][data-omnipedia-attached-data-content]:not([href]) {
   text-decoration-thickness:  $text-decoration-thickness;
   text-underline-offset:      $text-decoration-offset;
+
+  &.omnipedia-changes__diff-link {
+    @include on-dark-colour-scheme {
+      @include link-colours(
+        $background-colour-dark,
+
+        $normal-on-dark: $foreground-colour-on-dark,
+        $hover-on-dark:  $foreground-colour-on-dark,
+
+        $underline-normal-on-dark: rgba($foreground-colour-on-dark, 0.6),
+        $underline-hover-on-dark:  $foreground-colour-on-dark,
+      );
+    }
+  }
+
+  // .omnipedia-changes__diff {
+  //   @include on-dark-colour-scheme {
+  //     text-decoration-color: rgba($foreground-colour-on-dark, 0.6);
+  //   }
+  // }
+
+  // @include link-hover {
+  //   .omnipedia-changes__diff {
+  //     @include on-dark-colour-scheme {
+  //       text-decoration-color: $foreground-colour-on-dark;
+  //     }
+  //   }
+  // }
+
+  // @include link-active {
+  //   .omnipedia-changes__diff {
+  //     @include on-dark-colour-scheme {
+  //       @include on-dark-colour-scheme {
+  //         text-decoration-color: rgba($foreground-colour-on-dark, 0.6);
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 // This styles Wikimedia <a> elements without an href attribute that have
