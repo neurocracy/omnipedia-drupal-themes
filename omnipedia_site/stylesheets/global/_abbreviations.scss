@@ -1,0 +1,22 @@
+// -----------------------------------------------------------------------------
+//   Abbreviations partial
+// -----------------------------------------------------------------------------
+
+.layout-container {
+  @include abbr {
+    // Don't apply to elements in Symfony VarDumper output.
+    &:not(.sf-dump-note) {
+      // Heavy handed removal of fancy underlines because ugh.
+      background-image: none !important;
+      text-shadow:      none !important;
+
+      text-decoration-line:       underline;
+      text-decoration-style:      dotted;
+      text-decoration-thickness:  $text-decoration-thickness;
+      text-underline-offset:      $text-decoration-offset;
+
+      // This is to match our Wikimedia pseudo-links.
+      cursor: pointer;
+    }
+  }
+}
