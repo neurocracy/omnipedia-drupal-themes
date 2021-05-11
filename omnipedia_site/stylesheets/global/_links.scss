@@ -4,10 +4,8 @@
 
 :any-link,
 a[data-is-wikimedia-link][data-omnipedia-attached-data-title][data-omnipedia-attached-data-content]:not([href]) {
-  // This specifies a 1.5px thickness for link underlines and an offset that
-  // Chromium and Firefox roughly agree on.
-  text-decoration-thickness:  1.5px;
-  text-underline-offset:      10%;
+  text-decoration-thickness:  $text-decoration-thickness;
+  text-underline-offset:      $text-decoration-offset;
 }
 
 // This styles Wikimedia <a> elements without an href attribute that have

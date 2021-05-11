@@ -38,4 +38,20 @@ $heading-font-weight: $font-weight-normal;
 ///
 /// This overrides the default of 2px.
 ///
+/// @todo Remove this now that we're using native underlines?
+///
 $text-underline-thickness: 1px;
+
+///
+/// Shared text decoration thickness.
+///
+$text-decoration-thickness: 1.5px;
+
+///
+/// Shared text decoration offset.
+///
+/// This offsets the underline enough so there's a bit of space between it and
+/// the baseline of the text. This is a value that Firefox and Chrome display
+/// roughly similarly.
+///
+$text-decoration-offset: 10%;
