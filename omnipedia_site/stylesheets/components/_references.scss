@@ -1,0 +1,11 @@
+// -----------------------------------------------------------------------------
+//   References (citations, footnotes) partial
+// -----------------------------------------------------------------------------
+
+@at-root {
+  @include vertical-spacing-against-previous(
+    '.references',
+    $spacing-small: $content-item-vertical-spacing-small,
+    $spacing-large: $content-item-vertical-spacing-large
+  );
+}
