@@ -18,12 +18,13 @@
   }
 
   @at-root {
-    // This uses the same vertical spacing as other content elements, and
-    // specifically the same as <p> elements.
+    // This uses the same vertical spacing as other content elements plus a bit
+    // extra to attempt to align with the top of the first line of ajacent <p>
+    // elements.
     @include vertical-spacing-against-previous(
       '.omnipedia-media',
-      $spacing-small: $content-item-vertical-spacing-small,
-      $spacing-large: $content-item-vertical-spacing-large
+      $spacing-small: $content-item-vertical-spacing-small + 0.7em,
+      $spacing-large: $content-item-vertical-spacing-large + 0.7em
     );
   }
 

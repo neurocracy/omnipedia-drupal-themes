@@ -2,6 +2,22 @@
 //   Site layout - Content
 // -----------------------------------------------------------------------------
 
+///
+/// Generic content item vertical spacing on smaller screens.
+///
+/// Note that this is set to this specific value to approximate Wikipedia's
+/// spacing before <p> elements, so should not be changed from this value.
+///
+$content-item-vertical-spacing-small: $general-spacing * 0.8;
+
+///
+/// Generic content item vertical spacing on larger screens.
+///
+/// Note that this is set to this specific value to approximate Wikipedia's
+/// spacing before <p> elements, so should not be changed from this value.
+///
+$content-item-vertical-spacing-large: $general-spacing * 0.8;
+
 .layout-content {
   // On narrow screens the horizontal padding matches the layout gutter.
   padding: $layout-gap $layout-gutter;
