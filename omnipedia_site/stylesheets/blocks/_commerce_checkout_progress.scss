@@ -1,0 +1,11 @@
+// -----------------------------------------------------------------------------
+//   Drupal Commerce checkout progress block partial
+// -----------------------------------------------------------------------------
+
+.block-commerce-checkout-progress {
+  .checkout-progress {
+    // Reset the default list margin and padding to zero.
+    margin:   0;
+    padding:  0;
+  }
+}
