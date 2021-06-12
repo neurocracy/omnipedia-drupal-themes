@@ -1,0 +1,10 @@
+// -----------------------------------------------------------------------------
+//   Form radios container partial
+// -----------------------------------------------------------------------------
+
+.form-radios {
+  // This pulls the bottom of the container up a bit so that the text baseline
+  // of the last line is roughly aligned with the parent's border box on both
+  // the horizontal and vertical axes.
+  margin-bottom: -0.3em;
+}
