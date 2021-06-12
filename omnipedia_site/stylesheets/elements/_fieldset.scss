@@ -1,0 +1,35 @@
+// -----------------------------------------------------------------------------
+//   Fieldset partial
+// -----------------------------------------------------------------------------
+
+fieldset:not(.form-composite) {
+  margin: 0;
+
+  @include omnipedia-card;
+
+  // On wider screens the horizontal and bottom padding matches the layout gap.
+  @include on-sidebar-beside-content(any) {
+    padding-left:   $layout-gap;
+    padding-right:  $layout-gap;
+    padding-bottom: $layout-gap;
+  }
+}
+
+fieldset.form-composite {
+  margin: 0;
+
+  @at-root {
+    @include vertical-spacing-against-previous(
+      &,
+      $spacing-small: $content-item-vertical-spacing-small,
+      $spacing-large: $content-item-vertical-spacing-large
+    );
+  }
+
+  > legend + .fieldset-wrapper {
+    @include vertical-spacing(
+      $spacing-small: $content-item-vertical-spacing-small / 2,
+      $spacing-large: $content-item-vertical-spacing-small / 2
+    );
+  }
+}

@@ -1,0 +1,24 @@
+// -----------------------------------------------------------------------------
+//   Fieldset legend partial
+// -----------------------------------------------------------------------------
+
+fieldset:not(.form-composite) > legend {
+  position: relative;
+
+  top: -0.1em;
+
+  --legend-horizontal-padding: 0.2em;
+
+  // This compensates for the horizontal padding to align the legend back with
+  // the column edge of the elements that follow in the fieldset.
+  @include root-conditions(('[dir=ltr]'), 'html') {
+    margin-left:  calc(var(--legend-horizontal-padding) * -1);
+  }
+  @include root-conditions(('[dir=rtl]'), 'html') {
+    margin-right: calc(var(--legend-horizontal-padding) * -1);
+  }
+
+  // This adds padding between the text and the default border on a fieldset.
+  padding-left:   var(--legend-horizontal-padding);
+  padding-right:  var(--legend-horizontal-padding);
+}
