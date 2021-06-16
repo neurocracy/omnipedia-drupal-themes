@@ -1,0 +1,106 @@
+// -----------------------------------------------------------------------------
+//   Site layout - Commerce
+// -----------------------------------------------------------------------------
+
+@include add-breakpoints((
+  'layout-commerce-checkout-form-two-column': 35em,
+));
+
+.layout-checkout-form {
+  @include use-grid {
+    @include media('>=layout-commerce-checkout-form-two-column') {
+      display: grid;
+
+      grid-template-areas:
+        'main   secondary'
+        'footer footer';
+
+      grid-template-columns: minmax(15em, 1fr) 1fr;
+      grid-gap: $layout-gap;
+
+      &::after {
+        display: none;
+      }
+
+      .checkout-pane-review {
+        // This attempts to line up the top of the first fieldset with the
+        // adjacent secondary column <h3>.
+        margin-top: -0.9em;
+      }
+    }
+  }
+
+  // This contains an <iframe> that's got a high z-index set inline, which ends
+  // up layering this above elements such as the header and back to top widget.
+  .paypal-buttons-container {
+    position:   relative;
+    z-index:    1;
+  }
+}
+
+.layout-region-checkout-main {
+  grid-area: main;
+
+  @include vertical-spacing-against-previous(
+    '.form-wrapper',
+    $spacing-small: $content-item-vertical-spacing-small,
+    $spacing-large: $content-item-vertical-spacing-large
+  );
+}
+
+.layout-region-checkout-secondary {
+  grid-area: secondary;
+
+  @include use-grid {
+    @include media('>=layout-commerce-checkout-form-two-column') {
+      h3:first-child {
+        margin-top: -0.55em;
+      }
+    }
+  }
+}
+
+.layout-region-checkout-footer {
+  grid-area: footer;
+
+  .form-actions {
+    margin-bottom: 0;
+
+    @include use-grid {
+      // @todo Make this work without causing the back link to expand and have
+      //   phantom clickable space.
+      //
+      // grid-template-columns:  repeat(auto-fit, minmax(10em,   1fr));
+      // grid-template-rows:     repeat(auto-fit, minmax(2.6em,  1fr));
+
+      @include media('>=layout-commerce-checkout-form-two-column') {
+        margin-top: 0;
+      }
+
+      // @todo Apply this only when there are two or more items in the form
+      //   actions, i.e. not a step that has just the primary button. Applying
+      //   this when there's just the one button causes the button to be
+      //   aligned to the left.
+      // @include root-conditions(('[dir=ltr]', '[dir=rtl]'), 'html') {
+      //   justify-content: space-between;
+      // }
+
+      .button--primary,
+      .paypal-buttons-container {
+        order: 2;
+      }
+
+      .link--previous {
+        order: 1;
+      }
+
+      .paypal-buttons-container {
+        // This attempts to vertically centre the buttons with the adjacent
+        // link.
+        top: 0.25em;
+
+        min-width: 12em;
+      }
+    }
+  }
+}
