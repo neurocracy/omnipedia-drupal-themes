@@ -1,0 +1,9 @@
+// -----------------------------------------------------------------------------
+//   <iframe> element partial
+// -----------------------------------------------------------------------------
+
+// This removes the default browser border on PayPal overlays.
+iframe.paypal-checkout-iframe,
+iframe.paypal-checkout-sandbox-iframe {
+  border-width: 0;
+}
