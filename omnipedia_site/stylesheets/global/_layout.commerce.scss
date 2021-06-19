@@ -36,6 +36,18 @@
     position:   relative;
     z-index:    1;
   }
+
+  .address-book-edit-button {
+    // Reset Classy.
+    margin-left:  0;
+    margin-right: 0;
+  }
+
+  @include vertical-spacing-against-previous(
+    '.address-book-edit-button',
+    $spacing-small: $content-item-vertical-spacing-small,
+    $spacing-large: $content-item-vertical-spacing-large
+  );
 }
 
 .layout-region-checkout-main {
