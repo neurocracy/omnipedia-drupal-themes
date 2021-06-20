@@ -1,0 +1,16 @@
+// -----------------------------------------------------------------------------
+//   Commerce checkout form partial
+// -----------------------------------------------------------------------------
+
+.commerce-checkout-flow {
+  .stripe-form .form-text {
+    // This forces the Stripe text fields to always display using a light
+    // background, so that entered text and placeholders are visible in dark
+    // mode in Firefox. Chrome seems to not have this problem for some reason.
+    //
+    // @todo Customize the visual appearance to better match Material inputs?
+    //
+    // @see https://stripe.com/docs/js/element/other_methods/update?type=card
+    @include set-colours($background: white);
+  }
+}
