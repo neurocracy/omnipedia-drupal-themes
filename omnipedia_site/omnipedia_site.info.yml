@@ -16,7 +16,7 @@ site_slogan_width: 128
 site_slogan_height: 13
 core_version_requirement: ^8 || ^9
 
-# These are identitical to those in ambientimpact_base, duplicated here because
+# These are identical to those in ambientimpact_base, duplicated here because
 # Drupal doesn't seem to allow inheriting regions.
 #
 # @see https://www.drupal.org/project/drupal/issues/301295
@@ -32,8 +32,9 @@ regions:
   sidebar_second: 'Second sidebar'
   footer: 'Footer'
 
-# These are always attached on every page the theme is active on. See:
-# https://www.drupal.org/docs/8/theming/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-theme#attach-library-all-pages
+# These are always attached on every page the theme is active on.
+#
+# @see https://www.drupal.org/docs/8/theming/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-theme#attach-library-all-pages
 libraries:
   - omnipedia_site/global-styling
   - omnipedia_site/global-scripts
