@@ -1,0 +1,37 @@
+// -----------------------------------------------------------------------------
+//   Table partial
+// -----------------------------------------------------------------------------
+
+@include content-area {
+  table {
+    // Centres tables horizontally.
+    margin-left:  auto;
+    margin-right: auto;
+
+    --table-cell-border-width:  #{$omnipedia-card-border-width};
+    --table-cell-border-colour: #{$omnipedia-card-border-colour-on-light};
+
+    @include on-dark-colour-scheme {
+      --table-cell-border-colour: #{$omnipedia-card-border-colour-on-dark};
+    }
+
+    border:
+      var(--table-cell-border-width)
+      var(--table-cell-border-style)
+      var(--table-cell-border-colour);
+
+    background-color: transparent !important;
+  }
+
+  thead {
+    @include set-colours(
+      $background: $secondary-content-background-colour-light
+    );
+
+    @include on-dark-colour-scheme {
+      @include set-colours(
+        $background: $secondary-content-background-colour-dark
+      );
+    }
+  }
+}
