@@ -47,23 +47,45 @@ body,
   }
 }
 
-h3 {
-  // Better match Wikipedia.
-  margin-top:     1em;
-  margin-bottom:  0.25em;
+h3, h4, h5, h6 {
+  margin-top: var(--heading-spacing-block-start, 0);
 }
 
-h4, h5, h6 {
-  // Better match Wikipedia.
-  margin-top:     0.7em;
-  margin-bottom:  0.2em;
+// Matches Wikipedia.
+h3 {
+  @at-root {
+    @include vertical-spacing-against-previous(
+      &,
+      $property:      --heading-spacing-block-start,
+      $spacing-small: 1em,
+      $spacing-large: 1em
+    );
+  }
 
-  // Match Wikipedia's typography for these headings.
+  margin-bottom: 0.25em;
+}
+
+// Matches Wikipedia.
+h4, h5, h6 {
+  @each $selector in & {
+    @at-root {
+      @include vertical-spacing-against-previous(
+        $selector,
+        $property:      --heading-spacing-block-start,
+        $spacing-small: 0.7em,
+        $spacing-large: 0.7em
+      );
+    }
+  }
+
+  margin-bottom: 0.2em;
+
   font-family: $font-stack;
   font-weight: $font-weight-strong;
 }
 
 h5 {
+  // Matches Wikipedia.
   font-style: italic;
 }
 
