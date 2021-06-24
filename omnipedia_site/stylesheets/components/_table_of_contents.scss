@@ -14,8 +14,42 @@
 //
 // @see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Lists_and_Counters/Using_CSS_counters#Nesting_counters
 
+@include add-breakpoints((
+  'table-of-contents-wide': 25em,
+));
+
 .table-of-contents {
-  &, ol {
+
+  @include omnipedia-card($padding: 1em);
+
+  @at-root {
+    @include vertical-spacing-against-previous(
+      &,
+      $spacing-small: $content-item-vertical-spacing-small,
+      $spacing-large: $content-item-vertical-spacing-large
+    );
+  }
+
+  @include media('>=table-of-contents-wide') {
+    max-width: max-content;
+    min-width: 35%;
+  }
+
+  @include set-colours($background: $secondary-content-background-colour-light);
+
+  @include on-dark-colour-scheme {
+    @include set-colours(
+      $background: $secondary-content-background-colour-dark
+    );
+  }
+
+  &__heading {
+    --heading-spacing-block-start: -0.4em;
+
+    border-bottom-width: 0 !important;
+  }
+
+  ol {
     counter-reset: table-of-contents-item;
   }
 
