@@ -126,7 +126,11 @@
 .checkout-order-summary {
   // This table lists the products in the order.
   table {
-    width: 100%;
+    // Override ambientimpact_base styles.
+    display: table;
+
+    width:      100%;
+    max-width:  100%;
 
     // This table cell contains the price for a product and so we align it with
     // the end of the block to match the .order-total-line elements below it.
