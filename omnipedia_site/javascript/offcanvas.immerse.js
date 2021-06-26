@@ -4,7 +4,7 @@
 
 // This triggers 'immerseEnter' when an off-canvas panel opens and 'immerseExit'
 // when it closes. This is primarily to hide the header on narrow screens so
-// that it's not possible to interact with it until the panel is closedm
+// that it's not possible to interact with it until the panel is closed,
 // avoiding issues with double layering overlays.
 
 AmbientImpact.addComponent('OmnipediaSiteThemeOffcanvasImmerse', function(
