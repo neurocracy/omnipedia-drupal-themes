@@ -1,0 +1,128 @@
+// -----------------------------------------------------------------------------
+//   Offcanvas sidebars partial
+// -----------------------------------------------------------------------------
+
+// @see ./_layout.sidebars.scss
+//   Describes the offcanvas sidebar elements and their functions.
+
+///
+/// Header shadow on light backgrounds.
+///
+$offcanvas-sidebars-shadow-on-light:
+  var(--offcanvas-sidebars-shadow-x-offset) 0 3px rgba(0, 0, 0, 0.3);
+
+///
+/// Header shadow on dark backgrounds.
+///
+$offcanvas-sidebars-shadow-on-dark:
+  var(--offcanvas-sidebars-shadow-x-offset) 0 3px rgba(0, 0, 0, 0.8);
+
+:root {
+  &[dir=ltr] {
+    --offcanvas-sidebars-hidden-translate-x:  100%;
+    --offcanvas-sidebars-shadow-x-offset:    -2px;
+  }
+  &[dir=rtl] {
+    --offcanvas-sidebars-hidden-translate-x: -100%;
+    --offcanvas-sidebars-shadow-x-offset:     2px;
+  }
+}
+
+.layout-sidebars {
+  @include media('<layout-with-both-sidebars') {
+
+    will-change: transform, opacity;
+
+    transform: translateX(var(--offcanvas-sidebars-hidden-translate-x));
+
+    &:target {
+      transform: translateX(0);
+    }
+
+    transition-property: transform, opacity, visibility;
+
+    // These are used when transitioning out of view, i.e. is closing. The panel
+    // accelerates out to give it a sense of physicality and weight, as if this
+    // is a real object subject to physics. The duration is shortened to
+    // compensate for the different easing, making it feel similar in duration
+    // to the transition in.
+    transition-duration:        0.2s;
+    transition-timing-function: $easing-accelerate;
+
+    // These are used when transitioning into view, i.e. is opening. The panel
+    // comes in at full speed and decelerates to a stop.
+    &:target {
+      transition-duration:        0.3s;
+      transition-timing-function: $easing-decelerate;
+    }
+
+    // Don't transition transforms if the user indicates they prefer reduced
+    // motion but use opacity instead.
+    //
+    // @see https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion
+    @media (prefers-reduced-motion: reduce) {
+      --offcanvas-sidebars-hidden-translate-x: 0 !important;
+
+      opacity: 0;
+
+      // Opacity transitions look more natural with linear easing.
+      transition-timing-function: linear;
+
+      pointer-events: none;
+
+      &:target {
+        opacity: 1;
+
+        pointer-events: auto;
+      }
+    }
+
+    &::after {
+      box-shadow: $offcanvas-sidebars-shadow-on-light;
+
+      @include on-dark-colour-scheme {
+        box-shadow: $offcanvas-sidebars-shadow-on-dark;
+      }
+    }
+
+    &__wrapper {
+      @include set-colours($background: $background-colour-light);
+
+      @include on-dark-colour-scheme {
+        @include set-colours($background: $background-colour-dark);
+      }
+
+      @include root-conditions(('[dir=ltr]'), 'html') {
+        border-left: $divider-thickness solid $divider-colour-on-light;
+
+        @include on-dark-colour-scheme {
+          border-left-color: $divider-colour-on-dark;
+        }
+      }
+      @include root-conditions(('[dir=rtl]'), 'html') {
+        border-right: $divider-thickness solid $divider-colour-on-light;
+
+        @include on-dark-colour-scheme {
+          border-right-color: $divider-colour-on-dark;
+        }
+      }
+    }
+
+    &::after,
+    &__closed-target,
+    &__closed-anchor {
+      transition-property:        opacity;
+      transition-duration:        200ms;
+      // Opacity transitions look more natural with linear easing.
+      transition-timing-function: linear;
+
+      opacity: 0;
+    }
+
+    &:target::after,
+    &:target ~ &__closed-target,
+    &:target ~ &__closed-anchor {
+      opacity: 1;
+    }
+  }
+}

@@ -41,3 +41,17 @@ main[role="main"]::before {
   // This must be higher than any sticky elements such as the header.
   @include z-index(floating-above);
 }
+
+.layout-sidebars__closed-target,
+.layout-sidebars__closed-anchor {
+  @include media('<layout-with-both-sidebars') {
+    @include z-index(modal);
+  }
+}
+
+.layout-sidebars {
+  @include media('<layout-with-both-sidebars') {
+    // This is not ideal but needed to place this above the target and anchor.
+    z-index: z-index(modal) + 1;
+  }
+}

@@ -12,6 +12,11 @@
  * - Moved page.highlighted, page.help, and page.breadcrumb into
  *   .layout-content.
  *
+ * - Added .layout-sidebars, .layout-sidebars__wrapper,
+ *   .layout-sidebars__closed-target, .layout-sidebars__closed-anchor, and
+ *   .layout-sidebars__close elements and associated attributes. See
+ *   ../../stylesheets/global/_layout.sidebars.scss for their purpose.
+ *
  * Available variables:
  *
  * General utility variables:
@@ -113,6 +118,36 @@
   }) %}
 {% endif %}
 
+{% if page.sidebar_first or page.sidebar_second %}
+  {% set sidebar_container_attributes = create_attribute({
+    'id':     'menu',
+    'class':  ['layout-sidebars'],
+  }) %}
+
+  {% set sidebar_wrapper_attributes = create_attribute({
+    'class':  ['layout-sidebars__wrapper'],
+  }) %}
+
+  {% set sidebar_closed_target_attributes = create_attribute({
+    'id':     'menu-closed',
+    'class':  ['layout-sidebars__closed-target'],
+  }) %}
+
+  {% set sidebar_closed_anchor_attributes = create_attribute({
+    'href':   '#' ~ sidebar_closed_target_attributes.offsetGet('id'),
+    'class':  ['layout-sidebars__closed-anchor'],
+    'hidden':       true,
+    'aria-hidden':  'true',
+    'tabindex':     '-1',
+  }) %}
+
+  {% set sidebar_close_attributes = create_attribute({
+    'href':   '#' ~ sidebar_closed_target_attributes.offsetGet('id'),
+    'class':  ['layout-sidebars__close', 'button-placeholder'],
+    'hidden': true,
+  }) %}
+{% endif %}
+
 <div{{ layout_container_attributes }}>
 
   {# This provides the target element for the search anchor. This is position:
@@ -153,6 +188,13 @@
       {{ page.content }}
     </div>{# /.layout-content #}
 
+    {% if sidebar_container_attributes %}
+      <div{{ sidebar_container_attributes }}>
+    {% endif %}
+    {% if sidebar_wrapper_attributes %}
+      <div{{ sidebar_wrapper_attributes }}>
+    {% endif %}
+
     {% if page.sidebar_first %}
       <aside class="layout-sidebar-first" role="complementary">
         {{ page.sidebar_first }}
@@ -163,6 +205,25 @@
       <aside class="layout-sidebar-second" role="complementary">
         {{ page.sidebar_second }}
       </aside>
+    {% endif %}
+
+    {% if sidebar_close_attributes %}
+      <a{{ sidebar_close_attributes }}>{{ 'Close'|t }}</a>
+    {% endif %}
+
+    {% if sidebar_wrapper_attributes %}
+      </div>
+    {% endif %}
+    {% if sidebar_container_attributes %}
+      </div>
+    {% endif %}
+
+    {% if sidebar_closed_target_attributes %}
+      <div {{ sidebar_closed_target_attributes }}></div>
+    {% endif %}
+
+    {% if sidebar_closed_anchor_attributes %}
+      <a{{ sidebar_closed_anchor_attributes }}></a>
     {% endif %}
 
   </main>

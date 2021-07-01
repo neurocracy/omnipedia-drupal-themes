@@ -9,7 +9,8 @@
 // The header overlay in compact mode, i.e. narrow screens.
 //
 // @see ../global/_header.overlay.scss
-main[role="main"]::before {
+main[role="main"]::before,
+.layout-sidebars__closed-target {
   @include set-colours(
     $background: rgba($background-colour-light, 0.8)
   );

@@ -2,6 +2,172 @@
 //   Site layout - Sidebars
 // -----------------------------------------------------------------------------
 
+// This positions the sidebars container as an offcanvas panel on small screens
+// where sidebars cannot be placed alongside the content column.
+//
+// Descriptions of what each element does:
+//
+// - .layout-sidebars: This is the element that contains both sidebars and is
+//   used as the offcanvas panel itself on small screens. On larger screens
+//   where the sidebars are displayed alongside the content column, this is set
+//   to display: contents;
+//
+// - .layout-sidebars::after: This provides the panel drop shadow. The shadow
+//   is applied to this pseudo element so that it can have its opacity
+//   transitioned independently of the panel.
+//
+// - .layout-sidebars__wrapper: Wrapper element around the sidebars themselves,
+//   so that sidebars can be scrolled vertically while the close link/button is
+//   left in a fixed position and doesn't scroll with them. This also provides
+//   the panel background colour and vertical border, as applying the border
+//   to .layout-sidebars would cause the box-shadow from .layout-sidebars::after
+//   to be layered on top of the border.
+//
+// - .layout-sidebars__close: Close link placed in the sidebars container which
+//   points to the ID of .layout-sidebars__closed-target. This closes the panel
+//   if clicked/tapped. This is only shown on narrow screens and has the
+//   'hidden' attribute in case CSS is not applied.
+//
+// - .layout-sidebars__closed-target: This is used as the target ID for closing
+//   the overlay using just HTML and CSS. This element also doubles as the
+//   overlay when the panel is open. Using an in-page anchor to open and
+//   close the panel allows it to function without any hacks if JavaScript fails
+//   for any reason, and allows the browser back button to close the panel.
+//
+// - .layout-sidebars__closed-anchor: This is layered on top of the overlay but
+//   below the panel to allow closing the panel without any JavaScript if the
+//   user clicks/taps the overlay. This is a link that points to the ID of
+//   .layout-sidebars__closed-target to avoid scrolling to the top on closing
+//   the panel and overlay.
+//
+// @see ../components/_overlay.scss
+//   Contains overlay styles.
+//
+// @see ./_sidebars.offcanvas.scss
+//   Contains non-layout styles for the offcanvas sidebars panel.
+
+.layout-sidebars {
+  @include media('<layout-with-both-sidebars') {
+    position: fixed;
+
+    top:    0;
+    bottom: 0;
+
+    @include root-conditions(('[dir=ltr]'), 'html') {
+      right: 0;
+    }
+    @include root-conditions(('[dir=rtl]'), 'html') {
+      left: 0;
+    }
+
+    min-width: 13em;
+
+    &__wrapper {
+      height: 100%;
+
+      box-sizing: border-box;
+
+      // Scroll if the sidebar content doesn't fit in the vertical space.
+      overflow-y: auto;
+
+      padding: $layout-gutter;
+
+      // This should roughly account for the close button.
+      //
+      // @todo Find a way to sync this with the actual expected height of the
+      //   button.
+      padding-bottom: calc(#{$layout-gutter} + 3em);
+    }
+
+    // Shadow element. See documentation at the top of this partial.
+    &::after {
+      content: '';
+
+      position: absolute;
+
+      top:    0;
+      bottom: 0;
+      left:   0;
+      right:  0;
+
+      z-index: -1;
+    }
+
+    &__close {
+      // Fallback display for browsers that don't support max-width:
+      // max-content, to at least make it visible as it has the 'hidden'
+      // attribute to not be displayed if CSS fails to load or be applied.
+      display: unset;
+
+      @supports (max-width: max-content) {
+        display: block;
+      }
+
+      max-width: max-content;
+
+      position: absolute;
+
+      bottom:   $layout-gutter;
+
+      @include root-conditions(('[dir=ltr]'), 'html') {
+        right:  $layout-gutter;
+      }
+      @include root-conditions(('[dir=rtl]'), 'html') {
+        left:   $layout-gutter;
+      }
+
+      // Box shadow with extended spread to make the close button hide content
+      // below it a little more pleasantly than with hard edges.
+      box-shadow: 0 0 6px 6px var(--background-colour);
+
+      // Give this a solid background colour if it's a link as it won't have one
+      // by default. This only applies to the link as when this is replaced with
+      // a button we'll likely have a background colour.
+      &:any-link {
+        background-color: var(--background-colour);
+      }
+    }
+
+    // See documentation at the top of this partial for these.
+    &__closed-target,
+    &__closed-anchor {
+      display: block;
+
+      position: fixed;
+
+      top:    0;
+      bottom: 0;
+      left:   0;
+      right:  0;
+
+      // Ignore all clicks/taps and allow them to register as the elements were
+      // not positioned above everything when the panel is not open.
+      pointer-events: none;
+    }
+
+    // When the panel is open, these register clicks/taps to close the panel.
+    &:target ~ &__closed-target,
+    &:target ~ &__closed-anchor {
+      pointer-events: auto;
+    }
+  }
+
+  @include on-sidebar-beside-content(both) {
+    // This causes the container's children to act as if the container doesn't
+    // exist for layout purposes, including grid placement. This has better
+    // support currently than subgrid, which is not available in Chrome as of
+    // June 2021.
+    //
+    // @link https://hiddedevries.nl/en/blog/2018-04-21-more-accessible-markup-with-display-contents
+    // @link https://caniuse.com/css-display-contents
+    //
+    // @todo Fallback for browsers that don't support this?
+    &, &__wrapper {
+      display: contents;
+    }
+  }
+}
+
 .region-sidebar-second {
   @include on-sidebar-beside-content(both) {
     // This adjusts the top of the first block's title with the adjacent main
