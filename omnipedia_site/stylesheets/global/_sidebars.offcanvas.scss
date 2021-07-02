@@ -35,7 +35,8 @@ $offcanvas-sidebars-shadow-on-dark:
 
     transform: translateX(var(--offcanvas-sidebars-hidden-translate-x));
 
-    &:target {
+    &:target,
+    &:focus-within {
       transform: translateX(0);
     }
 
@@ -51,7 +52,8 @@ $offcanvas-sidebars-shadow-on-dark:
 
     // These are used when transitioning into view, i.e. is opening. The panel
     // comes in at full speed and decelerates to a stop.
-    &:target {
+    &:target,
+    &:focus-within {
       transition-duration:        0.3s;
       transition-timing-function: $easing-decelerate;
     }
@@ -70,7 +72,8 @@ $offcanvas-sidebars-shadow-on-dark:
 
       pointer-events: none;
 
-      &:target {
+      &:target,
+      &:focus-within {
         opacity: 1;
 
         pointer-events: auto;
@@ -121,7 +124,10 @@ $offcanvas-sidebars-shadow-on-dark:
 
     &:target::after,
     &:target ~ &__closed-target,
-    &:target ~ &__closed-anchor {
+    &:target ~ &__closed-anchor,
+    &:focus-within::after,
+    &:focus-within ~ &__closed-target,
+    &:focus-within ~ &__closed-anchor {
       opacity: 1;
     }
   }

@@ -147,7 +147,9 @@
 
     // When the panel is open, these register clicks/taps to close the panel.
     &:target ~ &__closed-target,
-    &:target ~ &__closed-anchor {
+    &:target ~ &__closed-anchor,
+    &:focus-within ~ &__closed-target,
+    &:focus-within ~ &__closed-anchor {
       pointer-events: auto;
     }
   }
