@@ -1,0 +1,11 @@
+// -----------------------------------------------------------------------------
+//   Site layout - Overlays
+// -----------------------------------------------------------------------------
+
+// This prevents scrolling the viewport when an overlay is opened.
+//
+// @see https://stackoverflow.com/questions/9280258/prevent-body-scrolling-but-allow-overlay-scrolling#9280412
+
+html.omnipedia-overlay-open {
+  overflow-y: hidden;
+}

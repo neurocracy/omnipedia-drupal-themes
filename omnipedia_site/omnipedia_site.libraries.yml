@@ -17,6 +17,7 @@ global-scripts:
     javascript/header.overlay.js: {}
     javascript/header.keyboard.js: {}
     javascript/offcanvas.immerse.js: {}
+    javascript/overlay.scroll.js: {}
   dependencies:
     - ambientimpact_core/ally.js
     - ambientimpact_ux/component.headroom
