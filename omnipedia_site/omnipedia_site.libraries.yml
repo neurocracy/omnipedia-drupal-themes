@@ -22,6 +22,7 @@ global-scripts:
     javascript/sidebars.state.js: {}
     javascript/sidebars.focus.js: {}
     javascript/sidebars.overlay.js: {}
+    javascript/sidebars.keyboard.js: {}
   dependencies:
     - ambientimpact_core/ally.js
     - ambientimpact_ux/component.headroom
