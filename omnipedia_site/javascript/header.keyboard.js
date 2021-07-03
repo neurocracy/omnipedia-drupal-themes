@@ -44,10 +44,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderKeyboard', function(
         'omnipediaSearchInactive.OmnipediaSiteThemeHeaderKeyboard',
       function(event) {
 
-        if (
-          'disengage' in allyWhenKeyHandle &&
-          typeof allyWhenKeyHandle.disengage === 'function'
-        ) {
+        if (AmbientImpact.objectPathExists('disengage', allyWhenKeyHandle)) {
           allyWhenKeyHandle.disengage();
         }
 
@@ -56,10 +53,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderKeyboard', function(
     },
     function(context, settings, trigger) {
 
-      if (
-        'disengage' in allyWhenKeyHandle &&
-        typeof allyWhenKeyHandle.disengage === 'function'
-      ) {
+      if (AmbientImpact.objectPathExists('disengage', allyWhenKeyHandle)) {
         allyWhenKeyHandle.disengage();
       }
 
