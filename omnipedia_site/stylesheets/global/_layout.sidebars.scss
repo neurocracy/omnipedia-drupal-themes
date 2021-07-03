@@ -47,7 +47,13 @@
 //   Contains non-layout styles for the offcanvas sidebars panel.
 
 .layout-sidebars {
+  // Indicate to the sidebars JavaScript that sidebars are not off-canvas.
+  --omnipedia-sidebars-off-canvas: false;
+
   @include media('<layout-with-both-sidebars') {
+    // Indicate to the sidebars JavaScript that sidebars are off-canvas.
+    --omnipedia-sidebars-off-canvas: true;
+
     position: fixed;
 
     top:    0;
@@ -130,7 +136,7 @@
 
     // See documentation at the top of this partial for these.
     &__closed-target,
-    &__closed-anchor {
+    &__closed-anchor:not(&__closed-anchor--disabled) {
       display: block;
 
       position: fixed;

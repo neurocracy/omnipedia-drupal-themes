@@ -18,6 +18,10 @@ global-scripts:
     javascript/header.keyboard.js: {}
     javascript/offcanvas.immerse.js: {}
     javascript/overlay.scroll.js: {}
+    javascript/sidebars.elements.js: {}
+    javascript/sidebars.state.js: {}
+    javascript/sidebars.focus.js: {}
+    javascript/sidebars.overlay.js: {}
   dependencies:
     - ambientimpact_core/ally.js
     - ambientimpact_ux/component.headroom
