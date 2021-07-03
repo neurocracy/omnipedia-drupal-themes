@@ -36,6 +36,13 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderElements', function(
   var $searchField = $();
 
   /**
+   * The menu open control, if any, wrapped in a jQuery collection.
+   *
+   * @type {jQuery}
+   */
+  var $menuOpen = $();
+
+  /**
    * Whether we've attached the behaviour.
    *
    * @type {Boolean}
@@ -79,6 +86,15 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderElements', function(
   };
 
   /**
+   * Get the menu open control jQuery collection.
+   *
+   * @return {jQuery}
+   */
+  this.getMenuOpen = function() {
+    return $menuOpen;
+  };
+
+  /**
    * Get the selector to attach header behaviours to.
    *
    * @return {String}
@@ -105,17 +121,20 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderElements', function(
 
       $searchField = $searchForm.find('.form-item-terms input', context);
 
+      $menuOpen = $('.omnipedia-header__menu-link', context);
+
       // Reset jQuery collections and bail if we can't find one of the required
       // elements.
       if (
         $searchAnchor.length === 0 ||
         $searchTarget.length === 0 ||
         $searchForm.length === 0 ||
-        $searchField.length === 0
+        $searchField.length === 0 ||
+        $menuOpen.length === 0
       ) {
         console.error(
           'Could not find one of the required elements. Found:',
-          $searchAnchor, $searchTarget, $searchForm, $searchField
+          $searchAnchor, $searchTarget, $searchForm, $searchField, $menuOpen
         );
 
         $searchAnchor = $();
@@ -125,6 +144,8 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderElements', function(
         $searchForm = $();
 
         $searchField = $();
+
+        $menuOpen = $();
 
         return;
       }
@@ -145,6 +166,8 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderElements', function(
       $searchForm = $();
 
       $searchField = $();
+
+      $menuOpen = $();
 
       behaviourAttached = false;
 
