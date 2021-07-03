@@ -134,9 +134,30 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
    */
   function hashChangeHandler(event) {
 
-    if (headerState.isSearchOpen() === true) {
+    /**
+     * The hash value stored in the search anchor's 'hash' property.
+     *
+     * @type {USVString}
+     */
+    var hash = headerElements.getSearchAnchor().prop('hash');
+
+    /**
+     * The hash value for the old URL the window navigated from.
+     *
+     * @type {USVString}
+     */
+    var oldHash = new URL(event.originalEvent.oldURL).hash;
+
+    /**
+     * The hash value for the new URL the window is navigating to.
+     *
+     * @type {USVString}
+     */
+    var newHash = new URL(event.originalEvent.newURL).hash;
+
+    if (newHash === hash && oldHash !== hash) {
       setActive();
-    } else {
+    } else if (oldHash === hash && newHash !== hash) {
       setInactive();
     }
 
