@@ -20,11 +20,19 @@ $offcanvas-sidebars-shadow-on-dark:
 :root {
   &[dir=ltr] {
     --offcanvas-sidebars-hidden-translate-x:  100%;
-    --offcanvas-sidebars-shadow-x-offset:    -2px;
+    --offcanvas-sidebars-shadow-x-offset:    -1px;
+
+    @include on-dark-colour-scheme {
+      --offcanvas-sidebars-shadow-x-offset:    -2px;
+    }
   }
   &[dir=rtl] {
     --offcanvas-sidebars-hidden-translate-x: -100%;
-    --offcanvas-sidebars-shadow-x-offset:     2px;
+    --offcanvas-sidebars-shadow-x-offset:     1px;
+
+    @include on-dark-colour-scheme {
+      --offcanvas-sidebars-shadow-x-offset:     2px;
+    }
   }
 }
 
