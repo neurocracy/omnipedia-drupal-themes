@@ -138,5 +138,9 @@ $offcanvas-sidebars-shadow-on-dark:
     &:focus-within ~ &__closed-anchor {
       opacity: 1;
     }
+
+    &__close {
+      @include material-ripple;
+    }
   }
 }
