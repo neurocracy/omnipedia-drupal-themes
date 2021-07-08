@@ -49,3 +49,7 @@ libraries-override:
 
   # We provide our own checkout form layout.
   commerce_checkout/form: false
+
+libraries-extend:
+  eu_cookie_compliance/eu_cookie_compliance:
+    - omnipedia_site/eu_cookie_compliance

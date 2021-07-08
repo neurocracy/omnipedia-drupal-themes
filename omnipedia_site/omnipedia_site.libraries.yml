@@ -26,3 +26,9 @@ global-scripts:
   dependencies:
     - ambientimpact_core/ally.js
     - ambientimpact_ux/component.headroom
+
+eu_cookie_compliance:
+  js:
+    javascript/eu_cookie_compliance.js: {}
+  dependencies:
+    - omnipedia_block/component.privacy_settings
