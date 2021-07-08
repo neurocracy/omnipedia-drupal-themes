@@ -9,6 +9,10 @@
  * - Moved categories accept selection button to #popup-buttons with the other
  *   buttons.
  *
+ * - The 'more_info_button' is unset and the 'privacy_policy_link_url',
+ *   'privacy_policy_link_title', and 'privacy_policy_link_attributes' variables
+ *   are defined so that a link can be output instead of the button.
+ *
  * -----------------------------------------------------------------------------
  *
  * When overriding this template it is important to note that jQuery will use
@@ -38,6 +42,27 @@
  * - privacy_settings_tab_label: Label text for the Privacy settings tab.
  * - withdraw_button_on_info_popup: Show the withdraw button on this popup.
  * - method: Chosen consent method.
+ *
+ * Omnipedia variables:
+ *
+ * - 'privacy_policy_link_url': A \Drupal\Core\Url object pointing to the
+ *   configured privacy policy URL.
+ *
+ * - 'privacy_policy_link_title': The text content to use for the privacy policy
+ *   link. This is taken from the value of 'more_info_button'.
+ *
+ * - 'privacy_policy_link_attributes': A \Drupal\Core\Template\Attribute object,
+ *   optionally containing 'target' => '_blank' if the privacy policy is
+ *   configured to open in a new window or tab.
+ *
+ * @see \omnipedia_site_preprocess_eu_cookie_compliance_popup_info()
+ *   Unsets the 'more_info_button' and defines the 'privacy_policy_link_url',
+ *   'privacy_policy_link_title', and 'privacy_policy_link_attributes'
+ *   variables.
+ *
+ * @see https://www.drupal.org/project/eu_cookie_compliance/issues/3222159
+ *   Issue regarding the "More info" / privacy policy button being better suited
+ *   as a link for accessibility.
  */
 #}
 {% if privacy_settings_tab_label %}
@@ -55,6 +80,18 @@
 
       {% if more_info_button %}
         <button type="button" class="find-more-button eu-cookie-compliance-more-button">{{ more_info_button }}</button>
+      {% endif %}
+
+      {% if privacy_policy_link_title and
+        privacy_policy_link_url and
+        privacy_policy_link_attributes
+      %}
+        {% set privacy_policy_link_attributes = privacy_policy_link_attributes.addClass('eu-cookie-compliance-privacy-policy-link') %}
+        {{ link(
+          privacy_policy_link_title,
+          privacy_policy_link_url,
+          privacy_policy_link_attributes
+        ) }}
       {% endif %}
     </div>
 
