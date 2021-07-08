@@ -1,0 +1,46 @@
+// -----------------------------------------------------------------------------
+//   EU cookie compliance pop-up toggle partial
+// -----------------------------------------------------------------------------
+
+.eu-cookie-compliance-popup {
+
+  .eu-cookie-withdraw-tab {
+    @include root-conditions(('[dir=ltr]'), 'html') {
+      left: 0;
+
+      border-top-right-radius: $material-border-radius;
+    }
+    @include root-conditions(('[dir=rtl]'), 'html') {
+      right: 0;
+
+      border-top-left-radius: $material-border-radius;
+    }
+
+    --shadow-buffer: 1em;
+
+    padding: 0.2em 0.6em;
+
+    border-width: 0;
+
+    // This overrides the module's translateX of -50% and adds a 1px buffer for
+    // rounding errors with the clip-path in Chromium.
+    transform: translate(0, calc(-100% + 1px));
+
+    // This is to clip any shadow leaking out of the bottom so that the toggle
+    // appears to be part of the panel.
+    clip-path: polygon(
+      0 calc(0% - var(--shadow-buffer)),
+      calc(100% + var(--shadow-buffer)) calc(0% - var(--shadow-buffer)),
+      calc(100% + var(--shadow-buffer)) 100%,
+      0% 100%
+    );
+
+    @include material-ripple;
+  }
+
+  // This is removed when there's an in-page toggle associated with the pop-up.
+  &--has-in-page-toggle .eu-cookie-withdraw-tab {
+    display: none;
+  }
+
+}

@@ -1,0 +1,12 @@
+// -----------------------------------------------------------------------------
+//   EU cookie compliance pop-up background partial
+// -----------------------------------------------------------------------------
+
+.eu-cookie-compliance-popup {
+
+  &,
+  .eu-cookie-withdraw-tab {
+    @include set-colours($background: $omnipedia-blue);
+  }
+
+}

@@ -1,0 +1,28 @@
+// -----------------------------------------------------------------------------
+//   EU cookie compliance pop-up shadow partial
+// -----------------------------------------------------------------------------
+
+.eu-cookie-compliance-popup {
+
+  --shadow-colour: rgba(0, 0, 0, 0.3);
+
+  box-shadow: 0 -2px 3px var(--shadow-colour);
+
+  @include on-dark-colour-scheme {
+    --shadow-colour: rgba(0, 0, 0, 0.8);
+  }
+
+  .eu-cookie-withdraw-tab {
+
+    @include root-conditions(('[dir=ltr]'), 'html') {
+      --shadow-x-offset: 2px;
+    }
+    @include root-conditions(('[dir=rtl]'), 'html') {
+      --shadow-x-offset: -2px;
+    }
+
+    box-shadow: var(--shadow-x-offset) -2px 3px var(--shadow-colour);
+
+  }
+
+}

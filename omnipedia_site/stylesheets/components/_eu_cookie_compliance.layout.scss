@@ -1,0 +1,73 @@
+// -----------------------------------------------------------------------------
+//   EU cookie compliance pop-up layout partial
+// -----------------------------------------------------------------------------
+
+.eu-cookie-compliance-popup {
+
+  left:   0;
+  right:  0;
+  bottom: 0;
+
+  .eu-cookie-compliance-banner {
+    max-height: 70vh;
+
+    // Make this scrollable.
+    overflow-y: auto;
+  }
+
+  .eu-cookie-compliance-content {
+    display: block;
+
+    @include layout-max-width;
+
+    padding-left:   $layout-gutter;
+    padding-right:  $layout-gutter;
+
+    // This matches ../global/_layout.grid.scss
+    @include on-sidebar-beside-content(any) {
+      padding-left:   $layout-gap;
+      padding-right:  $layout-gap;
+    }
+
+    padding-top:    $layout-gutter;
+    padding-bottom: $layout-gutter;
+
+    box-sizing: border-box;
+
+    > * + * {
+      @include vertical-spacing(
+        $spacing-small: $content-item-vertical-spacing-small,
+        $spacing-large: $content-item-vertical-spacing-large,
+      );
+    }
+
+  }
+
+  .eu-cookie-compliance-message {
+    max-width: none;
+
+    float: none;
+  }
+
+  .eu-cookie-compliance-categories {
+
+    @include use-grid {
+      display: grid;
+
+      grid-template-columns: repeat(auto-fit, minmax(20em, 1fr));
+
+      column-gap: 2em;
+      row-gap:    1em;
+    }
+
+  }
+
+  .eu-cookie-compliance-buttons {
+    float: none;
+
+    max-width: none;
+
+    margin-top: 2em;
+  }
+
+}

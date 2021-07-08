@@ -1,0 +1,75 @@
+// -----------------------------------------------------------------------------
+//   EU cookie compliance pop-up content partial
+// -----------------------------------------------------------------------------
+
+.eu-cookie-compliance-popup {
+
+  .eu-cookie-compliance-content {
+
+    :any-link {
+      @if $use-link-styles == true {
+        @include link($background: $omnipedia-blue);
+
+        @include link-colours(
+          $omnipedia-blue,
+
+          $normal-on-dark: $foreground-colour-on-dark,
+          $hover-on-dark:  $foreground-colour-on-dark,
+
+          $underline-normal-on-dark: rgba($foreground-colour-on-dark, 0.6),
+          $underline-hover-on-dark:  $foreground-colour-on-dark,
+        );
+      }
+
+      @if $use-fancy-link-underlines == true {
+        @include fancy-link-underlines;
+      }
+
+      @if $use-image-link-styles == true {
+        @include image-link;
+      }
+    }
+
+  }
+
+  .eu-cookie-compliance-message {
+    @include headings(2, 6) {
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+
+  .eu-cookie-compliance-privacy-policy-link {
+    white-space: nowrap;
+  }
+
+  .eu-cookie-compliance-categories {
+
+    label {
+      font-size: 110%;
+
+      @include root-conditions(('[dir=ltr]'), 'html') {
+        padding-left: 0.2em;
+      }
+      @include root-conditions(('[dir=rtl]'), 'html') {
+        padding-right: 0.2em;
+      }
+    }
+
+    input[type='checkbox'] {
+      transform: scale(140%) translateY(-5%);
+    }
+
+  }
+
+  .eu-cookie-compliance-buttons {
+
+    @extend .form-actions;
+
+    button {
+      @extend .button;
+    }
+  }
+
+}
