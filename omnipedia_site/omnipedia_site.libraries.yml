@@ -26,6 +26,7 @@ global-scripts:
   dependencies:
     - ambientimpact_core/ally.js
     - ambientimpact_ux/component.headroom
+    - ambientimpact_ux/component.scrollbar_gutter
 
 eu_cookie_compliance:
   js:
