@@ -56,6 +56,23 @@
     animation-duration: 0;
   }
 
+  opacity: 0;
+
+  // This transitions the pop-up to opacity of 0 and a delay equal to that of
+  // the module JavaScript jQuery animation when not open, so that users don't
+  // see the pop-up briefly along the bottom if they resize the window quickly.
+  transition-property:  opacity;
+  transition-duration:  1ms;
+  transition-delay:     var(--eu-cookie-compliance-transition-duration, 0ms);
+
+  // When the pop-up is open, remove the transition delay and set it to opacity
+  // of 1 immediately so that it can be seen sliding into view.
+  body.eu-cookie-compliance-popup-open & {
+    opacity: 1;
+
+    transition-delay: 0ms;
+  }
+
   .eu-cookie-compliance-banner {
     max-height: 70vh;
 

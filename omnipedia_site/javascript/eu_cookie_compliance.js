@@ -75,10 +75,12 @@ AmbientImpact.addComponent('OmnipediaSiteThemeEuCookieCompliance', function(
 
       $popup.addClass(baseClass);
 
-      // $popup.prop('style').setProperty(
-      //   '--eu-cookie-compliance-transition-duration',
-      //   transitionDuration + 'ms'
-      // );
+      // Save the transition duration as a custom property on the pop-up so that
+      // it can be used in CSS.
+      $popup.prop('style').setProperty(
+        '--eu-cookie-compliance-transition-duration',
+        transitionDuration + 'ms'
+      );
 
       // If the pop-up is open when we attach, mark it as such to the overlay
       // scroll component.
@@ -98,6 +100,11 @@ AmbientImpact.addComponent('OmnipediaSiteThemeEuCookieCompliance', function(
       function(event) {
 
         overlayScroll.overlayClosed($popup);
+
+        // The module JavaScript annoyingly does not remove this class when the
+        // pop-up is closed via clicking the accept buttons so make sure this is
+        // removed on close.
+        $('body').removeClass('eu-cookie-compliance-popup-open');
 
       })
       .on('click.OmnipediaSiteThemeEuCookieCompliance', function(event) {
