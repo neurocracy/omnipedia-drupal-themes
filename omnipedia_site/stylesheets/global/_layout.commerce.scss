@@ -27,6 +27,13 @@
         // adjacent secondary column <h3>.
         margin-top: -0.9em;
       }
+
+      // The log in pane has its own internal two column layout and is intended
+      // to span the full width.
+      .checkout-pane-login {
+        grid-column-start:  main;
+        grid-column-end:    secondary;
+      }
     }
   }
 
