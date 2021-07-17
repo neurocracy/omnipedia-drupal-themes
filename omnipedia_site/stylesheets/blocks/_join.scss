@@ -1,0 +1,53 @@
+// -----------------------------------------------------------------------------
+//   Join Omnipedia block partial
+// -----------------------------------------------------------------------------
+
+///
+/// Join Omnipedia link border pulse keyframes on light backgrounds.
+///
+@keyframes join-omnipedia-pulse-on-light {
+  0% {
+    border-color: $omnipedia-blue;
+  }
+  100% {
+    border-color: mix($omnipedia-blue, $background-colour-light, 50%);
+  }
+}
+
+///
+/// Join Omnipedia link border pulse keyframes on dark backgrounds.
+///
+@keyframes join-omnipedia-pulse-on-dark {
+  0% {
+    border-color: $omnipedia-blue;
+  }
+  100% {
+    border-color: mix($omnipedia-blue, $background-colour-dark, 70%);
+  }
+}
+
+.join-omnipedia {
+  &__link {
+    display: block;
+
+    border: 2px solid $omnipedia-blue;
+    border-radius:    $material-border-radius;
+
+    padding: 0.3em 0.4em;
+
+    font-size: 120%;
+
+    text-align: center;
+
+    // This adds a subtle pulsing of the border colour.
+    animation-name:             join-omnipedia-pulse-on-light;
+    animation-duration:         1500ms;
+    animation-timing-function:  ease-in-out;
+    animation-iteration-count:  infinite;
+    animation-direction:        alternate;
+
+    @include on-dark-colour-scheme {
+      animation-name:           join-omnipedia-pulse-on-dark;
+    }
+  }
+}
