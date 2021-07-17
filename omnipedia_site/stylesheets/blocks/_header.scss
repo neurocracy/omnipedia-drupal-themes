@@ -87,6 +87,10 @@
       @include on-sidebar-beside-content(both) {
         display: none;
       }
+
+      // This prevents Chrome on Android wrapping the "Menu" at some viewport
+      // sizes.
+      white-space: nowrap;
     }
 
     &__search-form {
