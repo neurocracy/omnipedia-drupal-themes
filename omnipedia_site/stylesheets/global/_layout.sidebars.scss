@@ -82,7 +82,7 @@
       //
       // @todo Find a way to sync this with the actual expected height of the
       //   button.
-      padding-bottom: calc(#{$layout-gutter} + 3em);
+      padding-bottom: calc(#{$layout-gutter} + 3.5em);
     }
 
     // Shadow element. See documentation at the top of this partial.
@@ -121,6 +121,9 @@
       @include root-conditions(('[dir=rtl]'), 'html') {
         left:   $layout-gutter;
       }
+
+      // Ensure that this is above other elements.
+      z-index: 1;
 
       // Box shadow with extended spread to make the close button hide content
       // below it a little more pleasantly than with hard edges.
