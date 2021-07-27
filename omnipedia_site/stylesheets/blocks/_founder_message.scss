@@ -45,7 +45,8 @@ $founder-block-background-logo-url: '../images/logo_faded_greyscale.svg?v=1';
   background-position:  if($direction == ltr, 100%, 0) 20%, center;
 }
 
-.block-omnipedia-founder-message {
+.block-omnipedia-founder-message,
+.block-omnipedia-founder-message-join {
   // Vertical padding always uses the full padding value.
   padding-top:    $founder-block-padding;
   padding-bottom: $founder-block-padding;
@@ -95,4 +96,22 @@ $founder-block-background-logo-url: '../images/logo_faded_greyscale.svg?v=1';
   .block__title {
     margin-top: -0.5em;
   }
+
+  .omnipedia-founder-message {
+    &__join {
+    }
+
+    &__join-link {
+      font-size:    110%;
+      font-weight:  $font-weight-strong;
+
+      text-transform: uppercase;
+    }
+  }
+
+  @include vertical-spacing-against-previous(
+    '.omnipedia-founder-message__join',
+    $spacing-small: $content-item-vertical-spacing-small,
+    $spacing-large: $content-item-vertical-spacing-large
+  );
 }
