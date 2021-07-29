@@ -47,5 +47,13 @@
 
   &__caption {
     @include omnipedia-card-caption;
+
+    // These force the caption to wrap at the width of the thumbnails but no
+    // wider, by first causing the text to wrap as small as possible so that it
+    // doesn't make the box wider than the thumbnails, and then setting a
+    // minimum width of 100% which increases it back up to the width of the
+    // thumbnails.
+    width:      min-content;
+    min-width:  100%;
   }
 }
