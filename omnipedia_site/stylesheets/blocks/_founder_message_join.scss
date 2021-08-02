@@ -1,0 +1,28 @@
+// -----------------------------------------------------------------------------
+//   Omnipedia founder message (join variant) partial
+// -----------------------------------------------------------------------------
+
+.block-omnipedia-founder-message-join {
+
+  @extend .block-omnipedia-founder-message;
+
+  .omnipedia-founder-message {
+
+    &__join-link {
+
+      font-size:    110%;
+      font-weight:  $font-weight-strong;
+
+      text-transform: uppercase;
+
+    }
+
+  }
+
+  @include vertical-spacing-against-previous(
+    '.omnipedia-founder-message__join',
+    $spacing-small: $content-item-vertical-spacing-small,
+    $spacing-large: $content-item-vertical-spacing-large
+  );
+
+}

@@ -8,15 +8,28 @@
 $founder-block-background-logo-url: '../images/logo_faded_greyscale.svg?v=1';
 
 ///
-/// Set the background for the founder block.
+/// Founder message stacking order. Later in the list means a higher z-index.
+///
+$founder-message-stacking-order: background, content;
+
+///
+/// Set the background for the founder message block.
 ///
 /// This includes a faded version of the Omnipedia logo and a greyscale gradient
 /// from side to side.
 ///
+/// Note that this uses a semi-transparent gradient background-image to allow
+/// for more flexiblity in styling.
+///
 /// @param {String} $direction [ltr]
 ///   The text direction, either ltr or rtl.
 ///
+/// @link https://ambientimpact.com/web/snippets/safari-bug-with-gradients-that-fade-to-transparent
+///   Explanation of why we use a colour with zero opacity instead of
+///   'transparent'.
+///
 @mixin founder-block-background($direction: ltr) {
+
   background-image:
     // Faded Omnipedia logo.
     url($founder-block-background-logo-url),
@@ -24,8 +37,8 @@ $founder-block-background-logo-url: '../images/logo_faded_greyscale.svg?v=1';
     // slightly darker version of the primary content background colour.
     linear-gradient(
       to if($direction == ltr, right, left),
-      scale-color($primary-content-background-colour-light, $lightness: -20%),
-      $primary-content-background-colour-light
+      hsla(0, 0, 0, 0.20),
+      hsla(0, 0, 0, 0)
     );
 
   @include on-dark-colour-scheme {
@@ -36,17 +49,18 @@ $founder-block-background-logo-url: '../images/logo_faded_greyscale.svg?v=1';
       // slightly light version of the primary content background colour.
       linear-gradient(
         to if($direction == ltr, right, left),
-        scale-color($primary-content-background-colour-dark, $lightness: +15%),
-        $primary-content-background-colour-dark
+        hsla(0, 0, 100%, 0.15),
+        hsla(0, 0, 0, 0)
       );
   }
 
   background-repeat:    no-repeat, no-repeat;
   background-position:  if($direction == ltr, 100%, 0) 20%, center;
+
 }
 
-.block-omnipedia-founder-message,
-.block-omnipedia-founder-message-join {
+.block-omnipedia-founder-message {
+
   // Vertical padding always uses the full padding value.
   padding-top:    $founder-block-padding;
   padding-bottom: $founder-block-padding;
@@ -78,40 +92,55 @@ $founder-block-background-logo-url: '../images/logo_faded_greyscale.svg?v=1';
   // column, switch to using the full card styles and set larger padding on all
   // sides.
   @include on-sidebar-beside-content('any') {
+
     @include omnipedia-card;
 
     margin-left:  0;
     margin-right: 0;
 
     padding: $founder-block-padding;
+
   }
 
-  @include root-conditions(('[dir=ltr]'), 'html') {
-    @include founder-block-background($direction: ltr);
+  &::before {
+
+    content: '';
+
+    display: block;
+
+    position: absolute;
+
+    top:    0;
+    bottom: 0;
+    left:   0;
+    right:  0;
+
+    z-index: index($founder-message-stacking-order, background);
+
+    @include root-conditions(('[dir=ltr]'), 'html') {
+      @include founder-block-background($direction: ltr);
+    }
+    @include root-conditions(('[dir=rtl]'), 'html') {
+      @include founder-block-background($direction: rtl);
+    }
+
   }
-  @include root-conditions(('[dir=rtl]'), 'html') {
-    @include founder-block-background($direction: rtl);
+
+  &::after {
+    z-index: index($founder-message-stacking-order, content);
+  }
+
+  .block__title,
+  .omnipedia-founder-message__body {
+
+    position: relative;
+
+    z-index: index($founder-message-stacking-order, content);
+
   }
 
   .block__title {
     margin-top: -0.5em;
   }
 
-  .omnipedia-founder-message {
-    &__join {
-    }
-
-    &__join-link {
-      font-size:    110%;
-      font-weight:  $font-weight-strong;
-
-      text-transform: uppercase;
-    }
-  }
-
-  @include vertical-spacing-against-previous(
-    '.omnipedia-founder-message__join',
-    $spacing-small: $content-item-vertical-spacing-small,
-    $spacing-large: $content-item-vertical-spacing-large
-  );
 }
