@@ -2,11 +2,124 @@
 //   Omnipedia founder message (join variant) partial
 // -----------------------------------------------------------------------------
 
+///
+/// Founder message (join variant) gradient.
+///
+/// Note that postcss-easing-gradients doesn't understand colour stop locations,
+/// i.e. specifying a percentage after the colour value. Additionally, it
+/// doesn't seem to output a valid gradient if using more than one easing in a
+/// single gradient, so we have to split it into two. We use background-size and
+/// background-position to stick them together into a contiguous single
+/// gradient.
+///
+/// @link https://github.com/larsenwork/postcss-easing-gradients
+///   PostCSS Easing Gradients plug-in.
+///
+/// @link https://ambientimpact.com/web/snippets/safari-bug-with-gradients-that-fade-to-transparent
+///   Explanation of why we use the background colour with zero opacity instead
+///   of 'transparent'.
+///
+@mixin founder-message-join-gradient($colour) {
+
+  background-image:
+    // Left/fade out gradient.
+    linear-gradient(
+      to right,
+      #{adjust-color($colour, $alpha: -1)},
+      #{$easing-decelerate},
+      #{$colour}
+    ),
+    // Right/fade in gradient.
+    linear-gradient(
+      to right,
+      #{$colour},
+      #{$easing-accelerate},
+      #{adjust-color($colour, $alpha: -1)}
+    );
+
+}
+
+///
+/// Founder message (join variant) background wipe keyframes.
+///
+@keyframes founder-message-join-wipe {
+
+  0% {
+    transform: translateX(-100%);
+  }
+  60% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+
+}
+
 .block-omnipedia-founder-message-join {
 
   @extend .block-omnipedia-founder-message;
 
   .omnipedia-founder-message {
+    &--join::before {
+
+      content: '';
+
+      display: block;
+
+      position: absolute;
+
+      top:    0;
+      bottom: 0;
+      left:   0;
+      right:  0;
+
+      z-index: index($founder-message-stacking-order, background);
+
+      // This makes it wide enough that the gradient looks much smoother,
+      // especially on narrow screens.
+      min-width: calc-responsive-value(
+        $min-screen:  30em,
+        $min-value:   200em,
+        $max-screen:  $layout-with-both-sidebars-max-width,
+        $max-value:   300em
+      );
+
+      @include founder-message-join-gradient(adjust-color(
+        $omnipedia-blue, $lightness: +50%, $saturation: +40%
+      ));
+
+      @include on-dark-colour-scheme {
+        @include founder-message-join-gradient($omnipedia-blue);
+      }
+
+      background-repeat:    no-repeat;
+      background-position:  left, right;
+      background-size:      50%, 50%;
+
+      animation-name:             founder-message-join-wipe;
+      animation-duration:         5000ms;
+      animation-timing-function:  linear;
+      animation-iteration-count:  infinite;
+      animation-delay:            2000ms;
+      animation-fill-mode:        backwards;
+
+      @include on-immerse {
+        animation-play-state: paused;
+      }
+
+      // Don't animate if the user indicates they prefer reduced motion.
+      //
+      // @see https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion
+      @media (prefers-reduced-motion: reduce) {
+        display: none;
+
+        animation: none;
+      }
+
+      opacity: 0.4;
+
+    }
 
     &__join {
 
