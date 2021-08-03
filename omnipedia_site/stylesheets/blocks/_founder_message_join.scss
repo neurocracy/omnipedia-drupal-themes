@@ -8,6 +8,14 @@
 
   .omnipedia-founder-message {
 
+    &__join {
+
+      position: relative;
+
+      z-index: index($founder-message-stacking-order, content);
+
+    }
+
     &__join-link {
 
       font-size:    110%;
