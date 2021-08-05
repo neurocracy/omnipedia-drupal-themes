@@ -56,6 +56,11 @@
 
 }
 
+///
+/// Founder message (join variant) join link background base colour.
+///
+$founder-message-join-link-background-colour-base: white;
+
 .block-omnipedia-founder-message-join {
 
   @extend .block-omnipedia-founder-message;
@@ -131,10 +136,64 @@
 
     &__join-link {
 
-      font-size:    110%;
+      display: block;
+
+      border:         2px solid currentColor;
+      border-radius:  $material-border-radius;
+
+      padding: 0.6em 0.4em;
+
+      background-color: change-color(
+        $founder-message-join-link-background-colour-base,
+        $alpha: 0.4
+      );
+
+      @include link-hover {
+
+        background-color: change-color(
+          $founder-message-join-link-background-colour-base,
+          $alpha: 0.8
+        );
+
+      }
+
+      @include on-dark-colour-scheme {
+
+        background-color: change-color(
+          $founder-message-join-link-background-colour-base,
+          $alpha: 0.1
+        );
+
+        @include link-hover {
+
+          background-color: change-color(
+            $founder-message-join-link-background-colour-base,
+            $alpha: 0.25
+          );
+
+        }
+
+      }
+
+      font-size:    120%;
       font-weight:  $font-weight-strong;
 
+      text-align:     center;
       text-transform: uppercase;
+
+      @include material-ripple;
+
+      --shadow-colour: hsla(0, 0, 0, 0.3);
+
+      box-shadow: 0 2px 4px var(--shadow-colour);
+
+      @include on-dark-colour-scheme {
+        --shadow-colour: hsla(0, 0, 0, 0.4);
+      }
+
+      // This gives the transparent background colour a frosted glass
+      // appearance.
+      backdrop-filter: blur(2px);
 
     }
 
@@ -142,8 +201,8 @@
 
   @include vertical-spacing-against-previous(
     '.omnipedia-founder-message__join',
-    $spacing-small: $content-item-vertical-spacing-small,
-    $spacing-large: $content-item-vertical-spacing-large
+    $spacing-small: 2em,
+    $spacing-large: 2em
   );
 
 }
