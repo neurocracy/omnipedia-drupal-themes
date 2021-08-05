@@ -137,6 +137,15 @@ $founder-message-stacking-order: background, content;
 
     z-index: index($founder-message-stacking-order, content);
 
+    // @todo This causes performance issues on mobile; can this be applied only
+    //   on high powered devices somehow?
+    //
+    // text-shadow: 0 0 3px white;
+    //
+    // @include on-dark-colour-scheme {
+    //   text-shadow: 0 0 3px black;
+    // }
+
   }
 
   .block__title {
