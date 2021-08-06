@@ -13,6 +13,8 @@
  *   'privacy_policy_link_title', and 'privacy_policy_link_attributes' variables
  *   are defined so that a link can be output instead of the button.
  *
+ * - Added a "Decide later" button.
+ *
  * -----------------------------------------------------------------------------
  *
  * When overriding this template it is important to note that jQuery will use
@@ -125,6 +127,10 @@
       {% if secondary_button_label %}
         <button type="button" class="{{ secondary_button_class }}">{{ secondary_button_label }}</button>
       {% endif %}
+
+      <button type="button" class="eu-cookie-compliance-buttons__later">{{
+        'Decide later'|t
+      }}</button>
     </div>
   </div>
 </div>

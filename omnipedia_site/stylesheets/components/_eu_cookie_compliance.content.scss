@@ -70,6 +70,17 @@
     button {
       @extend .button;
     }
+
+    // Only show the "Decide later" button if the current user agreement status
+    // is null, i.e. they haven't agreed to anything yet.
+    @include root-conditions(
+      (':not(.eu-cookie-compliance-status-null)'), 'body'
+    ) {
+      &__later {
+        display: none;
+      }
+    }
+
   }
 
 }

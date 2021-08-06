@@ -15,6 +15,12 @@
 //
 // - Fixes the 'eu_cookie_compliance_popup_close' event not being triggered when
 //   closing the pop-up via the accept buttons.
+//
+// - Fixes the container (usually body) agreement status classes not updating
+//   after the module JavaScript has attached.
+//
+// - Adds event handler to close the pop-up when clicking the "Decide later"
+//   button.
 
 AmbientImpact.onGlobals([
   'Drupal.eu_cookie_compliance',
@@ -114,14 +120,42 @@ AmbientImpact.addComponent('OmnipediaSiteThemeEuCookieCompliance', function(
         // Without this, the viewport would remain unscrollable when the pop-up
         // closes on a user clicking one of the accept buttons.
         if (
-          $(event.target).is('button') &&
-          $popup.find('.eu-cookie-compliance-buttons')
-            .find(event.target).length > 0
+          $(event.target).is('.eu-cookie-compliance-save-preferences-button') ||
+          $(event.target).is('.agree-button')
         ) {
           $popup.trigger('eu_cookie_compliance_popup_close');
+
+          // The module's JavaScript only updates the container (usually body)
+          // classes when first attached. Unfortunately, this means that CSS
+          // cannot depend on these updating when a user agrees to some or all
+          // categories, so we have to do that ourselves. Note that this must
+          // delay until the pop-up is expected to be closed to avoid causing
+          // issues with hiding the pop-up smoothly.
+          setTimeout(function() {
+
+            $(drupalSettings.eu_cookie_compliance.containing_element)
+            .removeClass([
+              'eu-cookie-compliance-status-null',
+              'eu-cookie-compliance-status-1',
+              'eu-cookie-compliance-status-2',
+            ])
+            .addClass(
+              'eu-cookie-compliance-status-' +
+              Drupal.eu_cookie_compliance.getCurrentStatus()
+            );
+
+          }, drupalSettings.eu_cookie_compliance.popup_delay);
+
         }
 
       });
+
+      // Event handler to close the pop-up when the "Decide later" button is
+      // clicked.
+      $popup.find('.eu-cookie-compliance-buttons__later').on(
+        'click.OmnipediaSiteThemeEuCookieCompliance',
+        Drupal.eu_cookie_compliance.toggleWithdrawBanner
+      );
 
       if (OmnipediaPrivacySettings.getToggle().length > 0) {
         $popup.addClass(panelHasInPageToggleClass);
