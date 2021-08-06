@@ -6,13 +6,13 @@
 // menu region, and the search anchor, and handles syncing various events
 // between them.
 
-AmbientImpact.on('headroom', function(aiHeadroom, $) {
-AmbientImpact.on(
-  'OmnipediaSiteThemeHeaderElements',
-function(headerElements, $) {
+AmbientImpact.on([
+  'headroom', 'OmnipediaSiteThemeHeaderElements'
+], function(aiHeadroom, headerElements, $) {
 AmbientImpact.addComponent('OmnipediaSiteThemeHeaderHeadroom', function(
   headerHeadroom, $
 ) {
+
   'use strict';
 
   /**
@@ -101,6 +101,5 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderHeadroom', function(
     }
   );
 
-});
 });
 });
