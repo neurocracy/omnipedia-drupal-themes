@@ -32,7 +32,10 @@ eu_cookie_compliance:
   js:
     javascript/eu_cookie_compliance.elements.js: {}
     javascript/eu_cookie_compliance.state.js: {}
+    javascript/eu_cookie_compliance.focus.js: {}
     javascript/eu_cookie_compliance.decide_later.js: {}
     javascript/eu_cookie_compliance.overlay.js: {}
   dependencies:
+    - ambientimpact_core/ally.js
+    - ambientimpact_ux/component.pointer_focus_hide
     - omnipedia_block/component.privacy_settings
