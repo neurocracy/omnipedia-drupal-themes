@@ -82,6 +82,17 @@ function(
 
         $(this).trigger('euCookieCompliancePopUpOpen');
 
+        // The module's JavaScript does not provide an event for when the pop-up
+        // has finished opening, so this does that in a roundabout way. Note
+        // that since this is using the configured delay value, it waits in
+        // parallel with the value, but may be triggered a frame before or after
+        // the pop-up's jQuery animation has actually completed.
+        setTimeout(function() {
+
+          $popUp.trigger('euCookieCompliancePopUpOpened');
+
+        }, drupalSettings.eu_cookie_compliance.popup_delay);
+
       })
       .on(
         'eu_cookie_compliance_popup_close.OmnipediaSiteThemeEuCookieComplianceState',
