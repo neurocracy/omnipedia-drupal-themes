@@ -48,8 +48,6 @@ function(
         return;
       }
 
-      $popUp.attr('tab-index', '-1');
-
       $popUp
       .on(
         'euCookieCompliancePopUpOpened.OmnipediaSiteThemeEuCookieComplianceFocus',
