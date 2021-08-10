@@ -13,7 +13,8 @@
 AmbientImpact.on([
   'OmnipediaSiteThemeSidebarsElements',
   'OmnipediaSiteThemeSidebarsState',
-], function(sidebarsElements, sidebarsState, $) {
+  'pointerFocusHide',
+], function(sidebarsElements, sidebarsState, aiPointerFocusHide, $) {
 AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsFocus', function(
   sidebarsFocus, $
 ) {
@@ -31,7 +32,13 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsFocus', function(
       function(event) {
 
         if (sidebarsState.isOffCanvas() === true) {
+
+          aiPointerFocusHide.lock();
+
           sidebarsElements.getSidebarsContainer().focus();
+
+          aiPointerFocusHide.unlock();
+
         }
 
       }).on(
@@ -39,7 +46,13 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsFocus', function(
       function(event) {
 
         if (sidebarsState.isOffCanvas() === true) {
+
+          aiPointerFocusHide.lock();
+
           sidebarsElements.getSidebarsMenuOpen().focus();
+
+          aiPointerFocusHide.unlock();
+
         }
 
       });
