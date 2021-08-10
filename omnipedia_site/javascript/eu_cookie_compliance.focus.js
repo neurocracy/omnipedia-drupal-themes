@@ -64,7 +64,7 @@ function(
 
         aiPointerFocusHide.unlock();
 
-     })
+      })
       .on(
         'euCookieCompliancePopUpClose.OmnipediaSiteThemeEuCookieComplianceFocus',
       function(event) {
@@ -98,7 +98,7 @@ function(
       }
 
       $popUp.off([
-        'euCookieCompliancePopUpOpen.OmnipediaSiteThemeEuCookieComplianceFocus',
+        'euCookieCompliancePopUpOpened.OmnipediaSiteThemeEuCookieComplianceFocus',
         'euCookieCompliancePopUpClose.OmnipediaSiteThemeEuCookieComplianceFocus',
         'euCookieCompliancePopUpClosed.OmnipediaSiteThemeEuCookieComplianceFocus',
       ].join(' '));
