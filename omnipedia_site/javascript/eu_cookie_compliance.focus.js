@@ -7,7 +7,8 @@
 // - 'euCookieCompliancePopUpOpened': moves focus to the first tabbable element
 //   in the pop-up.
 //
-// - 'euCookieCompliancePopUpClose': moves focus to the privacy settings toggle.
+// - 'euCookieCompliancePopUpClosed': moves focus to the privacy settings
+//   toggle.
 
 AmbientImpact.onGlobals('ally.query.tabbable', function() {
 AmbientImpact.on([
@@ -67,7 +68,7 @@ function(
 
      })
       .on(
-        'euCookieCompliancePopUpClose.OmnipediaSiteThemeEuCookieComplianceFocus',
+        'euCookieCompliancePopUpClosed.OmnipediaSiteThemeEuCookieComplianceFocus',
       function(event) {
         OmnipediaPrivacySettings.getToggle().focus();
       });
@@ -89,7 +90,7 @@ function(
 
       $popUp.off([
         'euCookieCompliancePopUpOpen.OmnipediaSiteThemeEuCookieComplianceFocus',
-        'euCookieCompliancePopUpClose.OmnipediaSiteThemeEuCookieComplianceFocus',
+                'euCookieCompliancePopUpClosed.OmnipediaSiteThemeEuCookieComplianceFocus',
       ].join(' '));
 
     }
