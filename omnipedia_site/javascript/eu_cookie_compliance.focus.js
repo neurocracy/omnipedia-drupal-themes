@@ -68,9 +68,20 @@ function(
 
      })
       .on(
+        'euCookieCompliancePopUpClose.OmnipediaSiteThemeEuCookieComplianceFocus',
+      function(event) {
+
+        aiPointerFocusHide.lock();
+
+      })
+      .on(
         'euCookieCompliancePopUpClosed.OmnipediaSiteThemeEuCookieComplianceFocus',
       function(event) {
+
         OmnipediaPrivacySettings.getToggle().focus();
+
+        aiPointerFocusHide.unlock();
+
       });
 
     },
@@ -90,7 +101,8 @@ function(
 
       $popUp.off([
         'euCookieCompliancePopUpOpen.OmnipediaSiteThemeEuCookieComplianceFocus',
-                'euCookieCompliancePopUpClosed.OmnipediaSiteThemeEuCookieComplianceFocus',
+        'euCookieCompliancePopUpClose.OmnipediaSiteThemeEuCookieComplianceFocus',
+        'euCookieCompliancePopUpClosed.OmnipediaSiteThemeEuCookieComplianceFocus',
       ].join(' '));
 
     }
