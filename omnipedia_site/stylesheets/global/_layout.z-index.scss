@@ -42,6 +42,10 @@ main[role="main"]::before {
   @include z-index(floating-above);
 }
 
+.overlay {
+  @include z-index(floating-above);
+}
+
 .layout-sidebars__closed-target,
 .layout-sidebars__closed-anchor {
   @include media('<layout-with-both-sidebars') {

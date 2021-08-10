@@ -37,5 +37,6 @@ eu_cookie_compliance:
     javascript/eu_cookie_compliance.overlay.js: {}
   dependencies:
     - ambientimpact_core/ally.js
+    - ambientimpact_ux/component.overlay
     - ambientimpact_ux/component.pointer_focus_hide
     - omnipedia_block/component.privacy_settings
