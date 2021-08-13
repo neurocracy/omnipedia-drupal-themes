@@ -63,7 +63,22 @@ $omnipedia-page-revisions-block-item-padding: $general-spacing;
     }
   }
 
+  max-height: 30vh;
+
+  overflow-y: auto;
+
+  scroll-snap-type: y mandatory;
+
   &__item {
+
+    scroll-snap-align: start;
+
+    // The last item aligns to the end/bottom of its block rather than the
+    // start/top.
+    &:last-child {
+      scroll-snap-align: end;
+    }
+
     // .item-list is for specificity.
     .item-list & {
       margin-bottom:  0;
