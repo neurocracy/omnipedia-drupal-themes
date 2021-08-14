@@ -191,9 +191,11 @@ $founder-message-join-link-background-colour-base: white;
         --shadow-colour: hsla(0, 0, 0, 0.4);
       }
 
-      // This gives the transparent background colour a frosted glass
-      // appearance.
-      backdrop-filter: blur(2px);
+      @if ($use-backdrop-filter-blur == true) {
+        // This gives the transparent background colour a frosted glass
+        // appearance.
+        backdrop-filter: blur(2px);
+      }
 
     }
 

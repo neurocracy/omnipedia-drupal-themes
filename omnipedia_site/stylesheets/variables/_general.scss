@@ -40,3 +40,12 @@ $material-tabs-indicator-thickness: $divider-thickness * 2;
 /// @link https://developer.mozilla.org/en-US/docs/Web/CSS/text-underline-offset
 ///
 $use-fancy-link-underlines: false;
+
+///
+/// Whether to use backdrop-filter: blur.
+///
+/// Firefox 91 on Android currently has major performance issues when this is
+/// used, so this is set to false so it can be toggled on at a later date when
+/// the situation improves.
+///
+$use-backdrop-filter-blur: false;
