@@ -112,6 +112,9 @@ $founder-message-join-link-background-colour-base: white;
       @include on-immerse {
         animation-play-state: paused;
       }
+      @include on-overlay-active {
+        animation-play-state: paused;
+      }
 
       // Don't animate if the user indicates they prefer reduced motion.
       //
