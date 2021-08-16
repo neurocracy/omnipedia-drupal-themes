@@ -84,13 +84,16 @@ $omnipedia-page-revisions-block-item-padding: $general-spacing;
         scroll-snap-align: end;
       }
 
-      #{$self} & { // Required for specificity.
-        margin-bottom:  0;
+      // Remove bottom margin. Direction required for specificity over Classy.
+      @include root-conditions(('[dir=ltr]', '[dir=rtl]'), 'html') {
+        margin-bottom: 0;
       }
 
-      // Spacing between items. Note specificity.
-      #{$self} * + & {
-        margin-top:     $omnipedia-page-revisions-block-item-spacing;
+      // Spacing between items. Direction required for specificity over Classy.
+      * + & {
+        @include root-conditions(('[dir=ltr]', '[dir=rtl]'), 'html') {
+          margin-top: $omnipedia-page-revisions-block-item-spacing;
+        }
       }
 
       @include root-conditions(('[dir=ltr]'), 'html') {
