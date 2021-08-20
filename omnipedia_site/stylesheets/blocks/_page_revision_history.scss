@@ -47,12 +47,10 @@ $omnipedia-page-revisions-block-item-padding: $general-spacing;
 
     max-height: 30vh;
 
-    overflow-y: auto;
-
     scroll-snap-type: y mandatory;
 
-    // This is the vertical lines that's meant to represent the time axis. On
-    // LTR the line is on the left, while on RTL it's on the right.
+    // This vertical line is meant to represent the time axis. On LTR the line
+    // is on the left, while on RTL it's on the right.
     @include root-conditions(('[dir=ltr]'), 'html') {
       border-left:
         $omnipedia-page-revisions-block-line-thickness
@@ -73,6 +71,11 @@ $omnipedia-page-revisions-block-item-padding: $general-spacing;
         border-right-color: $omnipedia-page-revisions-block-line-colour-on-dark;
       }
     }
+
+    // Remove the vertical margins as they'll no longer be collapsed due to
+    // overflow-x on the container.
+    margin-top:     0;
+    margin-bottom:  0;
 
     &-item {
 
@@ -123,4 +126,52 @@ $omnipedia-page-revisions-block-item-padding: $general-spacing;
 
   }
 
+  // Scrollbar hide stuff starts here.
+
+  @include scrollbar-hide-container;
+
+  &__list {
+
+    @include scrollbar-hide-scroller;
+
+    --scroll-hide-scroller-padding-top: calc(
+      var(--scrollbar-hide-fade-distance) * 0.75
+    );
+
+    &-item {
+      @include scrollbar-hide-child;
+    }
+
+  }
+
+  &::before, &::after {
+    content: '';
+  }
+
+  &::before {
+    @include scrollbar-hide-fade(top);
+  }
+
+  &::after {
+    @include scrollbar-hide-fade(bottom);
+  }
+
+  &:hover, &:focus-within {
+    #{$self}__list {
+      @include scrollbar-hide-scroller-scrollbar-visible;
+    }
+
+    #{$self}__list-item {
+      @include scrollbar-hide-child-scrollbar-visible;
+    }
+
+    &::before, &::after {
+      @include scrollbar-hide-fade-scrollbar-visible;
+    }
+  }
+
+}
+
+* + .omnipedia-wiki-page-revisions-toggle {
+  margin-top: $omnipedia-page-revisions-block-item-spacing / 2;
 }
