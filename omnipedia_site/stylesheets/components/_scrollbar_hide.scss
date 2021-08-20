@@ -1,0 +1,380 @@
+// -----------------------------------------------------------------------------
+//   Scrollbar hide partial
+// -----------------------------------------------------------------------------
+
+// The scrollbar hiding consists of 3 required elements and 2 optional elements.
+//
+// Required:
+//
+// - The container: as the name implies, this contains everything else; it is
+//   not scrollable itself but acts to clip and thus hide the scrollbar.
+//
+// - The scroller: this is a child of the container that's scrollable, with a
+//   visible scrollbar when interacted with.
+//
+// - The children: children of the scroller; these have padding applied to the
+//   edge where the scrollbar exists to ensure contents don't shift when the
+//   scrollbar is shown or hidden, if the scrollbar takes up any space.
+//
+// Optional:
+//
+// - Fade elements: these two create a gradient overlay that fades the contents
+//   of the scroller on the scrolling axis; these should be children of the
+//   container but siblings to the scroller; generated content is recommended
+//   for these, i.e. ::before and ::after.
+
+///
+/// Scrollbar hide: transition duration.
+///
+/// This is how long it takes the scrollbars to transition into or out of view.
+///
+$scrollbar-hide-transition-duration: 200ms;
+
+///
+/// Scrollbar hide: extra space.
+///
+/// This is a small amount of extra space to account for sub-pixel rounding
+/// errors, i.e. to prevent the edge of the scrollbar being visible when hidden.
+///
+$scrollbar-hide-extra-space: 1px;
+
+///
+/// Scrollbar hide: get the scroller edge from provided text direction.
+///
+/// @param {String} $direction
+///   The text direction. Must be one of 'ltr' or 'rtl'.
+///
+/// @return {String}
+///   Either 'left' or 'right'.
+///
+@function scrollbar-edge-from-text-dir($direction) {
+
+  @if ($direction == ltr) {
+    @return right;
+
+  } @else if ($direction == rtl) {
+    @return left;
+  }
+
+}
+
+///
+/// Scrollbar hide: get fade element gradient.
+///
+/// @param {String} $direction
+///   The gradient direction.
+///
+/// @param {Color} $background-colour
+///   The background colour to fade.
+///
+/// @link https://github.com/larsenwork/postcss-easing-gradients
+///   PostCSS Easing Gradients plug-in.
+///
+/// @link https://ambientimpact.com/web/snippets/safari-bug-with-gradients-that-fade-to-transparent
+///   Explanation of why we use the background colour with zero opacity instead
+///   of 'transparent'.
+///
+/// @require {variable} $easing-accelerate
+///
+@function scrollbar-hide-gradient($direction, $background-colour) {
+  @return linear-gradient(
+    to #{$direction},
+    #{$background-colour},
+    #{$easing-accelerate},
+    #{adjust-color($background-colour, $alpha: -1)}
+  );
+}
+
+///
+/// Scrollbar hide: container base styles.
+///
+/// @require {variable} $easing-accelerate
+/// @require {variable} $easing-decelerate
+/// @require {variable} $scrollbar-hide-transition-duration
+///
+@mixin scrollbar-hide-container {
+
+  --scrollbar-hide-transition-duration: #{$scrollbar-hide-transition-duration};
+  --scrollbar-hide-easing-showing:      #{$easing-decelerate};
+  --scrollbar-hide-easing-hiding:       #{$easing-accelerate};
+
+  --scrollbar-hide-fade-distance: 2em;
+
+  // Required to correctly position the gradient fade in/out elements.
+  position: relative;
+
+  // Required to be able to hide the scrollbars in the horizontal overflow.
+  overflow-x: hidden;
+
+}
+
+///
+/// Scrollbar hide: scroller element base styles.
+///
+/// @require {mixin} scrollbar-hide-scroller-directional
+///
+@mixin scrollbar-hide-scroller {
+
+  overflow-y: auto;
+
+  // Reset ambientimpact_base so that this can exceed 100% width.
+  max-width: none;
+
+  @include scrollbar-hide-scroller-directional(ltr);
+  @include scrollbar-hide-scroller-directional(rtl);
+
+  transition-duration:        var(--scrollbar-hide-transition-duration);
+  transition-timing-function: var(--scrollbar-hide-easing-hiding);
+
+  --scroll-hide-scroller-padding-top:     var(--scrollbar-hide-fade-distance);
+  --scroll-hide-scroller-padding-bottom:  var(--scrollbar-hide-fade-distance);
+
+  padding-top:            var(--scroll-hide-scroller-padding-top);
+  scroll-padding-top:     var(--scroll-hide-scroller-padding-top);
+
+  padding-bottom:         var(--scroll-hide-scroller-padding-bottom);
+  scroll-padding-bottom:  var(--scroll-hide-scroller-padding-bottom);
+
+}
+
+///
+/// Scrollbar hide: scroller element directional styles.
+///
+/// This uses --scrollbar-gutter to set a negative margin on the relevant edge
+/// so that any scrollbar that takes up space will be hidden. This is then reset
+/// when the container is hovered by the pointer or anything within it is
+/// focused.
+///
+/// @param {String} $direction [ltr]
+///   The text direction to output styles for. Must be one of 'ltr' or 'rtl';
+///
+/// @require {function} scrollbar-edge-from-text-dir
+///
+/// @require {mixin} root-conditions
+///
+/// @require {variable} $scrollbar-hide-extra-space
+///
+@mixin scrollbar-hide-scroller-directional($direction: ltr) {
+
+  $scrollbar-edge: scrollbar-edge-from-text-dir($direction);
+
+  @include root-conditions(('[dir=#{$direction}]'), 'html') {
+
+    margin-#{$scrollbar-edge}: calc(
+      var(--scrollbar-gutter, 0) * -1 - #{$scrollbar-hide-extra-space}
+    );
+
+    transition-property: margin-#{$scrollbar-edge};
+
+  }
+
+}
+
+///
+/// Scrollbar hide: scroller element styles, scrollbar visible.
+///
+/// @require {mixin} scrollbar-hide-scroller-scrollbar-visible-directional
+///
+@mixin scrollbar-hide-scroller-scrollbar-visible {
+
+  transition-timing-function: var(--scrollbar-hide-easing-showing);
+
+  @include scrollbar-hide-scroller-scrollbar-visible-directional(ltr);
+  @include scrollbar-hide-scroller-scrollbar-visible-directional(rtl);
+
+}
+
+///
+/// Scrollbar hide: scroller element directional styles, scrollbar visible.
+///
+/// @param {String} $direction [ltr]
+///   The text direction to output styles for. Must be one of 'ltr' or 'rtl';
+///
+/// @require {function} scrollbar-edge-from-text-dir
+///
+/// @require {mixin} root-conditions
+///
+@mixin scrollbar-hide-scroller-scrollbar-visible-directional($direction: ltr) {
+
+  $scrollbar-edge: scrollbar-edge-from-text-dir($direction);
+
+  @include root-conditions(('[dir=#{$direction}]'), 'html') {
+    margin-#{$scrollbar-edge}: 0;
+  }
+
+}
+
+///
+/// Scrollbar hide: child element base styles.
+///
+/// @require {mixin} scrollbar-hide-child-directional
+///
+@mixin scrollbar-hide-child {
+
+  @include scrollbar-hide-child-directional(ltr);
+  @include scrollbar-hide-child-directional(rtl);
+
+  // Rather than duplicating the values from the parent, just inherit transition
+  // properties.
+  transition-duration:        inherit;
+  transition-timing-function: inherit;
+
+}
+
+///
+/// Scrollbar hide: child element directional styles.
+///
+/// This uses --scrollbar-gutter to set a negative margin on the relevant edge
+/// so that any scrollbar that takes up space will be hidden. This is then reset
+/// when the container is hovered by the pointer or anything within it is
+/// focused.
+///
+/// @param {String} $direction [ltr]
+///   The text direction to output styles for. Must be one of 'ltr' or 'rtl';
+///
+/// @require {function} scrollbar-edge-from-text-dir
+///
+/// @require {mixin} root-conditions
+///
+/// @require {variable} $scrollbar-hide-extra-space
+///
+@mixin scrollbar-hide-child-directional($direction: ltr) {
+
+  $scrollbar-edge: scrollbar-edge-from-text-dir($direction);
+
+  @include root-conditions(('[dir=#{$direction}]'), 'html') {
+
+    padding-#{$scrollbar-edge}: calc(
+      var(--scrollbar-gutter, 0) + #{$scrollbar-hide-extra-space}
+    );
+
+    transition-property: padding-#{$scrollbar-edge};
+
+  }
+
+}
+
+///
+/// Scrollbar hide: child element styles, scrollbar visible.
+///
+/// @require {mixin} scrollbar-hide-child-scrollbar-visible-directional
+///
+@mixin scrollbar-hide-child-scrollbar-visible {
+  @include scrollbar-hide-child-scrollbar-visible-directional(ltr);
+  @include scrollbar-hide-child-scrollbar-visible-directional(rtl);
+}
+
+///
+/// Scrollbar hide: child element directional styles, scrollbar visible.
+///
+/// @param {String} $direction [ltr]
+///   The text direction to output styles for. Must be one of 'ltr' or 'rtl';
+///
+/// @require {function} scrollbar-edge-from-text-dir
+///
+/// @require {mixin} root-conditions
+///
+@mixin scrollbar-hide-child-scrollbar-visible-directional($direction: ltr) {
+
+  $scrollbar-edge: scrollbar-edge-from-text-dir($direction);
+
+  @include root-conditions(('[dir=#{$direction}]'), 'html') {
+    padding-#{$scrollbar-edge}: 0;
+  }
+
+}
+
+///
+/// Scrollbar hide: fade element base styles.
+///
+/// @require {function} scrollbar-hide-gradient
+///
+/// @require {mixin} on-dark-colour-scheme
+///
+/// @require {variable} $secondary-content-background-colour-dark
+/// @require {variable} $secondary-content-background-colour-light
+///
+@mixin scrollbar-hide-fade($location) {
+
+  position: absolute;
+
+  // This causes the fade element to default to display: none; if
+  // --scrollbar-gutter isn't defined. This prevents the fade element being
+  // placed on top of the scrollbar when JavaScript has not detected the
+  // scrollbar width, either because the JavaScript is still loading or it
+  // failed to be applied.
+  //
+  // @see https://lea.verou.me/2020/10/the-var-space-hack-to-toggle-multiple-values-with-one-custom-property/
+  //   Could we use something like this to provide a fallback when
+  //   --scrollbar-gutter isn't defined?
+  display: var(--scrollbar-gutter, none);
+
+  left:   0;
+  right:  0;
+
+  height: var(--scrollbar-hide-fade-distance);
+
+  pointer-events: none;
+
+  transition-duration:        var(--scrollbar-hide-transition-duration);
+  transition-timing-function: var(--scrollbar-hide-easing-hiding);
+  transition-property:        transform;
+
+  @if ($location == top) {
+
+    top: 0;
+
+    background-image: scrollbar-hide-gradient(
+      bottom, $secondary-content-background-colour-light
+    );
+
+    @include on-dark-colour-scheme {
+      background-image: scrollbar-hide-gradient(
+        bottom, $secondary-content-background-colour-dark
+      );
+    }
+
+  } @else if ($location == bottom) {
+
+    bottom: 0;
+
+    background-image: scrollbar-hide-gradient(
+      top, $secondary-content-background-colour-light
+    );
+
+    @include on-dark-colour-scheme {
+      background-image: scrollbar-hide-gradient(
+        top, $secondary-content-background-colour-dark
+      );
+    }
+
+  }
+
+}
+
+///
+/// Scrollbar hide: fade element styles, scrollbar visible.
+///
+/// This translates the fade element laterally to avoid overlapping the
+/// scrollbar, using the same transition easing as the container.
+///
+/// @require {mixin} root-conditions
+///
+/// @require {variable} $scrollbar-hide-extra-space
+///
+@mixin scrollbar-hide-fade-scrollbar-visible {
+
+  transition-timing-function: var(--scrollbar-hide-easing-showing);
+
+  @include root-conditions(('[dir=ltr]'), 'html') {
+    transform: translateX(calc(
+      0% - var(--scrollbar-gutter, 0) + #{$scrollbar-hide-extra-space}
+    ));
+  }
+  @include root-conditions(('[dir=rtl]'), 'html') {
+    transform: translateX(calc(
+      0% + var(--scrollbar-gutter, 0) + #{$scrollbar-hide-extra-space}
+    ));
+  }
+
+}
