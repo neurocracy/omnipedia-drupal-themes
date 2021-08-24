@@ -5,17 +5,11 @@
 @include content-area {
   ol,
   ul {
-    &:not(.contextual-links):not(.links) {
+    &:not(.contextual-links):not(.links):not(.table-of-contents__list):not(.references__list) {
       // This prevents the list items losing their marker indent if a floated
       // element is between it and the edge where the markers are, e.g. floated
       // left with markers on the left and vice versa.
       overflow: auto;
     }
-  }
-
-  .table-of-contents__list,
-  .table-of-contents__list ol,
-  .references ol {
-    overflow: visible !important;
   }
 }
