@@ -2,6 +2,10 @@
 //   References (citations, footnotes) partial
 // -----------------------------------------------------------------------------
 
+.references-heading {
+  clear: both;
+}
+
 @at-root {
   @include vertical-spacing-against-previous(
     '.references',
