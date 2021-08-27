@@ -1,0 +1,14 @@
+// -----------------------------------------------------------------------------
+//   <video> element partial
+// -----------------------------------------------------------------------------
+
+video {
+
+  // Override normalize.css which sets inline-block.
+  display: block;
+
+  // Make responsive. max-width: 100% is set in ambientimpact_base for all
+  // elements.
+  height: auto;
+
+}
