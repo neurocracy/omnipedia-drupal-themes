@@ -396,3 +396,37 @@ function omnipedia_site_preprocess_views_exposed_form(array &$variables): void {
   }
 
 }
+
+/**
+ * Implements hook_pwa_manifest_alter().
+ *
+ * This alters the manifest to add our icons.
+ */
+function omnipedia_site_pwa_manifest_alter(array &$manifestData): void {
+
+  /** @var integer The icon version. Increment when files change to force re-download. */
+  $iconVersion = 1;
+
+  /** @var \Drupal\Core\Theme\ThemeManagerInterface */
+  $themeManager = \Drupal::service('theme.manager');
+
+  /** @var string */
+  $themePath = $themeManager->getActiveTheme()->getPath();
+
+  unset($manifestData['icons']);
+
+  foreach ([144, 192, 256, 512] as $size) {
+    $manifestData['icons'][] = [
+      'src'   => Url::fromUri(
+        'base:' . $themePath . '/' .
+          'images/icons/generated/pwa-icon-' . $size . 'x' . $size . '.png',
+        [
+          'query' => ['v' => $iconVersion]
+        ]
+      )->toString(),
+      'sizes' => $size . 'x' . $size,
+      'type'  => 'image/png',
+    ];
+  }
+
+}
