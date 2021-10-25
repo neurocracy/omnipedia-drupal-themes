@@ -75,6 +75,18 @@ function(
           $overlay.prop('aiOverlay').show();
         }
 
+        // Failsafe to prevent disabling scroll if the pop-up is not visible or
+        // has been removed for any reason, such as an add-on, e.g. uBlock
+        // Origin, or some other software.
+        if (
+          $popUp.is(':hidden') ||
+          $popUp.width() < 10 ||
+          $popUp.height() < 10 ||
+          $popUp.css('visibility') === 'hidden'
+        ) {
+          return;
+        }
+
         overlayScroll.overlayOpened($popUp);
 
         // We trigger immerse events to pause any animations on the page while
