@@ -4,8 +4,8 @@
 
 :any-link,
 a[data-is-wikimedia-link][data-omnipedia-attached-data-title][data-omnipedia-attached-data-content]:not([href]) {
-  text-decoration-thickness:  $text-decoration-thickness;
-  text-underline-offset:      $text-decoration-offset;
+
+  text-underline-offset: $text-decoration-offset;
 
   &.omnipedia-changes__diff-link {
     @include on-dark-colour-scheme {

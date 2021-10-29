@@ -34,18 +34,18 @@ $heading-font-stack: 'Exo2', 'Linux Libertine', 'Georgia', 'Times', serif;
 $heading-font-weight: $font-weight-normal;
 
 ///
-/// The text underline thickness.
-///
-/// This overrides the default of 2px.
-///
-/// @todo Remove this now that we're using native underlines?
-///
-$text-underline-thickness: 1px;
-
-///
 /// Shared text decoration thickness.
 ///
-$text-decoration-thickness: 1.5px;
+/// This value is chosen specifically because Firefox and Chrome agree on the
+/// same computed thickness and spacing of dashed/dotted underlines. A value of
+/// 2px would result in Firefox making it too thick and too different from
+/// Chrome at the same value.
+///
+$text-decoration-thickness: 1.6px;
+
+:root {
+  --text-decoration-thickness: #{$text-decoration-thickness};
+}
 
 ///
 /// Shared text decoration offset.
