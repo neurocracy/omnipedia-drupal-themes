@@ -10,9 +10,9 @@
     "grunt-favicons": "github:japrescott/grunt-favicons#f9b4f3d99a7d05632f6291564086bb72bd43cdcc",
     "grunt-sass": "^3.1.0",
     "load-grunt-config": "^3.0.2",
-    "node-sass": "^6.0.1",
     "postcss": "^8.3.5",
-    "postcss-easing-gradients": "^3.0.1"
+    "postcss-easing-gradients": "^3.0.1",
+    "sass": "^1.43.4"
   },
   "dependencies": {}
 }
