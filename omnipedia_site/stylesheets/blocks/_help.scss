@@ -2,6 +2,9 @@
 //   Help block partial
 // -----------------------------------------------------------------------------
 
+@use 'sass:color';
+@use 'sass:math';
+
 ///
 /// Help block base colour.
 ///
@@ -10,21 +13,21 @@ $help-block-colour-base: #006ce4;
 ///
 /// Help block background colour on light backgrounds.
 ///
-$help-block-background-colour-on-light: adjust-color(
+$help-block-background-colour-on-light: color.adjust(
   $help-block-colour-base, $saturation: -40%, $lightness: 45%
 );
 
 ///
 /// Help block background colour on dark backgrounds.
 ///
-$help-block-background-colour-on-dark: adjust-color(
+$help-block-background-colour-on-dark: color.adjust(
   $help-block-colour-base, $saturation: -60%, $lightness: -20%
 );
 
 ///
 /// Help block padding.
 ///
-$help-block-padding: ($layout-gap / 3) ($layout-gap / 2);
+$help-block-padding: math.div($layout-gap, 3) math.div($layout-gap, 2);
 
 .block-help {
   padding: $help-block-padding;

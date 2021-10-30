@@ -37,8 +37,8 @@ $founder-message-stacking-order: background, content;
     // slightly darker version of the primary content background colour.
     linear-gradient(
       to if($direction == ltr, right, left),
-      hsla(0, 0, 0, 0.20),
-      hsla(0, 0, 0, 0)
+      hsla(0, 0%, 0%, 0.20),
+      hsla(0, 0%, 0%, 0)
     );
 
   @include on-dark-colour-scheme {
@@ -49,8 +49,8 @@ $founder-message-stacking-order: background, content;
       // slightly light version of the primary content background colour.
       linear-gradient(
         to if($direction == ltr, right, left),
-        hsla(0, 0, 100%, 0.15),
-        hsla(0, 0, 0, 0)
+        hsla(0, 0%, 100%, 0.15),
+        hsla(0, 0%, 0%, 0)
       );
   }
 

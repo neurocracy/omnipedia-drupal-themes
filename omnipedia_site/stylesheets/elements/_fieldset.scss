@@ -2,6 +2,8 @@
 //   Fieldset partial
 // -----------------------------------------------------------------------------
 
+@use 'sass:math';
+
 fieldset:not(.form-composite) {
   margin: 0;
 
@@ -28,8 +30,8 @@ fieldset.form-composite {
 
   > legend + .fieldset-wrapper {
     @include vertical-spacing(
-      $spacing-small: $content-item-vertical-spacing-small / 2,
-      $spacing-large: $content-item-vertical-spacing-small / 2
+      $spacing-small: math.div($content-item-vertical-spacing-small, 2),
+      $spacing-large: math.div($content-item-vertical-spacing-small, 2)
     );
   }
 }

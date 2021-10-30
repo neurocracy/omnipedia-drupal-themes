@@ -2,6 +2,8 @@
 //   Site layout - Grid
 // -----------------------------------------------------------------------------
 
+@use 'sass:math';
+
 ///
 /// The Omnipedia grid definition in compact layout (narrow screens).
 ///
@@ -249,7 +251,7 @@
 
           // This creates an intrinsic ratio with the heights of the site logo,
           // name, and slogan, all divided by the width of the column.
-          padding-top: (128 + 20 + 13) / 128 * 100%;
+          padding-top: math.div(128 + 20 + 13, 128) * 100%;
 
           // Don't forget the spacing between elements!
           margin-bottom: $branding-spacing * 2 + $layout-gap;

@@ -2,6 +2,8 @@
 //   Omnipedia card element partial
 // -----------------------------------------------------------------------------
 
+@use 'sass:math';
+
 ///
 /// Omnipedia card border colour on light backgrounds.
 ///
@@ -69,7 +71,7 @@ $omnipedia-card-padding: 0.5em !default;
   margin-top:     0 !important;
   margin-bottom: -0.3em;
 
-  padding-top: $omnipedia-card-padding / 2;
+  padding-top: math.div($omnipedia-card-padding, 2);
 
   font-size: 92%;
 }

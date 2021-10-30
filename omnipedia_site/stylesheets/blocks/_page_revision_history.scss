@@ -2,6 +2,8 @@
 //   Page revision history block partial
 // -----------------------------------------------------------------------------
 
+@use 'sass:math';
+
 ///
 /// Omnipedia page revisions block line colour on light backgrounds.
 ///
@@ -173,5 +175,5 @@ $omnipedia-page-revisions-block-item-padding: $general-spacing;
 }
 
 * + .omnipedia-wiki-page-revisions-toggle {
-  margin-top: $omnipedia-page-revisions-block-item-spacing / 2;
+  margin-top: math.div($omnipedia-page-revisions-block-item-spacing, 2);
 }

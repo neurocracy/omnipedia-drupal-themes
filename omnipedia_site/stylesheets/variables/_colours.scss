@@ -38,7 +38,7 @@ $primary-content-background-colour-dark: black;
 /// This is used for secondary content areas and is applied to the viewport when
 /// the user has not specified dark mode.
 ///
-$secondary-content-background-colour-light: hsl(0, 0, 95%);
+$secondary-content-background-colour-light: hsl(0, 0%, 95%);
 
 ///
 /// Secondary content dark background colour.
@@ -46,7 +46,7 @@ $secondary-content-background-colour-light: hsl(0, 0, 95%);
 /// This is used for secondary content areas and is applied to the viewport when
 /// the user has specified dark mode.
 ///
-$secondary-content-background-colour-dark: hsl(0, 0, 4%);
+$secondary-content-background-colour-dark: hsl(0, 0%, 4%);
 
 ///
 /// Light background colour.
@@ -68,7 +68,7 @@ $background-colour-dark: $secondary-content-background-colour-dark;
 /// This is applied to various things, including the border around the main
 /// content area when the user has not specified dark mode.
 ///
-$divider-colour-on-light: hsl(0, 0, 75%);
+$divider-colour-on-light: hsl(0, 0%, 75%);
 
 ///
 /// Divider colour on dark backgrounds.
@@ -76,7 +76,7 @@ $divider-colour-on-light: hsl(0, 0, 75%);
 /// This is applied to various things, including the border around the main
 /// content area when the user has specified dark mode.
 ///
-$divider-colour-on-dark: hsl(0, 0, 25%);
+$divider-colour-on-dark: hsl(0, 0%, 25%);
 
 ///
 /// Material Design line colour on light backgrounds.
