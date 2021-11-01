@@ -2,6 +2,8 @@
 //   Join Omnipedia block partial
 // -----------------------------------------------------------------------------
 
+@use 'sass:color';
+
 ///
 /// Join Omnipedia link border pulse keyframes on light backgrounds.
 ///
@@ -10,7 +12,7 @@
     border-color: $omnipedia-blue;
   }
   100% {
-    border-color: mix($omnipedia-blue, $background-colour-light, 50%);
+    border-color: color.mix($omnipedia-blue, $background-colour-light, 50%);
   }
 }
 
@@ -22,7 +24,7 @@
     border-color: $omnipedia-blue;
   }
   100% {
-    border-color: mix($omnipedia-blue, $background-colour-dark, 70%);
+    border-color: color.mix($omnipedia-blue, $background-colour-dark, 70%);
   }
 }
 

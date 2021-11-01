@@ -2,6 +2,8 @@
 //   Scrollbar hide partial
 // -----------------------------------------------------------------------------
 
+@use 'sass:color';
+
 // The scrollbar hiding consists of 3 required elements and 2 optional elements.
 //
 // Required:
@@ -81,7 +83,7 @@ $scrollbar-hide-extra-space: 1px;
     to #{$direction},
     #{$background-colour},
     #{$easing-accelerate},
-    #{adjust-color($background-colour, $alpha: -1)}
+    #{color.adjust($background-colour, $alpha: -1)}
   );
 }
 

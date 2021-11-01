@@ -2,6 +2,8 @@
 //   Omnipedia site header block partial
 // -----------------------------------------------------------------------------
 
+@use 'sass:list';
+
 // This partial handles most of the internal layout and functionality of the
 // site header element.
 //
@@ -63,7 +65,7 @@
 
     &__current-date,
     &__menu {
-      z-index: index($local-stacking-order, other);
+      z-index: list.index($local-stacking-order, other);
     }
 
     &__current-date {
@@ -94,7 +96,7 @@
     }
 
     &__search-form {
-      z-index: index($local-stacking-order, search);
+      z-index: list.index($local-stacking-order, search);
 
       // If subgrid is not supported, position this absolutely across the
       // entire container.

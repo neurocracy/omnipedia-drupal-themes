@@ -2,6 +2,8 @@
 //   Site layout - Header
 // -----------------------------------------------------------------------------
 
+@use 'sass:list';
+
 // This positions the header and primary menu region as sticky elements along
 // the top of the viewport. Despite them being separate elements, generated
 // content on both are used to create the illusion of a shared container on
@@ -73,12 +75,12 @@ header[role='banner'],
   &::before {
     content: '';
 
-    z-index: index($layout-header-stacking-order, background);
+    z-index: list.index($layout-header-stacking-order, background);
   }
 
   > * {
     position: relative;
-    z-index:  index($layout-header-stacking-order, content);
+    z-index:  list.index($layout-header-stacking-order, content);
   }
 }
 
@@ -254,7 +256,7 @@ header[role='banner']::before {
     > * {
       position: relative;
 
-      z-index: index($layout-header-stacking-order, content);
+      z-index: list.index($layout-header-stacking-order, content);
     }
   }
 
@@ -275,7 +277,7 @@ header[role='banner']::before {
     // different layout stuff because it doesn't support subgrid.
     max-width: 100vw;
 
-    z-index: index($layout-header-stacking-order, background);
+    z-index: list.index($layout-header-stacking-order, background);
 
     // This has no use when the site branding is in the sidebar.
     @include on-sidebar-beside-content(both) {
@@ -304,11 +306,11 @@ header[role='banner']::before {
   }
 
   &::before {
-    z-index: index($layout-header-stacking-order, border);
+    z-index: list.index($layout-header-stacking-order, border);
   }
 
   &::after {
-    z-index: index($layout-header-stacking-order, shadow);
+    z-index: list.index($layout-header-stacking-order, shadow);
   }
 }
 

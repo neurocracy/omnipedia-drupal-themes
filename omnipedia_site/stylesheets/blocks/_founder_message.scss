@@ -2,6 +2,8 @@
 //   Omnipedia founder message partial
 // -----------------------------------------------------------------------------
 
+@use 'sass:list';
+
 ///
 /// Founder block background logo URL.
 ///
@@ -115,7 +117,7 @@ $founder-message-stacking-order: background, content;
     left:   0;
     right:  0;
 
-    z-index: index($founder-message-stacking-order, background);
+    z-index: list.index($founder-message-stacking-order, background);
 
     @include root-conditions(('[dir=ltr]'), 'html') {
       @include founder-block-background($direction: ltr);
@@ -127,7 +129,7 @@ $founder-message-stacking-order: background, content;
   }
 
   &::after {
-    z-index: index($founder-message-stacking-order, content);
+    z-index: list.index($founder-message-stacking-order, content);
   }
 
   .block__title,
@@ -135,7 +137,7 @@ $founder-message-stacking-order: background, content;
 
     position: relative;
 
-    z-index: index($founder-message-stacking-order, content);
+    z-index: list.index($founder-message-stacking-order, content);
 
     // @todo This causes performance issues on mobile; can this be applied only
     //   on high powered devices somehow?

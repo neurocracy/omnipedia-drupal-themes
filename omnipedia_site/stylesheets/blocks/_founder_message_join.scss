@@ -2,6 +2,9 @@
 //   Omnipedia founder message (join variant) partial
 // -----------------------------------------------------------------------------
 
+@use 'sass:color';
+@use 'sass:list';
+
 ///
 /// Founder message (join variant) gradient.
 ///
@@ -25,7 +28,7 @@
     // Left/fade out gradient.
     linear-gradient(
       to right,
-      #{adjust-color($colour, $alpha: -1)},
+      #{color.adjust($colour, $alpha: -1)},
       #{$easing-decelerate},
       #{$colour}
     ),
@@ -34,7 +37,7 @@
       to right,
       #{$colour},
       #{$easing-accelerate},
-      #{adjust-color($colour, $alpha: -1)}
+      #{color.adjust($colour, $alpha: -1)}
     );
 
 }
@@ -79,7 +82,7 @@ $founder-message-join-link-background-colour-base: white;
       left:   0;
       right:  0;
 
-      z-index: index($founder-message-stacking-order, background);
+      z-index: list.index($founder-message-stacking-order, background);
 
       // This makes it wide enough that the gradient looks much smoother,
       // especially on narrow screens.
@@ -90,7 +93,7 @@ $founder-message-join-link-background-colour-base: white;
         $max-value:   300em
       );
 
-      @include founder-message-join-gradient(adjust-color(
+      @include founder-message-join-gradient(color.adjust(
         $omnipedia-blue, $lightness: +50%, $saturation: +40%
       ));
 
@@ -133,7 +136,7 @@ $founder-message-join-link-background-colour-base: white;
 
       position: relative;
 
-      z-index: index($founder-message-stacking-order, content);
+      z-index: list.index($founder-message-stacking-order, content);
 
     }
 
@@ -146,14 +149,14 @@ $founder-message-join-link-background-colour-base: white;
 
       padding: 0.6em 0.4em;
 
-      background-color: change-color(
+      background-color: color.change(
         $founder-message-join-link-background-colour-base,
         $alpha: 0.4
       );
 
       @include link-hover {
 
-        background-color: change-color(
+        background-color: color.change(
           $founder-message-join-link-background-colour-base,
           $alpha: 0.8
         );
@@ -162,14 +165,14 @@ $founder-message-join-link-background-colour-base: white;
 
       @include on-dark-colour-scheme {
 
-        background-color: change-color(
+        background-color: color.change(
           $founder-message-join-link-background-colour-base,
           $alpha: 0.1
         );
 
         @include link-hover {
 
-          background-color: change-color(
+          background-color: color.change(
             $founder-message-join-link-background-colour-base,
             $alpha: 0.25
           );
