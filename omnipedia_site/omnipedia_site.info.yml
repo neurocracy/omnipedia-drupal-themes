@@ -43,10 +43,6 @@ libraries-override:
   # This is removed as we provide our own styling.
   classy/media_embed_error: false
 
-  # Remove the fancy link underlines JavaScript as we're using native
-  # underlines.
-  ambientimpact_ux/component.link.underline: false
-
   # We provide our own checkout form layout.
   commerce_checkout/form: false
 
