@@ -28,20 +28,6 @@ $material-tabs-underline-thickness: $divider-thickness;
 $material-tabs-indicator-thickness: $divider-thickness * 2;
 
 ///
-/// Whether to use fancy link underlines.
-///
-/// This disables the use of fancy link underlines, as all browsers now support
-/// standardized CSS properties to control the thickness, offset, and descender
-/// clearing (clipping) for text decorations/underlines. The fancy link
-/// underline functionality will be removed entirely at some point as its now
-/// redundant and simply adds too much complexity via text-shadows and so on.
-///
-/// @link https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-thickness
-/// @link https://developer.mozilla.org/en-US/docs/Web/CSS/text-underline-offset
-///
-$use-fancy-link-underlines: false;
-
-///
 /// Whether to use backdrop-filter: blur.
 ///
 /// Firefox 91 on Android currently has major performance issues when this is
