@@ -21,10 +21,6 @@
         );
       }
 
-      @if $use-fancy-link-underlines == true {
-        @include fancy-link-underlines;
-      }
-
       @if $use-image-link-styles == true {
         @include image-link;
       }

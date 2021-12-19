@@ -4,13 +4,6 @@
 
 .search-anchor {
   @include material-ripple;
-
-  // Remove fancy underlines as we neither need them nor do they work correctly
-  // here due to the fact that they use a carefully positioned background
-  // gradient.
-  @if $use-fancy-link-underlines == true {
-    @include remove-fancy-link-underlines;
-  }
 }
 
 // Everything past this point enables the search field to be shown and the

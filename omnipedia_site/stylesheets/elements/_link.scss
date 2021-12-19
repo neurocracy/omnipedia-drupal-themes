@@ -60,14 +60,4 @@ a[data-is-wikimedia-link][data-omnipedia-attached-data-title][data-omnipedia-att
   text-decoration-line:   underline;
   text-decoration-style:  dashed;
 
-  @if $use-fancy-link-underlines == true {
-    @include fancy-link-underlines($underline-style: dashed);
-
-    // Links inside the PhotoSwipe caption need special handling as fancy
-    // underlines are currently disabled for them. See
-    // ../../../../ambientimpact/ambientimpact_base/stylesheets/elements/_link.scss
-    .#{$photoswipe-root-class}__caption__center & {
-      text-decoration: dashed underline !important;
-    }
-  }
 }
