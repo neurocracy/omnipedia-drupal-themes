@@ -1,4 +1,5 @@
 module.exports = function(grunt, options) {
+
   'use strict';
 
   return {
@@ -14,11 +15,12 @@ module.exports = function(grunt, options) {
       },
       files: [{
         src:
-          '<%= extensionPaths %>/<%= stylesheetPaths %>/**/*.css',
+          '<%= pathTemplates.extensions %>/<%= pathTemplates.stylesheets %>/**/*.css',
         ext:  '.css',
         extDot: 'last',
         expand: true,
       }]
     }
   };
+
 };

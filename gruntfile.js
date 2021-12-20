@@ -1,7 +1,18 @@
 module.exports = function(grunt) {
+
   'use strict';
 
-  var paths = {
+  const childProcess = require('child_process');
+
+  const modulesPath = childProcess.execSync(
+    'drush ambientimpact:modules-path'
+  ).toString().trim();
+
+  const componentPaths = JSON.parse(childProcess.execSync(
+    'drush ambientimpact:component-paths'
+  ).toString().trim());
+
+  let pathTemplates = {
     // Drupal extension directory names/paths relative to this gruntfile.
     // Extensions are either modules or themes.
     extensions: [
@@ -17,14 +28,15 @@ module.exports = function(grunt) {
     ],
   };
 
-  for (const propertyName in paths) {
-    if (!paths.hasOwnProperty(propertyName)) {
+  for (const propertyName in pathTemplates) {
+
+    if (!pathTemplates.hasOwnProperty(propertyName)) {
       continue;
     }
 
     // Convert each path into a string, joined with a comma if multiple items
     // are found.
-    paths[propertyName] = paths[propertyName].join(',');
+    pathTemplates[propertyName] = pathTemplates[propertyName].join(',');
 
     // Add braces if a comma is found, so that expansion of multiple paths can
     // occur. Note that we have to do this conditionally because a set of braces
@@ -33,18 +45,19 @@ module.exports = function(grunt) {
     //
     // @see https://www.gnu.org/software/bash/manual/html_node/Brace-Expansion.html
     // @see https://gruntjs.com/configuring-tasks#templates
-    if (paths[propertyName].indexOf(',') > -1) {
-      paths[propertyName] = '{' + paths[propertyName] + '}';
+    if (pathTemplates[propertyName].indexOf(',') > -1) {
+      pathTemplates[propertyName] = '{' + pathTemplates[propertyName] + '}';
     }
+
   }
 
   // Load our Grunt task configs from external files in the 'grunt' directory.
   require('load-grunt-config')(grunt, {
     init: true,
     data: {
-      extensionPaths:   paths.extensions,
-      stylesheetPaths:  paths.stylesheets,
-      javascriptPaths:  paths.javascript
+      pathTemplates:  pathTemplates,
+      modulesPath:    modulesPath,
+      componentPaths: componentPaths,
     }
   });
 
@@ -58,4 +71,5 @@ module.exports = function(grunt) {
     'sass',
     'postcss',
   ]);
+
 };

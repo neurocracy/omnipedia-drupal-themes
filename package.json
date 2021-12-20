@@ -12,7 +12,8 @@
     "load-grunt-config": "^3.0.2",
     "postcss": "^8.3.5",
     "postcss-easing-gradients": "^3.0.1",
-    "sass": "^1.43.4"
+    "sass": "^1.43.4",
+    "sass-module-importer": "^1.4.0"
   },
   "dependencies": {}
 }
