@@ -2,7 +2,11 @@
 //   Omnipedia site header block partial
 // -----------------------------------------------------------------------------
 
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/forms/search';
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout' as layout-base;
+@use 'sass/helpers/layout';
 @use 'sass:list';
+@use '../variables/layout' as layout-variables;
 
 // This partial handles most of the internal layout and functionality of the
 // site header element.
@@ -16,17 +20,17 @@
   ///
   $local-stacking-order: other, search;
 
-  @include use-grid {
+  @include layout.use-grid {
     display: grid;
 
     align-items:      center;
-    grid-gap:         $branding-spacing;
+    grid-gap:         layout-variables.$branding-spacing;
     grid-auto-flow:   column;
 
     // Narrow screen layout when the site branding is in the header.
     &--has-search {
       grid-template-columns: 1fr min-content calc(
-        #{$search-button-icon-size} + #{$search-button-spacing}
+        #{search.$button-icon-size} + #{search.$button-spacing}
       );
     }
     &--no-search {
@@ -35,10 +39,10 @@
 
     justify-items: end;
 
-    @include on-sidebar-beside-content(any) {
+    @include layout-base.on-sidebar-beside-content(any) {
       // This adds a bigger gap between the header items to ensure they read as
       // separate elements.
-      grid-column-gap:  $header-distinct-gap;
+      grid-column-gap: layout-variables.$header-distinct-gap;
 
       // Remove the columns when the site branding is in the sidebar.
       grid-template-columns: auto;
@@ -58,7 +62,7 @@
 
       grid-row: 1;
 
-      @include on-sidebar-beside-content(any) {
+      @include layout-base.on-sidebar-beside-content(any) {
         justify-items: stretch;
       }
     }
@@ -71,7 +75,7 @@
     &__current-date {
       grid-column: 1;
 
-      @include on-sidebar-beside-content(any) {
+      @include layout-base.on-sidebar-beside-content(any) {
         grid-column: auto;
       }
     }
@@ -86,7 +90,7 @@
       //
       // @todo Could showing this still be useful for keyboard navigation on
       //   wide screens?
-      @include on-sidebar-beside-content(both) {
+      @include layout-base.on-sidebar-beside-content(both) {
         display: none;
       }
 
@@ -107,7 +111,7 @@
         left:   0;
         right:  0;
 
-        @include on-sidebar-beside-content(any) {
+        @include layout-base.on-sidebar-beside-content(any) {
           position: static;
         }
       }
@@ -122,10 +126,10 @@
 
       max-width: none;
 
-      @include on-sidebar-beside-content(any) {
+      @include layout-base.on-sidebar-beside-content(any) {
         grid-column: auto;
 
-        max-width: $search-form-container-max-width;
+        max-width: search.$form-container-max-width;
       }
 
       .form-item-terms,
@@ -135,7 +139,7 @@
         position: relative;
         top:      -0.4em;
 
-        @include on-sidebar-beside-content(any) {
+        @include layout-base.on-sidebar-beside-content(any) {
           top:    0.3em;
         }
 
@@ -144,4 +148,5 @@
       }
     }
   }
+
 }

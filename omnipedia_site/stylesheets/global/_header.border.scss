@@ -2,13 +2,18 @@
 //   Site header - Border
 // -----------------------------------------------------------------------------
 
+@use 'sass/helpers/colour';
+@use '../variables/colours';
+@use '../variables/general' as general-variables;
+
 .omnipedia-header,
 .region-primary-menu {
   &::before {
-    border-bottom: $divider-thickness solid $divider-colour-on-light;
+    border-bottom:
+      general-variables.$divider-thickness solid colours.$divider-on-light;
 
-    @include on-dark-colour-scheme {
-      border-bottom-color: $divider-colour-on-dark;
+    @include colour.on-dark-scheme {
+      border-bottom-color: colours.$divider-on-dark;
     }
   }
 }

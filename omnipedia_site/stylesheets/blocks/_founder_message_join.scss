@@ -2,8 +2,22 @@
 //   Omnipedia founder message (join variant) partial
 // -----------------------------------------------------------------------------
 
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout';
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout.vertical_spacing' as vertical-spacing;
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/typography';
+@use '_founder_message' as founder-message;
+@use 'immerse';
+@use 'link/link.state' as link-state;
+@use 'material.common/material.general' as material-general;
+@use 'material.ripple' as material-ripple;
+@use 'overlay';
 @use 'sass:color';
 @use 'sass:list';
+@use 'sass/helpers/colour';
+@use 'sass/helpers/responsive';
+@use 'sass/variables/motion';
+@use '../variables/colours';
+@use '../variables/general';
 
 ///
 /// Founder message (join variant) gradient.
@@ -22,21 +36,21 @@
 ///   Explanation of why we use the background colour with zero opacity instead
 ///   of 'transparent'.
 ///
-@mixin founder-message-join-gradient($colour) {
+@mixin gradient($colour) {
 
   background-image:
     // Left/fade out gradient.
     linear-gradient(
       to right,
       #{color.adjust($colour, $alpha: -1)},
-      #{$easing-decelerate},
+      #{motion.$easing-decelerate},
       #{$colour}
     ),
     // Right/fade in gradient.
     linear-gradient(
       to right,
       #{$colour},
-      #{$easing-accelerate},
+      #{motion.$easing-accelerate},
       #{color.adjust($colour, $alpha: -1)}
     );
 
@@ -62,7 +76,7 @@
 ///
 /// Founder message (join variant) join link background base colour.
 ///
-$founder-message-join-link-background-colour-base: white;
+$link-background-colour-base: white;
 
 .block-omnipedia-founder-message-join {
 
@@ -82,23 +96,23 @@ $founder-message-join-link-background-colour-base: white;
       left:   0;
       right:  0;
 
-      z-index: list.index($founder-message-stacking-order, background);
+      z-index: list.index(founder-message.$stacking-order, background);
 
       // This makes it wide enough that the gradient looks much smoother,
       // especially on narrow screens.
-      min-width: calc-responsive-value(
+      min-width: responsive.calc-value(
         $min-screen:  30em,
         $min-value:   200em,
-        $max-screen:  $layout-with-both-sidebars-max-width,
+        $max-screen:  layout.$with-both-sidebars-max-width,
         $max-value:   300em
       );
 
-      @include founder-message-join-gradient(color.adjust(
-        $omnipedia-blue, $lightness: +50%, $saturation: +40%
+      @include gradient(color.adjust(
+        colours.$omnipedia-blue, $lightness: +50%, $saturation: +40%
       ));
 
-      @include on-dark-colour-scheme {
-        @include founder-message-join-gradient($omnipedia-blue);
+      @include colour.on-dark-scheme {
+        @include gradient(colours.$omnipedia-blue);
       }
 
       background-repeat:    no-repeat;
@@ -112,10 +126,10 @@ $founder-message-join-link-background-colour-base: white;
       animation-delay:            2000ms;
       animation-fill-mode:        backwards;
 
-      @include on-immerse {
+      @include immerse.on-immerse {
         animation-play-state: paused;
       }
-      @include on-overlay-active {
+      @include overlay.on-overlay-active {
         animation-play-state: paused;
       }
 
@@ -136,7 +150,7 @@ $founder-message-join-link-background-colour-base: white;
 
       position: relative;
 
-      z-index: list.index($founder-message-stacking-order, content);
+      z-index: list.index(founder-message.$stacking-order, content);
 
     }
 
@@ -145,35 +159,35 @@ $founder-message-join-link-background-colour-base: white;
       display: block;
 
       border:         2px solid currentColor;
-      border-radius:  $material-border-radius;
+      border-radius:  material-general.$border-radius;
 
       padding: 0.6em 0.4em;
 
       background-color: color.change(
-        $founder-message-join-link-background-colour-base,
+        $link-background-colour-base,
         $alpha: 0.4
       );
 
-      @include link-hover {
+      @include link-state.highlight {
 
         background-color: color.change(
-          $founder-message-join-link-background-colour-base,
+          $link-background-colour-base,
           $alpha: 0.8
         );
 
       }
 
-      @include on-dark-colour-scheme {
+      @include colour.on-dark-scheme {
 
         background-color: color.change(
-          $founder-message-join-link-background-colour-base,
+          $link-background-colour-base,
           $alpha: 0.1
         );
 
-        @include link-hover {
+        @include link-state.highlight {
 
           background-color: color.change(
-            $founder-message-join-link-background-colour-base,
+            $link-background-colour-base,
             $alpha: 0.25
           );
 
@@ -182,22 +196,22 @@ $founder-message-join-link-background-colour-base: white;
       }
 
       font-size:    120%;
-      font-weight:  $font-weight-strong;
+      font-weight:  typography.$font-weight-strong;
 
       text-align:     center;
       text-transform: uppercase;
 
-      @include material-ripple;
+      @include material-ripple.material-ripple;
 
       --shadow-colour: hsla(0, 0, 0, 0.3);
 
       box-shadow: 0 2px 4px var(--shadow-colour);
 
-      @include on-dark-colour-scheme {
+      @include colour.on-dark-scheme {
         --shadow-colour: hsla(0, 0, 0, 0.4);
       }
 
-      @if ($use-backdrop-filter-blur == true) {
+      @if (general.$use-backdrop-filter-blur == true) {
         // This gives the transparent background colour a frosted glass
         // appearance.
         backdrop-filter: blur(2px);
@@ -207,7 +221,7 @@ $founder-message-join-link-background-colour-base: white;
 
   }
 
-  @include vertical-spacing-against-previous(
+  @include vertical-spacing.against-previous(
     '.omnipedia-founder-message__join',
     $spacing-small: 2em,
     $spacing-large: 2em

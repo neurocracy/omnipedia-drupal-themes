@@ -2,6 +2,9 @@
 //   Overlay partial
 // -----------------------------------------------------------------------------
 
+@use 'sass/helpers/colour';
+@use '../variables/general' as general-variables;
+
 // This centralizes overlay styles used by several components.
 
 // Generic JavaScript-powered overlays.
@@ -11,29 +14,29 @@
 // @see ../global/_header.overlay.scss
 main[role="main"]::before,
 .layout-sidebars__closed-target {
-  @include set-colours(
-    $background: rgba($background-colour-light, 0.8)
+  @include colour.set(
+    $background: rgba(colour.$background-light, 0.8)
   );
 
-  @include on-dark-colour-scheme {
-    @include set-colours(
-      $background: rgba($background-colour-dark, 0.8)
+  @include colour.on-dark-scheme {
+    @include colour.set(
+      $background: rgba(colour.$background-dark, 0.8)
     );
   }
 
-  @if ($use-backdrop-filter-blur == true) {
+  @if (general-variables.$use-backdrop-filter-blur == true) {
 
     // We don't need as high opacity if backdrop-filter is supported. If we used
     // the same opacity as above, the blurring would make the background far
     // fainter perceptually than intended.
     @supports (backdrop-filter: blur(4px)) {
-      @include set-colours(
-        $background: rgba($background-colour-light, 0.6)
+      @include colour.set(
+        $background: rgba(colour.$background-light, 0.6)
       );
 
-      @include on-dark-colour-scheme {
-        @include set-colours(
-          $background: rgba($background-colour-dark, 0.6)
+      @include colour.on-dark-scheme {
+        @include colour.set(
+          $background: rgba(colour.$background-dark, 0.6)
         );
       }
     }

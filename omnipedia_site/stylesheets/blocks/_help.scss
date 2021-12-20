@@ -2,45 +2,48 @@
 //   Help block partial
 // -----------------------------------------------------------------------------
 
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout' as layout-base;
+@use 'material.common/material.general' as material-general;
 @use 'sass:color';
 @use 'sass:math';
+@use 'sass/helpers/colour';
 
 ///
 /// Help block base colour.
 ///
-$help-block-colour-base: #006ce4;
+$colour-base: #006ce4;
 
 ///
 /// Help block background colour on light backgrounds.
 ///
-$help-block-background-colour-on-light: color.adjust(
-  $help-block-colour-base, $saturation: -40%, $lightness: 45%
+$background-colour-on-light: color.adjust(
+  $colour-base, $saturation: -40%, $lightness: 45%
 );
 
 ///
 /// Help block background colour on dark backgrounds.
 ///
-$help-block-background-colour-on-dark: color.adjust(
-  $help-block-colour-base, $saturation: -60%, $lightness: -20%
+$background-colour-on-dark: color.adjust(
+  $colour-base, $saturation: -60%, $lightness: -20%
 );
 
 ///
 /// Help block padding.
 ///
-$help-block-padding: math.div($layout-gap, 3) math.div($layout-gap, 2);
+$padding: math.div(layout-base.$gap, 3) math.div(layout-base.$gap, 2);
 
 .block-help {
-  padding: $help-block-padding;
+  padding: $padding;
 
-  border-radius: $material-border-radius;
+  border-radius: material-general.$border-radius;
 
-  @include set-colours(
-    $background: $help-block-background-colour-on-light
+  @include colour.set(
+    $background: $background-colour-on-light
   );
 
-  @include on-dark-colour-scheme {
-    @include set-colours(
-      $background: $help-block-background-colour-on-dark
+  @include colour.on-dark-scheme {
+    @include colour.set(
+      $background: $background-colour-on-dark
     );
   }
 }

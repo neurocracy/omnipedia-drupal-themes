@@ -2,51 +2,38 @@
 //   Site layout - Content
 // -----------------------------------------------------------------------------
 
-///
-/// Generic content item vertical spacing on smaller screens.
-///
-/// Note that this is set to this specific value to approximate Wikipedia's
-/// spacing before <p> elements, so should not be changed from this value.
-///
-$content-item-vertical-spacing-small: $general-spacing * 0.8;
-
-///
-/// Generic content item vertical spacing on larger screens.
-///
-/// Note that this is set to this specific value to approximate Wikipedia's
-/// spacing before <p> elements, so should not be changed from this value.
-///
-$content-item-vertical-spacing-large: $general-spacing * 0.8;
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout' as layout-base;
+@use 'sass/helpers/breakpoint';
 
 .layout-content {
   // On narrow screens the horizontal padding matches the layout gutter.
-  padding: $layout-gap $layout-gutter;
+  padding: layout-base.$gap layout-base.$gutter;
 
-  @include media('<layout-with-both-sidebars') {
+  @include breakpoint.on('<layout-with-both-sidebars') {
     // Cancel out the default horizontal padding set in the
     // layout-container-base-horizontal mixin, as this conflicts with the
     // background and borders we set around the content area.
     //
     // @see {mixin} layout-container-base-horizontal
-    margin-left:  -$layout-gutter;
-    margin-right: -$layout-gutter;
+    margin-left:  layout-base.$gutter * -1;
+    margin-right: layout-base.$gutter * -1;
   }
 
-  @include on-sidebar-beside-content(any) {
+  @include layout-base.on-sidebar-beside-content(any) {
     // On wider screens the horizontal padding matches the vertical padding.
-    padding-left:   $layout-gap;
-    padding-right:  $layout-gap;
+    padding-left:   layout-base.$gap;
+    padding-right:  layout-base.$gap;
   }
 
   .region + .region {
-    margin-top: $layout-gap;
+    margin-top: layout-base.$gap;
   }
 }
 
 .region-content {
-  // Add space between blocks using the $layout-gap variable.
+  // Add space between blocks using the layout-base.$gap variable.
   .block + .block,
   [data-drupal-messages] + .block {
-    margin-top: $layout-gap;
+    margin-top: layout-base.$gap;
   }
 }

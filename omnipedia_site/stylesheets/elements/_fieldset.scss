@@ -2,18 +2,22 @@
 //   Fieldset partial
 // -----------------------------------------------------------------------------
 
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/content';
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout';
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout.vertical_spacing' as vertical-spacing;
+@use '../global/card';
 @use 'sass:math';
 
 fieldset:not(.form-composite) {
   margin: 0;
 
-  @include omnipedia-card;
+  @include card.base;
 
   // On wider screens the horizontal and bottom padding matches the layout gap.
-  @include on-sidebar-beside-content(any) {
-    padding-left:   $layout-gap;
-    padding-right:  $layout-gap;
-    padding-bottom: $layout-gap;
+  @include layout.on-sidebar-beside-content(any) {
+    padding-left:   layout.$gap;
+    padding-right:  layout.$gap;
+    padding-bottom: layout.$gap;
   }
 }
 
@@ -21,17 +25,17 @@ fieldset.form-composite {
   margin: 0;
 
   @at-root {
-    @include vertical-spacing-against-previous(
+    @include vertical-spacing.against-previous(
       &,
-      $spacing-small: $content-item-vertical-spacing-small,
-      $spacing-large: $content-item-vertical-spacing-large
+      $spacing-small: content.$item-vertical-spacing-small,
+      $spacing-large: content.$item-vertical-spacing-large
     );
   }
 
   > legend + .fieldset-wrapper {
-    @include vertical-spacing(
-      $spacing-small: math.div($content-item-vertical-spacing-small, 2),
-      $spacing-large: math.div($content-item-vertical-spacing-small, 2)
+    @include vertical-spacing.vertical-spacing(
+      $spacing-small: math.div(content.$item-vertical-spacing-small, 2),
+      $spacing-large: math.div(content.$item-vertical-spacing-small, 2)
     );
   }
 }

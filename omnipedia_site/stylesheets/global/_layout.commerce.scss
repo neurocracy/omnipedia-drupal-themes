@@ -2,13 +2,20 @@
 //   Site layout - Commerce
 // -----------------------------------------------------------------------------
 
-@include add-breakpoints((
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/content';
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout' as layout-base;
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout.vertical_spacing' as vertical-spacing;
+@use 'sass/helpers/breakpoint';
+@use 'sass/helpers/layout';
+@use 'sass/helpers/selector';
+
+@include breakpoint.add((
   'layout-commerce-checkout-form-two-column': 35em,
 ));
 
 .layout-checkout-form {
-  @include use-grid {
-    @include media('>=layout-commerce-checkout-form-two-column') {
+  @include layout.use-grid {
+    @include breakpoint.on('>=layout-commerce-checkout-form-two-column') {
       display: grid;
 
       grid-template-areas:
@@ -16,7 +23,7 @@
         'footer footer';
 
       grid-template-columns: minmax(15em, 1fr) 1fr;
-      grid-gap: $layout-gap;
+      grid-gap: layout-base.$gap;
 
       &::after {
         display: none;
@@ -50,28 +57,28 @@
     margin-right: 0;
   }
 
-  @include vertical-spacing-against-previous(
+  @include vertical-spacing.against-previous(
     '.address-book-edit-button',
-    $spacing-small: $content-item-vertical-spacing-small,
-    $spacing-large: $content-item-vertical-spacing-large
+    $spacing-small: content.$item-vertical-spacing-small,
+    $spacing-large: content.$item-vertical-spacing-large
   );
 }
 
 .layout-region-checkout-main {
   grid-area: main;
 
-  @include vertical-spacing-against-previous(
+  @include vertical-spacing.against-previous(
     '.form-wrapper',
-    $spacing-small: $content-item-vertical-spacing-small,
-    $spacing-large: $content-item-vertical-spacing-large
+    $spacing-small: content.$item-vertical-spacing-small,
+    $spacing-large: content.$item-vertical-spacing-large
   );
 }
 
 .layout-region-checkout-secondary {
   grid-area: secondary;
 
-  @include use-grid {
-    @include media('>=layout-commerce-checkout-form-two-column') {
+  @include layout.use-grid {
+    @include breakpoint.on('>=layout-commerce-checkout-form-two-column') {
       h3:first-child {
         margin-top: -0.55em;
       }
@@ -85,14 +92,14 @@
   .form-actions {
     margin-bottom: 0;
 
-    @include use-grid {
+    @include layout.use-grid {
       // @todo Make this work without causing the back link to expand and have
       //   phantom clickable space.
       //
       // grid-template-columns:  repeat(auto-fit, minmax(10em,   1fr));
       // grid-template-rows:     repeat(auto-fit, minmax(2.6em,  1fr));
 
-      @include media('>=layout-commerce-checkout-form-two-column') {
+      @include breakpoint.on('>=layout-commerce-checkout-form-two-column') {
         margin-top: 0;
       }
 
@@ -100,7 +107,7 @@
       //   actions, i.e. not a step that has just the primary button. Applying
       //   this when there's just the one button causes the button to be
       //   aligned to the left.
-      // @include root-conditions(('[dir=ltr]', '[dir=rtl]'), 'html') {
+      // @include selector.root-conditions(('[dir=ltr]', '[dir=rtl]'), 'html') {
       //   justify-content: space-between;
       // }
 
@@ -124,10 +131,10 @@
   }
 }
 
-@include vertical-spacing-against-previous(
+@include vertical-spacing.against-previous(
   '.checkout-pane-order-summary',
-  $spacing-small: $content-item-vertical-spacing-small,
-  $spacing-large: $content-item-vertical-spacing-large
+  $spacing-small: content.$item-vertical-spacing-small,
+  $spacing-large: content.$item-vertical-spacing-large
 );
 
 .checkout-order-summary {
@@ -148,9 +155,9 @@
 
   // This is the <div> that contains the subtotal and total for the order.
   > table ~ div {
-    @include vertical-spacing(
-      $spacing-small: $content-item-vertical-spacing-small,
-      $spacing-large: $content-item-vertical-spacing-large
+    @include vertical-spacing.vertical-spacing(
+      $spacing-small: content.$item-vertical-spacing-small,
+      $spacing-large: content.$item-vertical-spacing-large
     );
   }
 

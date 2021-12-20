@@ -2,76 +2,80 @@
 //   Omnipedia card element partial
 // -----------------------------------------------------------------------------
 
+@use 'material.common/material.general' as material-general;
+@use 'sass/helpers/colour';
 @use 'sass:math';
+@use '../variables/colours';
+@use '../variables/general' as general-variables;
 
 ///
 /// Omnipedia card border colour on light backgrounds.
 ///
-/// @require {variable} $divider-colour-on-light
+/// @require {variable} colours.$divider-on-light
 ///
-$omnipedia-card-border-colour-on-light: $divider-colour-on-light !default;
+$border-colour-on-light: colours.$divider-on-light !default;
 
 ///
 /// Omnipedia card border colour on dark backgrounds.
 ///
-/// @require {variable} $divider-colour-on-dark
+/// @require {variable} colours.$divider-on-dark
 ///
-$omnipedia-card-border-colour-on-dark: $divider-colour-on-dark !default;
+$border-colour-on-dark: colours.$divider-on-dark !default;
 
 ///
 /// Omnipedia card border width.
 ///
-/// @require {variable} $divider-thickness
+/// @require {variable} general-variables.$divider-thickness
 ///
-$omnipedia-card-border-width: $divider-thickness !default;
+$border-width: general-variables.$divider-thickness !default;
 
 ///
 /// Omnipedia card border radius.
 ///
-/// @require {variable} $material-border-radius
+/// @require {variable} material-general.$border-radius
 ///
-$omnipedia-card-border-radius: $material-border-radius !default;
+$border-radius: material-general.$border-radius !default;
 
 ///
 /// Omnipedia card default padding.
 ///
-$omnipedia-card-padding: 0.5em !default;
+$padding: 0.5em !default;
 
 ///
 /// Omnipedia card base styles.
 ///
-/// @param {Number} $padding [$omnipedia-card-padding]
+/// @param {Number} $padding [$padding]
 ///   The padding to apply to the card element.
 ///
-/// @require {variable} $omnipedia-card-padding
-/// @require {variable} $omnipedia-card-border-width
-/// @require {variable} $omnipedia-card-border-colour-on-light
-/// @require {variable} $omnipedia-card-border-colour-on-dark
-/// @require {variable} $omnipedia-card-border-radius
+/// @require {variable} $padding
+/// @require {variable} $border-width
+/// @require {variable} $border-colour-on-light
+/// @require {variable} $border-colour-on-dark
+/// @require {variable} $border-radius
 ///
-@mixin omnipedia-card($padding: $omnipedia-card-padding) {
+@mixin base($padding: $padding) {
   padding: $padding;
 
-  border-width:   $omnipedia-card-border-width;
+  border-width:   $border-width;
   border-style:   solid;
-  border-color:   $omnipedia-card-border-colour-on-light;
-  border-radius:  $omnipedia-card-border-radius;
+  border-color:   $border-colour-on-light;
+  border-radius:  $border-radius;
 
-  @include on-dark-colour-scheme {
-    border-color: $omnipedia-card-border-colour-on-dark;
+  @include colour.on-dark-scheme {
+    border-color: $border-colour-on-dark;
   }
 }
 
 ///
 /// Omnipedia card caption styles.
 ///
-/// @require {variable} $omnipedia-card-padding
+/// @require {variable} $padding
 ///
-@mixin omnipedia-card-caption {
+@mixin caption {
   margin-top:     0 !important;
   margin-bottom: -0.3em;
 
-  padding-top: math.div($omnipedia-card-padding, 2);
+  padding-top: math.div($padding, 2);
 
   font-size: 92%;
 }

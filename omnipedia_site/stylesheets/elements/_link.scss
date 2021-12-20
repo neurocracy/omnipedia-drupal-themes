@@ -2,44 +2,50 @@
 //   Link element partial
 // -----------------------------------------------------------------------------
 
+@use 'link/link';
+@use 'link/link.colour' as link-colour;
+// @use 'link/link.state' as link-state;
+@use 'sass/helpers/colour';
+@use '../variables/typography' as typography-variables;
+
 :any-link,
 a[data-is-wikimedia-link][data-omnipedia-attached-data-title][data-omnipedia-attached-data-content]:not([href]) {
 
-  text-underline-offset: $text-decoration-offset;
+  text-underline-offset: typography-variables.$text-decoration-offset;
 
   &.omnipedia-changes__diff-link {
-    @include on-dark-colour-scheme {
-      @include link-colours(
-        $background-colour-dark,
+    @include colour.on-dark-scheme {
+      @include link-colour.set(
+        colour.$background-dark,
 
-        $normal-on-dark: $foreground-colour-on-dark,
-        $hover-on-dark:  $foreground-colour-on-dark,
+        $normal-on-dark:    colour.$foreground-on-dark,
+        $highlight-on-dark: colour.$foreground-on-dark,
 
-        $underline-normal-on-dark: rgba($foreground-colour-on-dark, 0.6),
-        $underline-hover-on-dark:  $foreground-colour-on-dark,
+        $underline-normal-on-dark:    rgba(colour.$foreground-on-dark, 0.6),
+        $underline-highlight-on-dark: colour.$foreground-on-dark,
       );
     }
   }
 
   // .omnipedia-changes__diff {
-  //   @include on-dark-colour-scheme {
-  //     text-decoration-color: rgba($foreground-colour-on-dark, 0.6);
+  //   @include colour.on-dark-scheme {
+  //     text-decoration-color: rgba(colour.$foreground-on-dark, 0.6);
   //   }
   // }
 
-  // @include link-hover {
+  // @include link-state.highlight {
   //   .omnipedia-changes__diff {
-  //     @include on-dark-colour-scheme {
-  //       text-decoration-color: $foreground-colour-on-dark;
+  //     @include colour.on-dark-scheme {
+  //       text-decoration-color: colour.$foreground-on-dark;
   //     }
   //   }
   // }
 
-  // @include link-active {
+  // @include link-state.active {
   //   .omnipedia-changes__diff {
-  //     @include on-dark-colour-scheme {
-  //       @include on-dark-colour-scheme {
-  //         text-decoration-color: rgba($foreground-colour-on-dark, 0.6);
+  //     @include colour.on-dark-scheme {
+  //       @include colour.on-dark-scheme {
+  //         text-decoration-color: rgba(colour.$foreground-on-dark, 0.6);
   //       }
   //     }
   //   }
@@ -49,10 +55,10 @@ a[data-is-wikimedia-link][data-omnipedia-attached-data-title][data-omnipedia-att
 // This styles Wikimedia <a> elements without an href attribute that have
 // attached data to appear as links, albeit with a dashed underline.
 a[data-is-wikimedia-link][data-omnipedia-attached-data-title][data-omnipedia-attached-data-content]:not([href]) {
-  @include link;
+  @include link.link;
 
-  @include on-dark-colour-scheme {
-    @include link-colours($background-colour-dark);
+  @include colour.on-dark-scheme {
+    @include link-colour.set(colour.$background-dark);
   }
 
   cursor: pointer;

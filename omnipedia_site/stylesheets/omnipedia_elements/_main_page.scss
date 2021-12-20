@@ -2,10 +2,14 @@
 //   Omnipedia <main-page> element partial
 // -----------------------------------------------------------------------------
 
+@use '../global/card';
+@use 'sass/helpers/breakpoint';
+@use 'main_page/_main_page' as main-page;
+
 .omnipedia-main-page {
   &__item {
-    @include media('>=omnipedia-main-page-dual-column') {
-      @include omnipedia-card($padding: $omnipedia-main-page-spacing);
+    @include breakpoint.on('>=omnipedia-main-page-dual-column') {
+      @include card.base($padding: main-page.$spacing);
     }
   }
 }

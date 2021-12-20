@@ -2,6 +2,9 @@
 //   Site layout - Global z-index values
 // -----------------------------------------------------------------------------
 
+@use 'sass/helpers/breakpoint';
+@use 'sass/helpers/z-index';
+
 // Branding and primary menu regions.
 //
 // @todo Can we create explicit z-index keywords that allow layering these
@@ -9,29 +12,29 @@
 header[role='banner'] {
   // This must be lower than the primary menu region so that the search form can
   // be layered on top of this when it gains focus.
-  @include z-index(page-floating);
+  @include z-index.get(page-floating);
 }
 .region-primary-menu {
   // This must be higher than the branding region to be able to layer the search
   // form on top of it when the form gains focus.
-  @include z-index(floating);
+  @include z-index.get(floating);
 }
 
 .search-anchor {
-  @include z-index('floating-above');
+  @include z-index.get('floating-above');
 }
 
 // This needs to be increased over the value in ambientimpact_base or it'll be
 // placed below parts of the header on narrow screens.
 .skip-link-container {
-  @include z-index('floating-above');
+  @include z-index.get('floating-above');
 }
 
 // Header overlay.
 //
 // @see ./_header.overlay.scss
 main[role="main"]::before {
-  @include z-index(floating-below);
+  @include z-index.get(floating-below);
 }
 
 // Site reveal overlay.
@@ -39,23 +42,23 @@ main[role="main"]::before {
 // @see ./_reveal.scss
 .layout-container::before {
   // This must be higher than any sticky elements such as the header.
-  @include z-index(floating-above);
+  @include z-index.get(floating-above);
 }
 
 .overlay {
-  @include z-index(floating-above);
+  @include z-index.get(floating-above);
 }
 
 .layout-sidebars__closed-target,
 .layout-sidebars__closed-anchor {
-  @include media('<layout-with-both-sidebars') {
-    @include z-index(modal);
+  @include breakpoint.on('<layout-with-both-sidebars') {
+    @include z-index.get(modal);
   }
 }
 
 .layout-sidebars {
-  @include media('<layout-with-both-sidebars') {
+  @include breakpoint.on('<layout-with-both-sidebars') {
     // This is not ideal but needed to place this above the target and anchor.
-    z-index: z-index(modal) + 1;
+    z-index: z-index.get(modal) + 1;
   }
 }

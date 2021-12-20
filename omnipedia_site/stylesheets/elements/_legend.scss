@@ -2,6 +2,8 @@
 //   Fieldset legend partial
 // -----------------------------------------------------------------------------
 
+@use 'sass/helpers/selector';
+
 fieldset:not(.form-composite) > legend {
   position: relative;
 
@@ -11,10 +13,10 @@ fieldset:not(.form-composite) > legend {
 
   // This compensates for the horizontal padding to align the legend back with
   // the column edge of the elements that follow in the fieldset.
-  @include root-conditions(('[dir=ltr]'), 'html') {
+  @include selector.root-conditions(('[dir=ltr]'), 'html') {
     margin-left:  calc(var(--legend-horizontal-padding) * -1);
   }
-  @include root-conditions(('[dir=rtl]'), 'html') {
+  @include selector.root-conditions(('[dir=rtl]'), 'html') {
     margin-right: calc(var(--legend-horizontal-padding) * -1);
   }
 

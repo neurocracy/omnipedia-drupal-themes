@@ -2,7 +2,13 @@
 //   Site layout - Header
 // -----------------------------------------------------------------------------
 
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/forms/search';
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout' as layout-base;
+@use 'headroom';
+@use 'sass/helpers/selector';
 @use 'sass:list';
+@use '../variables/general' as general-variables;
+@use '../variables/layout' as layout-variables;
 
 // This positions the header and primary menu region as sticky elements along
 // the top of the viewport. Despite them being separate elements, generated
@@ -20,7 +26,7 @@
 ///
 /// Header layout stacking order. Later in the list means a higher z-index.
 ///
-$layout-header-stacking-order: shadow, background, border, content;
+$stacking-order: shadow, background, border, content;
 
 header[role='banner'],
 .region-primary-menu {
@@ -28,7 +34,7 @@ header[role='banner'],
   // falls back to a value of 0em displacement if the custom property is not
   // defined. Note that we have to specify a unit rather than just "0" for
   // calc().
-  top: calc(var(--displace-top, 0em) + #{$layout-gutter}) !important;
+  top: calc(var(--displace-top, 0em) + #{layout-base.$gutter}) !important;
 }
 
 header[role='banner'],
@@ -37,28 +43,28 @@ header[role='banner'],
   position: sticky;
 
   --headroom-translate-unpinned: calc(
-    -100% - #{$layout-gutter * 2} - #{$divider-thickness}
+    -100% - #{layout-base.$gutter * 2} - #{general-variables.$divider-thickness}
   );
 }
 
 .region-primary-menu {
-  @include on-sidebar-beside-content(both) {
+  @include layout-base.on-sidebar-beside-content(both) {
     // Same as above, but on wide screens.
-    top: calc(var(--displace-top, 0em) + #{$layout-gap}) !important;
+    top: calc(var(--displace-top, 0em) + #{layout-base.$gap}) !important;
 
     // Because Chrome is being dumb with rounding errors on the right edge.
-    width: calc(100% + #{$divider-thickness});
+    width: calc(100% + #{general-variables.$divider-thickness});
   }
 
   --headroom-translate-unpinned: calc(
-    -100% - #{$layout-gap * 2} - #{$divider-thickness}
+    -100% - #{layout-base.$gap * 2} - #{general-variables.$divider-thickness}
   );
 }
 
 header[role='banner'] {
   // The header is reverted to static positioning on wider screens and Headroom
   // transforms are set to zero.
-  @include on-sidebar-beside-content(both) {
+  @include layout-base.on-sidebar-beside-content(both) {
     position: static;
 
     --headroom-translate-pinned:    0;
@@ -75,59 +81,59 @@ header[role='banner'],
   &::before {
     content: '';
 
-    z-index: list.index($layout-header-stacking-order, background);
+    z-index: list.index($stacking-order, background);
   }
 
   > * {
     position: relative;
-    z-index:  list.index($layout-header-stacking-order, content);
+    z-index:  list.index($stacking-order, content);
   }
 }
 
 header[role='banner']::before {
   position: absolute;
 
-  top:      -$layout-gutter;
-  bottom:   -$layout-gutter;
+  top:      layout-base.$gutter * -1;
+  bottom:   layout-base.$gutter * -1;
 
-  @include root-conditions(('[dir=ltr]'), 'html') {
-    left:   -$layout-gutter;
-    right:  -$header-distinct-gap;
+  @include selector.root-conditions(('[dir=ltr]'), 'html') {
+    left:   layout-base.$gutter * -1;
+    right:  layout-variables.$header-distinct-gap * -1;
   }
-  @include root-conditions(('[dir=rtl]'), 'html') {
-    left:   -$header-distinct-gap;
-    right:  -$layout-gutter;
+  @include selector.root-conditions(('[dir=rtl]'), 'html') {
+    left:   layout-variables.$header-distinct-gap * -1;
+    right:  layout-base.$gutter * -1;
   }
 
   // This has no use when the site branding is in the sidebar.
-  @include on-sidebar-beside-content(both) {
+  @include layout-base.on-sidebar-beside-content(both) {
     display: none;
   }
 }
 
 .region-primary-menu::before,
 .region-primary-menu::after {
-  @include root-conditions(('[dir=ltr]'), 'html') {
-    margin-right: -$layout-gutter;
+  @include selector.root-conditions(('[dir=ltr]'), 'html') {
+    margin-right: layout-base.$gutter * -1;
   }
-  @include root-conditions(('[dir=rtl]'), 'html') {
-    margin-left:  -$layout-gutter;
+  @include selector.root-conditions(('[dir=rtl]'), 'html') {
+    margin-left:  layout-base.$gutter * -1;
   }
 }
 
 .region-primary-menu::before {
-  margin-top:     -$layout-gutter;
-  margin-bottom:  -$layout-gutter;
+  margin-top:     layout-base.$gutter * -1;
+  margin-bottom:  layout-base.$gutter * -1;
 
   grid-area: menu-primary;
 
-  @include on-sidebar-beside-content(both) {
+  @include layout-base.on-sidebar-beside-content(both) {
     position: absolute;
 
     left:   0;
     right:  0;
-    top:    -$layout-gap;
-    bottom: -$layout-gap;
+    top:    layout-base.$gap * -1;
+    bottom: layout-base.$gap * -1;
 
     margin-top:     0;
     margin-bottom:  0;
@@ -144,7 +150,7 @@ header[role='banner']::before {
   right:  0;
 
   // This has no use when the site branding is in the sidebar.
-  @include on-sidebar-beside-content(both) {
+  @include layout-base.on-sidebar-beside-content(both) {
     display: none;
   }
 }
@@ -163,7 +169,7 @@ header[role='banner']::before {
   }
 
   // This has no use when the site branding is in the sidebar.
-  @include on-sidebar-beside-content(both) {
+  @include layout-base.on-sidebar-beside-content(both) {
     display: none;
 
     // Indicate to the header JavaScript that the anchor is hidden.
@@ -174,39 +180,39 @@ header[role='banner']::before {
   // button and form. This works together with the grid-*, align-*, and
   // justify-* properties set on this element and the container overall
   // font-size.
-  top: calc(var(--displace-top, 0em) + #{$layout-gutter} + 0.3em);
+  top: calc(var(--displace-top, 0em) + #{layout-base.$gutter} + 0.3em);
 
   grid-area:    menu-primary;
   align-self:   center;
   justify-self: end;
 
-  width:  $search-button-icon-size;
-  height: $search-button-icon-size;
+  width:  search.$button-icon-size;
+  height: search.$button-icon-size;
 
   // @see {mixin} search-form-submit
-  @include root-conditions(('[dir=ltr]'), 'html') {
-    margin-right: -#{$search-button-spacing};
+  @include selector.root-conditions(('[dir=ltr]'), 'html') {
+    margin-right: -#{search.$button-spacing};
   }
-  @include root-conditions(('[dir=rtl]'), 'html') {
-    margin-left:  -#{$search-button-spacing};
+  @include selector.root-conditions(('[dir=rtl]'), 'html') {
+    margin-left:  -#{search.$button-spacing};
   }
 
   // Note that we're multiplying slightly larger just to prevent potential tiny
   // areas around the border of the button where rounding errors may allow the
   // pointer to briefly be considered over the button rather than the anchor.
-  padding: $search-button-spacing * 1.05;
+  padding: search.$button-spacing * 1.05;
 }
 
 .search-target:target ~ header[role='banner'],
 .search-target--form-has-focus ~ header[role='banner'] {
   // This hides the branding region when .search-target is the ID in the
   // location, i.e. the in-page anchor target.
-  @include headroom-unpinned;
+  @include headroom.headroom-unpinned;
 
   // This reverts the above, making the branding always visible when the
   // branding is in the sidebar.
-  @include on-sidebar-beside-content(any) {
-    @include headroom-pinned;
+  @include layout-base.on-sidebar-beside-content(any) {
+    @include headroom.headroom-pinned;
   }
 }
 
@@ -217,10 +223,10 @@ header[role='banner']::before {
   }
 
   &__search-form#{&}__search-form { // Specificity :(.
-    margin:   -$layout-gutter;
-    padding:   $layout-gutter;
+    margin:   layout-base.$gutter * -1;
+    padding:  layout-base.$gutter;
 
-    @include on-sidebar-beside-content(any) {
+    @include layout-base.on-sidebar-beside-content(any) {
       margin:   0;
       padding:  0;
     }
@@ -233,7 +239,7 @@ header[role='banner']::before {
     clip-path: inset(0);
 
     // Remove the clip-path when the site branding is in the sidebar.
-    @include on-sidebar-beside-content(any) {
+    @include layout-base.on-sidebar-beside-content(any) {
       clip-path: none;
     }
   }
@@ -242,12 +248,12 @@ header[role='banner']::before {
     display: grid;
 
     grid-template-columns: 1fr calc(
-      #{$search-button-icon-size} + #{$search-button-spacing}
+      #{search.$button-icon-size} + #{search.$button-spacing}
     );
 
     // Revert this back to the default of flexbox when the branding is in the
     // sidebar.
-    @include on-sidebar-beside-content(any) {
+    @include layout-base.on-sidebar-beside-content(any) {
       display: flex;
     }
 
@@ -256,7 +262,7 @@ header[role='banner']::before {
     > * {
       position: relative;
 
-      z-index: list.index($layout-header-stacking-order, content);
+      z-index: list.index($stacking-order, content);
     }
   }
 
@@ -267,20 +273,20 @@ header[role='banner']::before {
 
     position: absolute;
 
-    top:    -$layout-gutter;
-    bottom: -$layout-gutter;
-    left:   -$layout-gutter;
-    right:  -$layout-gutter;
+    top:    layout-base.$gutter * -1;
+    bottom: layout-base.$gutter * -1;
+    left:   layout-base.$gutter * -1;
+    right:  layout-base.$gutter * -1;
 
     // Ensure that this can't be wider than the viewport. This seems to happen
     // in Chrome, but it's unclear if it's a bug with Chrome or just due to
     // different layout stuff because it doesn't support subgrid.
     max-width: 100vw;
 
-    z-index: list.index($layout-header-stacking-order, background);
+    z-index: list.index($stacking-order, background);
 
     // This has no use when the site branding is in the sidebar.
-    @include on-sidebar-beside-content(both) {
+    @include layout-base.on-sidebar-beside-content(both) {
       display: none;
     }
   }
@@ -295,22 +301,22 @@ header[role='banner']::before {
 
     position: absolute;
 
-    top:    -$layout-gutter;
-    bottom: -$layout-gutter;
-    left:   -$layout-gutter;
-    right:  -$layout-gutter;
+    top:    layout-base.$gutter * -1;
+    bottom: layout-base.$gutter * -1;
+    left:   layout-base.$gutter * -1;
+    right:  layout-base.$gutter * -1;
 
-    @include on-sidebar-beside-content(any) {
+    @include layout-base.on-sidebar-beside-content(any) {
       display: none;
     }
   }
 
   &::before {
-    z-index: list.index($layout-header-stacking-order, border);
+    z-index: list.index($stacking-order, border);
   }
 
   &::after {
-    z-index: list.index($layout-header-stacking-order, shadow);
+    z-index: list.index($stacking-order, shadow);
   }
 }
 
@@ -318,7 +324,7 @@ header[role='banner']::before {
   // The ::before generated content provides the header bottom border on wider
   // screens (where sidebars are beside the content column, while the ::after
   // provides the shadow.
-  @include on-sidebar-beside-content(any) {
+  @include layout-base.on-sidebar-beside-content(any) {
     &::before,
     &::after {
       content: '';
@@ -327,8 +333,8 @@ header[role='banner']::before {
 
       left:   0;
       right:  0;
-      top:    -$layout-gap;
-      bottom: -$layout-gap;
+      top:    layout-base.$gap * -1;
+      bottom: layout-base.$gap * -1;
     }
   }
 }

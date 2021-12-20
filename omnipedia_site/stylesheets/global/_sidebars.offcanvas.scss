@@ -2,19 +2,27 @@
 //   Offcanvas sidebars partial
 // -----------------------------------------------------------------------------
 
+@use 'material.ripple' as material-ripple;
+@use 'sass/helpers/breakpoint';
+@use 'sass/helpers/colour';
+@use 'sass/helpers/selector';
+@use 'sass/variables/motion';
+@use '../variables/colours';
+@use '../variables/general' as general-variables;
+
 // @see ./_layout.sidebars.scss
 //   Describes the offcanvas sidebar elements and their functions.
 
 ///
 /// Header shadow on light backgrounds.
 ///
-$offcanvas-sidebars-shadow-on-light:
+$shadow-on-light:
   var(--offcanvas-sidebars-shadow-x-offset) 0 3px rgba(0, 0, 0, 0.3);
 
 ///
 /// Header shadow on dark backgrounds.
 ///
-$offcanvas-sidebars-shadow-on-dark:
+$shadow-on-dark:
   var(--offcanvas-sidebars-shadow-x-offset) 0 3px rgba(0, 0, 0, 0.8);
 
 :root {
@@ -22,7 +30,7 @@ $offcanvas-sidebars-shadow-on-dark:
     --offcanvas-sidebars-hidden-translate-x:  100%;
     --offcanvas-sidebars-shadow-x-offset:    -1px;
 
-    @include on-dark-colour-scheme {
+    @include colour.on-dark-scheme {
       --offcanvas-sidebars-shadow-x-offset:    -2px;
     }
   }
@@ -30,14 +38,14 @@ $offcanvas-sidebars-shadow-on-dark:
     --offcanvas-sidebars-hidden-translate-x: -100%;
     --offcanvas-sidebars-shadow-x-offset:     1px;
 
-    @include on-dark-colour-scheme {
+    @include colour.on-dark-scheme {
       --offcanvas-sidebars-shadow-x-offset:     2px;
     }
   }
 }
 
 .layout-sidebars {
-  @include media('<layout-with-both-sidebars') {
+  @include breakpoint.on('<layout-with-both-sidebars') {
 
     will-change: transform, opacity;
 
@@ -56,14 +64,14 @@ $offcanvas-sidebars-shadow-on-dark:
     // compensate for the different easing, making it feel similar in duration
     // to the transition in.
     transition-duration:        0.2s;
-    transition-timing-function: $easing-accelerate;
+    transition-timing-function: motion.$easing-accelerate;
 
     // These are used when transitioning into view, i.e. is opening. The panel
     // comes in at full speed and decelerates to a stop.
     &:target,
     &:focus-within {
       transition-duration:        0.3s;
-      transition-timing-function: $easing-decelerate;
+      transition-timing-function: motion.$easing-decelerate;
     }
 
     // Don't transition transforms if the user indicates they prefer reduced
@@ -89,32 +97,34 @@ $offcanvas-sidebars-shadow-on-dark:
     }
 
     &::after {
-      box-shadow: $offcanvas-sidebars-shadow-on-light;
+      box-shadow: $shadow-on-light;
 
-      @include on-dark-colour-scheme {
-        box-shadow: $offcanvas-sidebars-shadow-on-dark;
+      @include colour.on-dark-scheme {
+        box-shadow: $shadow-on-dark;
       }
     }
 
     &__wrapper {
-      @include set-colours($background: $background-colour-light);
+      @include colour.set($background: colour.$background-light);
 
-      @include on-dark-colour-scheme {
-        @include set-colours($background: $background-colour-dark);
+      @include colour.on-dark-scheme {
+        @include colour.set($background: colour.$background-dark);
       }
 
-      @include root-conditions(('[dir=ltr]'), 'html') {
-        border-left: $divider-thickness solid $divider-colour-on-light;
+      @include selector.root-conditions(('[dir=ltr]'), 'html') {
+        border-left:
+          general-variables.$divider-thickness solid colours.$divider-on-light;
 
-        @include on-dark-colour-scheme {
-          border-left-color: $divider-colour-on-dark;
+        @include colour.on-dark-scheme {
+          border-left-color: colours.$divider-on-dark;
         }
       }
-      @include root-conditions(('[dir=rtl]'), 'html') {
-        border-right: $divider-thickness solid $divider-colour-on-light;
+      @include selector.root-conditions(('[dir=rtl]'), 'html') {
+        border-right:
+          general-variables.$divider-thickness solid colours.$divider-on-light;
 
-        @include on-dark-colour-scheme {
-          border-right-color: $divider-colour-on-dark;
+        @include colour.on-dark-scheme {
+          border-right-color: colours.$divider-on-dark;
         }
       }
     }
@@ -140,7 +150,7 @@ $offcanvas-sidebars-shadow-on-dark:
     }
 
     &__close {
-      @include material-ripple;
+      @include material-ripple.material-ripple;
     }
   }
 }

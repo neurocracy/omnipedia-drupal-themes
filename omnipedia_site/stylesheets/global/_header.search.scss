@@ -2,8 +2,14 @@
 //   Site header - Search
 // -----------------------------------------------------------------------------
 
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout' as layout-base;
+@use 'headroom';
+@use 'material.ripple' as material-ripple;
+@use 'sass/variables/motion';
+@use '../variables/layout' as layout-variables;
+
 .search-anchor {
-  @include material-ripple;
+  @include material-ripple.material-ripple;
 }
 
 // Everything past this point enables the search field to be shown and the
@@ -19,11 +25,13 @@
   &__search-form .form--inline::before,
   &__search-form .form-item-terms {
     transition-property:  transform;
-    transition-duration:  var(--headroom-duration, #{$headroom-duration});
+    transition-duration:  var(
+      --headroom-duration, #{headroom.$headroom-duration}
+    );
 
     will-change: transform;
 
-    @include on-sidebar-beside-content(any) {
+    @include layout-base.on-sidebar-beside-content(any) {
       transition-property: none;
 
       will-change: none;
@@ -34,7 +42,7 @@
   &__menu {
     transform: translateY(0);
 
-    transition-timing-function: $easing-decelerate;
+    transition-timing-function: motion.$easing-decelerate;
   }
 
   .search-target:target ~ * &,
@@ -42,12 +50,13 @@
     &__current-date,
     &__menu {
       transform: translateY(calc(
-        -#{$header-row-height} - #{$layout-gap} - #{$layout-gap} - 0.2em
+        -#{layout-variables.$header-row-height} - #{layout-base.$gap} -
+        #{layout-base.$gap} - 0.2em
       ));
 
-      transition-timing-function: $easing-accelerate;
+      transition-timing-function: motion.$easing-accelerate;
 
-      @include on-sidebar-beside-content(any) {
+      @include layout-base.on-sidebar-beside-content(any) {
         transform: none;
       }
     }
@@ -59,9 +68,9 @@
     .form-item-terms {
       transform: translateY(100%);
 
-      transition-timing-function: $easing-accelerate;
+      transition-timing-function: motion.$easing-accelerate;
 
-      @include on-sidebar-beside-content(any) {
+      @include layout-base.on-sidebar-beside-content(any) {
         transform: none;
       }
     }
@@ -74,9 +83,9 @@
       // -1px rather than 0 to avoid potential rounding errors causing a gap.
       transform: translateY(-1px);
 
-      transition-timing-function: $easing-decelerate;
+      transition-timing-function: motion.$easing-decelerate;
 
-      @include on-sidebar-beside-content(any) {
+      @include layout-base.on-sidebar-beside-content(any) {
         transform: none;
       }
     }

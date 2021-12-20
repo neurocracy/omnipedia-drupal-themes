@@ -1,9 +1,5 @@
-// -----------------------------------------------------------------------------
-//   EU cookie compliance pop-up partial
-// -----------------------------------------------------------------------------
-
-@import '_eu_cookie_compliance.layout.scss';
-@import '_eu_cookie_compliance.background.scss';
-@import '_eu_cookie_compliance.shadow.scss';
-@import '_eu_cookie_compliance.content.scss';
-@import '_eu_cookie_compliance.toggle.scss';
+@use 'eu_cookie_compliance.layout' as *;
+@use 'eu_cookie_compliance.background' as *;
+@use 'eu_cookie_compliance.shadow' as *;
+@use 'eu_cookie_compliance.content' as *;
+@use 'eu_cookie_compliance.toggle' as *;

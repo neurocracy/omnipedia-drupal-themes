@@ -2,17 +2,23 @@
 //   Omnipedia founder message partial
 // -----------------------------------------------------------------------------
 
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout' as layout-base;
+@use 'founder_message/_founder_message' as founder-message;
+@use '../global/card';
 @use 'sass:list';
+@use 'sass/helpers/colour';
+@use 'sass/helpers/layout';
+@use 'sass/helpers/selector';
 
 ///
 /// Founder block background logo URL.
 ///
-$founder-block-background-logo-url: '../images/logo_faded_greyscale.svg?v=1';
+$block-background-logo-url: '../images/logo_faded_greyscale.svg?v=1';
 
 ///
 /// Founder message stacking order. Later in the list means a higher z-index.
 ///
-$founder-message-stacking-order: background, content;
+$stacking-order: background, content;
 
 ///
 /// Set the background for the founder message block.
@@ -30,11 +36,11 @@ $founder-message-stacking-order: background, content;
 ///   Explanation of why we use a colour with zero opacity instead of
 ///   'transparent'.
 ///
-@mixin founder-block-background($direction: ltr) {
+@mixin background($direction: ltr) {
 
   background-image:
     // Faded Omnipedia logo.
-    url($founder-block-background-logo-url),
+    url($block-background-logo-url),
     // Gradient going between the primary content background colour and a
     // slightly darker version of the primary content background colour.
     linear-gradient(
@@ -43,10 +49,10 @@ $founder-message-stacking-order: background, content;
       hsla(0, 0%, 0%, 0)
     );
 
-  @include on-dark-colour-scheme {
+  @include colour.on-dark-scheme {
     background-image:
       // Faded Omnipedia logo.
-      url($founder-block-background-logo-url),
+      url($block-background-logo-url),
       // Gradient going between the primary content background colour and a
       // slightly light version of the primary content background colour.
       linear-gradient(
@@ -64,43 +70,43 @@ $founder-message-stacking-order: background, content;
 .block-omnipedia-founder-message {
 
   // Vertical padding always uses the full padding value.
-  padding-top:    $founder-block-padding;
-  padding-bottom: $founder-block-padding;
+  padding-top:    founder-message.$block-padding;
+  padding-bottom: founder-message.$block-padding;
 
-  // On smaller screen widths, we use the $layout-gutter since the content
+  // On smaller screen widths, we use the layout.$gutter since the content
   // columm is flush with the sides of the viewport and this matches the rest of
   // the content.
-  padding-left:   $layout-gutter;
-  padding-right:  $layout-gutter;
+  padding-left:   layout-base.$gutter;
+  padding-right:  layout-base.$gutter;
 
   // This pulls the block flush with the edges of the viewport.
-  margin-left:   -$layout-gutter;
-  margin-right:  -$layout-gutter;
+  margin-left:    layout-base.$gutter * -1;
+  margin-right:   layout-base.$gutter * -1;
   max-width:      none;
 
   // On smaller screen widths, we just set vertical padding to match the card
   // styles, without horizontal borders.
   border-top:
-    $omnipedia-card-border-width solid $omnipedia-card-border-colour-on-light;
+    card.$border-width solid card.$border-colour-on-light;
   border-bottom:
-    $omnipedia-card-border-width solid $omnipedia-card-border-colour-on-light;
+    card.$border-width solid card.$border-colour-on-light;
 
-  @include on-dark-colour-scheme {
-    border-top-color:     $omnipedia-card-border-colour-on-dark;
-    border-bottom-color:  $omnipedia-card-border-colour-on-dark;
+  @include colour.on-dark-scheme {
+    border-top-color:     card.$border-colour-on-dark;
+    border-bottom-color:  card.$border-colour-on-dark;
   }
 
   // When we're using the layout with sidebars on either side of the content
   // column, switch to using the full card styles and set larger padding on all
   // sides.
-  @include on-sidebar-beside-content('any') {
+  @include layout-base.on-sidebar-beside-content('any') {
 
-    @include omnipedia-card;
+    @include card.base;
 
     margin-left:  0;
     margin-right: 0;
 
-    padding: $founder-block-padding;
+    padding: founder-message.$block-padding;
 
   }
 
@@ -117,19 +123,19 @@ $founder-message-stacking-order: background, content;
     left:   0;
     right:  0;
 
-    z-index: list.index($founder-message-stacking-order, background);
+    z-index: list.index($stacking-order, background);
 
-    @include root-conditions(('[dir=ltr]'), 'html') {
-      @include founder-block-background($direction: ltr);
+    @include selector.root-conditions(('[dir=ltr]'), 'html') {
+      @include background($direction: ltr);
     }
-    @include root-conditions(('[dir=rtl]'), 'html') {
-      @include founder-block-background($direction: rtl);
+    @include selector.root-conditions(('[dir=rtl]'), 'html') {
+      @include background($direction: rtl);
     }
 
   }
 
   &::after {
-    z-index: list.index($founder-message-stacking-order, content);
+    z-index: list.index($stacking-order, content);
   }
 
   .block__title,
@@ -137,14 +143,14 @@ $founder-message-stacking-order: background, content;
 
     position: relative;
 
-    z-index: list.index($founder-message-stacking-order, content);
+    z-index: list.index($stacking-order, content);
 
     // @todo This causes performance issues on mobile; can this be applied only
     //   on high powered devices somehow?
     //
     // text-shadow: 0 0 3px white;
     //
-    // @include on-dark-colour-scheme {
+    // @include colour.on-dark-scheme {
     //   text-shadow: 0 0 3px black;
     // }
 

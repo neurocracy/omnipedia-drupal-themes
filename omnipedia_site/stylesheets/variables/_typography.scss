@@ -12,12 +12,17 @@ $font-size-big-screen: 87%;
 ///
 /// Font weight for normal (non-bold) text.
 ///
-$font-weight-normal:  400;
+$font-weight-normal: 400;
 
 ///
 /// Font weight for bold text.
 ///
-$font-weight-strong:  700;
+$font-weight-strong: 700;
+
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/typography' with (
+  $font-weight-normal: $font-weight-normal,
+  $font-weight-strong: $font-weight-strong,
+);
 
 ///
 /// The heading font stack.
@@ -32,6 +37,11 @@ $heading-font-stack: 'Exo2', 'Linux Libertine', 'Georgia', 'Times', serif;
 /// Bold is too heavy so we use the normal weight.
 ///
 $heading-font-weight: $font-weight-normal;
+
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/typography.heading' as typography-heading with (
+  $heading-font-stack:  $heading-font-stack,
+  $heading-font-weight: $heading-font-weight,
+);
 
 ///
 /// Shared text decoration thickness.

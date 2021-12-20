@@ -2,8 +2,11 @@
 //   Site layout - Primary menu region
 // -----------------------------------------------------------------------------
 
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout' as layout-base;
+@use 'sass/helpers/layout';
+
 .region-primary-menu {
-  @include use-grid {
+  @include layout.use-grid {
     // This aligns any blocks vertically along the X axis.
     display:        grid;
     align-content:  center;
@@ -16,7 +19,7 @@
   pointer-events: none;
 
   // Revert back to auto when the site branding is in the sidebar.
-  @include on-sidebar-beside-content(any) {
+  @include layout-base.on-sidebar-beside-content(any) {
     pointer-events: auto;
   }
 

@@ -2,9 +2,12 @@
 //   Abbreviation element partial
 // -----------------------------------------------------------------------------
 
+@use 'abbr';
+@use '../variables/typography' as typography-variables;
+
 .layout-container {
-  @include abbr {
-    text-underline-offset: $text-decoration-offset;
+  @include abbr.abbr {
+    text-underline-offset: typography-variables.$text-decoration-offset;
 
     // This is to match our Wikimedia pseudo-links.
     cursor: pointer;

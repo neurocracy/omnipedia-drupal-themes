@@ -2,7 +2,11 @@
 //   Current date block partial
 // -----------------------------------------------------------------------------
 
-@include add-breakpoints((
+@use 'sass/helpers/breakpoint';
+@use 'sass/helpers/hide';
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout';
+
+@include breakpoint.add((
   'omnipedia-current-date-visible':           32em,
   'omnipedia-current-date-font-size-larger':  40em,
 ));
@@ -10,8 +14,8 @@
 .omnipedia-current-date {
   display: block;
 
-  @include media('<omnipedia-current-date-visible') {
-    @include hide-me;
+  @include breakpoint.on('<omnipedia-current-date-visible') {
+    @include hide.me;
   }
 
   font-size:    100%;
@@ -22,11 +26,11 @@
 
   opacity: 0.6;
 
-  @include media('>=omnipedia-current-date-font-size-larger') {
+  @include breakpoint.on('>=omnipedia-current-date-font-size-larger') {
     font-size: 120%;
   }
 
-  @include on-sidebar-beside-content(any) {
+  @include layout.on-sidebar-beside-content(any) {
     font-size:  150%;
   }
 }

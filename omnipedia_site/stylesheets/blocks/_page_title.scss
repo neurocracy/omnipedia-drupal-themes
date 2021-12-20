@@ -2,13 +2,16 @@
 //   Page title block partial
 // -----------------------------------------------------------------------------
 
+@use 'sass/helpers/hide';
+@use 'sass/helpers/selector';
+
 // @see ../global/_typography.scss
 //   Contains typography/font properties for the page title.
 
 .block-page-title-block {
   // Hide the page title visually on main pages as it's not really needed.
   .omnipedia--is-main-page & {
-    @include hide-me;
+    @include hide.me;
 
     // Completely remove contextual links so that they cannot be focused.
     .contextual {
@@ -38,10 +41,10 @@
 
     // This adds a bit of extra space between the primary and secondary
     // sections.
-    @include root-conditions(('[dir=ltr]'), 'html') {
+    @include selector.root-conditions(('[dir=ltr]'), 'html') {
       padding-right: 0.4em;
     }
-    @include root-conditions(('[dir=rtl]'), 'html') {
+    @include selector.root-conditions(('[dir=rtl]'), 'html') {
       padding-left: 0.4em;
     }
   }

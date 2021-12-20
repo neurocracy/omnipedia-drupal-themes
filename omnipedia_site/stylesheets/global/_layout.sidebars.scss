@@ -2,6 +2,12 @@
 //   Site layout - Sidebars
 // -----------------------------------------------------------------------------
 
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/content';
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout' as layout-base;
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout.vertical_spacing' as vertical-spacing;
+@use 'sass/helpers/breakpoint';
+@use 'sass/helpers/selector';
+
 // This positions the sidebars container as an offcanvas panel on small screens
 // where sidebars cannot be placed alongside the content column.
 //
@@ -50,7 +56,7 @@
   // Indicate to the sidebars JavaScript that sidebars are not off-canvas.
   --omnipedia-sidebars-off-canvas: false;
 
-  @include media('<layout-with-both-sidebars') {
+  @include breakpoint.on('<layout-with-both-sidebars') {
     // Indicate to the sidebars JavaScript that sidebars are off-canvas.
     --omnipedia-sidebars-off-canvas: true;
 
@@ -59,10 +65,10 @@
     top:    0;
     bottom: 0;
 
-    @include root-conditions(('[dir=ltr]'), 'html') {
+    @include selector.root-conditions(('[dir=ltr]'), 'html') {
       right: 0;
     }
-    @include root-conditions(('[dir=rtl]'), 'html') {
+    @include selector.root-conditions(('[dir=rtl]'), 'html') {
       left: 0;
     }
 
@@ -76,13 +82,13 @@
       // Scroll if the sidebar content doesn't fit in the vertical space.
       overflow-y: auto;
 
-      padding: $layout-gutter;
+      padding: layout-base.$gutter;
 
       // This should roughly account for the close button.
       //
       // @todo Find a way to sync this with the actual expected height of the
       //   button.
-      padding-bottom: calc(#{$layout-gutter} + 3.5em);
+      padding-bottom: calc(#{layout-base.$gutter} + 3.5em);
     }
 
     // Shadow element. See documentation at the top of this partial.
@@ -113,13 +119,13 @@
 
       position: absolute;
 
-      bottom:   $layout-gutter;
+      bottom:   layout-base.$gutter;
 
-      @include root-conditions(('[dir=ltr]'), 'html') {
-        right:  $layout-gutter;
+      @include selector.root-conditions(('[dir=ltr]'), 'html') {
+        right:  layout-base.$gutter;
       }
-      @include root-conditions(('[dir=rtl]'), 'html') {
-        left:   $layout-gutter;
+      @include selector.root-conditions(('[dir=rtl]'), 'html') {
+        left:   layout-base.$gutter;
       }
 
       // Ensure that this is above other elements.
@@ -163,7 +169,7 @@
     }
   }
 
-  @include on-sidebar-beside-content(both) {
+  @include layout-base.on-sidebar-beside-content(both) {
     // This causes the container's children to act as if the container doesn't
     // exist for layout purposes, including grid placement. This has better
     // support currently than subgrid, which is not available in Chrome as of
@@ -179,15 +185,15 @@
   }
 
   .block + .block {
-    @include vertical-spacing(
-      $spacing-small: $content-item-vertical-spacing-small * 3,
-      $spacing-large: $content-item-vertical-spacing-large * 3,
+    @include vertical-spacing.vertical-spacing(
+      $spacing-small: content.$item-vertical-spacing-small * 3,
+      $spacing-large: content.$item-vertical-spacing-large * 3,
     );
   }
 }
 
 .region-sidebar-second {
-  @include on-sidebar-beside-content(both) {
+  @include layout-base.on-sidebar-beside-content(both) {
     // This adjusts the top of the first block's title with the adjacent main
     // content box .
     .block:first-child .block__title {

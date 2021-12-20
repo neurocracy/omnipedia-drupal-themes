@@ -2,11 +2,14 @@
 //   EU cookie compliance pop-up background partial
 // -----------------------------------------------------------------------------
 
+@use 'sass/helpers/colour';
+@use '../variables/colours';
+
 .eu-cookie-compliance-popup {
 
   &,
   .eu-cookie-withdraw-tab {
-    @include set-colours($background: $omnipedia-blue);
+    @include colour.set($background: colours.$omnipedia-blue);
   }
 
 }

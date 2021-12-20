@@ -2,12 +2,16 @@
 //   Site layout - Grid
 // -----------------------------------------------------------------------------
 
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout' as layout-base;
+@use 'sass/helpers/breakpoint';
+@use 'sass/helpers/layout';
 @use 'sass:math';
+@use '../variables/layout' as layout-variables;
 
 ///
 /// The Omnipedia grid definition in compact layout (narrow screens).
 ///
-@mixin omnipedia-layout-grid-compact {
+@mixin grid-compact {
   grid-template-areas:
     'branding       menu-primary'
     'main-content   main-content'
@@ -16,7 +20,10 @@
     'footer         footer';
 
   grid-template-rows:
-    minmax($branding-compact-size-min, $branding-compact-size-max)
+    minmax(
+      layout-variables.$branding-compact-size-min,
+      layout-variables.$branding-compact-size-max
+    )
     1fr
     min-content
     min-content
@@ -24,16 +31,16 @@
 
   grid-template-columns: minmax(10em, 1fr) 2fr;
 
-  grid-row-gap:     $layout-gutter;
+  grid-row-gap:     layout-base.$gutter;
   // This adds a bigger gap between the site branding and header items to ensure
   // they read as separate elements.
-  grid-column-gap:  $header-distinct-gap;
+  grid-column-gap: layout-variables.$header-distinct-gap;
 }
 
 ///
 /// The Omnipedia grid definition on wider screens.
 ///
-@mixin omnipedia-layout-grid-wide {
+@mixin grid-wide {
   grid-template-areas:
     'branding       menu-primary  ....'
     'branding       main-content  sidebar-second'
@@ -41,7 +48,7 @@
     '....           footer        ....';
 
   grid-template-rows:
-    $header-row-height
+    layout-variables.$header-row-height
     min-content
     1fr
     min-content;
@@ -49,15 +56,15 @@
 
 // Common stuff regardless of whether subgrid is supported.
 .layout-container {
-  @include media('<layout-with-both-sidebars') {
-    margin-top: $layout-gutter;
+  @include breakpoint.on('<layout-with-both-sidebars') {
+    margin-top: layout-base.$gutter;
   }
 
-  @include on-sidebar-beside-content(any) {
+  @include layout-base.on-sidebar-beside-content(any) {
     // On wider screens, the horizontal padding on either side of the layout
     // matches the layout gap between columns.
-    padding-left:   $layout-gap;
-    padding-right:  $layout-gap;
+    padding-left:   layout-base.$gap;
+    padding-right:  layout-base.$gap;
   }
 
   header[role='banner'] {
@@ -65,7 +72,7 @@
   }
 
   .region-primary-menu {
-    @include media('<layout-with-both-sidebars') {
+    @include breakpoint.on('<layout-with-both-sidebars') {
       &,
       .block,
       .omnipedia-header {
@@ -77,7 +84,7 @@
 
     // Required to override ambientimpact_base/stylesheets/global/_layout.scss
     // when that applies its wider screen layout grid.
-    @include on-sidebar-beside-content(both) {
+    @include layout-base.on-sidebar-beside-content(both) {
       grid-area: menu-primary;
     }
   }
@@ -102,11 +109,11 @@
     grid-column-start:  main-content;
     grid-column-end:    main-content;
   }
-  @include use-grid {
+  @include layout.use-grid {
     .layout-container {
       display: grid;
 
-      @include omnipedia-layout-grid-compact;
+      @include grid-compact;
     }
 
     main[role='main'] {
@@ -120,7 +127,7 @@
     }
 
     .region-primary-menu {
-      @include media('<layout-with-both-sidebars') {
+      @include breakpoint.on('<layout-with-both-sidebars') {
         &,
         .block,
         .omnipedia-header,
@@ -137,9 +144,9 @@
       }
     }
 
-    @include on-sidebar-beside-content(both) {
+    @include layout-base.on-sidebar-beside-content(both) {
       .layout-container {
-        @include omnipedia-layout-grid-wide;
+        @include grid-wide;
       }
 
       main[role='main'] {
@@ -192,11 +199,11 @@
 // main[role='main'].
 @supports not (grid-template-columns: subgrid) {
   .layout-container {
-    // These have to be placed outside of the @include use-grid because they
+    // These have to be placed outside of the @include layout.use-grid because they
     // also use the mixin and double nesting would cause two nested
     // body.use-grid selectors which would never match.
-    @include layout-grid;
-    @include layout-max-width;
+    @include layout-base.grid;
+    @include layout-base.max-width;
   }
 
   // This must span the full width of the parent's grid and the full rows of the
@@ -208,14 +215,14 @@
     grid-row-end:       main-content;
   }
 
-  @include use-grid {
+  @include layout.use-grid {
     .layout-container {
       display: grid;
 
-      @include omnipedia-layout-grid-compact;
+      @include grid-compact;
 
-      @include on-sidebar-beside-content(both) {
-        @include omnipedia-layout-grid-wide;
+      @include layout-base.on-sidebar-beside-content(both) {
+        @include grid-wide;
       }
 
       margin-left:  auto;
@@ -230,12 +237,12 @@
     }
 
     .region-primary-menu {
-      @include media('<layout-with-both-sidebars') {
+      @include breakpoint.on('<layout-with-both-sidebars') {
         &,
         .block {
           display: grid;
 
-          @include omnipedia-layout-grid-compact;
+          @include grid-compact;
 
           grid-row-gap: 0;
         }
@@ -243,7 +250,7 @@
     }
 
     .layout-sidebar-first {
-      @include on-sidebar-beside-content(both) {
+      @include layout-base.on-sidebar-beside-content(both) {
         // @todo Why doesn't 'first' parameter work here?
         &::before {
           content: '';
@@ -254,7 +261,8 @@
           padding-top: math.div(128 + 20 + 13, 128) * 100%;
 
           // Don't forget the spacing between elements!
-          margin-bottom: $branding-spacing * 2 + $layout-gap;
+          margin-bottom:
+            layout-variables.$branding-spacing * 2 + layout-base.$gap;
         }
       }
     }

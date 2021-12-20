@@ -2,6 +2,8 @@
 //   Site header - Overlay
 // -----------------------------------------------------------------------------
 
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout' as layout-base;
+
 // This provides the overlay for the header in compact mode.
 //
 // @see ../components/_overlay.scss
@@ -10,7 +12,7 @@
 main[role="main"]::before {
   content: '';
 
-  @include on-sidebar-beside-content(any) {
+  @include layout-base.on-sidebar-beside-content(any) {
     content: none;
 
     will-change: none;

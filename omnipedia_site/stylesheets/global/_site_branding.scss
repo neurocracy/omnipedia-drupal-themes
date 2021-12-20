@@ -2,31 +2,39 @@
 //   Site branding
 // -----------------------------------------------------------------------------
 
-@include on-dark-colour-scheme {
+@use 'sass/helpers/breakpoint';
+@use 'sass/helpers/colour';
+@use 'sass/helpers/layout';
+@use '../variables/layout' as layout-variables;
+
+@include colour.on-dark-scheme {
   // Invert the slogan image on dark theme since it's black text.
   .site-slogan {
     filter: invert(100%);
   }
 }
 
-@include use-grid {
+@include layout.use-grid {
   .block-system-branding-block {
     display: grid;
 
     grid-template-areas:  'logo name'
                           'logo slogan';
     grid-template-columns:
-      minmax($branding-compact-size-min, $branding-compact-size-max)
+      minmax(
+        layout-variables.$branding-compact-size-min,
+        layout-variables.$branding-compact-size-max
+      )
       minmax(7em, 1fr);
-    grid-gap: $branding-spacing;
+    grid-gap: layout-variables.$branding-spacing;
 
     // This is to prevent any potential layout shifting during page load.
-    height: $branding-compact-size-max;
+    height: layout-variables.$branding-compact-size-max;
 
     // When sidebars are beside the content column, display as block. This will
     // invalidate all grid-*/align-*/justify-* properties, allowing the branding
     // to be stacked vertically and saving us a lot of work.
-    @include media('>=layout-with-both-sidebars') {
+    @include breakpoint.on('>=layout-with-both-sidebars') {
       display: block;
 
       height: auto;
@@ -70,11 +78,11 @@
     }
   }
 
-  @include media('>=layout-with-both-sidebars') {
+  @include breakpoint.on('>=layout-with-both-sidebars') {
     // Add margins between the logo, name, and slogan when stacked vertically.
     .site-name,
     .site-slogan {
-      margin-top: $branding-spacing;
+      margin-top: layout-variables.$branding-spacing;
     }
 
     // Ensure that the site logo and name images expand to the full width of

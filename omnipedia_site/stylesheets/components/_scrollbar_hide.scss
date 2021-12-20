@@ -3,6 +3,10 @@
 // -----------------------------------------------------------------------------
 
 @use 'sass:color';
+@use 'sass/helpers/colour';
+@use 'sass/helpers/selector';
+@use 'sass/variables/motion';
+@use '../variables/colours';
 
 // The scrollbar hiding consists of 3 required elements and 2 optional elements.
 //
@@ -30,7 +34,7 @@
 ///
 /// This is how long it takes the scrollbars to transition into or out of view.
 ///
-$scrollbar-hide-transition-duration: 200ms;
+$transition-duration: 200ms;
 
 ///
 /// Scrollbar hide: extra space.
@@ -38,7 +42,7 @@ $scrollbar-hide-transition-duration: 200ms;
 /// This is a small amount of extra space to account for sub-pixel rounding
 /// errors, i.e. to prevent the edge of the scrollbar being visible when hidden.
 ///
-$scrollbar-hide-extra-space: 1px;
+$extra-space: 1px;
 
 ///
 /// Scrollbar hide: get the scroller edge from provided text direction.
@@ -76,13 +80,13 @@ $scrollbar-hide-extra-space: 1px;
 ///   Explanation of why we use the background colour with zero opacity instead
 ///   of 'transparent'.
 ///
-/// @require {variable} $easing-accelerate
+/// @require {variable} motion.$easing-accelerate
 ///
-@function scrollbar-hide-gradient($direction, $background-colour) {
+@function gradient($direction, $background-colour) {
   @return linear-gradient(
     to #{$direction},
     #{$background-colour},
-    #{$easing-accelerate},
+    #{motion.$easing-accelerate},
     #{color.adjust($background-colour, $alpha: -1)}
   );
 }
@@ -90,15 +94,15 @@ $scrollbar-hide-extra-space: 1px;
 ///
 /// Scrollbar hide: container base styles.
 ///
-/// @require {variable} $easing-accelerate
-/// @require {variable} $easing-decelerate
-/// @require {variable} $scrollbar-hide-transition-duration
+/// @require {variable} motion.$easing-accelerate
+/// @require {variable} motion.$easing-decelerate
+/// @require {variable} $transition-duration
 ///
-@mixin scrollbar-hide-container {
+@mixin container {
 
-  --scrollbar-hide-transition-duration: #{$scrollbar-hide-transition-duration};
-  --scrollbar-hide-easing-showing:      #{$easing-decelerate};
-  --scrollbar-hide-easing-hiding:       #{$easing-accelerate};
+  --scrollbar-hide-transition-duration: #{$transition-duration};
+  --scrollbar-hide-easing-showing:      #{motion.$easing-decelerate};
+  --scrollbar-hide-easing-hiding:       #{motion.$easing-accelerate};
 
   --scrollbar-hide-fade-distance: 2em;
 
@@ -113,17 +117,17 @@ $scrollbar-hide-extra-space: 1px;
 ///
 /// Scrollbar hide: scroller element base styles.
 ///
-/// @require {mixin} scrollbar-hide-scroller-directional
+/// @require {mixin} scroller-directional
 ///
-@mixin scrollbar-hide-scroller {
+@mixin scroller {
 
   overflow-y: auto;
 
   // Reset ambientimpact_base so that this can exceed 100% width.
   max-width: none;
 
-  @include scrollbar-hide-scroller-directional(ltr);
-  @include scrollbar-hide-scroller-directional(rtl);
+  @include scroller-directional(ltr);
+  @include scroller-directional(rtl);
 
   transition-duration:        var(--scrollbar-hide-transition-duration);
   transition-timing-function: var(--scrollbar-hide-easing-hiding);
@@ -152,18 +156,18 @@ $scrollbar-hide-extra-space: 1px;
 ///
 /// @require {function} scrollbar-edge-from-text-dir
 ///
-/// @require {mixin} root-conditions
+/// @require {mixin} selector.root-conditions
 ///
-/// @require {variable} $scrollbar-hide-extra-space
+/// @require {variable} $extra-space
 ///
-@mixin scrollbar-hide-scroller-directional($direction: ltr) {
+@mixin scroller-directional($direction: ltr) {
 
   $scrollbar-edge: scrollbar-edge-from-text-dir($direction);
 
-  @include root-conditions(('[dir=#{$direction}]'), 'html') {
+  @include selector.root-conditions(('[dir=#{$direction}]'), 'html') {
 
     margin-#{$scrollbar-edge}: calc(
-      var(--scrollbar-gutter, 0) * -1 - #{$scrollbar-hide-extra-space}
+      var(--scrollbar-gutter, 0) * -1 - #{$extra-space}
     );
 
     transition-property: margin-#{$scrollbar-edge};
@@ -175,14 +179,14 @@ $scrollbar-hide-extra-space: 1px;
 ///
 /// Scrollbar hide: scroller element styles, scrollbar visible.
 ///
-/// @require {mixin} scrollbar-hide-scroller-scrollbar-visible-directional
+/// @require {mixin} scroller-scrollbar-visible-directional
 ///
-@mixin scrollbar-hide-scroller-scrollbar-visible {
+@mixin scroller-scrollbar-visible {
 
   transition-timing-function: var(--scrollbar-hide-easing-showing);
 
-  @include scrollbar-hide-scroller-scrollbar-visible-directional(ltr);
-  @include scrollbar-hide-scroller-scrollbar-visible-directional(rtl);
+  @include scroller-scrollbar-visible-directional(ltr);
+  @include scroller-scrollbar-visible-directional(rtl);
 
 }
 
@@ -194,13 +198,13 @@ $scrollbar-hide-extra-space: 1px;
 ///
 /// @require {function} scrollbar-edge-from-text-dir
 ///
-/// @require {mixin} root-conditions
+/// @require {mixin} selector.root-conditions
 ///
-@mixin scrollbar-hide-scroller-scrollbar-visible-directional($direction: ltr) {
+@mixin scroller-scrollbar-visible-directional($direction: ltr) {
 
   $scrollbar-edge: scrollbar-edge-from-text-dir($direction);
 
-  @include root-conditions(('[dir=#{$direction}]'), 'html') {
+  @include selector.root-conditions(('[dir=#{$direction}]'), 'html') {
     margin-#{$scrollbar-edge}: 0;
   }
 
@@ -209,12 +213,12 @@ $scrollbar-hide-extra-space: 1px;
 ///
 /// Scrollbar hide: child element base styles.
 ///
-/// @require {mixin} scrollbar-hide-child-directional
+/// @require {mixin} child-directional
 ///
-@mixin scrollbar-hide-child {
+@mixin child {
 
-  @include scrollbar-hide-child-directional(ltr);
-  @include scrollbar-hide-child-directional(rtl);
+  @include child-directional(ltr);
+  @include child-directional(rtl);
 
   // Rather than duplicating the values from the parent, just inherit transition
   // properties.
@@ -236,18 +240,18 @@ $scrollbar-hide-extra-space: 1px;
 ///
 /// @require {function} scrollbar-edge-from-text-dir
 ///
-/// @require {mixin} root-conditions
+/// @require {mixin} selector.root-conditions
 ///
-/// @require {variable} $scrollbar-hide-extra-space
+/// @require {variable} $extra-space
 ///
-@mixin scrollbar-hide-child-directional($direction: ltr) {
+@mixin child-directional($direction: ltr) {
 
   $scrollbar-edge: scrollbar-edge-from-text-dir($direction);
 
-  @include root-conditions(('[dir=#{$direction}]'), 'html') {
+  @include selector.root-conditions(('[dir=#{$direction}]'), 'html') {
 
     padding-#{$scrollbar-edge}: calc(
-      var(--scrollbar-gutter, 0) + #{$scrollbar-hide-extra-space}
+      var(--scrollbar-gutter, 0) + #{$extra-space}
     );
 
     transition-property: padding-#{$scrollbar-edge};
@@ -259,11 +263,11 @@ $scrollbar-hide-extra-space: 1px;
 ///
 /// Scrollbar hide: child element styles, scrollbar visible.
 ///
-/// @require {mixin} scrollbar-hide-child-scrollbar-visible-directional
+/// @require {mixin} child-scrollbar-visible-directional
 ///
-@mixin scrollbar-hide-child-scrollbar-visible {
-  @include scrollbar-hide-child-scrollbar-visible-directional(ltr);
-  @include scrollbar-hide-child-scrollbar-visible-directional(rtl);
+@mixin child-scrollbar-visible {
+  @include child-scrollbar-visible-directional(ltr);
+  @include child-scrollbar-visible-directional(rtl);
 }
 
 ///
@@ -274,13 +278,13 @@ $scrollbar-hide-extra-space: 1px;
 ///
 /// @require {function} scrollbar-edge-from-text-dir
 ///
-/// @require {mixin} root-conditions
+/// @require {mixin} selector.root-conditions
 ///
-@mixin scrollbar-hide-child-scrollbar-visible-directional($direction: ltr) {
+@mixin child-scrollbar-visible-directional($direction: ltr) {
 
   $scrollbar-edge: scrollbar-edge-from-text-dir($direction);
 
-  @include root-conditions(('[dir=#{$direction}]'), 'html') {
+  @include selector.root-conditions(('[dir=#{$direction}]'), 'html') {
     padding-#{$scrollbar-edge}: 0;
   }
 
@@ -289,14 +293,14 @@ $scrollbar-hide-extra-space: 1px;
 ///
 /// Scrollbar hide: fade element base styles.
 ///
-/// @require {function} scrollbar-hide-gradient
+/// @require {function} gradient
 ///
-/// @require {mixin} on-dark-colour-scheme
+/// @require {mixin} colour.on-dark-scheme
 ///
-/// @require {variable} $secondary-content-background-colour-dark
-/// @require {variable} $secondary-content-background-colour-light
+/// @require {variable} colours.$secondary-content-background-dark
+/// @require {variable} colours.$secondary-content-background-light
 ///
-@mixin scrollbar-hide-fade($location) {
+@mixin fade($location) {
 
   position: absolute;
 
@@ -326,13 +330,13 @@ $scrollbar-hide-extra-space: 1px;
 
     top: 0;
 
-    background-image: scrollbar-hide-gradient(
-      bottom, $secondary-content-background-colour-light
+    background-image: gradient(
+      bottom, colours.$secondary-content-background-light
     );
 
-    @include on-dark-colour-scheme {
-      background-image: scrollbar-hide-gradient(
-        bottom, $secondary-content-background-colour-dark
+    @include colour.on-dark-scheme {
+      background-image: gradient(
+        bottom, colours.$secondary-content-background-dark
       );
     }
 
@@ -340,13 +344,13 @@ $scrollbar-hide-extra-space: 1px;
 
     bottom: 0;
 
-    background-image: scrollbar-hide-gradient(
-      top, $secondary-content-background-colour-light
+    background-image: gradient(
+      top, colours.$secondary-content-background-light
     );
 
-    @include on-dark-colour-scheme {
-      background-image: scrollbar-hide-gradient(
-        top, $secondary-content-background-colour-dark
+    @include colour.on-dark-scheme {
+      background-image: gradient(
+        top, colours.$secondary-content-background-dark
       );
     }
 
@@ -360,22 +364,22 @@ $scrollbar-hide-extra-space: 1px;
 /// This translates the fade element laterally to avoid overlapping the
 /// scrollbar, using the same transition easing as the container.
 ///
-/// @require {mixin} root-conditions
+/// @require {mixin} selector.root-conditions
 ///
-/// @require {variable} $scrollbar-hide-extra-space
+/// @require {variable} $extra-space
 ///
-@mixin scrollbar-hide-fade-scrollbar-visible {
+@mixin fade-scrollbar-visible {
 
   transition-timing-function: var(--scrollbar-hide-easing-showing);
 
-  @include root-conditions(('[dir=ltr]'), 'html') {
+  @include selector.root-conditions(('[dir=ltr]'), 'html') {
     transform: translateX(calc(
-      0% - var(--scrollbar-gutter, 0) + #{$scrollbar-hide-extra-space}
+      0% - var(--scrollbar-gutter, 0) + #{$extra-space}
     ));
   }
-  @include root-conditions(('[dir=rtl]'), 'html') {
+  @include selector.root-conditions(('[dir=rtl]'), 'html') {
     transform: translateX(calc(
-      0% + var(--scrollbar-gutter, 0) + #{$scrollbar-hide-extra-space}
+      0% + var(--scrollbar-gutter, 0) + #{$extra-space}
     ));
   }
 

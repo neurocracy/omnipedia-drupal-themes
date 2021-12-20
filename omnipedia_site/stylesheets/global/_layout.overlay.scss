@@ -2,6 +2,8 @@
 //   Site layout - Overlays
 // -----------------------------------------------------------------------------
 
+@use 'sass/helpers/selector';
+
 // This prevents scrolling the viewport when an overlay is opened.
 //
 // @see https://stackoverflow.com/questions/9280258/prevent-body-scrolling-but-allow-overlay-scrolling#9280412
@@ -13,10 +15,10 @@ html.omnipedia-overlay-open {
   // to prevent layout shifting when the scrollbars are hidden versus when
   // they're visible, on platforms where the scrollbars take up space and aren't
   // floating on top of content, i.e. usually desktop.
-  @include root-conditions(('[dir=ltr]'), 'html') {
+  @include selector.root-conditions(('[dir=ltr]'), 'html') {
     padding-right: var(--scrollbar-gutter, 0) !important;
   }
-  @include root-conditions(('[dir=rtl]'), 'html') {
+  @include selector.root-conditions(('[dir=rtl]'), 'html') {
     padding-left: var(--scrollbar-gutter, 0) !important;
   }
 }

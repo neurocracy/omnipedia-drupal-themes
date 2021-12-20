@@ -3,41 +3,48 @@
 // -----------------------------------------------------------------------------
 
 @use 'sass:math';
+@use 'sass/helpers/colour';
+@use 'sass/helpers/selector';
+@use 'sass/variables/general';
+@use '../components/scrollbar_hide' as scrollbar-hide;
+@use '../variables/colours';
+@use '../variables/general' as general-variables;
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/elements/list';
 
 ///
 /// Omnipedia page revisions block line colour on light backgrounds.
 ///
-/// @require {variable} $divider-colour-on-light
+/// @require {variable} colours.$divider-on-light
 ///
-$omnipedia-page-revisions-block-line-colour-on-light: $divider-colour-on-light;
+$block-line-colour-on-light: colours.$divider-on-light;
 
 ///
 /// Omnipedia page revisions block line colour on dark backgrounds.
 ///
-/// @require {variable} $divider-colour-on-dark
+/// @require {variable} colours.$divider-on-dark
 ///
-$omnipedia-page-revisions-block-line-colour-on-dark: $divider-colour-on-dark;
+$block-line-colour-on-dark: colours.$divider-on-dark;
 
 ///
 /// Omnipedia page revisions block line thickness.
 ///
-/// @require {variable} $divider-thickness
+/// @require {variable} general-variables.$divider-thickness
 ///
-$omnipedia-page-revisions-block-line-thickness: $divider-thickness;
+$block-line-thickness: general-variables.$divider-thickness;
 
 ///
 /// Omnipedia page revisions block item spacing.
 ///
-/// @require {variable} $general-spacing
+/// @require {variable} general.$general-spacing
 ///
-$omnipedia-page-revisions-block-item-spacing: $general-spacing * 1.3;
+$block-item-spacing: general.$general-spacing * 1.3;
 
 ///
 /// Omnipedia page revisions block item padding.
 ///
-/// @require {variable} $general-spacing
+/// @require {variable} general.$general-spacing
 ///
-$omnipedia-page-revisions-block-item-padding: $general-spacing;
+$block-item-padding: general.$general-spacing;
 
 .omnipedia-wiki-page-revisions {
 
@@ -45,7 +52,7 @@ $omnipedia-page-revisions-block-item-padding: $general-spacing;
 
   &__list {
 
-    @include unlisted-list;
+    @include list.unlisted;
 
     max-height: 30vh;
 
@@ -53,24 +60,24 @@ $omnipedia-page-revisions-block-item-padding: $general-spacing;
 
     // This vertical line is meant to represent the time axis. On LTR the line
     // is on the left, while on RTL it's on the right.
-    @include root-conditions(('[dir=ltr]'), 'html') {
+    @include selector.root-conditions(('[dir=ltr]'), 'html') {
       border-left:
-        $omnipedia-page-revisions-block-line-thickness
+        $block-line-thickness
         solid
-        $omnipedia-page-revisions-block-line-colour-on-light;
+        $block-line-colour-on-light;
 
-      @include on-dark-colour-scheme {
-        border-left-color: $omnipedia-page-revisions-block-line-colour-on-dark;
+      @include colour.on-dark-scheme {
+        border-left-color: $block-line-colour-on-dark;
       }
     }
-    @include root-conditions(('[dir=rtl]'), 'html') {
+    @include selector.root-conditions(('[dir=rtl]'), 'html') {
       border-right:
-        $omnipedia-page-revisions-block-line-thickness
+        $block-line-thickness
         solid
-        $omnipedia-page-revisions-block-line-colour-on-light;
+        $block-line-colour-on-light;
 
-      @include on-dark-colour-scheme {
-        border-right-color: $omnipedia-page-revisions-block-line-colour-on-dark;
+      @include colour.on-dark-scheme {
+        border-right-color: $block-line-colour-on-dark;
       }
     }
 
@@ -90,34 +97,34 @@ $omnipedia-page-revisions-block-item-padding: $general-spacing;
       }
 
       // Remove bottom margin. Direction required for specificity over Classy.
-      @include root-conditions(('[dir=ltr]', '[dir=rtl]'), 'html') {
+      @include selector.root-conditions(('[dir=ltr]', '[dir=rtl]'), 'html') {
         margin-bottom: 0;
       }
 
       // Spacing between items. Direction required for specificity over Classy.
       * + & {
-        @include root-conditions(('[dir=ltr]', '[dir=rtl]'), 'html') {
-          margin-top: $omnipedia-page-revisions-block-item-spacing;
+        @include selector.root-conditions(('[dir=ltr]', '[dir=rtl]'), 'html') {
+          margin-top: $block-item-spacing;
         }
       }
 
-      @include root-conditions(('[dir=ltr]'), 'html') {
-        padding-left:   $omnipedia-page-revisions-block-item-padding;
+      @include selector.root-conditions(('[dir=ltr]'), 'html') {
+        padding-left:   $block-item-padding;
       }
-      @include root-conditions(('[dir=rtl]'), 'html') {
-        padding-right:  $omnipedia-page-revisions-block-item-padding;
+      @include selector.root-conditions(('[dir=rtl]'), 'html') {
+        padding-right:  $block-item-padding;
       }
 
       // This horizontal line is meant to represent individual revisions
       // branching off of the time axis.
       border-bottom:
-        $omnipedia-page-revisions-block-line-thickness
+        $block-line-thickness
         solid
-        $omnipedia-page-revisions-block-line-colour-on-light;
+        $block-line-colour-on-light;
 
-      @include on-dark-colour-scheme {
+      @include colour.on-dark-scheme {
         border-bottom-color:
-          $omnipedia-page-revisions-block-line-colour-on-dark;
+          $block-line-colour-on-dark;
       }
 
     }
@@ -130,18 +137,18 @@ $omnipedia-page-revisions-block-item-padding: $general-spacing;
 
   // Scrollbar hide stuff starts here.
 
-  @include scrollbar-hide-container;
+  @include scrollbar-hide.container;
 
   &__list {
 
-    @include scrollbar-hide-scroller;
+    @include scrollbar-hide.scroller;
 
     --scroll-hide-scroller-padding-top: calc(
       var(--scrollbar-hide-fade-distance) * 0.75
     );
 
     &-item {
-      @include scrollbar-hide-child;
+      @include scrollbar-hide.child;
     }
 
   }
@@ -151,29 +158,29 @@ $omnipedia-page-revisions-block-item-padding: $general-spacing;
   }
 
   &::before {
-    @include scrollbar-hide-fade(top);
+    @include scrollbar-hide.fade(top);
   }
 
   &::after {
-    @include scrollbar-hide-fade(bottom);
+    @include scrollbar-hide.fade(bottom);
   }
 
   &:hover, &:focus-within {
     #{$self}__list {
-      @include scrollbar-hide-scroller-scrollbar-visible;
+      @include scrollbar-hide.scroller-scrollbar-visible;
     }
 
     #{$self}__list-item {
-      @include scrollbar-hide-child-scrollbar-visible;
+      @include scrollbar-hide.child-scrollbar-visible;
     }
 
     &::before, &::after {
-      @include scrollbar-hide-fade-scrollbar-visible;
+      @include scrollbar-hide.fade-scrollbar-visible;
     }
   }
 
 }
 
 * + .omnipedia-wiki-page-revisions-toggle {
-  margin-top: math.div($omnipedia-page-revisions-block-item-spacing, 2);
+  margin-top: math.div($block-item-spacing, 2);
 }

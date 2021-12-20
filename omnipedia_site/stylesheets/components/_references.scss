@@ -2,14 +2,17 @@
 //   References (citations, footnotes) partial
 // -----------------------------------------------------------------------------
 
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/content';
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout.vertical_spacing' as vertical-spacing;
+
 .references-heading {
   clear: both;
 }
 
 @at-root {
-  @include vertical-spacing-against-previous(
+  @include vertical-spacing.against-previous(
     '.references',
-    $spacing-small: $content-item-vertical-spacing-small,
-    $spacing-large: $content-item-vertical-spacing-large
+    $spacing-small: content.$item-vertical-spacing-small,
+    $spacing-large: content.$item-vertical-spacing-large
   );
 }

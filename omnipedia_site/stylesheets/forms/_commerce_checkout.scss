@@ -2,6 +2,8 @@
 //   Commerce checkout form partial
 // -----------------------------------------------------------------------------
 
+@use 'sass/helpers/colour';
+
 .commerce-checkout-flow {
   .stripe-form .form-text {
     // This forces the Stripe text fields to always display using a light
@@ -11,6 +13,6 @@
     // @todo Customize the visual appearance to better match Material inputs?
     //
     // @see https://stripe.com/docs/js/element/other_methods/update?type=card
-    @include set-colours($background: white);
+    @include colour.set($background: white);
   }
 }

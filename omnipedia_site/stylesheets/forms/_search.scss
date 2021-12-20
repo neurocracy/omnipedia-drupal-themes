@@ -2,9 +2,12 @@
 //   Search forms partial
 // -----------------------------------------------------------------------------
 
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/forms/search';
+@use 'icon';
+
 .omnipedia-header__search-form,
 .view-wiki-search .view-filters {
-  @include search-form-container;
+  @include search.form-container;
 
   .form--inline {
     // Don't wrap the search button to a new line when the screen is narrow, but
@@ -19,7 +22,7 @@
   }
 
   .form-item-terms {
-    @include search-form-field-container;
+    @include search.field-container;
 
     // Remove the default margins the plain button provides enough visual
     // spacing between it and the terms field.
@@ -35,10 +38,10 @@
   }
 
   .form-submit {
-    @include search-form-submit;
+    @include search.form-submit;
 
-    @include on-icon-container {
-      @include set-icon-display(block);
+    @include icon.on-icon-container {
+      @include icon.set-icon-display(block);
     }
   }
 }

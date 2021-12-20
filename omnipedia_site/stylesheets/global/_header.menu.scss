@@ -2,6 +2,8 @@
 //   Site header - Menu link
 // -----------------------------------------------------------------------------
 
+@use 'material.ripple' as material-ripple;
+
 .omnipedia-header__menu-link {
-  @include material-ripple;
+  @include material-ripple.material-ripple;
 }

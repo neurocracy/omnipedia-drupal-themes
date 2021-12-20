@@ -2,16 +2,24 @@
 //   Omnipedia <media-group> element partial
 // -----------------------------------------------------------------------------
 
-.omnipedia-media-group {
-  @include omnipedia-card();
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/elements/list';
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/content';
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout.vertical_spacing' as vertical-spacing;
+@use '../global/card';
+@use 'sass/helpers/colour';
+@use 'sass/helpers/layout';
+@use '../variables/colours';
 
-  @include set-colours(
-    $background: $secondary-content-background-colour-light
+.omnipedia-media-group {
+  @include card.base;
+
+  @include colour.set(
+    $background: colours.$secondary-content-background-light
   );
 
-  @include on-dark-colour-scheme {
-    @include set-colours(
-      $background: $secondary-content-background-colour-dark
+  @include colour.on-dark-scheme {
+    @include colour.set(
+      $background: colours.$secondary-content-background-dark
     );
   }
 
@@ -19,21 +27,21 @@
     // This uses the same vertical spacing as other content elements plus a bit
     // extra to attempt to align with the top of the first line of ajacent <p>
     // elements.
-    @include vertical-spacing-against-previous(
+    @include vertical-spacing.against-previous(
       '.omnipedia-media-group',
-      $spacing-small: $content-item-vertical-spacing-small + 0.7em,
-      $spacing-large: $content-item-vertical-spacing-large + 0.7em
+      $spacing-small: content.$item-vertical-spacing-small + 0.7em,
+      $spacing-large: content.$item-vertical-spacing-large + 0.7em
     );
   }
 
   &__list {
-    @include unlisted-list;
+    @include list.unlisted;
 
-    @include use-grid {
+    @include layout.use-grid {
       display: grid;
 
       grid-auto-flow: column;
-      grid-gap:       $omnipedia-card-padding;
+      grid-gap:       card.$padding;
 
       li + li {
         margin-top: 0 !important;
@@ -46,7 +54,7 @@
   }
 
   &__caption {
-    @include omnipedia-card-caption;
+    @include card.caption;
 
     // These force the caption to wrap at the width of the thumbnails but no
     // wider, by first causing the text to wrap as small as possible so that it

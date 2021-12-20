@@ -2,13 +2,19 @@
 //   Heading element partial
 // -----------------------------------------------------------------------------
 
+@use 'sass/helpers/colour';
+@use 'sass/helpers/selector';
+@use '../variables/colours';
+@use '../variables/general' as general-variables;
+
 .page-title,
 .layout-content h3 {
   // Add a divider under the page title to match Wikipedia.
-  border-bottom: $divider-thickness solid $divider-colour-on-light;
+  border-bottom:
+    general-variables.$divider-thickness solid colours.$divider-on-light;
 
-  @include on-dark-colour-scheme {
-    border-bottom-color: $divider-colour-on-dark;
+  @include colour.on-dark-scheme {
+    border-bottom-color: colours.$divider-on-dark;
   }
 
   // This crops the border to the area that the heading text can actually flow
@@ -26,10 +32,10 @@
   top: 0.2em;
 
   // Space between the heading text and the permalink.
-  @include root-conditions(('[dir=ltr]'), 'html') {
+  @include selector.root-conditions(('[dir=ltr]'), 'html') {
     left: 0.3em;
   }
-  @include root-conditions(('[dir=rtl]'), 'html') {
+  @include selector.root-conditions(('[dir=rtl]'), 'html') {
     right: 0.3em;
   }
 

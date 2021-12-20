@@ -2,17 +2,22 @@
 //   Join Omnipedia block partial
 // -----------------------------------------------------------------------------
 
+@use 'material.common/material.general' as material-general;
 @use 'sass:color';
+@use 'sass/helpers/colour';
+@use '../variables/colours';
 
 ///
 /// Join Omnipedia link border pulse keyframes on light backgrounds.
 ///
 @keyframes join-omnipedia-pulse-on-light {
   0% {
-    border-color: $omnipedia-blue;
+    border-color: colours.$omnipedia-blue;
   }
   100% {
-    border-color: color.mix($omnipedia-blue, $background-colour-light, 50%);
+    border-color: color.mix(
+      colours.$omnipedia-blue, colour.$background-light, 50%
+    );
   }
 }
 
@@ -21,10 +26,12 @@
 ///
 @keyframes join-omnipedia-pulse-on-dark {
   0% {
-    border-color: $omnipedia-blue;
+    border-color: colours.$omnipedia-blue;
   }
   100% {
-    border-color: color.mix($omnipedia-blue, $background-colour-dark, 70%);
+    border-color: color.mix(
+      colours.$omnipedia-blue, colour.$background-dark, 70%
+    );
   }
 }
 
@@ -32,8 +39,8 @@
   &__link {
     display: block;
 
-    border: 2px solid $omnipedia-blue;
-    border-radius:    $material-border-radius;
+    border: 2px solid colours.$omnipedia-blue;
+    border-radius:    material-general.$border-radius;
 
     padding: 0.3em 0.4em;
 
@@ -48,7 +55,7 @@
     animation-iteration-count:  infinite;
     animation-direction:        alternate;
 
-    @include on-dark-colour-scheme {
+    @include colour.on-dark-scheme {
       animation-name:           join-omnipedia-pulse-on-dark;
     }
   }

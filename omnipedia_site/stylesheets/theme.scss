@@ -2,17 +2,13 @@
 //   Omnipedia - Site theme - Master stylesheet
 // -----------------------------------------------------------------------------
 
-@import 'variables/_variables.scss';
+@use 'variables';
 
-// This imports all the partials from the base theme and ambientimpact_*
-// modules.
-@import '../../../ambientimpact/ambientimpact_base/stylesheets/_base.scss';
+@use '../../../ambientimpact/ambientimpact_base/stylesheets/base';
 
-@import '../../../../modules/omnipedia/_components.scss';
-
-@import 'global/_global.scss';
-@import 'elements/_elements.scss';
-@import 'components/_components.scss';
-@import 'omnipedia_elements/_omnipedia_elements.scss';
-@import 'blocks/_blocks.scss';
-@import 'forms/_forms.scss';
+@use 'global';
+@use 'elements';
+@use 'components';
+@use 'omnipedia_elements';
+@use 'blocks';
+@use 'forms';

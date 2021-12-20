@@ -2,14 +2,19 @@
 //   Omnipedia <infobox> element partial
 // -----------------------------------------------------------------------------
 
+@use 'sass/helpers/colour';
+@use '../global/card';
+@use 'infobox/_infobox' as infobox;
+@use '../variables/colours';
+
 .omnipedia-infobox {
-  @include omnipedia-card($padding: $omnipedia-infobox-outer-spacing);
+  @include card.base($padding: infobox.$outer-spacing);
 
-  @include set-colours($background: $secondary-content-background-colour-light);
+  @include colour.set($background: colours.$secondary-content-background-light);
 
-  @include on-dark-colour-scheme {
-    @include set-colours(
-      $background: $secondary-content-background-colour-dark
+  @include colour.on-dark-scheme {
+    @include colour.set(
+      $background: colours.$secondary-content-background-dark
     );
   }
 }

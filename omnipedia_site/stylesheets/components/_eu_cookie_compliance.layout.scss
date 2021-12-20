@@ -2,6 +2,13 @@
 //   EU cookie compliance pop-up layout partial
 // -----------------------------------------------------------------------------
 
+@use 'sass/helpers/selector';
+@use 'sass/helpers/layout';
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/forms/search';
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/content';
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout' as layout-base;
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout.vertical_spacing' as vertical-spacing;
+
 ///
 /// Keyframes to fade in the pop-up if already consented.
 ///
@@ -18,18 +25,18 @@
 
   // This compensates for the scrollbar gutter when the pop-up is closing so
   // that the pop-up contents don't shift when the viewport scrollbar appears.
-  @include root-conditions(('[dir=ltr]'), 'html') {
+  @include selector.root-conditions(('[dir=ltr]'), 'html') {
     right: calc(var(--scrollbar-gutter, 0) * -1);
   }
-  @include root-conditions(('[dir=rtl]'), 'html') {
+  @include selector.root-conditions(('[dir=rtl]'), 'html') {
     left: calc(var(--scrollbar-gutter, 0) * -1);
   }
 
   html.omnipedia-overlay-open & {
-    @include root-conditions(('[dir=ltr]'), 'html') {
+    @include selector.root-conditions(('[dir=ltr]'), 'html') {
       right: 0;
     }
-    @include root-conditions(('[dir=rtl]'), 'html') {
+    @include selector.root-conditions(('[dir=rtl]'), 'html') {
       left: 0;
     }
   }
@@ -83,26 +90,26 @@
   .eu-cookie-compliance-content {
     display: block;
 
-    @include layout-max-width;
+    @include layout-base.max-width;
 
-    padding-left:   $layout-gutter;
-    padding-right:  $layout-gutter;
+    padding-left:   layout-base.$gutter;
+    padding-right:  layout-base.$gutter;
 
     // This matches ../global/_layout.grid.scss
-    @include on-sidebar-beside-content(any) {
-      padding-left:   $layout-gap;
-      padding-right:  $layout-gap;
+    @include layout-base.on-sidebar-beside-content(any) {
+      padding-left:   layout-base.$gap;
+      padding-right:  layout-base.$gap;
     }
 
-    padding-top:    $layout-gutter;
-    padding-bottom: $layout-gutter;
+    padding-top:    layout-base.$gutter;
+    padding-bottom: layout-base.$gutter;
 
     box-sizing: border-box;
 
     > * + * {
-      @include vertical-spacing(
-        $spacing-small: $content-item-vertical-spacing-small,
-        $spacing-large: $content-item-vertical-spacing-large,
+      @include vertical-spacing.vertical-spacing(
+        $spacing-small: content.$item-vertical-spacing-small,
+        $spacing-large: content.$item-vertical-spacing-large,
       );
     }
 
@@ -116,7 +123,7 @@
 
   .eu-cookie-compliance-categories {
 
-    @include use-grid {
+    @include layout.use-grid {
       display: grid;
 
       grid-template-columns: repeat(auto-fit, minmax(20em, 1fr));

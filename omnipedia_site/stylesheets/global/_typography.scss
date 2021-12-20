@@ -2,9 +2,14 @@
 //   Typography partial
 // -----------------------------------------------------------------------------
 
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout' as layout-base;
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout.vertical_spacing' as vertical-spacing;
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/typography';
+@use '../variables/typography' as typography-variables;
+
 body {
-  @include on-sidebar-beside-content(any) {
-    font-size: $font-size-big-screen;
+  @include layout-base.on-sidebar-beside-content(any) {
+    font-size: typography-variables.$font-size-big-screen;
   }
 
   hyphens: auto;
@@ -41,7 +46,7 @@ body,
     // Only apply a more significant font size reduction on wider screens, as
     // this would otherwise make the text uncomfortably small due to the
     // responsive font size higher up the tree.
-    @include on-sidebar-beside-content(any) {
+    @include layout-base.on-sidebar-beside-content(any) {
       font-size: 70%;
     }
   }
@@ -54,7 +59,7 @@ h3, h4, h5, h6 {
 // Matches Wikipedia.
 h3 {
   @at-root {
-    @include vertical-spacing-against-previous(
+    @include vertical-spacing.against-previous(
       &,
       $property:      --heading-spacing-block-start,
       $spacing-small: 1em,
@@ -69,7 +74,7 @@ h3 {
 h4, h5, h6 {
   @each $selector in & {
     @at-root {
-      @include vertical-spacing-against-previous(
+      @include vertical-spacing.against-previous(
         $selector,
         $property:      --heading-spacing-block-start,
         $spacing-small: 0.7em,
@@ -80,8 +85,8 @@ h4, h5, h6 {
 
   margin-bottom: 0.2em;
 
-  font-family: $font-stack;
-  font-weight: $font-weight-strong;
+  font-family: typography.$font-stack;
+  font-weight: typography.$font-weight-strong;
 }
 
 h5 {

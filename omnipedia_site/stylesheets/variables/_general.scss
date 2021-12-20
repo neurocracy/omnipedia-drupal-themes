@@ -2,6 +2,8 @@
 //   Variables - General
 // -----------------------------------------------------------------------------
 
+@use 'material.tabs' as material-tabs;
+
 ///
 /// Divider thickness.
 ///
@@ -15,7 +17,7 @@ $divider-thickness: 1px;
 ///
 /// @require {variable} $divider-thickness
 ///
-$material-tabs-underline-thickness: $divider-thickness;
+material-tabs.$underline-thickness: $divider-thickness;
 
 ///
 /// Material tabs active indicator underline thickness.
@@ -25,7 +27,7 @@ $material-tabs-underline-thickness: $divider-thickness;
 ///
 /// @require {variable} $divider-thickness
 ///
-$material-tabs-indicator-thickness: $divider-thickness * 2;
+material-tabs.$indicator-thickness: $divider-thickness * 2;
 
 ///
 /// Whether to use backdrop-filter: blur.

@@ -2,23 +2,25 @@
 //   Site header - Shadow
 // -----------------------------------------------------------------------------
 
+@use 'sass/helpers/colour';
+
 ///
 /// Header shadow on light backgrounds.
 ///
-$header-shadow-on-light: 0 2px 3px rgba(0, 0, 0, 0.3);
+$shadow-on-light: 0 2px 3px rgba(0, 0, 0, 0.3);
 
 ///
 /// Header shadow on dark backgrounds.
 ///
-$header-shadow-on-dark: 0 1px 3px rgba(0, 0, 0, 0.8);
+$shadow-on-dark: 0 1px 3px rgba(0, 0, 0, 0.8);
 
 .omnipedia-header,
 .region-primary-menu {
   &::after {
-    box-shadow: $header-shadow-on-light;
+    box-shadow: $shadow-on-light;
 
-    @include on-dark-colour-scheme {
-      box-shadow: $header-shadow-on-dark;
+    @include colour.on-dark-scheme {
+      box-shadow: $shadow-on-dark;
     }
 
     transition-property:        opacity;

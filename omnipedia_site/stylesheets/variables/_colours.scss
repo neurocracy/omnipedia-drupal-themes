@@ -2,6 +2,9 @@
 //   Variables - Colours
 // -----------------------------------------------------------------------------
 
+@use 'material.common/material.colour' as material-colour;
+@use 'sass/helpers/colour';
+
 ///
 /// Omnipedia blue.
 ///
@@ -14,7 +17,7 @@ $omnipedia-blue: #0d47a1;
 ///
 /// @require {variable} $omnipedia-blue
 ///
-$material-primary-colour: $omnipedia-blue;
+material-colour.$primary: $omnipedia-blue;
 
 ///
 /// Primary content light background colour.
@@ -22,7 +25,7 @@ $material-primary-colour: $omnipedia-blue;
 /// This is used for the main content area when the user has not specified dark
 /// mode.
 ///
-$primary-content-background-colour-light: white;
+$primary-content-background-light: white;
 
 ///
 /// Primary content dark background colour.
@@ -30,7 +33,7 @@ $primary-content-background-colour-light: white;
 /// This is used for the main content area when the user has specified dark
 /// mode.
 ///
-$primary-content-background-colour-dark: black;
+$primary-content-background-dark: black;
 
 ///
 /// Secondary content light background colour.
@@ -38,7 +41,7 @@ $primary-content-background-colour-dark: black;
 /// This is used for secondary content areas and is applied to the viewport when
 /// the user has not specified dark mode.
 ///
-$secondary-content-background-colour-light: hsl(0, 0%, 95%);
+$secondary-content-background-light: hsl(0, 0%, 95%);
 
 ///
 /// Secondary content dark background colour.
@@ -46,21 +49,21 @@ $secondary-content-background-colour-light: hsl(0, 0%, 95%);
 /// This is used for secondary content areas and is applied to the viewport when
 /// the user has specified dark mode.
 ///
-$secondary-content-background-colour-dark: hsl(0, 0%, 4%);
+$secondary-content-background-dark: hsl(0, 0%, 4%);
 
 ///
 /// Light background colour.
 ///
-/// @require {variable} $secondary-content-background-colour-light
+/// @require {variable} $secondary-content-background-light
 ///
-$background-colour-light: $secondary-content-background-colour-light;
+colour.$background-light: $secondary-content-background-light;
 
 ///
 /// Dark background colour.
 ///
-/// @require {variable} $secondary-content-background-colour-dark
+/// @require {variable} $secondary-content-background-dark
 ///
-$background-colour-dark: $secondary-content-background-colour-dark;
+colour.$background-dark: $secondary-content-background-dark;
 
 ///
 /// Divider colour on light backgrounds.
@@ -68,7 +71,7 @@ $background-colour-dark: $secondary-content-background-colour-dark;
 /// This is applied to various things, including the border around the main
 /// content area when the user has not specified dark mode.
 ///
-$divider-colour-on-light: hsl(0, 0%, 75%);
+$divider-on-light: hsl(0, 0%, 75%);
 
 ///
 /// Divider colour on dark backgrounds.
@@ -76,7 +79,7 @@ $divider-colour-on-light: hsl(0, 0%, 75%);
 /// This is applied to various things, including the border around the main
 /// content area when the user has specified dark mode.
 ///
-$divider-colour-on-dark: hsl(0, 0%, 25%);
+$divider-on-dark: hsl(0, 0%, 25%);
 
 ///
 /// Material Design line colour on light backgrounds.
@@ -84,9 +87,9 @@ $divider-colour-on-dark: hsl(0, 0%, 25%);
 /// This overrides the default to ensure it's consistent with other content
 /// dividers.
 ///
-/// @require {variable} $divider-colour-on-light
+/// @require {variable} $divider-on-light
 ///
-$material-line-colour-on-light: $divider-colour-on-light;
+material-colour.$line-on-light: $divider-on-light;
 
 ///
 /// Material Design line colour on dark backgrounds.
@@ -94,6 +97,6 @@ $material-line-colour-on-light: $divider-colour-on-light;
 /// This overrides the default to ensure it's consistent with other content
 /// dividers.
 ///
-/// @require {variable} $divider-colour-on-dark
+/// @require {variable} $divider-on-dark
 ///
-$material-line-colour-on-dark: $divider-colour-on-dark;
+material-colour.$line-on-dark: $divider-on-dark;

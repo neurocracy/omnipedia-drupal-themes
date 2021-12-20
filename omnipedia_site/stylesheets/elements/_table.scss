@@ -2,12 +2,16 @@
 //   Table partial
 // -----------------------------------------------------------------------------
 
-:root {
-  --table-cell-border-width:  #{$omnipedia-card-border-width};
-  --table-cell-border-colour: #{$omnipedia-card-border-colour-on-light};
+@use '../global/card';
+@use 'sass/helpers/colour';
+@use '../variables/colours';
 
-  @include on-dark-colour-scheme {
-    --table-cell-border-colour: #{$omnipedia-card-border-colour-on-dark};
+:root {
+  --table-cell-border-width:  #{card.$border-width};
+  --table-cell-border-colour: #{card.$border-colour-on-light};
+
+  @include colour.on-dark-scheme {
+    --table-cell-border-colour: #{card.$border-colour-on-dark};
   }
 }
 
@@ -25,13 +29,13 @@ table {
 }
 
 thead {
-  @include set-colours(
-    $background: $secondary-content-background-colour-light
+  @include colour.set(
+    $background: colours.$secondary-content-background-light
   );
 
-  @include on-dark-colour-scheme {
-    @include set-colours(
-      $background: $secondary-content-background-colour-dark
+  @include colour.on-dark-scheme {
+    @include colour.set(
+      $background: colours.$secondary-content-background-dark
     );
   }
 }

@@ -2,6 +2,8 @@
 //   Site header - Backgrounds
 // -----------------------------------------------------------------------------
 
+@use 'sass/helpers/colour';
+
 header[role='banner'],
 .region-primary-menu,
 .region-primary-menu .omnipedia-header__search-form .form--inline {
@@ -9,10 +11,10 @@ header[role='banner'],
   // menu region, and the search form. Note that in the case of the primary menu
   // region, ::before is also used for the bottom border on wider screens.
   &::before {
-    @include set-colours($background: $background-colour-light);
+    @include colour.set($background: colour.$background-light);
 
-    @include on-dark-colour-scheme {
-      @include set-colours($background: $background-colour-dark);
+    @include colour.on-dark-scheme {
+      @include colour.set($background: colour.$background-dark);
     }
   }
 }

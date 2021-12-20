@@ -2,11 +2,13 @@
 //   List element partial
 // -----------------------------------------------------------------------------
 
+// @use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/content';
+
 // @todo Rework the list item markers so this can be enabled; it currently
 //   prevents all flowing around any floated element, including ones we do want
 //   to flow around.
 
-// @include content-area {
+// @include content.area {
 //   ol,
 //   ul {
 //     &:not(.contextual-links):not(.links):not(.table-of-contents__list):not(.references__list) {

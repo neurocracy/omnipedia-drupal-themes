@@ -2,18 +2,22 @@
 //   EU cookie compliance pop-up toggle partial
 // -----------------------------------------------------------------------------
 
+@use 'material.common/material.general' as material-general;
+@use 'material.ripple' as material-ripple;
+@use 'sass/helpers/selector';
+
 .eu-cookie-compliance-popup {
 
   .eu-cookie-withdraw-tab {
-    @include root-conditions(('[dir=ltr]'), 'html') {
+    @include selector.root-conditions(('[dir=ltr]'), 'html') {
       left: 0;
 
-      border-top-right-radius: $material-border-radius;
+      border-top-right-radius: material-general.$border-radius;
     }
-    @include root-conditions(('[dir=rtl]'), 'html') {
+    @include selector.root-conditions(('[dir=rtl]'), 'html') {
       right: 0;
 
-      border-top-left-radius: $material-border-radius;
+      border-top-left-radius: material-general.$border-radius;
     }
 
     --shadow-buffer: 1em;
@@ -35,7 +39,7 @@
       0% 100%
     );
 
-    @include material-ripple;
+    @include material-ripple.material-ripple;
   }
 
   // This is removed when there's an in-page toggle associated with the pop-up.

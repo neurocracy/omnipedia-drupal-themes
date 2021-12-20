@@ -2,6 +2,14 @@
 //   Table of contents partial
 // -----------------------------------------------------------------------------
 
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/content';
+@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout.vertical_spacing' as vertical-spacing;
+@use 'sass/helpers/breakpoint';
+@use 'sass/helpers/colour';
+@use 'sass/helpers/selector';
+@use '../global/card';
+@use '../variables/colours';
+
 // Nested table of contents lists have their parent list item's number prepended
 // like so:
 //
@@ -14,32 +22,32 @@
 //
 // @see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Lists_and_Counters/Using_CSS_counters#Nesting_counters
 
-@include add-breakpoints((
+@include breakpoint.add((
   'table-of-contents-wide': 25em,
 ));
 
 .table-of-contents {
 
-  @include omnipedia-card($padding: 1em);
+  @include card.base($padding: 1em);
 
   @at-root {
-    @include vertical-spacing-against-previous(
+    @include vertical-spacing.against-previous(
       &,
-      $spacing-small: $content-item-vertical-spacing-small,
-      $spacing-large: $content-item-vertical-spacing-large
+      $spacing-small: content.$item-vertical-spacing-small,
+      $spacing-large: content.$item-vertical-spacing-large
     );
   }
 
-  @include media('>=table-of-contents-wide') {
+  @include breakpoint.on('>=table-of-contents-wide') {
     max-width: max-content;
     min-width: 35%;
   }
 
-  @include set-colours($background: $secondary-content-background-colour-light);
+  @include colour.set($background: colours.$secondary-content-background-light);
 
-  @include on-dark-colour-scheme {
-    @include set-colours(
-      $background: $secondary-content-background-colour-dark
+  @include colour.on-dark-scheme {
+    @include colour.set(
+      $background: colours.$secondary-content-background-dark
     );
   }
 
@@ -61,10 +69,10 @@
     // @see https://developer.mozilla.org/en-US/docs/Web/CSS/::marker
     counter-increment: table-of-contents-item;
 
-    @include root-conditions(('[dir=ltr]'), 'html') {
+    @include selector.root-conditions(('[dir=ltr]'), 'html') {
       padding-left: 0.3em;
     }
-    @include root-conditions(('[dir=rtl]'), 'html') {
+    @include selector.root-conditions(('[dir=rtl]'), 'html') {
       padding-right: 0.3em;
     }
 
