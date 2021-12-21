@@ -152,7 +152,7 @@ $extra-space: 1px;
 /// focused.
 ///
 /// @param {String} $direction [ltr]
-///   The text direction to output styles for. Must be one of 'ltr' or 'rtl';
+///   The text direction to output styles for. Must be one of 'ltr' or 'rtl'.
 ///
 /// @require {function} scrollbar-edge-from-text-dir
 ///
@@ -194,7 +194,7 @@ $extra-space: 1px;
 /// Scrollbar hide: scroller element directional styles, scrollbar visible.
 ///
 /// @param {String} $direction [ltr]
-///   The text direction to output styles for. Must be one of 'ltr' or 'rtl';
+///   The text direction to output styles for. Must be one of 'ltr' or 'rtl'.
 ///
 /// @require {function} scrollbar-edge-from-text-dir
 ///
@@ -236,7 +236,7 @@ $extra-space: 1px;
 /// focused.
 ///
 /// @param {String} $direction [ltr]
-///   The text direction to output styles for. Must be one of 'ltr' or 'rtl';
+///   The text direction to output styles for. Must be one of 'ltr' or 'rtl'.
 ///
 /// @require {function} scrollbar-edge-from-text-dir
 ///
@@ -274,7 +274,7 @@ $extra-space: 1px;
 /// Scrollbar hide: child element directional styles, scrollbar visible.
 ///
 /// @param {String} $direction [ltr]
-///   The text direction to output styles for. Must be one of 'ltr' or 'rtl';
+///   The text direction to output styles for. Must be one of 'ltr' or 'rtl'.
 ///
 /// @require {function} scrollbar-edge-from-text-dir
 ///
@@ -292,6 +292,9 @@ $extra-space: 1px;
 
 ///
 /// Scrollbar hide: fade element base styles.
+///
+/// @param {String} $location
+///   The location to place the fade element. Must be one of 'top' or 'bottom'.
 ///
 /// @require {function} gradient
 ///
