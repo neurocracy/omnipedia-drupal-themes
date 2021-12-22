@@ -63,6 +63,20 @@ function omnipedia_site_preprocess_page(array &$variables) {
 }
 
 /**
+ * Prepares variables for region templates.
+ *
+ * This attaches the 'omnipedia_site/sidebars' library to 'sidebar_first' and
+ * 'sidebar_second' regions.
+ */
+function omnipedia_site_preprocess_region(array &$variables): void {
+
+  if (\in_array($variables['region'], ['sidebar_first', 'sidebar_second'])) {
+    $variables['#attached']['library'][] = 'omnipedia_site/sidebars';
+  }
+
+}
+
+/**
  * Implements hook_form_FORM_ID_alter().
  *
  * This alters the submit button for the wiki search view exposed form:
@@ -248,11 +262,17 @@ function omnipedia_site_preprocess_media(array &$variables) {
  *
  * This adds a 'button-placeholder' class to the 'menu_link' element.
  *
+ * This attaches the 'omnipedia_site/header' library to this template.
+ *
  * @see \Drupal\omnipedia_block\Plugin\Block\Header
  *   Used by this block.
  */
 function omnipedia_site_preprocess_omnipedia_header(array &$variables) {
+
   $variables['menu_link']['#attributes']['class'][] = 'button-placeholder';
+
+  $variables['#attached']['library'][] = 'omnipedia_site/header';
+
 }
 
 /**
