@@ -42,7 +42,8 @@ regions:
 
 libraries:
   - omnipedia_site/global-styling
-  - omnipedia_site/global-scripts
+  - omnipedia_site/header
+  - omnipedia_site/sidebars
 
 libraries-override:
   # This is removed as we provide our own styling.

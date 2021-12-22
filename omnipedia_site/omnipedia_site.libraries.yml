@@ -5,27 +5,6 @@ global-styling:
   dependencies:
     - ambientimpact_ux/component.material.ripple
 
-global-scripts:
-  js:
-    javascript/header.elements.js: {}
-    javascript/header.headroom.js: {}
-    javascript/header.state.js: {}
-    javascript/header.focus.js: {}
-    javascript/header.overlay.js: {}
-    javascript/header.keyboard.js: {}
-    javascript/offcanvas.immerse.js: {}
-    javascript/overlay.scroll.js: {}
-    javascript/sidebars.elements.js: {}
-    javascript/sidebars.state.js: {}
-    javascript/sidebars.focus.js: {}
-    javascript/sidebars.overlay.js: {}
-    javascript/sidebars.keyboard.js: {}
-  dependencies:
-    - ambientimpact_core/ally.js
-    - ambientimpact_ux/component.headroom
-    - ambientimpact_ux/component.pointer_focus_hide
-    - ambientimpact_ux/component.scrollbar_gutter
-
 eu_cookie_compliance:
   js:
     javascript/eu_cookie_compliance.elements.js: {}
@@ -39,3 +18,40 @@ eu_cookie_compliance:
     - ambientimpact_ux/component.overlay
     - ambientimpact_ux/component.pointer_focus_hide
     - omnipedia_block/component.privacy_settings
+    - omnipedia_site/offcanvas_immerse
+
+header:
+  js:
+    javascript/header.elements.js: {}
+    javascript/header.focus.js: {}
+    javascript/header.headroom.js: {}
+    javascript/header.keyboard.js: {}
+    javascript/header.overlay.js: {}
+    javascript/header.state.js: {}
+  dependencies:
+    - ambientimpact_core/ally.js
+    - ambientimpact_ux/component.headroom
+    - omnipedia_site/offcanvas_immerse
+    - omnipedia_site/overlay_scroll
+
+offcanvas_immerse:
+  js:
+    javascript/offcanvas.immerse.js: {}
+
+overlay_scroll:
+  js:
+    javascript/overlay.scroll.js: {}
+
+sidebars:
+  js:
+    javascript/sidebars.elements.js: {}
+    javascript/sidebars.state.js: {}
+    javascript/sidebars.focus.js: {}
+    javascript/sidebars.overlay.js: {}
+    javascript/sidebars.keyboard.js: {}
+  dependencies:
+    - ambientimpact_core/ally.js
+    - ambientimpact_ux/component.headroom
+    - ambientimpact_ux/component.pointer_focus_hide
+    - ambientimpact_ux/component.scrollbar_gutter
+    - omnipedia_site/header
