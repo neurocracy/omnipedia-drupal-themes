@@ -1,6 +1,3 @@
-# Theses are the global libraries, named so to match Drupal's naming convention.
-#
-# @see https://www.drupal.org/docs/8/theming/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-theme#attach-library-all-pages
 global-styling:
   css:
     theme:
