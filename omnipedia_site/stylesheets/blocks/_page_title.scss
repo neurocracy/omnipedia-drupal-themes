@@ -2,11 +2,9 @@
 //   Page title block partial
 // -----------------------------------------------------------------------------
 
+@use 'base:global/layout' as layout-base;
 @use 'sass/helpers/hide';
 @use 'sass/helpers/selector';
-
-// @see ../global/_typography.scss
-//   Contains typography/font properties for the page title.
 
 .block-page-title-block {
   // Hide the page title visually on main pages as it's not really needed.
@@ -33,6 +31,17 @@
   flex-wrap: wrap;
   align-items: baseline;
 
+  // This negative margin roughly accounts for the line-height of the first
+  // (top) line so that it appears to have the same spacing on the left, right,
+  // and top with respect to the content box.
+  margin-top:     -0.2em;
+  margin-bottom:   0.6em;
+
+  padding-bottom: 0.4em;
+
+  // This reduces the admittedly large space between lines if the title wraps.
+  line-height: 1.1;
+
   // This is usually a colon (:) or dash (-), and provided for when the title
   // is displayed as text-only, such as in the <title> element and when copied
   // by a user, but is otherwise invisible.
@@ -50,6 +59,21 @@
   }
 
   &__secondary {
+    padding-top: 0.3em;
+
     opacity: 0.6;
+
+    // Increase the line height versus the parent to compensate a bit for the
+    // reduced font size.
+    line-height: 1.4;
+
+    font-size: 85%;
+
+    // Only apply a more significant font size reduction on wider screens, as
+    // this would otherwise make the text uncomfortably small due to the
+    // responsive font size higher up the tree.
+    @include layout-base.on-sidebar-beside-content(any) {
+      font-size: 70%;
+    }
   }
 }
