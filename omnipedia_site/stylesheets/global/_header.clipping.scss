@@ -2,8 +2,8 @@
 //   Site header - Clipping
 // -----------------------------------------------------------------------------
 
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/forms/search';
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout' as layout-base;
+@use 'base:forms/search';
+@use 'base:global/layout' as layout-base;
 @use 'sass/helpers/selector';
 @use '../variables/general' as general-variables;
 

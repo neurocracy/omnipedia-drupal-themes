@@ -2,9 +2,9 @@
 //   Omnipedia <media-group> element partial
 // -----------------------------------------------------------------------------
 
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/elements/list';
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/content';
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout.vertical_spacing' as vertical-spacing;
+@use 'base:elements/list';
+@use 'base:global/content';
+@use 'base:global/layout.vertical_spacing' as vertical-spacing;
 @use '../global/card';
 @use 'sass/helpers/colour';
 @use 'sass/helpers/layout';

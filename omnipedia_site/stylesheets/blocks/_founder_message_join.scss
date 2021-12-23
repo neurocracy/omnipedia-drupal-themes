@@ -2,9 +2,9 @@
 //   Omnipedia founder message (join variant) partial
 // -----------------------------------------------------------------------------
 
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout';
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout.vertical_spacing' as vertical-spacing;
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/typography';
+@use 'base:global/layout';
+@use 'base:global/layout.vertical_spacing' as vertical-spacing;
+@use 'base:global/typography';
 @use '_founder_message' as founder-message;
 @use 'immerse';
 @use 'link/link.state' as link-state;

@@ -9,7 +9,7 @@
 @use '../components/scrollbar_hide' as scrollbar-hide;
 @use '../variables/colours';
 @use '../variables/general' as general-variables;
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/elements/list';
+@use 'base:elements/list';
 
 ///
 /// Omnipedia page revisions block line colour on light backgrounds.

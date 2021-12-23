@@ -4,7 +4,7 @@
 
 @use 'sass/helpers/breakpoint';
 @use 'sass/helpers/hide';
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout';
+@use 'base:global/layout';
 
 @include breakpoint.add((
   'omnipedia-current-date-visible':           32em,

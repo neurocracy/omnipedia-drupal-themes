@@ -2,8 +2,8 @@
 //   Table of contents partial
 // -----------------------------------------------------------------------------
 
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/content';
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout.vertical_spacing' as vertical-spacing;
+@use 'base:global/content';
+@use 'base:global/layout.vertical_spacing' as vertical-spacing;
 @use 'sass/helpers/breakpoint';
 @use 'sass/helpers/colour';
 @use 'sass/helpers/selector';

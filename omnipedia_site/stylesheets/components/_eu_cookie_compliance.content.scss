@@ -2,10 +2,10 @@
 //   EU cookie compliance pop-up content partial
 // -----------------------------------------------------------------------------
 
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/components/form_actions' as form-actions;
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/elements/button';
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/elements/link' as link-base;
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/typography.heading' as typography-heading;
+@use 'base:components/form_actions' as form-actions;
+@use 'base:elements/button';
+@use 'base:elements/link' as link-base;
+@use 'base:global/typography.heading' as typography-heading;
 @use 'link/link';
 @use 'link/link.colour' as link-colour;
 @use 'sass/helpers/colour';

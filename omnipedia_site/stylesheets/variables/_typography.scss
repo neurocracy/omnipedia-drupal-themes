@@ -19,7 +19,7 @@ $font-weight-normal: 400;
 ///
 $font-weight-strong: 700;
 
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/typography' with (
+@use 'base:global/typography' with (
   $font-weight-normal: $font-weight-normal,
   $font-weight-strong: $font-weight-strong,
 );
@@ -38,7 +38,7 @@ $heading-font-stack: 'Exo2', 'Linux Libertine', 'Georgia', 'Times', serif;
 ///
 $heading-font-weight: $font-weight-normal;
 
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/typography.heading' as typography-heading with (
+@use 'base:global/typography.heading' as typography-heading with (
   $heading-font-stack:  $heading-font-stack,
   $heading-font-weight: $heading-font-weight,
 );

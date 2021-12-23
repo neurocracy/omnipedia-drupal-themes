@@ -2,7 +2,7 @@
 //   Site header - Search
 // -----------------------------------------------------------------------------
 
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout' as layout-base;
+@use 'base:global/layout' as layout-base;
 @use 'headroom';
 @use 'material.ripple' as material-ripple;
 @use 'sass/variables/motion';

@@ -4,10 +4,10 @@
 
 @use 'sass/helpers/selector';
 @use 'sass/helpers/layout';
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/forms/search';
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/content';
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout' as layout-base;
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout.vertical_spacing' as vertical-spacing;
+@use 'base:forms/search';
+@use 'base:global/content';
+@use 'base:global/layout' as layout-base;
+@use 'base:global/layout.vertical_spacing' as vertical-spacing;
 
 ///
 /// Keyframes to fade in the pop-up if already consented.

@@ -2,8 +2,8 @@
 //   Site layout - Header
 // -----------------------------------------------------------------------------
 
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/forms/search';
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout' as layout-base;
+@use 'base:forms/search';
+@use 'base:global/layout' as layout-base;
 @use 'headroom';
 @use 'sass/helpers/selector';
 @use 'sass:list';

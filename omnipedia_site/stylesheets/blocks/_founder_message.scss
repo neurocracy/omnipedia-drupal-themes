@@ -2,7 +2,7 @@
 //   Omnipedia founder message partial
 // -----------------------------------------------------------------------------
 
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout' as layout-base;
+@use 'base:global/layout' as layout-base;
 @use 'founder_message/_founder_message' as founder-message;
 @use '../global/card';
 @use 'sass:list';

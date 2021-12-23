@@ -2,7 +2,7 @@
 //   Site layout - Content
 // -----------------------------------------------------------------------------
 
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout' as layout-base;
+@use 'base:global/layout' as layout-base;
 @use 'sass/helpers/breakpoint';
 
 .layout-content {

@@ -2,7 +2,7 @@
 //   Variables - Layout
 // -----------------------------------------------------------------------------
 
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/content';
+@use 'base:global/content';
 @use 'sass/variables/general';
 
 ///
@@ -91,7 +91,7 @@ $sidebar-column-width: minmax(8em, 10em);
 ///
 $gap: 1.5em;
 
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout' with (
+@use 'base:global/layout' with (
   $with-both-sidebars-min-width: $with-both-sidebars-min-width,
   $with-both-sidebars-max-width: $with-both-sidebars-max-width,
   $sidebar-column-width: $sidebar-column-width,

@@ -2,7 +2,7 @@
 //   Help block partial
 // -----------------------------------------------------------------------------
 
-@use '../../../../ambientimpact/ambientimpact_base/stylesheets/global/layout' as layout-base;
+@use 'base:global/layout' as layout-base;
 @use 'material.common/material.general' as material-general;
 @use 'sass:color';
 @use 'sass:math';
