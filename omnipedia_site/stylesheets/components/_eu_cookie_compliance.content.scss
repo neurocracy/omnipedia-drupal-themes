@@ -5,7 +5,8 @@
 @use 'base:components/form_actions' as form-actions;
 @use 'base:elements/button';
 @use 'base:elements/link' as link-base;
-@use 'base:global/typography.heading' as typography-heading;
+@use '../variables/typography' as typography-variables; // Configure typography.
+@use 'base:typography/headings' as typography-headings;
 @use 'link/link';
 @use 'link/link.colour' as link-colour;
 @use 'sass/helpers/colour';
@@ -39,7 +40,7 @@
   }
 
   .eu-cookie-compliance-message {
-    @include typography-heading.headings(2, 6) {
+    @include typography-headings.headings(2, 6) {
       &:first-child {
         margin-top: 0;
       }

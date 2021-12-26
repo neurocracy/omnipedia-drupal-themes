@@ -5,7 +5,8 @@
 @use '../variables/layout' as layout-variables; // Configure layout.
 @use 'base:layout/config' as layout-config;
 @use 'base:layout/vertical_spacing' as vertical-spacing;
-@use 'base:global/typography';
+@use '../variables/typography' as typography-variables; // Configure typography.
+@use 'base:typography/config' as typography-config;
 @use '_founder_message' as founder-message;
 @use 'immerse';
 @use 'link/link.state' as link-state;
@@ -197,7 +198,7 @@ $link-background-colour-base: white;
       }
 
       font-size:    120%;
-      font-weight:  typography.$font-weight-strong;
+      font-weight:  typography-config.$font-weight-strong;
 
       text-align:     center;
       text-transform: uppercase;

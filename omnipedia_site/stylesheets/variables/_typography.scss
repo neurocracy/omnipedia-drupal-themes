@@ -19,7 +19,7 @@ $font-weight-normal: 400;
 ///
 $font-weight-strong: 700;
 
-@use 'base:global/typography' with (
+@use 'base:typography/config' as typography-config with (
   $font-weight-normal: $font-weight-normal,
   $font-weight-strong: $font-weight-strong,
 );
@@ -38,7 +38,7 @@ $heading-font-stack: 'Exo2', 'Linux Libertine', 'Georgia', 'Times', serif;
 ///
 $heading-font-weight: $font-weight-normal;
 
-@use 'base:global/typography.heading' as typography-heading with (
+@use 'base:typography/headings' as typography-headings with (
   $heading-font-stack:  $heading-font-stack,
   $heading-font-weight: $heading-font-weight,
 );
