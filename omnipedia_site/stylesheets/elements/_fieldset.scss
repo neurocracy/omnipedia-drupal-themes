@@ -2,9 +2,11 @@
 //   Fieldset partial
 // -----------------------------------------------------------------------------
 
+@use '../variables/layout' as layout-variables; // Configure layout.
+@use 'base:layout/config' as layout-config;
+@use 'base:layout/sidebars' as layout-sidebars;
+@use 'base:layout/vertical_spacing' as vertical-spacing;
 @use 'base:global/content';
-@use 'base:global/layout';
-@use 'base:global/layout.vertical_spacing' as vertical-spacing;
 @use '../global/card';
 @use 'sass:math';
 
@@ -14,10 +16,10 @@ fieldset:not(.form-composite) {
   @include card.base;
 
   // On wider screens the horizontal and bottom padding matches the layout gap.
-  @include layout.on-sidebar-beside-content(any) {
-    padding-left:   layout.$gap;
-    padding-right:  layout.$gap;
-    padding-bottom: layout.$gap;
+  @include layout-sidebars.on-sidebar-beside-content(any) {
+    padding-left:   layout-config.$gap;
+    padding-right:  layout-config.$gap;
+    padding-bottom: layout-config.$gap;
   }
 }
 

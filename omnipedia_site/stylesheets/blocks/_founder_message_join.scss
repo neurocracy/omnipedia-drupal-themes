@@ -2,8 +2,9 @@
 //   Omnipedia founder message (join variant) partial
 // -----------------------------------------------------------------------------
 
-@use 'base:global/layout';
-@use 'base:global/layout.vertical_spacing' as vertical-spacing;
+@use '../variables/layout' as layout-variables; // Configure layout.
+@use 'base:layout/config' as layout-config;
+@use 'base:layout/vertical_spacing' as vertical-spacing;
 @use 'base:global/typography';
 @use '_founder_message' as founder-message;
 @use 'immerse';
@@ -103,7 +104,7 @@ $link-background-colour-base: white;
       min-width: responsive.calc-value(
         $min-screen:  30em,
         $min-value:   200em,
-        $max-screen:  layout.$with-both-sidebars-max-width,
+        $max-screen:  layout-config.$with-both-sidebars-max-width,
         $max-value:   300em
       );
 

@@ -2,13 +2,15 @@
 //   Site header - Clipping
 // -----------------------------------------------------------------------------
 
+@use '../variables/layout' as layout-variables; // Configure layout.
+@use 'base:layout/config' as layout-config;
+@use 'base:layout/sidebars' as layout-sidebars;
 @use 'base:forms/search';
-@use 'base:global/layout' as layout-base;
 @use 'sass/helpers/selector';
 @use '../variables/general' as general-variables;
 
 .region-primary-menu {
-  @include layout-base.on-sidebar-beside-content(both) {
+  @include layout-sidebars.on-sidebar-beside-content(both) {
     ///
     /// Amount of extra vertical space below to prevent clipping the shadow.
     ///
@@ -19,40 +21,40 @@
     // Chromium and the shadow leaks a bit on the sides.
     @include selector.root-conditions(('[dir=ltr]'), 'html') {
       clip-path: polygon(
-        0 -#{layout-base.$gap},
+        0 -#{layout-config.$gap},
 
         calc(100% + #{search.$button-spacing} - #{general-variables.$divider-thickness})
-          -#{layout-base.$gap},
+          -#{layout-config.$gap},
 
         calc(100% + #{search.$button-spacing} - #{general-variables.$divider-thickness})
-          calc(100% + #{layout-base.$gap} - #{general-variables.$divider-thickness}),
+          calc(100% + #{layout-config.$gap} - #{general-variables.$divider-thickness}),
 
         calc(100% - #{general-variables.$divider-thickness})
-          calc(100% + #{layout-base.$gap} - #{general-variables.$divider-thickness}),
+          calc(100% + #{layout-config.$gap} - #{general-variables.$divider-thickness}),
 
         calc(100% - #{general-variables.$divider-thickness})
-          calc(100% + #{layout-base.$gap} + #{$shadow-buffer}),
+          calc(100% + #{layout-config.$gap} + #{$shadow-buffer}),
 
-        0 calc(100% + #{layout-base.$gap} + #{$shadow-buffer})
+        0 calc(100% + #{layout-config.$gap} + #{$shadow-buffer})
       );
     }
     @include selector.root-conditions(('[dir=rtl]'), 'html') {
       clip-path: polygon(
-        -#{search.$button-spacing} -#{layout-base.$gap},
+        -#{search.$button-spacing} -#{layout-config.$gap},
 
-        calc(100% + #{general-variables.$divider-thickness}) -#{layout-base.$gap},
+        calc(100% + #{general-variables.$divider-thickness}) -#{layout-config.$gap},
 
         calc(100% + #{general-variables.$divider-thickness})
-          calc(100% + #{layout-base.$gap} + #{$shadow-buffer}),
+          calc(100% + #{layout-config.$gap} + #{$shadow-buffer}),
 
         #{general-variables.$divider-thickness}
-          calc(100% + #{layout-base.$gap} + #{$shadow-buffer}),
+          calc(100% + #{layout-config.$gap} + #{$shadow-buffer}),
 
         #{general-variables.$divider-thickness}
-          calc(100% + #{layout-base.$gap} - #{general-variables.$divider-thickness}),
+          calc(100% + #{layout-config.$gap} - #{general-variables.$divider-thickness}),
 
         -#{search.$button-spacing}
-          calc(100% + #{layout-base.$gap} - #{general-variables.$divider-thickness})
+          calc(100% + #{layout-config.$gap} - #{general-variables.$divider-thickness})
       );
     }
   }

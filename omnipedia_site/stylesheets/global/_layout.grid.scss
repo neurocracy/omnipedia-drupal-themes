@@ -2,11 +2,14 @@
 //   Site layout - Grid
 // -----------------------------------------------------------------------------
 
-@use 'base:global/layout' as layout-base;
+@use '../variables/layout' as layout-variables; // Configure layout.
+@use 'base:layout/config' as layout-config;
+@use 'base:layout/container' as layout-container;
+@use 'base:layout/grid' as layout-grid;
+@use 'base:layout/sidebars' as layout-sidebars;
 @use 'sass/helpers/breakpoint';
 @use 'sass/helpers/layout';
 @use 'sass:math';
-@use '../variables/layout' as layout-variables;
 
 ///
 /// The Omnipedia grid definition in compact layout (narrow screens).
@@ -31,7 +34,7 @@
 
   grid-template-columns: minmax(10em, 1fr) 2fr;
 
-  grid-row-gap:     layout-base.$gutter;
+  grid-row-gap:    layout-config.$gutter;
   // This adds a bigger gap between the site branding and header items to ensure
   // they read as separate elements.
   grid-column-gap: layout-variables.$header-distinct-gap;
@@ -57,14 +60,14 @@
 // Common stuff regardless of whether subgrid is supported.
 .layout-container {
   @include breakpoint.on('<layout-with-both-sidebars') {
-    margin-top: layout-base.$gutter;
+    margin-top: layout-config.$gutter;
   }
 
-  @include layout-base.on-sidebar-beside-content(any) {
+  @include layout-sidebars.on-sidebar-beside-content(any) {
     // On wider screens, the horizontal padding on either side of the layout
     // matches the layout gap between columns.
-    padding-left:   layout-base.$gap;
-    padding-right:  layout-base.$gap;
+    padding-left:   layout-config.$gap;
+    padding-right:  layout-config.$gap;
   }
 
   header[role='banner'] {
@@ -84,7 +87,7 @@
 
     // Required to override ambientimpact_base/stylesheets/global/_layout.scss
     // when that applies its wider screen layout grid.
-    @include layout-base.on-sidebar-beside-content(both) {
+    @include layout-sidebars.on-sidebar-beside-content(both) {
       grid-area: menu-primary;
     }
   }
@@ -144,7 +147,7 @@
       }
     }
 
-    @include layout-base.on-sidebar-beside-content(both) {
+    @include layout-sidebars.on-sidebar-beside-content(both) {
       .layout-container {
         @include grid-wide;
       }
@@ -202,8 +205,8 @@
     // These have to be placed outside of the @include layout.use-grid because they
     // also use the mixin and double nesting would cause two nested
     // body.use-grid selectors which would never match.
-    @include layout-base.grid;
-    @include layout-base.max-width;
+    @include layout-grid.grid;
+    @include layout-container.max-width;
   }
 
   // This must span the full width of the parent's grid and the full rows of the
@@ -221,7 +224,7 @@
 
       @include grid-compact;
 
-      @include layout-base.on-sidebar-beside-content(both) {
+      @include layout-sidebars.on-sidebar-beside-content(both) {
         @include grid-wide;
       }
 
@@ -250,7 +253,7 @@
     }
 
     .layout-sidebar-first {
-      @include layout-base.on-sidebar-beside-content(both) {
+      @include layout-sidebars.on-sidebar-beside-content(both) {
         // @todo Why doesn't 'first' parameter work here?
         &::before {
           content: '';
@@ -262,7 +265,7 @@
 
           // Don't forget the spacing between elements!
           margin-bottom:
-            layout-variables.$branding-spacing * 2 + layout-base.$gap;
+            layout-variables.$branding-spacing * 2 + layout-config.$gap;
         }
       }
     }

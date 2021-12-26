@@ -2,12 +2,15 @@
 //   EU cookie compliance pop-up layout partial
 // -----------------------------------------------------------------------------
 
+@use '../variables/layout' as layout-variables; // Configure layout.
+@use 'base:layout/config' as layout-config;
+@use 'base:layout/container' as layout-container;
+@use 'base:layout/sidebars' as layout-sidebars;
+@use 'base:layout/vertical_spacing' as vertical-spacing;
 @use 'sass/helpers/selector';
 @use 'sass/helpers/layout';
 @use 'base:forms/search';
 @use 'base:global/content';
-@use 'base:global/layout' as layout-base;
-@use 'base:global/layout.vertical_spacing' as vertical-spacing;
 
 ///
 /// Keyframes to fade in the pop-up if already consented.
@@ -90,19 +93,19 @@
   .eu-cookie-compliance-content {
     display: block;
 
-    @include layout-base.max-width;
+    @include layout-container.max-width;
 
-    padding-left:   layout-base.$gutter;
-    padding-right:  layout-base.$gutter;
+    padding-left:   layout-config.$gutter;
+    padding-right:  layout-config.$gutter;
 
     // This matches ../global/_layout.grid.scss
-    @include layout-base.on-sidebar-beside-content(any) {
-      padding-left:   layout-base.$gap;
-      padding-right:  layout-base.$gap;
+    @include layout-sidebars.on-sidebar-beside-content(any) {
+      padding-left:   layout-config.$gap;
+      padding-right:  layout-config.$gap;
     }
 
-    padding-top:    layout-base.$gutter;
-    padding-bottom: layout-base.$gutter;
+    padding-top:    layout-config.$gutter;
+    padding-bottom: layout-config.$gutter;
 
     box-sizing: border-box;
 

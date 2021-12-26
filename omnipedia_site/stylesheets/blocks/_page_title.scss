@@ -2,7 +2,8 @@
 //   Page title block partial
 // -----------------------------------------------------------------------------
 
-@use 'base:global/layout' as layout-base;
+@use '../variables/layout' as layout-variables; // Configure layout.
+@use 'base:layout/sidebars' as layout-sidebars;
 @use 'sass/helpers/hide';
 @use 'sass/helpers/selector';
 
@@ -72,7 +73,7 @@
     // Only apply a more significant font size reduction on wider screens, as
     // this would otherwise make the text uncomfortably small due to the
     // responsive font size higher up the tree.
-    @include layout-base.on-sidebar-beside-content(any) {
+    @include layout-sidebars.on-sidebar-beside-content(any) {
       font-size: 70%;
     }
   }

@@ -4,7 +4,7 @@
 
 @use 'sass/helpers/breakpoint';
 @use 'sass/helpers/hide';
-@use 'base:global/layout';
+@use 'base:layout/sidebars' as layout-sidebars;
 
 @include breakpoint.add((
   'omnipedia-current-date-visible':           32em,
@@ -30,7 +30,7 @@
     font-size: 120%;
   }
 
-  @include layout.on-sidebar-beside-content(any) {
+  @include layout-sidebars.on-sidebar-beside-content(any) {
     font-size:  150%;
   }
 }

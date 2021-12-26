@@ -2,9 +2,11 @@
 //   Site layout - Sidebars
 // -----------------------------------------------------------------------------
 
+@use '../variables/layout' as layout-variables; // Configure layout.
+@use 'base:layout/config' as layout-config;
+@use 'base:layout/sidebars' as layout-sidebars;
+@use 'base:layout/vertical_spacing' as vertical-spacing;
 @use 'base:global/content';
-@use 'base:global/layout' as layout-base;
-@use 'base:global/layout.vertical_spacing' as vertical-spacing;
 @use 'sass/helpers/breakpoint';
 @use 'sass/helpers/selector';
 
@@ -82,13 +84,13 @@
       // Scroll if the sidebar content doesn't fit in the vertical space.
       overflow-y: auto;
 
-      padding: layout-base.$gutter;
+      padding: layout-config.$gutter;
 
       // This should roughly account for the close button.
       //
       // @todo Find a way to sync this with the actual expected height of the
       //   button.
-      padding-bottom: calc(#{layout-base.$gutter} + 3.5em);
+      padding-bottom: calc(#{layout-config.$gutter} + 3.5em);
     }
 
     // Shadow element. See documentation at the top of this partial.
@@ -119,13 +121,13 @@
 
       position: absolute;
 
-      bottom:   layout-base.$gutter;
+      bottom:   layout-config.$gutter;
 
       @include selector.root-conditions(('[dir=ltr]'), 'html') {
-        right:  layout-base.$gutter;
+        right:  layout-config.$gutter;
       }
       @include selector.root-conditions(('[dir=rtl]'), 'html') {
-        left:   layout-base.$gutter;
+        left:   layout-config.$gutter;
       }
 
       // Ensure that this is above other elements.
@@ -169,7 +171,7 @@
     }
   }
 
-  @include layout-base.on-sidebar-beside-content(both) {
+  @include layout-sidebars.on-sidebar-beside-content(both) {
     // This causes the container's children to act as if the container doesn't
     // exist for layout purposes, including grid placement. This has better
     // support currently than subgrid, which is not available in Chrome as of
@@ -193,7 +195,7 @@
 }
 
 .region-sidebar-second {
-  @include layout-base.on-sidebar-beside-content(both) {
+  @include layout-sidebars.on-sidebar-beside-content(both) {
     // This adjusts the top of the first block's title with the adjacent main
     // content box .
     .block:first-child .block__title {

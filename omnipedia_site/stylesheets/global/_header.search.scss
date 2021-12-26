@@ -2,11 +2,12 @@
 //   Site header - Search
 // -----------------------------------------------------------------------------
 
-@use 'base:global/layout' as layout-base;
+@use '../variables/layout' as layout-variables; // Configure layout.
+@use 'base:layout/config' as layout-config;
+@use 'base:layout/sidebars' as layout-sidebars;
 @use 'headroom';
 @use 'material.ripple' as material-ripple;
 @use 'sass/variables/motion';
-@use '../variables/layout' as layout-variables;
 
 .search-anchor {
   @include material-ripple.material-ripple;
@@ -31,7 +32,7 @@
 
     will-change: transform;
 
-    @include layout-base.on-sidebar-beside-content(any) {
+    @include layout-sidebars.on-sidebar-beside-content(any) {
       transition-property: none;
 
       will-change: none;
@@ -50,13 +51,13 @@
     &__current-date,
     &__menu {
       transform: translateY(calc(
-        -#{layout-variables.$header-row-height} - #{layout-base.$gap} -
-        #{layout-base.$gap} - 0.2em
+        -#{layout-variables.$header-row-height} - #{layout-config.$gap} -
+        #{layout-config.$gap} - 0.2em
       ));
 
       transition-timing-function: motion.$easing-accelerate;
 
-      @include layout-base.on-sidebar-beside-content(any) {
+      @include layout-sidebars.on-sidebar-beside-content(any) {
         transform: none;
       }
     }
@@ -70,7 +71,7 @@
 
       transition-timing-function: motion.$easing-accelerate;
 
-      @include layout-base.on-sidebar-beside-content(any) {
+      @include layout-sidebars.on-sidebar-beside-content(any) {
         transform: none;
       }
     }
@@ -85,7 +86,7 @@
 
       transition-timing-function: motion.$easing-decelerate;
 
-      @include layout-base.on-sidebar-beside-content(any) {
+      @include layout-sidebars.on-sidebar-beside-content(any) {
         transform: none;
       }
     }

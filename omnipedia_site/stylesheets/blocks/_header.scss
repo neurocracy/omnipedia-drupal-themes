@@ -2,11 +2,11 @@
 //   Omnipedia site header block partial
 // -----------------------------------------------------------------------------
 
+@use '../variables/layout' as layout-variables; // Configure layout.
+@use 'base:layout/sidebars' as layout-sidebars;
 @use 'base:forms/search';
-@use 'base:global/layout' as layout-base;
 @use 'sass/helpers/layout';
 @use 'sass:list';
-@use '../variables/layout' as layout-variables;
 
 // This partial handles most of the internal layout and functionality of the
 // site header element.
@@ -39,7 +39,7 @@
 
     justify-items: end;
 
-    @include layout-base.on-sidebar-beside-content(any) {
+    @include layout-sidebars.on-sidebar-beside-content(any) {
       // This adds a bigger gap between the header items to ensure they read as
       // separate elements.
       grid-column-gap: layout-variables.$header-distinct-gap;
@@ -62,7 +62,7 @@
 
       grid-row: 1;
 
-      @include layout-base.on-sidebar-beside-content(any) {
+      @include layout-sidebars.on-sidebar-beside-content(any) {
         justify-items: stretch;
       }
     }
@@ -75,7 +75,7 @@
     &__current-date {
       grid-column: 1;
 
-      @include layout-base.on-sidebar-beside-content(any) {
+      @include layout-sidebars.on-sidebar-beside-content(any) {
         grid-column: auto;
       }
     }
@@ -90,7 +90,7 @@
       //
       // @todo Could showing this still be useful for keyboard navigation on
       //   wide screens?
-      @include layout-base.on-sidebar-beside-content(both) {
+      @include layout-sidebars.on-sidebar-beside-content(both) {
         display: none;
       }
 
@@ -111,7 +111,7 @@
         left:   0;
         right:  0;
 
-        @include layout-base.on-sidebar-beside-content(any) {
+        @include layout-sidebars.on-sidebar-beside-content(any) {
           position: static;
         }
       }
@@ -126,7 +126,7 @@
 
       max-width: none;
 
-      @include layout-base.on-sidebar-beside-content(any) {
+      @include layout-sidebars.on-sidebar-beside-content(any) {
         grid-column: auto;
 
         max-width: search.$form-container-max-width;
@@ -139,7 +139,7 @@
         position: relative;
         top:      -0.4em;
 
-        @include layout-base.on-sidebar-beside-content(any) {
+        @include layout-sidebars.on-sidebar-beside-content(any) {
           top:    0.3em;
         }
 

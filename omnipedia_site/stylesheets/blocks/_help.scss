@@ -2,7 +2,8 @@
 //   Help block partial
 // -----------------------------------------------------------------------------
 
-@use 'base:global/layout' as layout-base;
+@use '../variables/layout' as layout-variables; // Configure layout.
+@use 'base:layout/config' as layout-config;
 @use 'material.common/material.general' as material-general;
 @use 'sass:color';
 @use 'sass:math';
@@ -30,7 +31,9 @@ $background-colour-on-dark: color.adjust(
 ///
 /// Help block padding.
 ///
-$padding: math.div(layout-base.$gap, 3) math.div(layout-base.$gap, 2);
+/// @require {variable} layout-config.$gap
+///
+$padding: math.div(layout-config.$gap, 3) math.div(layout-config.$gap, 2);
 
 .block-help {
   padding: $padding;

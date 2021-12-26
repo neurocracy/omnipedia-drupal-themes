@@ -2,7 +2,8 @@
 //   Site content area
 // -----------------------------------------------------------------------------
 
-@use 'base:global/layout' as layout-base;
+@use '../variables/layout' as layout-variables; // Configure layout.
+@use 'base:layout/sidebars' as layout-sidebars;
 @use 'material.common/material.general' as material-general;
 @use 'sass/helpers/colour';
 @use '../variables/colours';
@@ -31,7 +32,7 @@
     @include colour.set($background: colours.$primary-content-background-dark);
   }
 
-  @include layout-base.on-sidebar-beside-content(any) {
+  @include layout-sidebars.on-sidebar-beside-content(any) {
     border-top-width: general-variables.$divider-thickness;
 
     // Add horizontal borders.

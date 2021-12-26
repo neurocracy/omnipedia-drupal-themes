@@ -2,7 +2,8 @@
 //   Site layout - Primary menu region
 // -----------------------------------------------------------------------------
 
-@use 'base:global/layout' as layout-base;
+@use '../variables/layout' as layout-variables; // Configure layout.
+@use 'base:layout/sidebars' as layout-sidebars;
 @use 'sass/helpers/layout';
 
 .region-primary-menu {
@@ -19,7 +20,7 @@
   pointer-events: none;
 
   // Revert back to auto when the site branding is in the sidebar.
-  @include layout-base.on-sidebar-beside-content(any) {
+  @include layout-sidebars.on-sidebar-beside-content(any) {
     pointer-events: auto;
   }
 

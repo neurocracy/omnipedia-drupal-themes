@@ -2,13 +2,14 @@
 //   Typography partial
 // -----------------------------------------------------------------------------
 
-@use 'base:global/layout' as layout-base;
-@use 'base:global/layout.vertical_spacing' as vertical-spacing;
+@use '../variables/layout' as layout-variables; // Configure layout.
+@use 'base:layout/sidebars' as layout-sidebars;
+@use 'base:layout/vertical_spacing' as vertical-spacing;
 @use 'base:global/typography';
 @use '../variables/typography' as typography-variables;
 
 body {
-  @include layout-base.on-sidebar-beside-content(any) {
+  @include layout-sidebars.on-sidebar-beside-content(any) {
     font-size: typography-variables.$font-size-big-screen;
   }
 

@@ -2,12 +2,14 @@
 //   Site layout - Content
 // -----------------------------------------------------------------------------
 
-@use 'base:global/layout' as layout-base;
+@use '../variables/layout' as layout-variables; // Configure layout.
+@use 'base:layout/config' as layout-config;
+@use 'base:layout/sidebars' as layout-sidebars;
 @use 'sass/helpers/breakpoint';
 
 .layout-content {
   // On narrow screens the horizontal padding matches the layout gutter.
-  padding: layout-base.$gap layout-base.$gutter;
+  padding: layout-config.$gap layout-config.$gutter;
 
   @include breakpoint.on('<layout-with-both-sidebars') {
     // Cancel out the default horizontal padding set in the
@@ -15,25 +17,25 @@
     // background and borders we set around the content area.
     //
     // @see {mixin} layout-container-base-horizontal
-    margin-left:  layout-base.$gutter * -1;
-    margin-right: layout-base.$gutter * -1;
+    margin-left:  layout-config.$gutter * -1;
+    margin-right: layout-config.$gutter * -1;
   }
 
-  @include layout-base.on-sidebar-beside-content(any) {
+  @include layout-sidebars.on-sidebar-beside-content(any) {
     // On wider screens the horizontal padding matches the vertical padding.
-    padding-left:   layout-base.$gap;
-    padding-right:  layout-base.$gap;
+    padding-left:   layout-config.$gap;
+    padding-right:  layout-config.$gap;
   }
 
   .region + .region {
-    margin-top: layout-base.$gap;
+    margin-top: layout-config.$gap;
   }
 }
 
 .region-content {
-  // Add space between blocks using the layout-base.$gap variable.
+  // Add space between blocks using the layout-config.$gap variable.
   .block + .block,
   [data-drupal-messages] + .block {
-    margin-top: layout-base.$gap;
+    margin-top: layout-config.$gap;
   }
 }

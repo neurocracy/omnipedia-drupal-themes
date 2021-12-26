@@ -2,7 +2,9 @@
 //   Omnipedia founder message partial
 // -----------------------------------------------------------------------------
 
-@use 'base:global/layout' as layout-base;
+@use '../variables/layout' as layout-variables; // Configure layout.
+@use 'base:layout/config' as layout-config;
+@use 'base:layout/sidebars' as layout-sidebars;
 @use 'founder_message/_founder_message' as founder-message;
 @use '../global/card';
 @use 'sass:list';
@@ -76,12 +78,12 @@ $stacking-order: background, content;
   // On smaller screen widths, we use the layout.$gutter since the content
   // columm is flush with the sides of the viewport and this matches the rest of
   // the content.
-  padding-left:   layout-base.$gutter;
-  padding-right:  layout-base.$gutter;
+  padding-left:   layout-config.$gutter;
+  padding-right:  layout-config.$gutter;
 
   // This pulls the block flush with the edges of the viewport.
-  margin-left:    layout-base.$gutter * -1;
-  margin-right:   layout-base.$gutter * -1;
+  margin-left:    layout-config.$gutter * -1;
+  margin-right:   layout-config.$gutter * -1;
   max-width:      none;
 
   // On smaller screen widths, we just set vertical padding to match the card
@@ -99,7 +101,7 @@ $stacking-order: background, content;
   // When we're using the layout with sidebars on either side of the content
   // column, switch to using the full card styles and set larger padding on all
   // sides.
-  @include layout-base.on-sidebar-beside-content('any') {
+  @include layout-sidebars.on-sidebar-beside-content('any') {
 
     @include card.base;
 
