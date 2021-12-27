@@ -45,6 +45,11 @@ header:
     - omnipedia_site/overlay_scroll
     - omnipedia_site/search_form
 
+media_embed_error:
+  css:
+    theme:
+      stylesheets/components/media_embed_error.css: {}
+
 offcanvas_immerse:
   js:
     javascript/offcanvas.immerse.js: {}
