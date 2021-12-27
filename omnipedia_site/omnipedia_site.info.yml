@@ -58,3 +58,15 @@ libraries-extend:
 
   eu_cookie_compliance/eu_cookie_compliance:
     - omnipedia_site/eu_cookie_compliance
+
+  omnipedia_content/component.infobox:
+    - omnipedia_site/omnipedia_infobox
+
+  omnipedia_content/component.main_page:
+    - omnipedia_site/omnipedia_main_page
+
+  omnipedia_media/component.media:
+    - omnipedia_site/omnipedia_media
+
+  omnipedia_media/component.media_group:
+    - omnipedia_site/omnipedia_media_group

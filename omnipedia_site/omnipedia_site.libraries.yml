@@ -57,6 +57,26 @@ offcanvas_immerse:
   js:
     javascript/offcanvas.immerse.js: {}
 
+omnipedia_infobox:
+  css:
+    theme:
+      stylesheets/omnipedia_elements/infobox.css: {}
+
+omnipedia_main_page:
+  css:
+    theme:
+      stylesheets/omnipedia_elements/main_page.css: {}
+
+omnipedia_media:
+  css:
+    theme:
+      stylesheets/omnipedia_elements/media.css: {}
+
+omnipedia_media_group:
+  css:
+    theme:
+      stylesheets/omnipedia_elements/media_group.css: {}
+
 overlay_scroll:
   js:
     javascript/overlay.scroll.js: {}
