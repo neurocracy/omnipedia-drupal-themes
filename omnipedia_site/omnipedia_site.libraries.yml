@@ -5,6 +5,11 @@ global-styling:
   dependencies:
     - ambientimpact_ux/component.material.ripple
 
+changes:
+  css:
+    theme:
+      stylesheets/components/changes.css: {}
+
 commerce_checkout_form:
   css:
     theme:

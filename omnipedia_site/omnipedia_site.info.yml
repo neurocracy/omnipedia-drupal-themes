@@ -70,3 +70,6 @@ libraries-extend:
 
   omnipedia_media/component.media_group:
     - omnipedia_site/omnipedia_media_group
+
+  omnipedia_content_changes/component.changes:
+    - omnipedia_site/changes
