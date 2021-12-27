@@ -329,3 +329,21 @@ function omnipedia_site_preprocess_eu_cookie_compliance_popup_info(
   }
 
 }
+
+/**
+ * Prepares variables for views exposed form templates.
+ *
+ * Default template: views-exposed-form.html.twig.
+ *
+ * This attaches the 'omnipedia_site/search_form' library to to the wiki search
+ * page view exposed form.
+ */
+function omnipedia_site_preprocess_views_exposed_form(array &$variables): void {
+
+  if ($variables['form']['#id'] === 'views-exposed-form-wiki-search-page') {
+
+    $variables['form']['#attached']['library'][] = 'omnipedia_site/search_form';
+
+  }
+
+}

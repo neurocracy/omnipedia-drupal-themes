@@ -38,6 +38,7 @@ header:
     - ambientimpact_ux/component.headroom
     - omnipedia_site/offcanvas_immerse
     - omnipedia_site/overlay_scroll
+    - omnipedia_site/search_form
 
 offcanvas_immerse:
   js:
@@ -46,6 +47,11 @@ offcanvas_immerse:
 overlay_scroll:
   js:
     javascript/overlay.scroll.js: {}
+
+search_form:
+  css:
+    theme:
+      stylesheets/forms/search.css: {}
 
 sidebars:
   js:
