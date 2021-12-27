@@ -10,6 +10,11 @@ commerce_checkout_form:
     theme:
       stylesheets/forms/commerce/checkout.css: {}
 
+commerce_checkout_progress:
+  css:
+    theme:
+      stylesheets/components/commerce_checkout_progress.css: {}
+
 eu_cookie_compliance:
   js:
     javascript/eu_cookie_compliance.elements.js: {}
