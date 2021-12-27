@@ -5,6 +5,11 @@ global-styling:
   dependencies:
     - ambientimpact_ux/component.material.ripple
 
+commerce_checkout_form:
+  css:
+    theme:
+      stylesheets/forms/commerce/checkout.css: {}
+
 eu_cookie_compliance:
   js:
     javascript/eu_cookie_compliance.elements.js: {}

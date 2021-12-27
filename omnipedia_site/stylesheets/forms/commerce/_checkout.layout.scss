@@ -1,8 +1,8 @@
 // -----------------------------------------------------------------------------
-//   Site layout - Commerce
+//   Commerce checkout layout partial
 // -----------------------------------------------------------------------------
 
-@use '../variables/layout' as layout-variables; // Configure layout.
+@use '../../variables/layout' as layout-variables; // Configure layout.
 @use 'base:layout/config' as layout-config;
 @use 'base:layout/vertical_spacing' as vertical-spacing;
 @use 'base:global/content';
