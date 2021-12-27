@@ -2,16 +2,16 @@
 //   EU cookie compliance pop-up content partial
 // -----------------------------------------------------------------------------
 
+@use '../../variables/typography' as typography-variables; // Configure typography.
+@use 'base:typography/headings' as typography-headings;
 @use 'base:components/form_actions' as form-actions;
 @use 'base:elements/button';
 @use 'base:elements/link' as link-base;
-@use '../variables/typography' as typography-variables; // Configure typography.
-@use 'base:typography/headings' as typography-headings;
 @use 'link/link';
 @use 'link/link.colour' as link-colour;
 @use 'sass/helpers/colour';
 @use 'sass/helpers/selector';
-@use '../variables/colours';
+@use '../../variables/colours';
 
 .eu-cookie-compliance-popup {
 

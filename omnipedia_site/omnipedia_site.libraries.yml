@@ -16,6 +16,9 @@ commerce_checkout_progress:
       stylesheets/components/commerce_checkout_progress.css: {}
 
 eu_cookie_compliance:
+  css:
+    theme:
+      stylesheets/components/eu_cookie_compliance.css: {}
   js:
     javascript/eu_cookie_compliance.elements.js: {}
     javascript/eu_cookie_compliance.state.js: {}
