@@ -2,8 +2,8 @@
 //   Site header - Border
 // -----------------------------------------------------------------------------
 
+@use '../variables/colours'; // Configure colours.
 @use 'sass/helpers/colour';
-@use '../variables/colours';
 @use '../variables/general' as general-variables;
 
 .omnipedia-header,
