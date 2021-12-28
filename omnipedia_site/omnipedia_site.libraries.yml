@@ -38,6 +38,11 @@ eu_cookie_compliance:
     - omnipedia_block/component.privacy_settings
     - omnipedia_site/offcanvas_immerse
 
+form_radios:
+  css:
+    theme:
+      stylesheets/components/form_radios.css: {}
+
 header:
   js:
     javascript/header.elements.js: {}

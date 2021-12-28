@@ -77,6 +77,16 @@ function omnipedia_site_preprocess_region(array &$variables): void {
 }
 
 /**
+ * Implements hook_element_info_alter().
+ *
+ * This attaches the 'omnipedia_site/form_radios' library to the 'radios'
+ * element.
+ */
+function omnipedia_site_element_info_alter(array &$info): void {
+  $info['radios']['#attached']['library'][] = 'omnipedia_site/form_radios';
+}
+
+/**
  * Implements hook_form_FORM_ID_alter().
  *
  * This alters the submit button for the wiki search view exposed form:
