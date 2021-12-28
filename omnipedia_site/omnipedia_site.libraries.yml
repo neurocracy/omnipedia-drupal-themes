@@ -58,6 +58,11 @@ media_embed_error:
     theme:
       stylesheets/components/media_embed_error.css: {}
 
+menu:
+  css:
+    theme:
+      stylesheets/components/menu.css: {}
+
 offcanvas_immerse:
   js:
     javascript/offcanvas.immerse.js: {}

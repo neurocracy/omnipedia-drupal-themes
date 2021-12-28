@@ -53,6 +53,9 @@ libraries-override:
 
 libraries-extend:
 
+  classy/base:
+    - omnipedia_site/menu
+
   commerce_checkout/checkout_progress:
     - omnipedia_site/commerce_checkout_progress
 
