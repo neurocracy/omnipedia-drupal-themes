@@ -1,14 +1,6 @@
 @use 'card';
 @use 'fonts';
 @use 'typography';
-@use 'layout.grid' as layout-grid;
-@use 'layout.z-index' as layout-z-index;
-@use 'layout.header' as layout-header;
-@use 'layout.region.primary_menu' as layout-region-primary-menu;
-@use 'layout.content' as layout-content;
-@use 'layout.sidebars' as layout-sidebars;
-@use 'layout.overlay' as layout-overlay;
-@use 'layout.footer' as layout-footer;
 @use 'reveal';
 @use 'site_branding';
 @use 'header.background' as header-background;

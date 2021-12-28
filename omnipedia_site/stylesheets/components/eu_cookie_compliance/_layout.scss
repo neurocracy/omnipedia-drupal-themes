@@ -98,7 +98,7 @@
     padding-left:   layout-config.$gutter;
     padding-right:  layout-config.$gutter;
 
-    // This matches ../global/_layout.grid.scss
+    // This matches ../layout/_grid.scss
     @include layout-sidebars.on-sidebar-beside-content(any) {
       padding-left:   layout-config.$gap;
       padding-right:  layout-config.$gap;
