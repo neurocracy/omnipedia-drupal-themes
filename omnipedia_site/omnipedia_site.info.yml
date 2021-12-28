@@ -62,6 +62,9 @@ libraries-extend:
   eu_cookie_compliance/eu_cookie_compliance:
     - omnipedia_site/eu_cookie_compliance
 
+  omnipedia_block/component.founder_message:
+    - omnipedia_site/founder_message
+
   omnipedia_content/component.infobox:
     - omnipedia_site/omnipedia_infobox
 

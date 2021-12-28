@@ -2,12 +2,12 @@
 //   Omnipedia founder message (join variant) partial
 // -----------------------------------------------------------------------------
 
-@use '../variables/layout' as layout-variables; // Configure layout.
+@use '../../variables/layout' as layout-variables; // Configure layout.
 @use 'base:layout/config' as layout-config;
 @use 'base:layout/vertical_spacing' as vertical-spacing;
-@use '../variables/typography' as typography-variables; // Configure typography.
+@use '../../variables/typography' as typography-variables; // Configure typography.
 @use 'base:typography/config' as typography-config;
-@use '_founder_message' as founder-message;
+@use '_base' as founder-message;
 @use 'immerse';
 @use 'link/link.state' as link-state;
 @use 'material.common/material.general' as material-general;
@@ -18,8 +18,8 @@
 @use 'sass/helpers/colour';
 @use 'sass/helpers/responsive';
 @use 'sass/variables/motion';
-@use '../variables/colours';
-@use '../variables/general';
+@use '../../variables/colours';
+@use '../../variables/general';
 
 ///
 /// Founder message (join variant) gradient.
