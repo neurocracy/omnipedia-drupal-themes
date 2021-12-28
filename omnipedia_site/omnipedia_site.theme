@@ -141,6 +141,48 @@ function omnipedia_site_form_views_exposed_form_alter(
 }
 
 /**
+ * Prepares variables for the 'help_block' block template.
+ *
+ * This attaches the 'omnipedia_site/help' library.
+ */
+function omnipedia_site_preprocess_block__help_block(array &$variables): void {
+  $variables['#attached']['library'][] = 'omnipedia_site/help';
+}
+
+/**
+ * Prepares variables for the 'omnipedia_current_date' block template.
+ *
+ * This attaches the 'omnipedia_site/current_date' library.
+ */
+function omnipedia_site_preprocess_block__omnipedia_current_date(
+  array &$variables
+): void {
+  $variables['#attached']['library'][] = 'omnipedia_site/current_date';
+}
+
+/**
+ * Prepares variables for the 'omnipedia_join' block template.
+ *
+ * This attaches the 'omnipedia_site/join' library.
+ */
+function omnipedia_site_preprocess_block__omnipedia_join(
+  array &$variables
+): void {
+  $variables['#attached']['library'][] = 'omnipedia_site/join';
+}
+
+/**
+ * Prepares variables for the 'omnipedia_page_revision_history' block template.
+ *
+ * This attaches the 'omnipedia_site/page_revision_history' library.
+ */
+function omnipedia_site_preprocess_block__omnipedia_page_revision_history(
+  array &$variables
+): void {
+  $variables['#attached']['library'][] = 'omnipedia_site/page_revision_history';
+}
+
+/**
  * Prepares variables for the 'system_branding_block' block template.
  *
  * This sets the 'front_page_url' to the current date's main page, so that the
@@ -283,6 +325,15 @@ function omnipedia_site_preprocess_omnipedia_header(array &$variables): void {
 
   $variables['#attached']['library'][] = 'omnipedia_site/header';
 
+}
+
+/**
+ * Prepares variables for page title templates.
+ *
+ * This attaches the 'omnipedia_site/page_title' library.
+ */
+function omnipedia_site_preprocess_page_title(array &$variables): void {
+  $variables['#attached']['library'][] = 'omnipedia_site/page_title';
 }
 
 /**

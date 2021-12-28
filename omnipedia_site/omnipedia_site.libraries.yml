@@ -20,6 +20,11 @@ commerce_checkout_progress:
     theme:
       stylesheets/components/commerce_checkout_progress.css: {}
 
+current_date:
+  css:
+    theme:
+      stylesheets/blocks/current_date.css: {}
+
 eu_cookie_compliance:
   css:
     theme:
@@ -49,6 +54,9 @@ form_radios:
       stylesheets/components/form_radios.css: {}
 
 header:
+  css:
+    theme:
+      stylesheets/blocks/header.css: {}
   js:
     javascript/header.elements.js: {}
     javascript/header.focus.js: {}
@@ -59,9 +67,20 @@ header:
   dependencies:
     - ambientimpact_core/ally.js
     - ambientimpact_ux/component.headroom
+    - omnipedia_site/current_date # Required for the current date element.
     - omnipedia_site/offcanvas_immerse
     - omnipedia_site/overlay_scroll
     - omnipedia_site/search_form
+
+help:
+  css:
+    theme:
+      stylesheets/blocks/help.css: {}
+
+join:
+  css:
+    theme:
+      stylesheets/blocks/join.css: {}
 
 media_embed_error:
   css:
@@ -100,6 +119,16 @@ omnipedia_media_group:
 overlay_scroll:
   js:
     javascript/overlay.scroll.js: {}
+
+page_revision_history:
+  css:
+    theme:
+      stylesheets/blocks/page_revision_history.css: {}
+
+page_title:
+  css:
+    theme:
+      stylesheets/blocks/page_title.css: {}
 
 references:
   css:
