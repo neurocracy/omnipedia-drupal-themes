@@ -65,6 +65,9 @@ libraries-extend:
   omnipedia_content/component.main_page:
     - omnipedia_site/omnipedia_main_page
 
+  omnipedia_content/component.reference:
+    - omnipedia_site/references
+
   omnipedia_media/component.media:
     - omnipedia_site/omnipedia_media
 

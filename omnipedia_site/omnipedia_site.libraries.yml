@@ -86,6 +86,11 @@ overlay_scroll:
   js:
     javascript/overlay.scroll.js: {}
 
+references:
+  css:
+    theme:
+      stylesheets/components/references.css: {}
+
 search_form:
   css:
     theme:
