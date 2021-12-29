@@ -24,6 +24,10 @@ $font-weight-strong: 700;
   $font-weight-strong: $font-weight-strong,
 );
 
+// Forward the base typography configuration to expose its public members as
+// part of this config.
+@forward 'base:typography/config';
+
 ///
 /// The heading font stack.
 ///
