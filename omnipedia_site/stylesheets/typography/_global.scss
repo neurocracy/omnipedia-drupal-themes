@@ -1,0 +1,22 @@
+// -----------------------------------------------------------------------------
+//   Global typography partial
+// -----------------------------------------------------------------------------
+
+@use '../variables/layout' as layout-variables; // Configure layout.
+@use 'base:layout/sidebars' as layout-sidebars;
+@use '../variables/typography' as typography-variables; // Configure typography.
+
+body {
+  @include layout-sidebars.on-sidebar-beside-content(any) {
+    font-size: typography-variables.$font-size-big-screen;
+  }
+
+  hyphens: auto;
+}
+
+body,
+.content-popup {
+  // This more or less matches both the mobile and traditional versions of
+  // Wikipedia. This is the default.
+  line-height: 1.7;
+}
