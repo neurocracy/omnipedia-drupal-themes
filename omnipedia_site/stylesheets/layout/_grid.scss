@@ -85,7 +85,7 @@
       }
     }
 
-    // Required to override ambientimpact_base/stylesheets/global/_layout.scss
+    // Required to override ambientimpact_base/stylesheets/layout/_output.scss
     // when that applies its wider screen layout grid.
     @include layout-sidebars.on-sidebar-beside-content(both) {
       grid-area: menu-primary;
@@ -232,8 +232,11 @@
       margin-right: auto;
 
       > * {
-        // Remove these added in ambientimpact_base' global/_layout.scss so that
-        // they don't squish the columns.
+        // Remove margins added in
+        // ambientimpact_base/stylesheets/layout/_output.scss so that they don't
+        // squish the columns.
+        //
+        // @todo Is this still needed?
         margin-left:  0;
         margin-right: 0;
       }
