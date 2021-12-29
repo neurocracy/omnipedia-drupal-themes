@@ -6,7 +6,7 @@
 @use 'base:layout/config' as layout-config;
 @use 'base:layout/sidebars' as layout-sidebars;
 @use 'founder_message/_founder_message' as founder-message;
-@use '../../global/card';
+@use '../../components/card';
 @use 'sass:list';
 @use 'sass/helpers/colour';
 @use 'sass/helpers/layout';

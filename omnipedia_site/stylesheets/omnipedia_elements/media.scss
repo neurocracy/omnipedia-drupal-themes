@@ -4,7 +4,7 @@
 
 @use 'base:global/content';
 @use 'base:layout/vertical_spacing' as vertical-spacing;
-@use '../global/card';
+@use '../components/card';
 @use 'sass/helpers/colour';
 @use '../variables/colours';
 

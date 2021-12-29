@@ -4,10 +4,10 @@
 
 @use 'base:global/content';
 @use 'base:layout/vertical_spacing' as vertical-spacing;
+@use 'card';
 @use 'sass/helpers/breakpoint';
 @use 'sass/helpers/colour';
 @use 'sass/helpers/selector';
-@use '../global/card';
 @use '../variables/colours';
 
 // Nested table of contents lists have their parent list item's number prepended

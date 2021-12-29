@@ -2,7 +2,7 @@
 //   Omnipedia <main-page> element stylesheet
 // -----------------------------------------------------------------------------
 
-@use '../global/card';
+@use '../components/card';
 @use 'sass/helpers/breakpoint';
 @use 'main_page/_main_page' as main-page;
 
