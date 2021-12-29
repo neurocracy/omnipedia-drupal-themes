@@ -2,6 +2,7 @@
 //   Link element partial
 // -----------------------------------------------------------------------------
 
+@use '../variables/colours'; // Configure colours.
 @use 'link/link';
 @use 'link/link.colour' as link-colour;
 // @use 'link/link.state' as link-state;
