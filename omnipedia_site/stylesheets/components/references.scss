@@ -2,7 +2,7 @@
 //   References (citations, footnotes) stylesheet
 // -----------------------------------------------------------------------------
 
-@use '../variables/layout' as layout-variables; // Configure layout.
+@use '../layout/config' as layout-variables; // Configure layout.
 @use 'base:global/content';
 @use 'base:layout/vertical_spacing' as vertical-spacing;
 

@@ -2,7 +2,7 @@
 //   Help block
 // -----------------------------------------------------------------------------
 
-@use '../variables/layout' as layout-variables; // Configure layout.
+@use '../layout/config' as layout-variables; // Configure layout.
 @use 'base:layout/config' as layout-config;
 @use 'material.common/material.general' as material-general;
 @use 'sass:color';

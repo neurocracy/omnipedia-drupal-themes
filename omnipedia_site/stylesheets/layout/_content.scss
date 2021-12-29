@@ -2,7 +2,7 @@
 //   Site layout - Content
 // -----------------------------------------------------------------------------
 
-@use '../variables/layout' as layout-variables; // Configure layout.
+@use 'config' as layout-variables; // Configure layout.
 @use 'base:layout/config' as layout-config;
 @use 'base:layout/sidebars' as layout-sidebars;
 @use 'sass/helpers/breakpoint';

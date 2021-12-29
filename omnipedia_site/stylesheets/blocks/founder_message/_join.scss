@@ -2,7 +2,7 @@
 //   Omnipedia founder message (join variant) partial
 // -----------------------------------------------------------------------------
 
-@use '../../variables/layout' as layout-variables; // Configure layout.
+@use '../../layout/config' as layout-variables; // Configure layout.
 @use 'base:layout/config' as layout-config;
 @use 'base:layout/vertical_spacing' as vertical-spacing;
 @use '../../typography/config' as typography-variables; // Configure typography.

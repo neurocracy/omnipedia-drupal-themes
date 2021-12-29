@@ -2,7 +2,7 @@
 //   Omnipedia site header block
 // -----------------------------------------------------------------------------
 
-@use '../variables/layout' as layout-variables; // Configure layout.
+@use '../layout/config' as layout-variables; // Configure layout.
 @use 'base:layout/sidebars' as layout-sidebars;
 @use 'base:forms/search';
 @use 'sass/helpers/layout';

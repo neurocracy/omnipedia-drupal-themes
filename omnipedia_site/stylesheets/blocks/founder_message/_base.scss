@@ -2,7 +2,7 @@
 //   Omnipedia founder message base partial
 // -----------------------------------------------------------------------------
 
-@use '../../variables/layout' as layout-variables; // Configure layout.
+@use '../../layout/config' as layout-variables; // Configure layout.
 @use 'base:layout/config' as layout-config;
 @use 'base:layout/sidebars' as layout-sidebars;
 @use 'founder_message/_founder_message' as founder-message;

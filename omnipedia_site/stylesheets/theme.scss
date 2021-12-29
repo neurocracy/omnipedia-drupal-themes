@@ -3,16 +3,15 @@
 // -----------------------------------------------------------------------------
 
 @use 'typography';
+@use 'layout';
 
 @use 'variables';
 
-@use 'base:layout' as base-layout;
 @use 'base:global' as base-global;
 @use 'base:elements' as base-elements;
 @use 'base:forms' as base-forms;
 @use 'base:components' as base-components;
 
 @use 'global';
-@use 'layout';
 @use 'elements';
 @use 'components';

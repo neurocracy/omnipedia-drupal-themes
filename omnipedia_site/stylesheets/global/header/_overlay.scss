@@ -2,7 +2,7 @@
 //   Site header - Overlay
 // -----------------------------------------------------------------------------
 
-@use '../../variables/layout' as layout-variables; // Configure layout.
+@use '../../layout/config' as layout-variables; // Configure layout.
 @use 'base:layout/sidebars' as layout-sidebars;
 
 // This provides the overlay for the header in compact mode.

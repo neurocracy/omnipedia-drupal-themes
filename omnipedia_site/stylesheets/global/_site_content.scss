@@ -2,7 +2,7 @@
 //   Site content area
 // -----------------------------------------------------------------------------
 
-@use '../variables/layout' as layout-variables; // Configure layout.
+@use '../layout/config' as layout-variables; // Configure layout.
 @use 'base:layout/sidebars' as layout-sidebars;
 @use 'material.common/material.general' as material-general;
 @use 'sass/helpers/colour';
