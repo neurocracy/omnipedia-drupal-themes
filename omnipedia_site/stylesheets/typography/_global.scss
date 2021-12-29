@@ -4,11 +4,11 @@
 
 @use '../variables/layout' as layout-variables; // Configure layout.
 @use 'base:layout/sidebars' as layout-sidebars;
-@use '../variables/typography' as typography-variables; // Configure typography.
+@use 'config' as typography-config; // Configure typography.
 
 body {
   @include layout-sidebars.on-sidebar-beside-content(any) {
-    font-size: typography-variables.$font-size-big-screen;
+    font-size: typography-config.$font-size-big-screen;
   }
 
   hyphens: auto;

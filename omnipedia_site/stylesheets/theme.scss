@@ -2,10 +2,11 @@
 //   Omnipedia - Site theme - Master stylesheet
 // -----------------------------------------------------------------------------
 
+@use 'typography';
+
 @use 'variables';
 
 @use 'base:layout' as base-layout;
-@use 'base:typography' as base-typography;
 @use 'base:global' as base-global;
 @use 'base:elements' as base-elements;
 @use 'base:forms' as base-forms;
@@ -13,6 +14,5 @@
 
 @use 'global';
 @use 'layout';
-@use 'typography';
 @use 'elements';
 @use 'components';

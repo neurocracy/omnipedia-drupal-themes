@@ -2,7 +2,7 @@
 //   EU cookie compliance pop-up content partial
 // -----------------------------------------------------------------------------
 
-@use '../../variables/typography' as typography-variables; // Configure typography.
+@use '../../typography/config' as typography-config; // Configure typography.
 @use 'base:typography/headings' as typography-headings;
 @use 'base:components/form_actions' as form-actions;
 @use 'base:elements/button';

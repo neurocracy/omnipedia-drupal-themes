@@ -6,12 +6,12 @@
 @use 'link/link.colour' as link-colour;
 // @use 'link/link.state' as link-state;
 @use 'sass/helpers/colour';
-@use '../variables/typography' as typography-variables;
+@use '../typography/config' as typography-config;
 
 :any-link,
 a[data-is-wikimedia-link][data-omnipedia-attached-data-title][data-omnipedia-attached-data-content]:not([href]) {
 
-  text-underline-offset: typography-variables.$text-decoration-offset;
+  text-underline-offset: typography-config.$text-decoration-offset;
 
   &.omnipedia-changes__diff-link {
     @include colour.on-dark-scheme {

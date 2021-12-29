@@ -3,11 +3,11 @@
 // -----------------------------------------------------------------------------
 
 @use 'abbr';
-@use '../variables/typography' as typography-variables;
+@use '../typography/config' as typography-config;
 
 .layout-container {
   @include abbr.abbr {
-    text-underline-offset: typography-variables.$text-decoration-offset;
+    text-underline-offset: typography-config.$text-decoration-offset;
 
     // This is to match our Wikimedia pseudo-links.
     cursor: pointer;

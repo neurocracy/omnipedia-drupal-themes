@@ -5,7 +5,7 @@
 @use '../../variables/layout' as layout-variables; // Configure layout.
 @use 'base:layout/config' as layout-config;
 @use 'base:layout/vertical_spacing' as vertical-spacing;
-@use '../../variables/typography' as typography-variables; // Configure typography.
+@use '../../typography/config' as typography-variables; // Configure typography.
 @use 'base:typography/config' as typography-config;
 @use '_base' as founder-message;
 @use 'immerse';
