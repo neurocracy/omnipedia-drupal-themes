@@ -2,7 +2,7 @@
 //   Page title block
 // -----------------------------------------------------------------------------
 
-@use '../layout/config' as layout-variables; // Configure layout.
+@use '../layout/config' as layout-config; // Configure layout.
 @use 'base:layout/sidebars' as layout-sidebars;
 @use 'sass/helpers/hide';
 @use 'sass/helpers/selector';

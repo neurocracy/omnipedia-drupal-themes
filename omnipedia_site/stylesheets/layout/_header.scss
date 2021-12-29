@@ -2,8 +2,7 @@
 //   Site layout - Header
 // -----------------------------------------------------------------------------
 
-@use 'config' as layout-variables; // Configure layout.
-@use 'base:layout/config' as layout-config;
+@use 'config' as layout-config; // Configure layout.
 @use 'base:layout/sidebars' as layout-sidebars;
 @use 'base:forms/search';
 @use 'headroom';
@@ -99,10 +98,10 @@ header[role='banner']::before {
 
   @include selector.root-conditions(('[dir=ltr]'), 'html') {
     left:   layout-config.$gutter * -1;
-    right:  layout-variables.$header-distinct-gap * -1;
+    right:  layout-config.$header-distinct-gap * -1;
   }
   @include selector.root-conditions(('[dir=rtl]'), 'html') {
-    left:   layout-variables.$header-distinct-gap * -1;
+    left:   layout-config.$header-distinct-gap * -1;
     right:  layout-config.$gutter * -1;
   }
 

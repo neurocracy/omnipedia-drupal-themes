@@ -5,7 +5,7 @@
 @use 'sass/helpers/breakpoint';
 @use 'sass/helpers/colour';
 @use 'sass/helpers/layout';
-@use '../layout/config' as layout-variables;
+@use '../layout/config' as layout-config;
 
 @include colour.on-dark-scheme {
   // Invert the slogan image on dark theme since it's black text.
@@ -22,14 +22,14 @@
                           'logo slogan';
     grid-template-columns:
       minmax(
-        layout-variables.$branding-compact-size-min,
-        layout-variables.$branding-compact-size-max
+        layout-config.$branding-compact-size-min,
+        layout-config.$branding-compact-size-max
       )
       minmax(7em, 1fr);
-    grid-gap: layout-variables.$branding-spacing;
+    grid-gap: layout-config.$branding-spacing;
 
     // This is to prevent any potential layout shifting during page load.
-    height: layout-variables.$branding-compact-size-max;
+    height: layout-config.$branding-compact-size-max;
 
     // When sidebars are beside the content column, display as block. This will
     // invalidate all grid-*/align-*/justify-* properties, allowing the branding
@@ -82,7 +82,7 @@
     // Add margins between the logo, name, and slogan when stacked vertically.
     .site-name,
     .site-slogan {
-      margin-top: layout-variables.$branding-spacing;
+      margin-top: layout-config.$branding-spacing;
     }
 
     // Ensure that the site logo and name images expand to the full width of

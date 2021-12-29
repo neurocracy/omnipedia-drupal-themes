@@ -2,7 +2,7 @@
 //   Omnipedia site header block
 // -----------------------------------------------------------------------------
 
-@use '../layout/config' as layout-variables; // Configure layout.
+@use '../layout/config' as layout-config; // Configure layout.
 @use 'base:layout/sidebars' as layout-sidebars;
 @use 'base:forms/search';
 @use 'sass/helpers/layout';
@@ -24,7 +24,7 @@
     display: grid;
 
     align-items:      center;
-    grid-gap:         layout-variables.$branding-spacing;
+    grid-gap:         layout-config.$branding-spacing;
     grid-auto-flow:   column;
 
     // Narrow screen layout when the site branding is in the header.
@@ -42,7 +42,7 @@
     @include layout-sidebars.on-sidebar-beside-content(any) {
       // This adds a bigger gap between the header items to ensure they read as
       // separate elements.
-      grid-column-gap: layout-variables.$header-distinct-gap;
+      grid-column-gap: layout-config.$header-distinct-gap;
 
       // Remove the columns when the site branding is in the sidebar.
       grid-template-columns: auto;

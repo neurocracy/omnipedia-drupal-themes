@@ -2,8 +2,7 @@
 //   EU cookie compliance pop-up layout partial
 // -----------------------------------------------------------------------------
 
-@use '../../layout/config' as layout-variables; // Configure layout.
-@use 'base:layout/config' as layout-config;
+@use '../../layout/config' as layout-config; // Configure layout.
 @use 'base:layout/container' as layout-container;
 @use 'base:layout/sidebars' as layout-sidebars;
 @use 'base:layout/vertical_spacing' as vertical-spacing;

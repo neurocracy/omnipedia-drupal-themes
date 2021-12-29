@@ -2,8 +2,7 @@
 //   Site header - Clipping
 // -----------------------------------------------------------------------------
 
-@use '../../layout/config' as layout-variables; // Configure layout.
-@use 'base:layout/config' as layout-config;
+@use '../../layout/config' as layout-config; // Configure layout.
 @use 'base:layout/sidebars' as layout-sidebars;
 @use 'base:forms/search';
 @use 'sass/helpers/selector';

@@ -2,8 +2,7 @@
 //   Site header - Search
 // -----------------------------------------------------------------------------
 
-@use '../../layout/config' as layout-variables; // Configure layout.
-@use 'base:layout/config' as layout-config;
+@use '../../layout/config' as layout-config; // Configure layout.
 @use 'base:layout/sidebars' as layout-sidebars;
 @use 'headroom';
 @use 'material.ripple' as material-ripple;
@@ -51,7 +50,7 @@
     &__current-date,
     &__menu {
       transform: translateY(calc(
-        -#{layout-variables.$header-row-height} - #{layout-config.$gap} -
+        -#{layout-config.$header-row-height} - #{layout-config.$gap} -
         #{layout-config.$gap} - 0.2em
       ));
 

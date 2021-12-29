@@ -97,3 +97,7 @@ $gap: 1.5em;
   $sidebar-column-width: $sidebar-column-width,
   $gap: $gap,
 );
+
+// Forward the base layout configuration to expose its public members as part of
+// this config.
+@forward 'base:layout/config';

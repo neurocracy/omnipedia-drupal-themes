@@ -2,8 +2,7 @@
 //   Site layout - Grid
 // -----------------------------------------------------------------------------
 
-@use 'config' as layout-variables; // Configure layout.
-@use 'base:layout/config' as layout-config;
+@use 'config' as layout-config; // Configure layout.
 @use 'base:layout/container' as layout-container;
 @use 'base:layout/grid' as layout-grid;
 @use 'base:layout/sidebars' as layout-sidebars;
@@ -24,8 +23,8 @@
 
   grid-template-rows:
     minmax(
-      layout-variables.$branding-compact-size-min,
-      layout-variables.$branding-compact-size-max
+      layout-config.$branding-compact-size-min,
+      layout-config.$branding-compact-size-max
     )
     1fr
     min-content
@@ -37,7 +36,7 @@
   grid-row-gap:    layout-config.$gutter;
   // This adds a bigger gap between the site branding and header items to ensure
   // they read as separate elements.
-  grid-column-gap: layout-variables.$header-distinct-gap;
+  grid-column-gap: layout-config.$header-distinct-gap;
 }
 
 ///
@@ -51,7 +50,7 @@
     '....           footer        ....';
 
   grid-template-rows:
-    layout-variables.$header-row-height
+    layout-config.$header-row-height
     min-content
     1fr
     min-content;
@@ -268,7 +267,7 @@
 
           // Don't forget the spacing between elements!
           margin-bottom:
-            layout-variables.$branding-spacing * 2 + layout-config.$gap;
+            layout-config.$branding-spacing * 2 + layout-config.$gap;
         }
       }
     }
