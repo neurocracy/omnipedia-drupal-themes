@@ -1,3 +1,6 @@
+@use '../variables/colours'; // Configure colours.
+@use '../variables/general'; // Configure general variables.
+@use 'base:components' as base-components;
 @use 'overlay';
 @use 'field';
 @use 'table_of_contents';

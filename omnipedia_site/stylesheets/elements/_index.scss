@@ -1,3 +1,6 @@
+@use '../variables/colours'; // Configure colours.
+@use '../variables/general'; // Configure general variables.
+@use 'base:elements' as base-elements;
 @use 'abbreviation';
 @use 'fieldset';
 @use 'heading';
