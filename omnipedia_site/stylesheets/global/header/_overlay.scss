@@ -2,12 +2,12 @@
 //   Site header - Overlay
 // -----------------------------------------------------------------------------
 
-@use '../variables/layout' as layout-variables; // Configure layout.
+@use '../../variables/layout' as layout-variables; // Configure layout.
 @use 'base:layout/sidebars' as layout-sidebars;
 
 // This provides the overlay for the header in compact mode.
 //
-// @see ../components/_overlay.scss
+// @see ../../components/_overlay.scss
 //   Shared overlay styles.
 
 main[role="main"]::before {

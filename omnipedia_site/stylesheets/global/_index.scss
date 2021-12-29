@@ -3,12 +3,6 @@
 @use 'typography';
 @use 'reveal';
 @use 'site_branding';
-@use 'header.background' as header-background;
-@use 'header.border' as header-border;
-@use 'header.shadow' as header-shadow;
-@use 'header.clipping' as header-clipping;
-@use 'header.menu' as header-menu;
-@use 'header.search' as header-search;
-@use 'header.overlay' as header-overlay;
+@use 'header';
 @use 'sidebars.offcanvas' as sidebars-offcanvas;
 @use 'site_content';

@@ -2,12 +2,12 @@
 //   Site header - Clipping
 // -----------------------------------------------------------------------------
 
-@use '../variables/layout' as layout-variables; // Configure layout.
+@use '../../variables/layout' as layout-variables; // Configure layout.
 @use 'base:layout/config' as layout-config;
 @use 'base:layout/sidebars' as layout-sidebars;
 @use 'base:forms/search';
 @use 'sass/helpers/selector';
-@use '../variables/general' as general-variables;
+@use '../../variables/general' as general-variables;
 
 .region-primary-menu {
   @include layout-sidebars.on-sidebar-beside-content(both) {

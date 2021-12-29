@@ -2,9 +2,9 @@
 //   Site header - Border
 // -----------------------------------------------------------------------------
 
-@use '../variables/colours'; // Configure colours.
+@use '../../variables/colours'; // Configure colours.
 @use 'sass/helpers/colour';
-@use '../variables/general' as general-variables;
+@use '../../variables/general' as general-variables;
 
 .omnipedia-header,
 .region-primary-menu {

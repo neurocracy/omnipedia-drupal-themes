@@ -11,7 +11,7 @@
 .overlay,
 // The header overlay in compact mode, i.e. narrow screens.
 //
-// @see ../global/_header.overlay.scss
+// @see ../global/header/_overlay.scss
 main[role="main"]::before,
 .layout-sidebars__closed-target {
   @include colour.set(
