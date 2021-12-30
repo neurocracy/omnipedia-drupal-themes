@@ -14,7 +14,10 @@
 ///
 /// Founder block background logo URL.
 ///
-$block-background-logo-url: '../images/logo_faded_greyscale.svg?v=1';
+/// Note that this is relative to the location of the compiled stylesheet, not
+/// this partial.
+///
+$block-background-logo-url: '../../images/logo_faded_greyscale.svg?v=1';
 
 ///
 /// Founder message stacking order. Later in the list means a higher z-index.
