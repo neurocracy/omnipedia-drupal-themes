@@ -95,6 +95,8 @@ menu:
 offcanvas_immerse:
   js:
     javascript/offcanvas.immerse.js: {}
+  dependencies:
+    - ambientimpact_ux/component.immerse
 
 omnipedia_infobox:
   css:
