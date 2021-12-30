@@ -53,6 +53,9 @@ libraries-override:
 
 libraries-extend:
 
+  ambientimpact_ux/component.offcanvas:
+    - omnipedia_site/offcanvas_immerse
+
   classy/base:
     - omnipedia_site/menu
 
