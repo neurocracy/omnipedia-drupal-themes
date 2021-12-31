@@ -69,3 +69,12 @@ $text-decoration-thickness: 1.6px;
 /// roughly similarly.
 ///
 $text-decoration-offset: 10%;
+
+///
+/// Line height vertical compensation.
+///
+/// This is roughly the distance between the top of the first line of text and
+/// the top of the block. This is primarily intended to line up <p> elements and
+/// an adjacent block that's floated alongside the <p>.
+///
+$line-height-compensation: 0.4em;

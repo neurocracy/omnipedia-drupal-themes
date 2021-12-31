@@ -2,6 +2,8 @@
 //   Omnipedia <media> element stylesheet
 // -----------------------------------------------------------------------------
 
+@use '../layout/config' as layout-config; // Configure layout.
+@use '../typography/config' as typography-config; // Configure typography.
 @use 'base:global/content';
 @use 'base:layout/vertical_spacing' as vertical-spacing;
 @use '../components/card';
@@ -25,12 +27,14 @@
 
   @at-root {
     // This uses the same vertical spacing as other content elements plus a bit
-    // extra to attempt to align with the top of the first line of ajacent <p>
+    // extra to attempt to align with the top of the first line of adjacent <p>
     // elements.
     @include vertical-spacing.against-previous(
       '.omnipedia-media',
-      $spacing-small: content.$item-vertical-spacing-small + 0.7em,
-      $spacing-large: content.$item-vertical-spacing-large + 0.7em
+      $spacing-small: content.$item-vertical-spacing-small +
+        typography-config.$line-height-compensation,
+      $spacing-large: content.$item-vertical-spacing-large +
+        typography-config.$line-height-compensation
     );
   }
 

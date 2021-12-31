@@ -2,12 +2,19 @@
 //   Omnipedia <infobox> element stylesheet
 // -----------------------------------------------------------------------------
 
+@use '../typography/config' as typography-config; // Configure typography.
+@use 'sass/helpers/breakpoint';
 @use 'sass/helpers/colour';
 @use '../components/card';
 @use 'infobox/_infobox' as infobox;
 @use '../variables/colours';
 
 .omnipedia-infobox {
+
+  @include breakpoint.on('>=omnipedia-infobox-floated') {
+    margin-top: typography-config.$line-height-compensation;
+  }
+
   @include card.base($padding: infobox.$outer-spacing);
 
   @include colour.set($background: colours.$secondary-content-background-light);

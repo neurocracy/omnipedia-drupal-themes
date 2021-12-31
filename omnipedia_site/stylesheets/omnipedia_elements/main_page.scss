@@ -2,14 +2,21 @@
 //   Omnipedia <main-page> element stylesheet
 // -----------------------------------------------------------------------------
 
+@use '../typography/config' as typography-config; // Configure typography.
 @use '../components/card';
 @use 'sass/helpers/breakpoint';
 @use 'main_page/_main_page' as main-page;
 
 .omnipedia-main-page {
+
   &__item {
     @include breakpoint.on('>=omnipedia-main-page-dual-column') {
       @include card.base($padding: main-page.$spacing);
     }
   }
+
+  .omnipedia-media {
+    margin-top: typography-config.$line-height-compensation;
+  }
+
 }
