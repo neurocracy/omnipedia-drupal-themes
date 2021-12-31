@@ -2,6 +2,8 @@
 //   Typography configuration
 // -----------------------------------------------------------------------------
 
+@use '../variables/colours'; // Configure colours, e.g. for text selection.
+
 ///
 /// Document font size when on large screens, i.e. when sidebars beside content.
 ///
