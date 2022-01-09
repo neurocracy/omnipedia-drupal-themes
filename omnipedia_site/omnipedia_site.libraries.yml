@@ -33,7 +33,6 @@ eu_cookie_compliance:
     javascript/eu_cookie_compliance.elements.js: {}
     javascript/eu_cookie_compliance.state.js: {}
     javascript/eu_cookie_compliance.focus.js: {}
-    javascript/eu_cookie_compliance.categories.js: {}
     javascript/eu_cookie_compliance.decide_later.js: {}
     javascript/eu_cookie_compliance.overlay.js: {}
   dependencies:
