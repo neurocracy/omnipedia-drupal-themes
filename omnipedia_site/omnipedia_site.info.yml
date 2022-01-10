@@ -14,7 +14,7 @@ site_name_height: 20
 site_slogan: images/site_slogan.svg?v=1
 site_slogan_width: 128
 site_slogan_height: 13
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9
 
 dependencies:
   - ambientimpact_core:ambientimpact_core
