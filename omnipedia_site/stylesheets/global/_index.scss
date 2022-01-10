@@ -2,7 +2,6 @@
 @use '../variables/general'; // Configure general variables.
 @use 'base:global' as base-global;
 @use 'reveal';
-@use 'site_branding';
 @use 'header';
 @use 'sidebars.offcanvas' as sidebars-offcanvas;
 @use 'site_content';

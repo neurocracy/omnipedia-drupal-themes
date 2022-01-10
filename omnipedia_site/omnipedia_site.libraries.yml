@@ -154,3 +154,8 @@ sidebars:
     - ambientimpact_ux/component.pointer_focus_hide
     - ambientimpact_ux/component.scrollbar_gutter
     - omnipedia_site/header
+
+site_branding:
+  css:
+    theme:
+      stylesheets/blocks/site_branding.css: {}

@@ -190,6 +190,8 @@ function omnipedia_site_preprocess_block__omnipedia_page_revision_history(
  *
  * This also changes the 'title' attribute on the links to 'Main Page'.
  *
+ * Attaches the 'omnipedia_site/site_branding' library.
+ *
  * @see \Drupal\omnipedia_block\EventSubscriber\Block\SystemBrandingBlockDateCacheEventSubscriber
  *   Alters the block build array to add Omnipedia date and main pages cache
  *   contexts and cache tags as doing so elsewhere would be too late.
@@ -224,6 +226,9 @@ function omnipedia_site_preprocess_block__system_branding_block(
     $variables[$key . '_link_attributes']
       ->setAttribute('title', \t('Main Page'));
   }
+
+  $variables['#attached']['library'][] = 'omnipedia_site/site_branding';
+
 }
 
 /**
