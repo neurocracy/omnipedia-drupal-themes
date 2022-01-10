@@ -6,6 +6,7 @@
 @use 'sass/helpers/colour';
 @use 'sass/helpers/layout';
 @use '../layout/config' as layout-config;
+@use 'base:layout/breakpoints' as layout-breakpoints;
 
 @include colour.on-dark-scheme {
   // Invert the slogan image on dark theme since it's black text.
