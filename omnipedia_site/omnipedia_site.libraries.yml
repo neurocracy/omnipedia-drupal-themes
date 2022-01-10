@@ -56,6 +56,7 @@ header:
   css:
     theme:
       stylesheets/blocks/header.css: {}
+      stylesheets/components/header.css: {}
   js:
     javascript/header.elements.js: {}
     javascript/header.focus.js: {}

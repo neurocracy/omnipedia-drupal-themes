@@ -32,7 +32,7 @@ header[role='banner'] {
 
 // Header overlay.
 //
-// @see ../global/header/_overlay.scss
+// @see ../components/header/_overlay.scss
 main[role="main"]::before {
   @include z-index.get(floating-below);
 }
