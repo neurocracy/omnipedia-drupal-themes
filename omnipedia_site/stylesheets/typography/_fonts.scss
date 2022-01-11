@@ -7,7 +7,7 @@
 ///
 /// Note that this is relative to the compiled stylesheet, not this partial.
 ///
-$fonts-path: '../fonts';
+$path: '../fonts';
 
 // Exo 2 font, converted from original TTF to WOFF/WOFF2 files.
 //
@@ -19,7 +19,7 @@ $fonts-path: '../fonts';
   // loading, see: https://tabatkins.github.io/specs/css-font-display/
   font-display: swap;
 
-  src:  url('#{$fonts-path}/Exo2/Exo2-Medium.woff2')  format('woff2'),
-        url('#{$fonts-path}/Exo2/Exo2-Medium.woff')   format('woff');
-        // url('#{$fonts-path}/Exo2/Exo2-Medium.ttf')    format('truetype');
+  src:  url('#{$path}/Exo2/Exo2-Medium.woff2')  format('woff2'),
+        url('#{$path}/Exo2/Exo2-Medium.woff')   format('woff');
+        // url('#{$path}/Exo2/Exo2-Medium.ttf')    format('truetype');
 }
