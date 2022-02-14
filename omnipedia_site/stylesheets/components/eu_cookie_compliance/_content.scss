@@ -5,7 +5,6 @@
 @use '../../typography/config' as typography-config; // Configure typography.
 @use 'base:typography/headings' as typography-headings;
 @use 'base:components/form_actions' as form-actions;
-@use 'base:elements/button';
 @use 'base:elements/link' as link-base;
 @use 'link/link';
 @use 'link/link.colour' as link-colour;
@@ -73,10 +72,6 @@
   .eu-cookie-compliance-buttons {
 
     @extend .form-actions;
-
-    button {
-      @extend .button;
-    }
 
     // Only show the "Decide later" button if the current user agreement status
     // is null, i.e. they haven't agreed to anything yet.
