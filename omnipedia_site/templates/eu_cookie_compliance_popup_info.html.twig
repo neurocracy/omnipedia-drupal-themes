@@ -119,16 +119,16 @@
     <div id="popup-buttons" class="eu-cookie-compliance-buttons{% if cookie_categories %} eu-cookie-compliance-has-categories{% endif %}">
       {% if save_preferences_button_label %}
           <button type="button"
-                  class="eu-cookie-compliance-save-preferences-button">{{ save_preferences_button_label }}</button>
+                  class="eu-cookie-compliance-save-preferences-button button">{{ save_preferences_button_label }}</button>
       {% endif %}
 
-      <button type="button" class="{{ primary_button_class }}">{{ agree_button }}</button>
+      <button type="button" class="{{ primary_button_class }} button">{{ agree_button }}</button>
 
       {% if secondary_button_label %}
-        <button type="button" class="{{ secondary_button_class }}">{{ secondary_button_label }}</button>
+        <button type="button" class="{{ secondary_button_class }} button">{{ secondary_button_label }}</button>
       {% endif %}
 
-      <button type="button" class="eu-cookie-compliance-buttons__later">{{
+      <button type="button" class="eu-cookie-compliance-buttons__later button">{{
         'Decide later'|t
       }}</button>
     </div>
