@@ -70,42 +70,40 @@
     grid-area: slogan;
   }
 
-  .site-name__link,
+}
+
+.site-logo,
+.site-name,
+.site-slogan {
+  img {
+    // This prevents extra vertical spacing below the <img> elements due to
+    // inline layout.
+    display: block;
+  }
+}
+
+@include breakpoint.on('>=layout-with-both-sidebars') {
+
+  // Add margins between the logo, name, and slogan when stacked vertically.
+  .site-name,
   .site-slogan {
+    margin-top: layout-config.$branding-spacing;
+  }
+
+  // Ensure that the site logo and name images expand to the full width of
+  // sidebar.
+  .site-logo,
+  .site-name {
     img {
-      // This prevents extra vertical spacing below the <img> elements due to
-      // inline layout.
-      display: block;
+      width: 100%;
     }
   }
 
-  @include breakpoint.on('>=layout-with-both-sidebars') {
-
-    // Add margins between the logo, name, and slogan when stacked vertically.
-    .site-name,
-    .site-slogan {
-      margin-top: layout-config.$branding-spacing;
-    }
-
-    // Ensure that the site logo and name images expand to the full width of
-    // sidebar. They're also displayed as block rather than the default inline
-    // to remove any vertical space due to the inline model.
-    .site-logo,
-    .site-name {
-      img {
-        display:  block;
-        width:    100%;
-      }
-    }
-
-    // The slogan is left to its default width, but is centred if the sidebar is
-    // wider than the slogan.
-    .site-slogan img {
-      display:      block;
-      margin-left:  auto;
-      margin-right: auto;
-    }
-
+  // The slogan is left to its default width, but is centred if the sidebar is
+  // wider than the slogan.
+  .site-slogan img {
+    margin-left:  auto;
+    margin-right: auto;
   }
 
 }
