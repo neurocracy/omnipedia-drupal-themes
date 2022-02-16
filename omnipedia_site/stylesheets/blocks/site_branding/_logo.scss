@@ -2,3 +2,10 @@
 //   Site branding logo partial
 // -----------------------------------------------------------------------------
 
+@use 'base:elements/link' as base-link;
+
+.site-logo {
+  &__link--has-inline-svg {
+    @include base-link.image($image-elements: svg);
+  }
+}

@@ -5,6 +5,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Template\Attribute;
+use Drupal\omnipedia_site\SiteBrandingInliner;
 
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
@@ -228,6 +229,11 @@ function omnipedia_site_preprocess_block__system_branding_block(
   }
 
   $variables['#attached']['library'][] = 'omnipedia_site/site_branding';
+
+  /** @var \Drupal\omnipedia_site\SiteBrandingInliner $inliner */
+  $inliner = \Drupal::classResolver(SiteBrandingInliner::class);
+
+  $inliner->alter($variables);
 
 }
 

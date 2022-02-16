@@ -82,6 +82,15 @@
   }
 }
 
+.site-logo {
+  &__link--has-inline-svg &__svg {
+    // If the SVG is present, make it responsive and have it expand to the full
+    // width of its container.
+    width:  100%;
+    height: auto;
+  }
+}
+
 @include breakpoint.on('>=layout-with-both-sidebars') {
 
   // Add margins between the logo, name, and slogan when stacked vertically.
