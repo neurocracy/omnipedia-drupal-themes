@@ -52,7 +52,13 @@
 .site-logo {
 
   &__link--has-inline-svg {
+
     @include base-link.image($image-elements: svg);
+
+    // If we know the SVG has been inlined, make the link completely circular to
+    // make the focus outline also circular.
+    border-radius: 50%;
+
   }
 
   &__svg {
