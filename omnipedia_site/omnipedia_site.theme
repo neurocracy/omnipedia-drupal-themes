@@ -186,12 +186,15 @@ function omnipedia_site_preprocess_block__omnipedia_page_revision_history(
 /**
  * Prepares variables for the 'system_branding_block' block template.
  *
+ * Attaches the 'omnipedia_site/site_branding' library.
+ *
+ * Attempts to inline the branding SVG elements so that their inner parts can be
+ * animated.
+ *
  * This sets the 'front_page_url' to the current date's main page, so that the
  * logo and site name links reflect the site's current state.
  *
  * This also changes the 'title' attribute on the links to 'Main Page'.
- *
- * Attaches the 'omnipedia_site/site_branding' library.
  *
  * @see \Drupal\omnipedia_block\EventSubscriber\Block\SystemBrandingBlockDateCacheEventSubscriber
  *   Alters the block build array to add Omnipedia date and main pages cache
@@ -200,6 +203,14 @@ function omnipedia_site_preprocess_block__omnipedia_page_revision_history(
 function omnipedia_site_preprocess_block__system_branding_block(
   array &$variables
 ): void {
+
+  $variables['#attached']['library'][] = 'omnipedia_site/site_branding';
+
+  /** @var \Drupal\omnipedia_site\SiteBrandingInliner $inliner */
+  $inliner = \Drupal::classResolver(SiteBrandingInliner::class);
+
+  $inliner->alter($variables);
+
   /** @var \Drupal\omnipedia_core\Service\WikiNodeMainPageInterface */
   $wikiNodeMainPage = \Drupal::service('omnipedia.wiki_node_main_page');
 
@@ -227,13 +238,6 @@ function omnipedia_site_preprocess_block__system_branding_block(
     $variables[$key . '_link_attributes']
       ->setAttribute('title', \t('Main Page'));
   }
-
-  $variables['#attached']['library'][] = 'omnipedia_site/site_branding';
-
-  /** @var \Drupal\omnipedia_site\SiteBrandingInliner $inliner */
-  $inliner = \Drupal::classResolver(SiteBrandingInliner::class);
-
-  $inliner->alter($variables);
 
 }
 
