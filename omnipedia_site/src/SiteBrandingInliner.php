@@ -18,8 +18,27 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
 
   /**
    * The HTML class of the logo <svg> element.
+   *
+   * @var string
    */
   protected const LOGO_SVG_CLASS = 'site-logo__svg';
+
+  /**
+   * The HTML class of the logo link when it contains an inline <svg> element.
+   *
+   * @var string
+   */
+  protected const LOGO_LINK_HAS_SVG_CLASS = 'site-logo__link--has-inline-svg';
+
+  /**
+   * Logo globe group 'id'.
+   *
+   * This specifically matches the output of the logo as exported from Adobe
+   * Illustrator CS6.
+   *
+   * @var string
+   */
+  protected const LOGO_SVG_GLOBE_ID = 'globe_x5F_expanded';
 
   /**
    * Logo row custom property name.
@@ -34,6 +53,30 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
    * @var string
    */
   protected const LOGO_COLUMN_CUSTOM_PROPERTY = '--column';
+
+  /**
+   * Logo SVG row 'id' attribute regular expression.
+   *
+   * This must contain a named capture group labelled 'row' to capture the row
+   * number.
+   *
+   * @var string
+   */
+  protected const LOGO_SVG_ROW_ID_REGEX = '/row(?\'row\'\d)/';
+
+  /**
+   * Logo SVG path 'id' attribute regular expression.
+   *
+   * This specifically matches the output of the logo as exported from Adobe
+   * Illustrator CS6.
+   *
+   * This must contain named capture groups labelled 'row' and 'column' to
+   * capture the row and column numbers, respectively.
+   *
+   * @var string
+   */
+  protected const LOGO_SVG_PATH_ID_REGEX =
+    '/row(?\'row\'\d)_x5F__x5F_column(?\'column\'\d)/';
 
   /**
    * The Drupal file system service.
@@ -230,12 +273,14 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
 
     $svgElement->setAttribute('aria-label', $oldElement['#alt']);
 
-    $globeGroup = $crawler->filter('#globe_x5F_expanded')->getNode(0);
+    $globeGroup = $crawler->filter('#' . self::LOGO_SVG_GLOBE_ID)->getNode(0);
 
     $svgElement->appendChild($globeGroup);
 
     // Detach all children of the <svg> that aren't the expanded globe group.
-    foreach ($svgCrawler->children('*:not(#globe_x5F_expanded)') as $node) {
+    foreach ($svgCrawler->children(
+      '*:not(#' . self::LOGO_SVG_GLOBE_ID . ')'
+    ) as $node) {
       $svgElement->removeChild($node);
     }
 
@@ -246,7 +291,7 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
     foreach ($svgCrawler->filter('g[id^="row"]') as $node) {
 
       \preg_match(
-        '/row(?\'row\'\d)/', $node->getAttribute('id'), $matches
+        self::LOGO_SVG_ROW_ID_REGEX, $node->getAttribute('id'), $matches
       );
 
       if (empty($matches['row'])) {
@@ -277,7 +322,7 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
     foreach ($svgCrawler->filter('path[id^="row"]') as $node) {
 
       \preg_match(
-        '/row(?\'row\'\d)_x5F__x5F_column(?\'column\'\d)/',
+        self::LOGO_SVG_PATH_ID_REGEX,
         $node->getAttribute('id'), $matches
       );
 
@@ -349,7 +394,7 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
     // Add a class to the logo link so that we can target styles when the inline
     // SVG is present.
     $variables['site_logo_link_attributes']->addClass(
-      'site-logo__link--has-inline-svg'
+      self::LOGO_LINK_HAS_SVG_CLASS
     );
 
   }
