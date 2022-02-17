@@ -3,9 +3,176 @@
 // -----------------------------------------------------------------------------
 
 @use 'base:elements/link' as base-link;
+@use '../../global/reveal';
+@use 'immerse';
+@use 'overlay';
+@use 'sass/helpers/colour';
+@use 'sass:math';
+
+///
+/// Site logo row reveal animation.
+///
+/// This fades in the row quickly with a brightness higher than 1. After the
+/// row has faded in, the brightness transitions back down to 1. This highlights
+/// each row as if it's 'hot' and then cools down to the normal brightness.
+///
+@keyframes site-logo-row-reveal {
+  0% {
+    filter: brightness(var(--reveal-brightness));
+    opacity: 0;
+  }
+  30% {
+    filter: brightness(var(--reveal-brightness));
+    opacity: 1;
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+///
+/// Site logo row pulse keyframes.
+///
+/// Note that the keyframe percentages are chosen with the assumpt that the
+/// animation will be rather long, with a long pause between the last keyframe
+/// and the start of the next loop.
+///
+@keyframes site-logo-pulse {
+  0% {
+    filter: brightness(1);
+  }
+  3% {
+    filter: brightness(var(--pulse-brightness));
+  }
+  8% {
+    filter: brightness(1);
+  }
+}
 
 .site-logo {
+
   &__link--has-inline-svg {
     @include base-link.image($image-elements: svg);
   }
+
+  &__svg {
+
+    &-row {
+
+      ///
+      /// The base delay for the reveal animation.
+      ///
+      /// This begins halfway through the site reveal overlay animation.
+      ///
+      /// @require {variable} reveal.$reveal-overlay-animation-duration
+      /// @require {variable} reveal.$site-reveal-overlay-animation-delay
+      ///
+      --reveal-delay-base: #{
+        reveal.$site-reveal-overlay-animation-delay +
+        math.div(reveal.$reveal-overlay-animation-duration, 2)
+      };
+
+      ///
+      /// The brightness value for the reveal animation, on light backgrounds.
+      ///
+      --reveal-brightness: 1.5;
+
+      ///
+      /// The brightness value for the pulse animation, on light backgrounds.
+      ///
+      --pulse-brightness: 1.3;
+
+      @include colour.on-dark-scheme {
+
+        ///
+        /// The brightness value for the reveal animation, on dark backgrounds.
+        ///
+        --reveal-brightness:  1.8;
+
+        ///
+        /// The brightness value for the pulse animation, on dark backgrounds.
+        ///
+        --pulse-brightness:   1.5;
+
+      }
+
+      ///
+      /// The interval between two rows' animations.
+      ///
+      /// This is applied to both the reveal animation and the pulse animation.
+      /// A larger value will make the 'wave' travel up the logo slower, while
+      /// a smaller value will cause it to travel up the logo faster.
+      ///
+      --stagger-interval: 100ms;
+
+      ///
+      /// The interval between the start of one pulse animation and the next.
+      ///
+      /// This specifically serves as both the duration of the entire pulse
+      /// animation and as part of the pulse animation delay.
+      ///
+      --pulse-interval: 5000ms;
+
+      ///
+      /// The reveal animation duration for this row.
+      ///
+      --reveal-animation-duration: 350ms;
+
+      ///
+      /// The pulse animation duration.
+      ///
+      /// Note that this includes the time between two pulses, including the
+      /// duration where no keyframes change.
+      ///
+      --pulse-animation-duration: var(--pulse-interval);
+
+      ///
+      /// The reveal animation delay for this row.
+      ///
+      /// Note that this is calculated to include the base delay plus a stagger
+      /// delay based on this row's row number.
+      ///
+      --reveal-animation-delay: calc(
+        var(--reveal-delay-base) +
+        (var(--row, 0) - 1) * var(--stagger-interval)
+      );
+
+      ///
+      /// The pulse animation delay for this row.
+      ///
+      /// Note that this is calculated to include the base delay, plus the pulse
+      /// interval, and plus a stagger delay based on this row's row number.
+      ///
+      --pulse-animation-delay: calc(
+        var(--reveal-delay-base) + var(--pulse-interval) +
+        (var(--row, 0) - 1) * var(--stagger-interval)
+      );
+
+      animation-name:             site-logo-row-reveal, site-logo-pulse;
+      animation-duration:
+        var(--reveal-animation-duration), var(--pulse-animation-duration);
+      animation-timing-function:  linear;
+      animation-fill-mode:        backwards, none;
+      animation-delay:
+        var(--reveal-animation-delay), var(--pulse-animation-delay);
+      animation-iteration-count:  1, infinite;
+
+      @include immerse.on-immerse {
+        animation-play-state: paused;
+      }
+      @include overlay.on-overlay-active {
+        animation-play-state: paused;
+      }
+
+      // Don't animate if the user indicates they prefer reduced motion.
+      //
+      // @see https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
+
+    }
+
+  }
+
 }

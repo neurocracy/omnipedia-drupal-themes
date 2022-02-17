@@ -2,6 +2,7 @@
 
 namespace Drupal\omnipedia_site;
 
+use Drupal\ambientimpact_core\Utility\AttributeHelper;
 use Drupal\ambientimpact_core\Utility\Html;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
@@ -19,6 +20,20 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
    * The HTML class of the logo <svg> element.
    */
   protected const LOGO_SVG_CLASS = 'site-logo__svg';
+
+  /**
+   * Logo row custom property name.
+   *
+   * @var string
+   */
+  protected const LOGO_ROW_CUSTOM_PROPERTY = '--row';
+
+  /**
+   * Logo column custom property name.
+   *
+   * @var string
+   */
+  protected const LOGO_COLUMN_CUSTOM_PROPERTY = '--column';
 
   /**
    * The Drupal file system service.
@@ -168,11 +183,12 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
    * - The expanded globe group is unwrapped.
    *
    * - All groups (<g>) that have an 'id' attribute starting with 'row' have
-   *   that transliterated into a BEM class and the 'id' removed.
+   *   that translated into BEM classes and CSS custom properties, and the 'id'
+   *   removed.
    *
    * - All <path> elements that have an 'id' attribute starting with 'row' have
-   *   the row and column number transliterated to a BEM class attribute and the
-   *   'id' removed.
+   *   the row and column numbers translated to BEM class attributes and CSS
+   *   custom properties, and the 'id' removed.
    *
    * @param array &$newElement
    *   Render array of '#type' => 'inline_template' with the contents of the
@@ -226,33 +242,66 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
     // Unwrap the expanded globe group.
     Html::unwrapNode($globeGroup);
 
-    // Replace all group element IDs
+    // Replace all group element IDs with BEM classes and CSS custom properties.
     foreach ($svgCrawler->filter('g[id^="row"]') as $node) {
 
-      Html::setElementClassAttribute(
-        $node,
-        Html::getElementClassAttribute($node)->addClass(
-          \preg_replace(
-            '/row(\d)/', self::LOGO_SVG_CLASS . '-row${1}',
-            $node->getAttribute('id'))
-        )
+      \preg_match(
+        '/row(?\'row\'\d)/', $node->getAttribute('id'), $matches
       );
+
+      if (empty($matches['row'])) {
+        continue;
+      }
+
+      /** @var \Drupal\Core\Template\Attribute */
+      $attributes = Html::getElementClassAttribute($node);
+
+      // Add BEM classes.
+      $attributes->addClass([
+        self::LOGO_SVG_CLASS . '-row',
+        self::LOGO_SVG_CLASS . '-row' . $matches['row'],
+      ]);
+
+      Html::setElementClassAttribute($node, $attributes);
+
+      // Add CSS custom properties.
+      $node->setAttribute('style', AttributeHelper::serializeStyleArray([
+        self::LOGO_ROW_CUSTOM_PROPERTY => $matches['row'],
+      ]));
 
       $node->removeAttribute('id');
 
     }
 
+    // Replace all path element IDs with BEM classes and CSS custom properties.
     foreach ($svgCrawler->filter('path[id^="row"]') as $node) {
 
-      Html::setElementClassAttribute(
-        $node,
-        Html::getElementClassAttribute($node)->addClass(
-          \preg_replace(
-            '/row(\d)_x5F__x5F_column(\d)/',
-            self::LOGO_SVG_CLASS . '-row${1}-column${2}',
-            $node->getAttribute('id'))
-        )
+      \preg_match(
+        '/row(?\'row\'\d)_x5F__x5F_column(?\'column\'\d)/',
+        $node->getAttribute('id'), $matches
       );
+
+      if (empty($matches['row']) || empty($matches['column'])) {
+        continue;
+      }
+
+      /** @var \Drupal\Core\Template\Attribute */
+      $attributes = Html::getElementClassAttribute($node);
+
+      // Add BEM classes.
+      $attributes->addClass([
+        self::LOGO_SVG_CLASS .
+          '-row'    . $matches['row'] .
+          '-column' . $matches['column']
+      ]);
+
+      Html::setElementClassAttribute($node, $attributes);
+
+      // Add CSS custom properties.
+      $node->setAttribute('style', AttributeHelper::serializeStyleArray([
+        self::LOGO_ROW_CUSTOM_PROPERTY    => $matches['row'],
+        self::LOGO_COLUMN_CUSTOM_PROPERTY => $matches['column'],
+      ]));
 
       $node->removeAttribute('id');
 
