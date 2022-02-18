@@ -5,6 +5,7 @@ namespace Drupal\omnipedia_site;
 use Drupal\ambientimpact_core\Utility\AttributeHelper;
 use Drupal\ambientimpact_core\Utility\Html;
 use Drupal\Component\Utility\UrlHelper;
+use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\DrupalKernelInterface;
 use Drupal\Core\File\FileSystemInterface;
@@ -79,6 +80,20 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
     '/row(?\'row\'\d)_x5F__x5F_column(?\'column\'\d)/';
 
   /**
+   * The cache ID to store the inlined logo render array under.
+   *
+   * @var string
+   */
+  protected const LOGO_CACHE_ID = 'omnipedia_site_branding_logo_inline';
+
+  /**
+   * The cache backend to store inlined render arrays in.
+   *
+   * @var \Drupal\Core\Cache\CacheBackendInterface
+   */
+  protected CacheBackendInterface $cache;
+
+  /**
    * The Drupal file system service.
    *
    * @var \Drupal\Core\File\FileSystemInterface
@@ -95,6 +110,9 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
   /**
    * Constructor; saves dependencies.
    *
+   * @param \Drupal\Core\Cache\CacheBackendInterface $cache
+   *   The cache backend to store inlined render arrays in.
+   *
    * @param \Drupal\Core\File\FileSystemInterface $fileSystem
    *   The Drupal file system service.
    *
@@ -102,10 +120,12 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
    *   The Drupal kernel.
    */
   public function __construct(
+    CacheBackendInterface $cache,
     FileSystemInterface   $fileSystem,
     DrupalKernelInterface $kernel
   ) {
 
+    $this->cache      = $cache;
     $this->fileSystem = $fileSystem;
     $this->kernel     = $kernel;
 
@@ -116,6 +136,7 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
    */
   public static function create(ContainerInterface $container) {
     return new static(
+      $container->get('cache.default'),
       $container->get('file_system'),
       $container->get('kernel')
     );
@@ -357,9 +378,42 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
   }
 
   /**
+   * Replace the logo with a new render array.
+   *
+   * @param array $renderArray
+   *   The new logo render array.
+   *
+   * @param array &$variables
+   *   Variables from the 'system_branding_block' block template.
+   */
+  protected function replaceLogo(array $renderArray, array &$variables): void {
+
+    $variables['content']['site_logo'] = $renderArray;
+
+    // Add a class to the logo link so that we can target styles when the inline
+    // SVG is present.
+    $variables['site_logo_link_attributes']->addClass(
+      self::LOGO_LINK_HAS_SVG_CLASS
+    );
+
+  }
+
+  /**
    * Alter the site logo.
    *
-   * This attempts to inline the site logo SVG file.
+   * This attempts to inline the site logo SVG file. If a previously cached logo
+   * is found, that will be used.
+   *
+   * Note that while we could use the render cache and pass on cache contexts
+   * and tags from $variables, that would defeat the purpose of this caching as
+   * the logo doesn't change between any cache contexts. The only cache tags
+   * added are:
+   *
+   * - 'config:block.block.omnipedia_site_branding': Invalidated when the site
+   *   branding block configuration changes, e.g. the block form is saved, etc.
+   *
+   * - 'omnipedia_site_inline_branding': Custom cache tag in case invalidating
+   *   this programmatically is necessary down the road.
    *
    * @param array &$variables
    *   Variables from the 'system_branding_block' block template.
@@ -369,6 +423,17 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
     // Bail if the element is hidden.
     if ($variables['content']['site_logo']['#access'] !== true) {
       return;
+    }
+
+    /** @var object|false */
+    $cached = $this->cache->get(self::LOGO_CACHE_ID);
+
+    if (\is_object($cached)) {
+
+      $this->replaceLogo($cached->data, $variables);
+
+      return;
+
     }
 
     $renderArray = $this->convertElement($variables['content']['site_logo']);
@@ -389,13 +454,16 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
       return;
     }
 
-    $variables['content']['site_logo'] = $renderArray;
-
-    // Add a class to the logo link so that we can target styles when the inline
-    // SVG is present.
-    $variables['site_logo_link_attributes']->addClass(
-      self::LOGO_LINK_HAS_SVG_CLASS
+    $this->cache->set(
+      self::LOGO_CACHE_ID, $renderArray,
+      CacheBackendInterface::CACHE_PERMANENT,
+      [
+        'config:block.block.omnipedia_site_branding',
+        'omnipedia_site_inline_branding',
+      ]
     );
+
+    $this->replaceLogo($renderArray, $variables);
 
   }
 
