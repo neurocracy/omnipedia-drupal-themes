@@ -83,6 +83,12 @@ class SiteBrandingMainPageLinks implements ContainerInjectionInterface {
    * @todo Would it make more sense to set the 'title' attribute to
    *   $currentMainPage->getTitle() so that we don't need to hard code 'Main
    *   Page' here?
+   *
+   * @see \Drupal\omnipedia_block\EventSubscriber\Block\SystemBrandingBlockDateCacheEventSubscriber
+   *   Alters the block render array to add Omnipedia date and main pages cache
+   *   contexts and cache tags as doing so here would not work because
+   *   preprocess is only invoked once Drupal has decided that something needs
+   *   to be rendered again, i.e. is not be used from cache.
    */
   public function alter(array &$variables): void {
 

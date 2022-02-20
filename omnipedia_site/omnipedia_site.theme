@@ -189,17 +189,12 @@ function omnipedia_site_preprocess_block__omnipedia_page_revision_history(
  *
  * Attaches the 'omnipedia_site/site_branding' library.
  *
- * Attempts to inline the branding SVG elements so that their inner parts can be
- * animated.
+ * @see \Drupal\omnipedia_site\SiteBrandingInliner
+ *   Attempts to inline the branding SVG elements so that their parts can be
+ *   animated.
  *
- * This sets the 'front_page_url' to the current date's main page, so that the
- * logo and site name links reflect the site's current state.
- *
- * This also changes the 'title' attribute on the links to 'Main Page'.
- *
- * @see \Drupal\omnipedia_block\EventSubscriber\Block\SystemBrandingBlockDateCacheEventSubscriber
- *   Alters the block build array to add Omnipedia date and main pages cache
- *   contexts and cache tags as doing so elsewhere would be too late.
+ * @see \Drupal\omnipedia_site\SiteBrandingMainPageLinks
+ *   Alters the branding main page links.
  */
 function omnipedia_site_preprocess_block__system_branding_block(
   array &$variables
