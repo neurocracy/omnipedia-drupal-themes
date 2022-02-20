@@ -2,11 +2,15 @@
 //   Site branding logo partial
 // -----------------------------------------------------------------------------
 
+@use '../../layout/config' as layout-config;
+@use 'base:layout/breakpoints' as layout-breakpoints;
 @use 'base:elements/link' as base-link;
 @use '../../global/reveal';
 @use 'immerse';
 @use 'overlay';
+@use 'sass/helpers/breakpoint';
 @use 'sass/helpers/colour';
+@use 'sass/helpers/outline';
 @use 'sass:math';
 
 ///
@@ -58,6 +62,16 @@
     // If we know the SVG has been inlined, make the link completely circular to
     // make the focus outline also circular.
     border-radius: 50%;
+
+    // When the logo is in the sidebar, it's a lot larger and a mouse is likely
+    // to be used, so we clip the link as a circle to attempt to make the hit
+    // box a fit the logo rather than a square. Note that care needs to be taken
+    // to avoid clipping off the focus outline, hence the calc().
+    @include breakpoint.on('>=layout-with-both-sidebars') {
+      clip-path: circle(calc(
+        50% + #{outline.$outline-width} + #{outline.$outline-offset}
+      ) at 50% 50%);
+    }
 
   }
 
