@@ -1,0 +1,114 @@
+<?php
+
+namespace Drupal\omnipedia_site;
+
+use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\StringTranslation\TranslationInterface;
+use Drupal\Core\Url;
+use Drupal\omnipedia_core\Service\WikiNodeMainPageInterface;
+use Drupal\omnipedia_core\Service\TimelineInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+/**
+ * Omnipedia site branding main page link alterations.
+ */
+class SiteBrandingMainPageLinks implements ContainerInjectionInterface {
+
+  use StringTranslationTrait;
+
+  /**
+   * The Omnipedia timeline service.
+   *
+   * @var \Drupal\omnipedia_core\Service\TimelineInterface
+   */
+  protected $timeline;
+
+  /**
+   * The Omnipedia wiki node main page service.
+   *
+   * @var \Drupal\omnipedia_core\Service\WikiNodeMainPageInterface
+   */
+  protected $wikiNodeMainPage;
+
+  /**
+   * Constructor; saves dependencies.
+   *
+   * @param \Drupal\Core\StringTranslation\TranslationInterface $stringTranslation
+   *   The Drupal string translation service.
+   *
+   * @param \Drupal\omnipedia_core\Service\TimelineInterface $timeline
+   *   The Omnipedia timeline service.
+   *
+   * @param \Drupal\omnipedia_core\Service\WikiNodeMainPageInterface $wikiNodeMainPage
+   *   The Omnipedia wiki node main page service.
+   */
+  public function __construct(
+    TranslationInterface        $stringTranslation,
+    TimelineInterface           $timeline,
+    WikiNodeMainPageInterface   $wikiNodeMainPage
+  ) {
+
+    $this->stringTranslation  = $stringTranslation;
+    $this->timeline           = $timeline;
+    $this->wikiNodeMainPage   = $wikiNodeMainPage;
+
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('string_translation'),
+      $container->get('omnipedia.timeline'),
+      $container->get('omnipedia.wiki_node_main_page')
+    );
+  }
+
+  /**
+   * Alter site branding elements.
+   *
+   * If the current user has access to the current date's main, this does the
+   * following:
+   *
+   * - Sets the 'front_page_url' to the current date's main page, so that the
+   *   logo and site name links reflect the site's current state.
+   *
+   * - Changes the 'title' attribute on the links to 'Main Page'.
+   *
+   * @param array &$variables
+   *   Variables from the 'system_branding_block' block template.
+   *
+   * @todo Would it make more sense to set the 'title' attribute to
+   *   $currentMainPage->getTitle() so that we don't need to hard code 'Main
+   *   Page' here?
+   */
+  public function alter(array &$variables): void {
+
+    /** @var string */
+    $currentDate = $this->timeline->getDateFormatted('current', 'storage');
+
+    /** @var \Drupal\omnipedia_core\Entity\NodeInterface|null */
+    $currentMainPage = $this->wikiNodeMainPage->getMainPage($currentDate);
+
+    // Don't alter the URL if no main page was found for this date or the user
+    // does not have access to said main page.
+    if ($currentMainPage === null || !$currentMainPage->access('view')) {
+      return;
+    }
+
+    $variables['front_page_url'] = Url::fromRoute(
+      $this->wikiNodeMainPage->getMainPageRouteName(),
+      $this->wikiNodeMainPage->getMainPageRouteParameters($currentDate)
+    );
+
+    foreach (['site_logo', 'site_name'] as $key) {
+      $variables[$key . '_link_attributes']->setAttribute(
+        'title', $this->t('Main Page')
+      );
+    }
+
+  }
+
+}

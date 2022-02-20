@@ -6,6 +6,7 @@ use Drupal\Core\Url;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Template\Attribute;
 use Drupal\omnipedia_site\SiteBrandingInliner;
+use Drupal\omnipedia_site\SiteBrandingMainPageLinks;
 
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
@@ -211,33 +212,10 @@ function omnipedia_site_preprocess_block__system_branding_block(
 
   $inliner->alter($variables);
 
-  /** @var \Drupal\omnipedia_core\Service\WikiNodeMainPageInterface */
-  $wikiNodeMainPage = \Drupal::service('omnipedia.wiki_node_main_page');
+  /** @var \Drupal\omnipedia_site\SiteBrandingMainPageLinks $mainPageLinks */
+  $mainPageLinks = \Drupal::classResolver(SiteBrandingMainPageLinks::class);
 
-  /** @var \Drupal\omnipedia_core\Service\TimelineInterface */
-  $timeline = \Drupal::service('omnipedia.timeline');
-
-  /** @var string */
-  $currentDate = $timeline->getDateFormatted('current', 'storage');
-
-  /** @var \Drupal\omnipedia_core\Entity\NodeInterface|null */
-  $currentMainPage = $wikiNodeMainPage->getMainPage($currentDate);
-
-  // Don't alter the URL if no main page was found for this date or the user
-  // does not have access to said main page.
-  if ($currentMainPage === null || !$currentMainPage->access('view')) {
-    return;
-  }
-
-  $variables['front_page_url'] = Url::fromRoute(
-    $wikiNodeMainPage->getMainPageRouteName(),
-    $wikiNodeMainPage->getMainPageRouteParameters($currentDate)
-  );
-
-  foreach (['site_logo', 'site_name'] as $key) {
-    $variables[$key . '_link_attributes']
-      ->setAttribute('title', \t('Main Page'));
-  }
+  $mainPageLinks->alter($variables);
 
 }
 
