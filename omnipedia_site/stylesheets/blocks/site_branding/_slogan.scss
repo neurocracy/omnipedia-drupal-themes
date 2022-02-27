@@ -6,7 +6,7 @@
 
 @include colour.on-dark-scheme {
   // Invert the slogan image on dark theme since it's black text.
-  .site-slogan {
+  .site-slogan img {
     filter: invert(100%);
   }
 }
