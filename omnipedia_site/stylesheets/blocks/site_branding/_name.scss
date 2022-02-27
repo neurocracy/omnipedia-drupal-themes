@@ -2,3 +2,14 @@
 //   Site branding name partial
 // -----------------------------------------------------------------------------
 
+@use 'sass/helpers/colour';
+
+@include colour.on-dark-scheme {
+  // Increase the site name link image brightness on dark colour scheme as the
+  // dark blue doesn't contrast well with the background. This also reduces the
+  // saturation slightly as the increased brightness otherwise makes the blue
+  // feel too saturated.
+  .site-name__link.ambientimpact-link-has-image {
+    filter: brightness(1.4) saturate(0.8);
+  }
+}
