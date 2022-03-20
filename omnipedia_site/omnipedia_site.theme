@@ -1,8 +1,6 @@
 <?php
 
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Url;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Template\Attribute;
 use Drupal\omnipedia_site\EuCookieCompliancePopUpInfoPreprocess;
