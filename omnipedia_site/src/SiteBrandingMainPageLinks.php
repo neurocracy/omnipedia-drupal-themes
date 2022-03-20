@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Drupal\omnipedia_site;
 
@@ -22,14 +22,14 @@ class SiteBrandingMainPageLinks implements ContainerInjectionInterface {
    *
    * @var \Drupal\omnipedia_core\Service\TimelineInterface
    */
-  protected $timeline;
+  protected TimelineInterface $timeline;
 
   /**
    * The Omnipedia wiki node main page service.
    *
    * @var \Drupal\omnipedia_core\Service\WikiNodeMainPageInterface
    */
-  protected $wikiNodeMainPage;
+  protected WikiNodeMainPageInterface $wikiNodeMainPage;
 
   /**
    * Constructor; saves dependencies.
