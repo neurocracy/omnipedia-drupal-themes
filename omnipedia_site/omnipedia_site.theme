@@ -277,6 +277,19 @@ function omnipedia_site_preprocess_page_title(array &$variables): void {
 }
 
 /**
+ * Preprocess variables for our billing info commerce-checkout-pane.html.twig.
+ *
+ * This attaches the 'omnipedia_site/help' library.
+ *
+ * @see \Drupal\omnipedia_commerce\Plugin\Commerce\CheckoutPane\BillingInformationMessagePane
+ */
+function omnipedia_site_preprocess_commerce_checkout_pane__omnipedia_billing_information_message(
+  array &$variables
+): void {
+  $variables['#attached']['library'][] = 'omnipedia_site/help';
+}
+
+/**
  * Prepares variables for the eu_cookie_compliance_popup_info.html.twig template.
  *
  * @see \Drupal\omnipedia_site\EuCookieCompliancePopUpInfoPreprocess
