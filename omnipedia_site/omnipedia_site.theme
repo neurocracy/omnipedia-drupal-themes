@@ -201,15 +201,9 @@ function omnipedia_site_preprocess_block__system_branding_block(
 
   $variables['#attached']['library'][] = 'omnipedia_site/site_branding';
 
-  /** @var \Drupal\omnipedia_site\SiteBrandingInliner $inliner */
-  $inliner = \Drupal::classResolver(SiteBrandingInliner::class);
+  \Drupal::classResolver(SiteBrandingInliner::class)->alter($variables);
 
-  $inliner->alter($variables);
-
-  /** @var \Drupal\omnipedia_site\SiteBrandingMainPageLinks $mainPageLinks */
-  $mainPageLinks = \Drupal::classResolver(SiteBrandingMainPageLinks::class);
-
-  $mainPageLinks->alter($variables);
+  \Drupal::classResolver(SiteBrandingMainPageLinks::class)->alter($variables);
 
 }
 
