@@ -2,8 +2,8 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
-use Drupal\Core\Template\Attribute;
 use Drupal\omnipedia_site\EuCookieCompliancePopUpInfoPreprocess;
+use Drupal\omnipedia_site\MediaSubtitleTracks;
 use Drupal\omnipedia_site\SiteBrandingInliner;
 use Drupal\omnipedia_site\SiteBrandingMainPageLinks;
 
@@ -216,11 +216,11 @@ function omnipedia_site_preprocess_block__system_branding_block(
 /**
  * Prepares variables for media entities.
  *
- * This builds <track> elements for media entities that have the
- * 'field_media_video_file' field and a non-empty 'field_subtitles' field.
- *
  * This switches 'field_media_image' from 'image_caption_formatter' back to
  * 'image_formatter'.
+ *
+ * @see \Drupal\omnipedia_site\MediaSubtitleTracks
+ *   Builds subtitle tracks.
  *
  * @todo Remove the 'field_media_image' stuff once 'image_caption_formatter' is
  *   no longer used by ambientimpact_media.
@@ -230,54 +230,7 @@ function omnipedia_site_preprocess_block__system_branding_block(
  */
 function omnipedia_site_preprocess_media(array &$variables): void {
 
-  if (
-    $variables['media']->hasField('field_media_video_file') &&
-    $variables['media']->hasField('field_subtitles') &&
-    !$variables['media']->get('field_subtitles')->isEmpty() &&
-    !$variables['media']->get('field_subtitles')->get(0)->isEmpty()
-  ) {
-
-    /** @var \Drupal\Core\Language\LanguageManagerInterface The Drupal language manager. */
-    $languageManager = \Drupal::service('language_manager');
-
-    /** @var string */
-    $langCode = $variables['media']->get('field_subtitles')->getLangcode();
-
-    /** @var string */
-    $languageName = $languageManager->getLanguageName($langCode);
-
-    /** @var \Drupal\file\FileInterface[] */
-    $subtitleFileEntities = $variables['media']->get('field_subtitles')
-      ->referencedEntities();
-
-    /** @var array[] */
-    $tracks = [];
-
-    foreach ($subtitleFileEntities as $delta => $fileEntity) {
-      $tracks[] = [
-        '#theme'      => 'track',
-        '#attributes' => new Attribute([
-          'kind'    => 'subtitles',
-          'src'     => $fileEntity->createFileUrl(),
-          'srclang' => $langCode,
-          'label'   => $languageName,
-        ]),
-      ];
-    }
-
-    // Add any available tracks to the 'field_media_video_file' field.
-    if (!empty($tracks)) {
-
-      foreach (Element::children(
-        $variables['content']['field_media_video_file']
-      ) as $key) {
-        $variables['content']['field_media_video_file'][$key]['#tracks'] =
-          $tracks;
-      }
-
-    }
-
-  }
+  \Drupal::classResolver(MediaSubtitleTracks::class)->preprocess($variables);
 
   if (
     !isset($variables['elements']['#embed']) ||
