@@ -43,14 +43,16 @@ function omnipedia_site_preprocess_html(array &$variables): void {
  * This adds the 'omnipedia_is_search_page' variable.
  *
  * Default template: page.html.twig.
+ *
+ * @see \Drupal\omnipedia_search\Service\WikiSearchInterface::isCurrentRouteSearchPage()
  */
 function omnipedia_site_preprocess_page(array &$variables): void {
-  /** @var \Drupal\omnipedia_search\Service\WikiSearchInterface */
-  $wikiSearch = \Drupal::service('omnipedia.wiki_search');
 
   /** @var bool */
-  $variables['omnipedia_is_search_page'] =
-    $wikiSearch->isCurrentRouteSearchPage();
+  $variables['omnipedia_is_search_page'] = \Drupal::service(
+    'omnipedia.wiki_search'
+  )->isCurrentRouteSearchPage();
+
 }
 
 /**
