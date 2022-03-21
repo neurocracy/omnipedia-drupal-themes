@@ -25,26 +25,16 @@ function omnipedia_site_theme_suggestions_html_alter(
  * This adds the 'omnipedia_is_main_page' variable.
  *
  * Default template: html.html.twig.
+ *
+ * @see \Drupal\omnipedia_core\Service\WikiNodeMainPageInterface::isCurrentRouteMainPage()
  */
 function omnipedia_site_preprocess_html(array &$variables): void {
-  $variables['omnipedia_is_main_page'] = false;
 
-  /** @var \Drupal\Core\Routing\StackedRouteMatchInterface */
-  $currentRouteMatch = \Drupal::service('current_route_match');
+  /** @var bool */
+  $variables['omnipedia_is_main_page'] = \Drupal::service(
+    'omnipedia.wiki_node_main_page'
+  )->isCurrentRouteMainPage();
 
-  // Bail if this is not a node page to avoid false positives.
-  if ($currentRouteMatch->getRouteName() !== 'entity.node.canonical') {
-    return;
-  }
-
-  /** @var \Drupal\omnipedia_core\Entity\NodeInterface|null */
-  $node = $currentRouteMatch->getParameter('node');
-
-  if ($node === null) {
-    return;
-  }
-
-  $variables['omnipedia_is_main_page'] = $node->isMainPage();
 }
 
 /**
