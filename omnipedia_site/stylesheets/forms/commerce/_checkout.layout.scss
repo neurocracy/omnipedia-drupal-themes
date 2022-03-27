@@ -9,39 +9,39 @@
 @use 'sass/helpers/layout';
 @use 'sass/helpers/selector';
 
-@include breakpoint.add((
-  'layout-commerce-checkout-form-two-column': 35em,
-));
-
 .layout-checkout-form {
-  @include layout.use-grid {
-    @include breakpoint.on('>=layout-commerce-checkout-form-two-column') {
-      display: grid;
 
-      grid-template-areas:
-        'main   secondary'
-        'footer footer';
+  display: flex;
+  flex-wrap: wrap;
 
-      grid-template-columns: minmax(15em, 1fr) 1fr;
-      grid-gap: layout-config.$gap;
+  --region-gap: #{layout-config.$gap};
+  --region-min-width: 18em;
 
-      &::after {
-        display: none;
-      }
+  gap: var(--region-gap);
 
-      .checkout-pane-review {
-        // This attempts to line up the top of the first fieldset with the
-        // adjacent secondary column <h3>.
-        margin-top: -0.9em;
-      }
+  .layout-region {
+    flex-grow: 1;
 
-      // The log in pane has its own internal two column layout and is intended
-      // to span the full width.
-      .checkout-pane-login {
-        grid-column-start:  main;
-        grid-column-end:    secondary;
-      }
+    min-width: var(--region-min-width);
+
+    box-sizing: border-box;
+
+    &-checkout-main, &-checkout-secondary {
+      // This lays out these sections as two columns side-by-side, if space
+      // permits. The 0.1em is to account for rounding errors.
+      width: calc(50% - var(--region-gap) / 2 - 0.1em);
     }
+
+  }
+
+  &::after {
+    display: none;
+  }
+
+  .checkout-pane-review {
+    // This attempts to line up the top of the first fieldset with the adjacent
+    // secondary column <h3>.
+    margin-top: -0.9em;
   }
 
   // This contains an <iframe> that's got a high z-index set inline, which ends
@@ -65,8 +65,6 @@
 }
 
 .layout-region-checkout-main {
-  grid-area: main;
-
   @include vertical-spacing.against-previous(
     '.form-wrapper',
     $spacing-small: content.$item-vertical-spacing-small,
@@ -75,22 +73,18 @@
 }
 
 .layout-region-checkout-secondary {
-  grid-area: secondary;
-
   @include layout.use-grid {
-    @include breakpoint.on('>=layout-commerce-checkout-form-two-column') {
-      h3:first-child {
-        margin-top: -0.55em;
-      }
+    h3:first-child {
+      margin-top: -0.55em;
     }
   }
 }
 
 .layout-region-checkout-footer {
-  grid-area: footer;
-
   .form-actions {
-    margin-bottom: 0;
+
+    margin-top:     0;
+    margin-bottom:  0;
 
     @include layout.use-grid {
       // @todo Make this work without causing the back link to expand and have
@@ -98,10 +92,6 @@
       //
       // grid-template-columns:  repeat(auto-fit, minmax(10em,   1fr));
       // grid-template-rows:     repeat(auto-fit, minmax(2.6em,  1fr));
-
-      @include breakpoint.on('>=layout-commerce-checkout-form-two-column') {
-        margin-top: 0;
-      }
 
       // @todo Apply this only when there are two or more items in the form
       //   actions, i.e. not a step that has just the primary button. Applying
