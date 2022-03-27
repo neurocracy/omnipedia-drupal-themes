@@ -67,10 +67,8 @@
 }
 
 .layout-region-checkout-secondary {
-  @include layout.use-grid {
-    h3:first-child {
-      margin-top: -0.55em;
-    }
+  h3:first-child {
+    margin-top: -0.55em;
   }
 }
 
