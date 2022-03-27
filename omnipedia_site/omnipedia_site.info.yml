@@ -48,8 +48,9 @@ libraries-override:
   # Replace the Classy media embed error with our own.
   classy/media_embed_error: omnipedia_site/media_embed_error
 
-  # Replace Commerce's checkout form layout with our own.
-  commerce_checkout/form: omnipedia_site/commerce_checkout_form
+  # Replace Commerce checkout libraries with our own.
+  commerce_checkout/form:       omnipedia_site/commerce_checkout_form
+  commerce_checkout/login_pane: omnipedia_site/commerce_checkout_login
 
 libraries-extend:
 

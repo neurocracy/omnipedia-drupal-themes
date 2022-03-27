@@ -15,6 +15,11 @@ commerce_checkout_form:
     theme:
       stylesheets/forms/commerce/checkout.css: {}
 
+commerce_checkout_login:
+  css:
+    theme:
+      stylesheets/forms/commerce/checkout.login.css: {}
+
 commerce_checkout_review:
   css:
     theme:
