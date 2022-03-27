@@ -17,9 +17,14 @@
   --region-gap: #{layout-config.$gap};
   --region-min-width: 18em;
 
+  // This lays out these sections as two columns side-by-side, if space
+  // permits. The 0.1em is to account for rounding errors.
+  --region-width: calc(50% - var(--region-gap) / 2 - 0.1em);
+
   gap: var(--region-gap);
 
   .layout-region {
+
     flex-grow: 1;
 
     min-width: var(--region-min-width);
@@ -27,9 +32,7 @@
     box-sizing: border-box;
 
     &-checkout-main, &-checkout-secondary {
-      // This lays out these sections as two columns side-by-side, if space
-      // permits. The 0.1em is to account for rounding errors.
-      width: calc(50% - var(--region-gap) / 2 - 0.1em);
+      width: var(--region-width);
     }
 
   }
