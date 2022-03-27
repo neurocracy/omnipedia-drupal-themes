@@ -15,10 +15,20 @@ commerce_checkout_form:
     theme:
       stylesheets/forms/commerce/checkout.css: {}
 
+commerce_checkout_review:
+  css:
+    theme:
+      stylesheets/forms/commerce/checkout.review.css: {}
+
 commerce_checkout_progress:
   css:
     theme:
       stylesheets/components/commerce_checkout_progress.css: {}
+
+commerce_checkout_summary:
+  css:
+    theme:
+      stylesheets/forms/commerce/checkout.summary.css: {}
 
 current_date:
   css:

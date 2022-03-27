@@ -38,12 +38,6 @@
     display: none;
   }
 
-  .checkout-pane-review {
-    // This attempts to line up the top of the first fieldset with the adjacent
-    // secondary column <h3>.
-    margin-top: -0.9em;
-  }
-
   // This contains an <iframe> that's got a high z-index set inline, which ends
   // up layering this above elements such as the header and back to top widget.
   .paypal-buttons-container {
@@ -118,42 +112,5 @@
         min-width: 12em;
       }
     }
-  }
-}
-
-@include vertical-spacing.against-previous(
-  '.checkout-pane-order-summary',
-  $spacing-small: content.$item-vertical-spacing-small,
-  $spacing-large: content.$item-vertical-spacing-large
-);
-
-.checkout-order-summary {
-  // This table lists the products in the order.
-  table {
-    // Override ambientimpact_base styles.
-    display: table;
-
-    width:      100%;
-    max-width:  100%;
-
-    // This table cell contains the price for a product and so we align it with
-    // the end of the block to match the .order-total-line elements below it.
-    td:last-child {
-      text-align: end;
-    }
-  }
-
-  // This is the <div> that contains the subtotal and total for the order.
-  > table ~ div {
-    @include vertical-spacing.vertical-spacing(
-      $spacing-small: content.$item-vertical-spacing-small,
-      $spacing-large: content.$item-vertical-spacing-large
-    );
-  }
-
-  // These match the horizontal padding on the base table styles.
-  .order-total-line {
-    padding-left:   var(--table-cell-padding-horizontal-edge);
-    padding-right:  var(--table-cell-padding-horizontal-edge);
   }
 }
