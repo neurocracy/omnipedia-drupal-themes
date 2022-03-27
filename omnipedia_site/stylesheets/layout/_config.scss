@@ -75,14 +75,11 @@ $with-both-sidebars-min-width: 52em;
 $with-both-sidebars-max-width: 100em;
 
 ///
-/// The sidebar column widths, as a grid-template-columns value.
+/// The maximum width of sidebar columns when displayed beside content.
 ///
-/// The maximum value is decreased from the default value.
+/// This is decreased from the default value.
 ///
-/// @link https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns
-///   Lists valid values.
-///
-$sidebar-column-width: minmax(8em, 10em);
+$sidebar-column-max-width: 10em !default;
 
 ///
 /// The gap between layout columns.
@@ -94,7 +91,7 @@ $gap: 1.5em;
 @use 'base:layout/config' with (
   $with-both-sidebars-min-width: $with-both-sidebars-min-width,
   $with-both-sidebars-max-width: $with-both-sidebars-max-width,
-  $sidebar-column-width: $sidebar-column-width,
+  $sidebar-column-max-width: $sidebar-column-max-width,
   $gap: $gap,
 );
 
