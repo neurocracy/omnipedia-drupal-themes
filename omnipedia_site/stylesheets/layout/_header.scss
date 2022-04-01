@@ -197,10 +197,15 @@ header[role='banner']::before {
     margin-left:  -#{search.$button-spacing};
   }
 
-  // Note that we're multiplying slightly larger just to prevent potential tiny
-  // areas around the border of the button where rounding errors may allow the
-  // pointer to briefly be considered over the button rather than the anchor.
-  padding: search.$button-spacing * 1.05;
+  // Double the class selector to have a higher specificity than .plain-button
+  // styles.
+  &#{&} {
+    // Note that we're multiplying slightly larger just to prevent potential
+    // tiny areas around the border of the button where rounding errors may
+    // allow the pointer to briefly be considered over the button rather than
+    // the anchor.
+    padding: search.$button-spacing * 1.05;
+  }
 }
 
 .search-target:target ~ header[role='banner'],
