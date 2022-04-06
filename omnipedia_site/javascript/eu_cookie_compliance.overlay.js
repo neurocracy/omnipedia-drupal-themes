@@ -2,23 +2,23 @@
 //   Omnipedia - Site theme - EU cookie compliance overlay
 // -----------------------------------------------------------------------------
 
-// This marks the pop-up as having opened and closed for the
-// 'OmnipediaSiteThemeOverlayScroll' component.
+// This marks the pop-up as having opened and closed for the scroll blocker
+// component.
 
 AmbientImpact.on([
   'OmnipediaPrivacySettings',
   'OmnipediaSiteThemeEuCookieComplianceElements',
   'OmnipediaSiteThemeEuCookieComplianceState',
-  'OmnipediaSiteThemeOverlayScroll',
   'OmnipediaSiteThemeSidebarsState',
   'overlay',
+  'scrollBlocker',
 ], function(
   OmnipediaPrivacySettings,
   euCookieComplianceElements,
   euCookieComplianceState,
-  overlayScroll,
   sidebarsState,
-  aiOverlay
+  aiOverlay,
+  aiScrollBlocker
 ) {
 AmbientImpact.addComponent(
   'OmnipediaSiteThemeEuCookieComplianceOverlay',
@@ -61,6 +61,15 @@ function(
       $overlay.insertBefore($popUp);
 
       /**
+       * The scroll blocker instance.
+       *
+       * @type {scrollBlocker}
+       */
+      let scrollBlocker = aiScrollBlocker.create();
+
+      $popUp.prop('scrollBlocker', scrollBlocker);
+
+      /**
        * Open the overlay and related tasks.
        */
       function openOverlay() {
@@ -87,7 +96,7 @@ function(
           return;
         }
 
-        overlayScroll.overlayOpened($popUp);
+        scrollBlocker.block($popUp);
 
         // We trigger immerse events to pause any animations on the page while
         // the overlay/pop-up are open for both performance reasons and so as to
@@ -113,7 +122,7 @@ function(
 
         $overlay.prop('aiOverlay').hide();
 
-        overlayScroll.overlayClosed($popUp);
+        scrollBlocker.unblock($popUp);
 
       })
       .on(
@@ -143,8 +152,20 @@ function(
         'euCookieCompliancePopUpClosed.OmnipediaSiteThemeEuCookieComplianceOverlay',
       ].join(' '));
 
-      // Make sure to mark the pop-up as closed in case it's open during detach.
-      overlayScroll.overlayClosed($popUp);
+      /**
+       * The scroll blocker instance.
+       *
+       * @type {scrollBlocker}
+       */
+      let scrollBlocker = $popUp.prop('scrollBlocker');
+
+      // Unblock scrolling if still blocked and destroy the scroll blocker
+      // instance if isn't blocking anything.
+      scrollBlocker.unblock($popUp);
+      scrollBlocker.destroy();
+
+      // Remove the scroll blocker instance.
+      $popUp.removeProp('scrollBlocker');
 
       // Destroy the overlay instance if found. Note that the destroy method
       // also deletes the aiOverlay property so we don't have to.

@@ -8,6 +8,7 @@
 @use 'base:layout/vertical_spacing' as vertical-spacing;
 @use 'sass/helpers/selector';
 @use 'sass/helpers/layout';
+@use 'scroll_blocker' as scroll-blocker;
 @use 'base:forms/search';
 @use 'base:global/content';
 
@@ -25,6 +26,8 @@
 
 .eu-cookie-compliance-popup {
 
+  $self: &;
+
   // This compensates for the scrollbar gutter when the pop-up is closing so
   // that the pop-up contents don't shift when the viewport scrollbar appears.
   @include selector.root-conditions(('[dir=ltr]'), 'html') {
@@ -34,12 +37,16 @@
     left: calc(var(--scrollbar-gutter, 0) * -1);
   }
 
-  html.omnipedia-overlay-open & {
-    @include selector.root-conditions(('[dir=ltr]'), 'html') {
-      right: 0;
-    }
-    @include selector.root-conditions(('[dir=rtl]'), 'html') {
-      left: 0;
+  @include scroll-blocker.on-scroll-blocked {
+    #{$self} {
+
+      @include selector.root-conditions(('[dir=ltr]'), 'html') {
+        right: 0;
+      }
+      @include selector.root-conditions(('[dir=rtl]'), 'html') {
+        left: 0;
+      }
+
     }
   }
 

@@ -11,8 +11,8 @@
 AmbientImpact.on([
   'OmnipediaSiteThemeHeaderElements',
   'OmnipediaSiteThemeHeaderState',
-  'OmnipediaSiteThemeOverlayScroll',
-], function(headerElements, headerState, overlayScroll, $) {
+  'scrollBlocker',
+], function(headerElements, headerState, aiScrollBlocker, $) {
 AmbientImpact.addComponent('OmnipediaSiteThemeHeaderOverlay', function(
   headerOverlay, $
 ) {
@@ -31,11 +31,20 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderOverlay', function(
        */
       var $main = $('main[role="main"]', context);
 
+      /**
+       * The scroll blocker instance.
+       *
+       * @type {scrollBlocker}
+       */
+      let scrollBlocker = aiScrollBlocker.create();
+
+      $main.prop('scrollBlocker', scrollBlocker);
+
       $(this).on(
         'omnipediaSearchActive.OmnipediaSiteThemeHeaderOverlay',
       function(event) {
 
-        overlayScroll.overlayOpened($main);
+        scrollBlocker.block($main);
 
         $main.one('click.OmnipediaSiteThemeHeaderOverlay', function(event) {
           headerState.hideSearch();
@@ -47,7 +56,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderOverlay', function(
 
         $main.off('click.OmnipediaSiteThemeHeaderOverlay');
 
-        overlayScroll.overlayClosed($main);
+        scrollBlocker.unblock($main);
 
       });
 
@@ -70,9 +79,20 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderOverlay', function(
         'omnipediaSearchInactive.OmnipediaSiteThemeHeaderOverlay',
       ].join(' '));
 
-      // Make sure to mark the overlay as closed in case it was opened on
-      // detach.
-      overlayScroll.overlayClosed($main);
+      /**
+       * The scroll blocker instance.
+       *
+       * @type {scrollBlocker}
+       */
+      let scrollBlocker = $main.prop('scrollBlocker');
+
+      // Unblock scrolling if still blocked and destroy the scroll blocker
+      // instance if isn't blocking anything.
+      scrollBlocker.unblock($main);
+      scrollBlocker.destroy();
+
+      // Remove the scroll blocker instance.
+      $main.removeProp('scrollBlocker');
 
     }
   );
