@@ -54,7 +54,6 @@ eu_cookie_compliance:
     - ambientimpact_core/ally.js
     - ambientimpact_ux/component.overlay
     - ambientimpact_ux/component.pointer_focus_hide
-    - ambientimpact_ux/component.scroll_blocker
     - omnipedia_block/component.privacy_settings
     - omnipedia_site/offcanvas_immerse
 

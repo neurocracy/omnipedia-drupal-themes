@@ -11,14 +11,12 @@ AmbientImpact.on([
   'OmnipediaSiteThemeEuCookieComplianceState',
   'OmnipediaSiteThemeSidebarsState',
   'overlay',
-  'scrollBlocker',
 ], function(
   OmnipediaPrivacySettings,
   euCookieComplianceElements,
   euCookieComplianceState,
   sidebarsState,
-  aiOverlay,
-  aiScrollBlocker
+  aiOverlay
 ) {
 AmbientImpact.addComponent(
   'OmnipediaSiteThemeEuCookieComplianceOverlay',
@@ -61,15 +59,6 @@ function(
       $overlay.insertBefore($popUp);
 
       /**
-       * The scroll blocker instance.
-       *
-       * @type {scrollBlocker}
-       */
-      let scrollBlocker = aiScrollBlocker.create();
-
-      $popUp.prop('scrollBlocker', scrollBlocker);
-
-      /**
        * Open the overlay and related tasks.
        */
       function openOverlay() {
@@ -96,8 +85,6 @@ function(
           return;
         }
 
-        scrollBlocker.block($popUp);
-
         // We trigger immerse events to pause any animations on the page while
         // the overlay/pop-up are open for both performance reasons and so as to
         // not distract users.
@@ -121,8 +108,6 @@ function(
       function(event) {
 
         $overlay.prop('aiOverlay').hide();
-
-        scrollBlocker.unblock($popUp);
 
       })
       .on(
@@ -151,21 +136,6 @@ function(
         'euCookieCompliancePopUpClose.OmnipediaSiteThemeEuCookieComplianceOverlay',
         'euCookieCompliancePopUpClosed.OmnipediaSiteThemeEuCookieComplianceOverlay',
       ].join(' '));
-
-      /**
-       * The scroll blocker instance.
-       *
-       * @type {scrollBlocker}
-       */
-      let scrollBlocker = $popUp.prop('scrollBlocker');
-
-      // Unblock scrolling if still blocked and destroy the scroll blocker
-      // instance if isn't blocking anything.
-      scrollBlocker.unblock($popUp);
-      scrollBlocker.destroy();
-
-      // Remove the scroll blocker instance.
-      $popUp.removeProp('scrollBlocker');
 
       // Destroy the overlay instance if found. Note that the destroy method
       // also deletes the aiOverlay property so we don't have to.
