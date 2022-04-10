@@ -101,7 +101,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
    * @see this.isCompact()
    */
   this.isSearchOpen = function() {
-    return location.hash === headerElements.getSearchAnchor().attr('href');
+    return location.hash === headerElements.getSearchAnchor().prop('hash');
   };
 
   /**
