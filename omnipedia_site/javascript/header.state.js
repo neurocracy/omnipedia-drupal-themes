@@ -22,6 +22,23 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
   var behaviourAttached = false;
 
   /**
+   * Whether a hide has been requested, to prevent race conditions.
+   *
+   * This acts as a failsafe to ensure only the first request to hide the search
+   * does anything, as there are some situations where the location hash hasn't
+   * changed yet and we can erroneously call history.back() twice.
+   *
+   * @type {Boolean}
+   *
+   * @see setActive()
+   *   Resets this to false.
+   *
+   * @see setInactive()
+   *   Sets this to true.
+   */
+  let hideRequested = false;
+
+  /**
    * Whether the header is currently in compact mode, i.e. on a narrow screen.
    *
    * @return {Boolean}
@@ -92,7 +109,11 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
    * Set the search form as active.
    */
   function setActive() {
+
+    hideRequested = false;
+
     headerElements.getSearchForm().trigger('omnipediaSearchActive');
+
   };
 
   /**
@@ -110,14 +131,18 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
    * Set the search form as inactive.
    */
   function setInactive() {
+
+    hideRequested = true;
+
     headerElements.getSearchForm().trigger('omnipediaSearchInactive');
+
   }
 
   /**
    * Hide the search form.
    */
   this.hideSearch = function() {
-    if (this.isSearchOpen() === false) {
+    if (this.isSearchOpen() === false || hideRequested === true) {
       return;
     }
 
