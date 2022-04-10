@@ -86,7 +86,9 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
    * @see this.isOffCanvas()
    */
   this.isMenuOpen = function() {
-    return location.hash === sidebarsElements.getSidebarsMenuOpen().attr('href');
+    return (
+      location.hash === sidebarsElements.getSidebarsMenuOpen().prop('hash')
+    );
   };
 
   /**
