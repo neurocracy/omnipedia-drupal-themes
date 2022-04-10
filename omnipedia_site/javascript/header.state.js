@@ -12,6 +12,7 @@ AmbientImpact.on('OmnipediaSiteThemeHeaderElements', function(
 AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
   headerState, $
 ) {
+
   'use strict';
 
   /**
@@ -120,11 +121,13 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
    * Show the search form.
    */
   this.showSearch = function() {
+
     if (this.isSearchOpen() === true) {
       return;
     }
 
     setActive();
+
   };
 
   /**
@@ -142,6 +145,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
    * Hide the search form.
    */
   this.hideSearch = function() {
+
     if (this.isSearchOpen() === false || hideRequested === true) {
       return;
     }
@@ -149,6 +153,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
     history.back();
 
     setInactive();
+
   };
 
   /**

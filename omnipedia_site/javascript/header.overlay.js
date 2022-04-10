@@ -14,6 +14,7 @@ AmbientImpact.on([
 AmbientImpact.addComponent('OmnipediaSiteThemeHeaderOverlay', function(
   headerOverlay, $
 ) {
+
   'use strict';
 
   /**

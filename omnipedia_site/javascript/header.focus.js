@@ -20,6 +20,7 @@ AmbientImpact.on([
 AmbientImpact.addComponent('OmnipediaSiteThemeHeaderFocus', function(
   headerFocus, $
 ) {
+
   'use strict';
 
   /**
@@ -128,6 +129,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderFocus', function(
       ].join(' '));
 
       headerElements.getSearchTarget().removeClass(searchTargetFormFocusClass);
+
     }
   );
 

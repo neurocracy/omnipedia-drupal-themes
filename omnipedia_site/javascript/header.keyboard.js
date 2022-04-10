@@ -13,6 +13,7 @@ AmbientImpact.on([
 AmbientImpact.addComponent('OmnipediaSiteThemeHeaderKeyboard', function(
   headerKeyboard, $
 ) {
+
   'use strict';
 
   /**

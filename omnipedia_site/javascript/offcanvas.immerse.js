@@ -10,6 +10,7 @@
 AmbientImpact.addComponent('OmnipediaSiteThemeOffcanvasImmerse', function(
   offcanvasImmerse, $
 ) {
+
   'use strict';
 
   this.addBehaviour(

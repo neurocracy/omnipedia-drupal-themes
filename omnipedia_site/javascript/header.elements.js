@@ -5,6 +5,7 @@
 AmbientImpact.addComponent('OmnipediaSiteThemeHeaderElements', function(
   headerElements, $
 ) {
+
   'use strict';
 
   /**
@@ -173,4 +174,5 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderElements', function(
 
     }
   );
+
 });
