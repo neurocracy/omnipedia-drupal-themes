@@ -23,6 +23,13 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
   let behaviourAttached = false;
 
   /**
+   * Event namespace name.
+   *
+   * @type {String}
+   */
+  const eventNamespace = this.getName();
+
+  /**
    * Whether a hide has been requested, to prevent race conditions.
    *
    * This acts as a failsafe to ensure only the first request to hide the search
@@ -203,10 +210,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
         return;
       }
 
-      $(window).on(
-        'hashchange.OmnipediaSiteThemeHeaderState',
-        hashChangeHandler
-      );
+      $(window).on('hashchange.' + eventNamespace, hashChangeHandler);
 
       behaviourAttached = true;
 
@@ -217,10 +221,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
         return;
       }
 
-      $(window).off(
-        'hashchange.OmnipediaSiteThemeHeaderState',
-        hashChangeHandler
-      );
+      $(window).off('hashchange.' + eventNamespace, hashChangeHandler);
 
       behaviourAttached = false;
 

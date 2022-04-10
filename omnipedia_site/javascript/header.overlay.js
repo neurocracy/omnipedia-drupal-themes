@@ -18,6 +18,13 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderOverlay', function(
   'use strict';
 
   /**
+   * Event namespace name.
+   *
+   * @type {String}
+   */
+  const eventNamespace = this.getName();
+
+  /**
    * Class applied to the <main> element when the JavaScript overlay is present.
    *
    * @type {String}
@@ -66,13 +73,11 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderOverlay', function(
       // Add class indicating JavaScript overlay is active.
       $main.addClass(hasOverlayClass);
 
-      $overlay.on('click.OmnipediaSiteThemeHeaderOverlay', function(event) {
+      $overlay.on('click.' + eventNamespace, function(event) {
         headerState.hideSearch();
       });
 
-      $(this).on(
-        'omnipediaSearchActive.OmnipediaSiteThemeHeaderOverlay',
-      function(event) {
+      $(this).on('omnipediaSearchActive.' + eventNamespace, function(event) {
 
         if (!headerState.isCompact()) {
           return;
@@ -80,16 +85,14 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderOverlay', function(
 
         overlay.show();
 
-      }).on(
-        'omnipediaSearchInactive.OmnipediaSiteThemeHeaderOverlay',
-      function(event) {
+      }).on('omnipediaSearchInactive.' + eventNamespace, function(event) {
 
         overlay.hide();
 
       });
 
       headerElements.getSearchForm()
-        .on('focusin.OmnipediaSiteThemeHeaderOverlay', function(event) {
+        .on('focusin.' + eventNamespace, function(event) {
 
           if (!headerState.isCompact()) {
             return;
@@ -98,7 +101,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderOverlay', function(
           overlay.show();
 
         })
-        .on('focusout.OmnipediaSiteThemeHeaderOverlay', function(event) {
+        .on('focusout.' + eventNamespace, function(event) {
 
           if (headerElements.getSearchForm().find(
             event.relatedTarget
@@ -121,13 +124,13 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderOverlay', function(
       let $main = $('main[role="main"]', context);
 
       headerElements.getSearchForm().off([
-        'focusin.OmnipediaSiteThemeHeaderOverlay',
-        'focusout.OmnipediaSiteThemeHeaderOverlay',
+        'focusin.'  + eventNamespace,
+        'focusout.' + eventNamespace,
       ].join(' '));
 
       $(this).off([
-        'omnipediaSearchActive.OmnipediaSiteThemeHeaderOverlay',
-        'omnipediaSearchInactive.OmnipediaSiteThemeHeaderOverlay',
+        'omnipediaSearchActive.'    + eventNamespace,
+        'omnipediaSearchInactive.'  + eventNamespace,
       ].join(' '));
 
       /**

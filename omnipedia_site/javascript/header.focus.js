@@ -24,6 +24,13 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderFocus', function(
   'use strict';
 
   /**
+   * Event namespace name.
+   *
+   * @type {String}
+   */
+  const eventNamespace = this.getName();
+
+  /**
    * Search target class applied when the search form has focus.
    *
    * @type {String}
@@ -56,15 +63,11 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderFocus', function(
     headerElements.getHeaderBehaviourSelector(),
     function(context, settings) {
 
-      $(this).on(
-        'omnipediaSearchActive.OmnipediaSiteThemeHeaderFocus',
-      function(event) {
+      $(this).on('omnipediaSearchActive.' + eventNamespace, function(event) {
 
         headerElements.getSearchField().focus();
 
-      }).on(
-        'omnipediaSearchInactive.OmnipediaSiteThemeHeaderFocus',
-      function(event) {
+      }).on('omnipediaSearchInactive.' + eventNamespace, function(event) {
 
         // If the currently focused element is within the search form, focus the
         // search anchor. Note that the check for where focus is located is very
@@ -94,7 +97,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderFocus', function(
       });
 
       headerElements.getSearchForm()
-        .on('focusin.OmnipediaSiteThemeHeaderFocus', function(event) {
+        .on('focusin.' + eventNamespace, function(event) {
 
           if (shouldIgnoreFocusChange(event.relatedTarget)) {
             return;
@@ -103,7 +106,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderFocus', function(
           headerElements.getSearchTarget()
             .addClass(searchTargetFormFocusClass);
         })
-        .on('focusout.OmnipediaSiteThemeHeaderFocus', function(event) {
+        .on('focusout.' + eventNamespace, function(event) {
 
           if (shouldIgnoreFocusChange(event.relatedTarget)) {
             return;
@@ -119,13 +122,13 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderFocus', function(
     function(context, settings, trigger) {
 
       $(this).off([
-        'omnipediaSearchActive.OmnipediaSiteThemeHeaderFocus',
-        'omnipediaSearchInactive.OmnipediaSiteThemeHeaderFocus',
+        'omnipediaSearchActive.'    + eventNamespace,
+        'omnipediaSearchInactive.'  + eventNamespace,
       ].join(' '));
 
       headerElements.getSearchForm().off([
-        'focusin.OmnipediaSiteThemeHeaderFocus',
-        'focusout.OmnipediaSiteThemeHeaderFocus',
+        'focusin.'  + eventNamespace,
+        'focusout.' + eventNamespace,
       ].join(' '));
 
       headerElements.getSearchTarget().removeClass(searchTargetFormFocusClass);

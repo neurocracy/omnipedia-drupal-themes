@@ -26,6 +26,13 @@ function(
 
   'use strict';
 
+  /**
+   * Event namespace name.
+   *
+   * @type {String}
+   */
+  const eventNamespace = this.getName();
+
   this.addBehaviour(
     'OmnipediaSiteThemeEuCookieComplianceOverlay',
     'omnipedia-site-theme-eu-cookie-compliance-overlay',
@@ -98,20 +105,19 @@ function(
         openOverlay();
       }
 
-      $popUp
-      .on(
-        'euCookieCompliancePopUpOpen.OmnipediaSiteThemeEuCookieComplianceOverlay',
+      $popUp.on(
+        'euCookieCompliancePopUpOpen.' + eventNamespace,
         openOverlay
       )
       .on(
-        'euCookieCompliancePopUpClose.OmnipediaSiteThemeEuCookieComplianceOverlay',
+        'euCookieCompliancePopUpClose.' + eventNamespace,
       function(event) {
 
         $overlay.prop('aiOverlay').hide();
 
       })
       .on(
-        'euCookieCompliancePopUpClosed.OmnipediaSiteThemeEuCookieComplianceOverlay',
+        'euCookieCompliancePopUpClosed.' + eventNamespace,
       function(event) {
         $popUp.trigger('immerseExit');
       });
@@ -132,9 +138,9 @@ function(
       }
 
       $popUp.off([
-        'euCookieCompliancePopUpOpen.OmnipediaSiteThemeEuCookieComplianceOverlay',
-        'euCookieCompliancePopUpClose.OmnipediaSiteThemeEuCookieComplianceOverlay',
-        'euCookieCompliancePopUpClosed.OmnipediaSiteThemeEuCookieComplianceOverlay',
+        'euCookieCompliancePopUpOpen.'    + eventNamespace,
+        'euCookieCompliancePopUpClose.'   + eventNamespace,
+        'euCookieCompliancePopUpClosed.'  + eventNamespace,
       ].join(' '));
 
       // Destroy the overlay instance if found. Note that the destroy method

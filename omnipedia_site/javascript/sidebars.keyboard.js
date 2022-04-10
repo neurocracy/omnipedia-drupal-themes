@@ -23,6 +23,13 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsKeyboard', function(
    */
   let allyWhenKeyHandle;
 
+  /**
+   * Event namespace name.
+   *
+   * @type {String}
+   */
+  const eventNamespace = this.getName();
+
   this.addBehaviour(
     'OmnipediaSiteThemeSidebarsKeyboard',
     'omnipedia-site-theme-sidebars-keyboard',
@@ -30,7 +37,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsKeyboard', function(
     function(context, settings) {
 
       $(this).on(
-        'omnipediaSidebarsMenuOpen.OmnipediaSiteThemeSidebarsKeyboard',
+        'omnipediaSidebarsMenuOpen.' + eventNamespace,
       function(event) {
 
         allyWhenKeyHandle = ally.when.key({
@@ -41,9 +48,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsKeyboard', function(
           }
         });
 
-      }).on(
-        'omnipediaSidebarsMenuClose.OmnipediaSiteThemeSidebarsKeyboard',
-      function(event) {
+      }).on('omnipediaSidebarsMenuClose.' + eventNamespace, function(event) {
 
         if (AmbientImpact.objectPathExists('disengage', allyWhenKeyHandle)) {
           allyWhenKeyHandle.disengage();
@@ -59,8 +64,8 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsKeyboard', function(
       }
 
       $(this).off([
-        'omnipediaSidebarsMenuOpen.OmnipediaSiteThemeSidebarsKeyboard',
-        'omnipediaSidebarsMenuClose.OmnipediaSiteThemeSidebarsKeyboard',
+        'omnipediaSidebarsMenuOpen.'  + eventNamespace,
+        'omnipediaSidebarsMenuClose.' + eventNamespace,
       ].join(' '));
 
     }

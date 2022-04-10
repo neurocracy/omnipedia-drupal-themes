@@ -16,6 +16,13 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderHeadroom', function(
   'use strict';
 
   /**
+   * Event namespace name.
+   *
+   * @type {String}
+   */
+  const eventNamespace = this.getName();
+
+  /**
    * The selector to match elements to apply Headroom.js to.
    *
    * The first two should be self explanatory. The reason we also apply to
@@ -56,17 +63,17 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderHeadroom', function(
       // needed so that both elements are pinned and frozen at the same time
       // when focus is inside one of them.
       $elements
-      .on('headroomPin.OmnipediaSiteThemeHeader', function(event) {
+      .on('headroomPin.' + eventNamespace, function(event) {
         for (let i = 0; i < $elements.length; i++) {
           $elements[i].headroom.pin();
         }
       })
-      .on('headroomFreeze.OmnipediaSiteThemeHeader', function(event) {
+      .on('headroomFreeze.' + eventNamespace, function(event) {
         for (let i = 0; i < $elements.length; i++) {
           $elements[i].headroom.freeze();
         }
       })
-      .on('headroomUnfreeze.OmnipediaSiteThemeHeader', function(event) {
+      .on('headroomUnfreeze.' + eventNamespace, function(event) {
         for (let i = 0; i < $elements.length; i++) {
           $elements[i].headroom.unfreeze();
         }
@@ -83,9 +90,9 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderHeadroom', function(
       let $elements = $(headroomElementsSelector, context);
 
       $elements.off([
-        'headroomPin.OmnipediaSiteThemeHeader',
-        'headroomFreeze.OmnipediaSiteThemeHeader',
-        'headroomUnfreeze.OmnipediaSiteThemeHeader',
+        'headroomPin.'      + eventNamespace,
+        'headroomFreeze.'   + eventNamespace,
+        'headroomUnfreeze.' + eventNamespace,
       ].join(' '));
 
       // Destroy Headroom.js instances if found.

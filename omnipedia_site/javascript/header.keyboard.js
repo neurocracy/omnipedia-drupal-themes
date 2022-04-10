@@ -17,6 +17,13 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderKeyboard', function(
   'use strict';
 
   /**
+   * Event namespace name.
+   *
+   * @type {String}
+   */
+  const eventNamespace = this.getName();
+
+  /**
    * ally.js when key handle.
    *
    * @see https://allyjs.io/api/when/key.html
@@ -29,9 +36,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderKeyboard', function(
     headerElements.getHeaderBehaviourSelector(),
     function(context, settings) {
 
-      $(this).on(
-        'omnipediaSearchActive.OmnipediaSiteThemeHeaderKeyboard',
-      function(event) {
+      $(this).on('omnipediaSearchActive.' + eventNamespace, function(event) {
 
         allyWhenKeyHandle = ally.when.key({
           escape: function(event, disengage) {
@@ -41,9 +46,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderKeyboard', function(
           }
         });
 
-      }).on(
-        'omnipediaSearchInactive.OmnipediaSiteThemeHeaderKeyboard',
-      function(event) {
+      }).on('omnipediaSearchInactive.' + eventNamespace, function(event) {
 
         if (AmbientImpact.objectPathExists('disengage', allyWhenKeyHandle)) {
           allyWhenKeyHandle.disengage();
@@ -59,8 +62,8 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderKeyboard', function(
       }
 
       $(this).off([
-        'omnipediaSearchActive.OmnipediaSiteThemeHeaderKeyboard',
-        'omnipediaSearchInactive.OmnipediaSiteThemeHeaderKeyboard',
+        'omnipediaSearchActive.'    + eventNamespace,
+        'omnipediaSearchInactive.'  + eventNamespace,
       ].join(' '));
 
     }

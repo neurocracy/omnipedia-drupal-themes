@@ -13,17 +13,23 @@ AmbientImpact.addComponent('OmnipediaSiteThemeOffcanvasImmerse', function(
 
   'use strict';
 
+  /**
+   * Event namespace name.
+   *
+   * @type {String}
+   */
+  const eventNamespace = this.getName();
+
   this.addBehaviour(
     'OmnipediaSiteThemeOffcanvasImmerse',
     'omnipedia-site-theme-offcanvas-immerse',
     '.offcanvas-panel',
     function(context, settings) {
 
-      $(this)
-      .on('openOffcanvas.OmnipediaSiteThemeOffcanvasImmerse', function(event) {
+      $(this).on('openOffcanvas.' + eventNamespace, function(event) {
         $(this).trigger('immerseEnter');
-      })
-      .on('closeOffcanvas.OmnipediaSiteThemeOffcanvasImmerse', function(event) {
+
+      }).on('closeOffcanvas.' + eventNamespace, function(event) {
         $(this).trigger('immerseExit');
       });
 
@@ -31,8 +37,8 @@ AmbientImpact.addComponent('OmnipediaSiteThemeOffcanvasImmerse', function(
     function(context, settings, trigger) {
 
       $(this).off([
-        'openOffcanvas.OmnipediaSiteThemeOffcanvasImmerse',
-        'closeOffcanvas.OmnipediaSiteThemeOffcanvasImmerse',
+        'openOffcanvas.'  + eventNamespace,
+        'closeOffcanvas.' + eventNamespace,
       ].join(' '));
 
     }

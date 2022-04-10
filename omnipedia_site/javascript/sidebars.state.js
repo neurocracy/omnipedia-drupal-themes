@@ -24,6 +24,13 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
   let behaviourAttached = false;
 
   /**
+   * Event namespace name.
+   *
+   * @type {String}
+   */
+  const eventNamespace = this.getName();
+
+  /**
    * Whether the sidebars are currently off-canvas, i.e. on a narrow screen.
    *
    * @return {Boolean}
@@ -187,13 +194,10 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
         return;
       }
 
-      $(window).on(
-        'hashchange.OmnipediaSiteThemeSidebarsState',
-        hashChangeHandler
-      );
+      $(window).on('hashchange.' + eventNamespace, hashChangeHandler);
 
       sidebarsElements.getSidebarsMenuClose().on(
-        'click.OmnipediaSiteThemeSidebarsState', menuCloseClickHandler
+        'click.' + eventNamespace, menuCloseClickHandler
       );
 
       behaviourAttached = true;
@@ -206,13 +210,10 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
       }
 
       sidebarsElements.getSidebarsMenuClose().off(
-        'click.OmnipediaSiteThemeSidebarsState', menuCloseClickHandler
+        'click.' + eventNamespace, menuCloseClickHandler
       );
 
-      $(window).off(
-        'hashchange.OmnipediaSiteThemeSidebarsState',
-        hashChangeHandler
-      );
+      $(window).off('hashchange.' + eventNamespace, hashChangeHandler);
 
       behaviourAttached = false;
 

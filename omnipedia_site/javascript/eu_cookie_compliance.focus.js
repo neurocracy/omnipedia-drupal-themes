@@ -36,6 +36,13 @@ function(
   'use strict';
 
   /**
+   * Event namespace name.
+   *
+   * @type {String}
+   */
+  const eventNamespace = this.getName();
+
+  /**
    * The ally.js focus source global service object.
    *
    * This initializes ally.js' focus source service, which starts watching the
@@ -66,9 +73,8 @@ function(
         return;
       }
 
-      $popUp
-      .on(
-        'euCookieCompliancePopUpOpened.OmnipediaSiteThemeEuCookieComplianceFocus',
+      $popUp.on(
+        'euCookieCompliancePopUpOpened.' + eventNamespace,
       function(event) {
 
         aiPointerFocusHide.lock();
@@ -84,14 +90,14 @@ function(
 
       })
       .on(
-        'euCookieCompliancePopUpClose.OmnipediaSiteThemeEuCookieComplianceFocus',
+        'euCookieCompliancePopUpClose.' + eventNamespace,
       function(event) {
 
         aiPointerFocusHide.lock();
 
       })
       .on(
-        'euCookieCompliancePopUpClosed.OmnipediaSiteThemeEuCookieComplianceFocus',
+        'euCookieCompliancePopUpClosed.' + eventNamespace,
       function(event) {
 
         // Only focus the toggle if the focus source was not the pointer, or if
@@ -134,9 +140,9 @@ function(
       }
 
       $popUp.off([
-        'euCookieCompliancePopUpOpened.OmnipediaSiteThemeEuCookieComplianceFocus',
-        'euCookieCompliancePopUpClose.OmnipediaSiteThemeEuCookieComplianceFocus',
-        'euCookieCompliancePopUpClosed.OmnipediaSiteThemeEuCookieComplianceFocus',
+        'euCookieCompliancePopUpOpened.'  + eventNamespace,
+        'euCookieCompliancePopUpClose.'   + eventNamespace,
+        'euCookieCompliancePopUpClosed.'  + eventNamespace,
       ].join(' '));
 
     }

@@ -20,6 +20,13 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsOverlay', function(
   'use strict';
 
   /**
+   * Event namespace name.
+   *
+   * @type {String}
+   */
+  const eventNamespace = this.getName();
+
+  /**
    * Class applied to the sidebars menu closed anchor when disabled.
    *
    * @type {String}
@@ -56,22 +63,18 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsOverlay', function(
       $overlay.prop('scrollBlocker', scrollBlocker);
 
       $(this).on(
-        'omnipediaSidebarsMenuOpen.OmnipediaSiteThemeSidebarsOverlay',
+        'omnipediaSidebarsMenuOpen.' + eventNamespace,
       function(event) {
 
         scrollBlocker.block($overlay);
 
-        $overlay.one('click.OmnipediaSiteThemeSidebarsOverlay', function(
-          event
-        ) {
+        $overlay.one('click.' + eventNamespace, function(event) {
           sidebarsState.closeMenu();
         });
 
-      }).on(
-        'omnipediaSidebarsMenuClose.OmnipediaSiteThemeSidebarsOverlay',
-      function(event) {
+      }).on('omnipediaSidebarsMenuClose.' + eventNamespace, function(event) {
 
-        $overlay.off('click.OmnipediaSiteThemeSidebarsOverlay');
+        $overlay.off('click.' + eventNamespace);
 
         scrollBlocker.unblock($overlay);
 
@@ -87,13 +90,11 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsOverlay', function(
        */
       let $overlay = $('.layout-sidebars__closed-target', context);
 
-      $overlay.off(
-        'click.OmnipediaSiteThemeSidebarsOverlay'
-      );
+      $overlay.off('click.' + eventNamespace);
 
       $(this).off([
-        'omnipediaSidebarsMenuOpen.OmnipediaSiteThemeSidebarsOverlay',
-        'omnipediaSidebarsMenuClose.OmnipediaSiteThemeSidebarsOverlay',
+        'omnipediaSidebarsMenuOpen.'  + eventNamespace,
+        'omnipediaSidebarsMenuClose.' + eventNamespace,
       ].join(' '));
 
       /**

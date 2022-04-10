@@ -26,6 +26,13 @@ function(
    */
   const decideLaterButtonClass = 'eu-cookie-compliance-buttons__later';
 
+  /**
+   * Event namespace name.
+   *
+   * @type {String}
+   */
+  const eventNamespace = this.getName();
+
   this.addBehaviour(
     'OmnipediaSiteThemeEuCookieComplianceDecideLater',
     'omnipedia-site-theme-eu-cookie-compliance-decide-later',
@@ -47,7 +54,7 @@ function(
       // Event handler to close the pop-up when the "Decide later" button is
       // clicked.
       $popUp.find('.' + decideLaterButtonClass).on(
-        'click.OmnipediaSiteThemeEuCookieComplianceDecideLater',
+        'click.' + eventNamespace,
         Drupal.eu_cookie_compliance.toggleWithdrawBanner
       );
 
@@ -66,9 +73,7 @@ function(
         return;
       }
 
-      $popUp.find('.' + decideLaterButtonClass).off(
-        'click.OmnipediaSiteThemeEuCookieComplianceDecideLater'
-      );
+      $popUp.find('.' + decideLaterButtonClass).off('click.' + eventNamespace);
 
     }
   );

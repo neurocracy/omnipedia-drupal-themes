@@ -21,6 +21,13 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsFocus', function(
 
   'use strict';
 
+  /**
+   * Event namespace name.
+   *
+   * @type {String}
+   */
+  const eventNamespace = this.getName();
+
   this.addBehaviour(
     'OmnipediaSiteThemeSidebarsFocus',
     'omnipedia-site-theme-sidebars-focus',
@@ -28,7 +35,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsFocus', function(
     function(context, settings) {
 
       $(this).on(
-        'omnipediaSidebarsMenuOpen.OmnipediaSiteThemeSidebarsFocus',
+        'omnipediaSidebarsMenuOpen.' + eventNamespace,
       function(event) {
 
         if (sidebarsState.isOffCanvas() === true) {
@@ -41,9 +48,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsFocus', function(
 
         }
 
-      }).on(
-        'omnipediaSidebarsMenuClose.OmnipediaSiteThemeSidebarsFocus',
-      function(event) {
+      }).on('omnipediaSidebarsMenuClose.' + eventNamespace, function(event) {
 
         if (sidebarsState.isOffCanvas() === true) {
 
@@ -61,8 +66,8 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsFocus', function(
     function(context, settings, trigger) {
 
       $(this).off([
-        'omnipediaSidebarsMenuOpen.OmnipediaSiteThemeSidebarsFocus',
-        'omnipediaSidebarsMenuClose.OmnipediaSiteThemeSidebarsFocus',
+        'omnipediaSidebarsMenuOpen.'  + eventNamespace,
+        'omnipediaSidebarsMenuClose.' + eventNamespace,
       ].join(' '));
 
     }

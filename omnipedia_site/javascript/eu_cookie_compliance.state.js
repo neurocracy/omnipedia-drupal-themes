@@ -34,6 +34,13 @@ function(
   const containingElementOpenClass = 'eu-cookie-compliance-popup-open';
 
   /**
+   * Event namespace name.
+   *
+   * @type {String}
+   */
+  const eventNamespace = this.getName();
+
+  /**
    * The transition duration for the cookie compliance pop-up.
    *
    * @type {Number}
@@ -77,7 +84,7 @@ function(
       );
 
       $popUp.on(
-        'eu_cookie_compliance_popup_open.OmnipediaSiteThemeEuCookieComplianceState',
+        'eu_cookie_compliance_popup_open.' + eventNamespace,
       function(event) {
 
         $(this).trigger('euCookieCompliancePopUpOpen');
@@ -95,7 +102,7 @@ function(
 
       })
       .on(
-        'eu_cookie_compliance_popup_close.OmnipediaSiteThemeEuCookieComplianceState',
+        'eu_cookie_compliance_popup_close.' + eventNamespace,
       function(event) {
 
         $(this).trigger('euCookieCompliancePopUpClose');
@@ -136,7 +143,7 @@ function(
         }, drupalSettings.eu_cookie_compliance.popup_delay);
 
       })
-      .on('click.OmnipediaSiteThemeEuCookieComplianceState', function(event) {
+      .on('click.' + eventNamespace, function(event) {
 
         // Hacky way of triggering the close event because the module's
         // JavaScript annoyingly does not trigger it when closed by the accept/
@@ -168,9 +175,9 @@ function(
       }
 
       $popUp.off([
-        'eu_cookie_compliance_popup_open.OmnipediaSiteThemeEuCookieComplianceState',
-        'eu_cookie_compliance_popup_close.OmnipediaSiteThemeEuCookieComplianceState',
-        'click.OmnipediaSiteThemeEuCookieComplianceState',
+        'eu_cookie_compliance_popup_open.'  + eventNamespace,
+        'eu_cookie_compliance_popup_close.' + eventNamespace,
+        'click.' + eventNamespace,
       ].join(' '))
       .prop('style').removeProperty(
         '--eu-cookie-compliance-transition-duration'
