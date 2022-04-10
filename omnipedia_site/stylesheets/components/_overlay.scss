@@ -7,12 +7,13 @@
 
 // This centralizes overlay styles used by several components.
 
-// Generic JavaScript-powered overlays.
+// JavaScript-powered overlays.
 .overlay,
-// The header overlay in compact mode, i.e. narrow screens.
+// The header overlay in compact mode, i.e. narrow screens if the JavaScript
+// overlay is not present.
 //
 // @see ../components/header/_overlay.scss
-main[role="main"]::before,
+main[role="main"]:not(.header-has-overlay)::before,
 .layout-sidebars__closed-target {
   @include colour.set(
     $background: rgba(colour.$background-light, 0.8)

@@ -82,7 +82,7 @@ header:
   dependencies:
     - ambientimpact_core/ally.js
     - ambientimpact_ux/component.headroom
-    - ambientimpact_ux/component.scroll_blocker
+    - ambientimpact_ux/component.overlay
     - omnipedia_site/current_date # Required for the current date element.
     - omnipedia_site/offcanvas_immerse
     - omnipedia_site/search_form

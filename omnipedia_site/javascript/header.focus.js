@@ -29,6 +29,26 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderFocus', function(
    */
   var searchTargetFormFocusClass = 'search-target--form-has-focus';
 
+  /**
+   * Whether a focus event should be ignored.
+   *
+   * @param {HTMLElement} element
+   *
+   * @return {Boolean}
+   *   True if the provided element is within the search form or the header is
+   *   not in compact mode. False otherwise.
+   */
+  function shouldIgnoreFocusChange(element) {
+
+    return (
+      // Is the element within the search form?
+      headerElements.getSearchForm().find(element).length > 0 ||
+      // Is the header not in compact mode?
+      !headerState.isCompact()
+    );
+
+  }
+
   this.addBehaviour(
     'OmnipediaSiteThemeHeaderFocus',
     'omnipedia-site-theme-header-focus',
@@ -74,10 +94,22 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderFocus', function(
 
       headerElements.getSearchForm()
         .on('focusin.OmnipediaSiteThemeHeaderFocus', function(event) {
+
+          if (shouldIgnoreFocusChange(event.relatedTarget)) {
+            return;
+          }
+
           headerElements.getSearchTarget()
             .addClass(searchTargetFormFocusClass);
         })
         .on('focusout.OmnipediaSiteThemeHeaderFocus', function(event) {
+
+          if (shouldIgnoreFocusChange(event.relatedTarget)) {
+            return;
+          }
+
+          headerState.hideSearch();
+
           headerElements.getSearchTarget()
             .removeClass(searchTargetFormFocusClass);
         });

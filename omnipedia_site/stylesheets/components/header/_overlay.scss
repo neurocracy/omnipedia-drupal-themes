@@ -10,7 +10,7 @@
 // @see ../../components/_overlay.scss
 //   Shared overlay styles.
 
-main[role="main"]::before {
+main[role="main"]:not(.header-has-overlay)::before {
   content: '';
 
   @include layout-sidebars.on-sidebar-beside-content(any) {

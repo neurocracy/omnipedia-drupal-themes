@@ -30,10 +30,17 @@ header[role='banner'] {
   @include z-index.get('floating-above');
 }
 
+// Default JavaScript-powered overlays. This must be before other overlays so
+// that they can override this as needed.
+.overlay {
+  @include z-index.get(floating-above);
+}
+
 // Header overlay.
 //
 // @see ../components/header/_overlay.scss
-main[role="main"]::before {
+main[role="main"]:not(.header-has-overlay)::before,
+.header-overlay {
   @include z-index.get(floating-below);
 }
 
@@ -42,10 +49,6 @@ main[role="main"]::before {
 // @see ./_reveal.scss
 .layout-container::before {
   // This must be higher than any sticky elements such as the header.
-  @include z-index.get(floating-above);
-}
-
-.overlay {
   @include z-index.get(floating-above);
 }
 

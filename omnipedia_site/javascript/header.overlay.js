@@ -2,21 +2,33 @@
 //   Omnipedia - Site theme - Header overlay
 // -----------------------------------------------------------------------------
 
-// This adds a one off click handler to the <main> element (which the overlay is
-// generated content of) when the search field is active, allowing a click or
-// tap on the overlay to close the search field and overlay. Additionally, this
-// marks that same element as being an active overlay for the purpose of
-// preventing viewport scrolling while the overlay is open.
+// This creates and attaches a JavaScript-powered overlay to override the CSS-
+// only overlay for consistency and to make use of various features like scroll
+// blocking while the overlay is open.
 
 AmbientImpact.on([
   'OmnipediaSiteThemeHeaderElements',
   'OmnipediaSiteThemeHeaderState',
-  'scrollBlocker',
-], function(headerElements, headerState, aiScrollBlocker, $) {
+  'overlay',
+], function(headerElements, headerState, aiOverlay, $) {
 AmbientImpact.addComponent('OmnipediaSiteThemeHeaderOverlay', function(
   headerOverlay, $
 ) {
   'use strict';
+
+  /**
+   * Class applied to the <main> element when the JavaScript overlay is present.
+   *
+   * @type {String}
+   */
+  const hasOverlayClass = 'header-has-overlay';
+
+  /**
+   * Class applied to the overlay element for CSS.
+   *
+   * @type {String}
+   */
+  const overlayClass = 'header-overlay';
 
   this.addBehaviour(
     'OmnipediaSiteThemeHeaderOverlay',
@@ -32,33 +44,70 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderOverlay', function(
       var $main = $('main[role="main"]', context);
 
       /**
-       * The scroll blocker instance.
+       * The header overlay, wrapped in a jQuery object.
        *
-       * @type {scrollBlocker}
+       * @type {jQuery}
        */
-      let scrollBlocker = aiScrollBlocker.create();
+      let $overlay = aiOverlay.create();
 
-      $main.prop('scrollBlocker', scrollBlocker);
+      /**
+       * The overlay instance.
+       *
+       * @type {Object}
+       */
+      let overlay = $overlay.prop('aiOverlay');
+
+      // Save overlay instance to a property for the detach handler.
+      $main.prop('aiOverlay', overlay);
+
+      $overlay.addClass(overlayClass).insertBefore($main);
+
+      // Add class indicating JavaScript overlay is active.
+      $main.addClass(hasOverlayClass);
+
+      $overlay.on('click.OmnipediaSiteThemeHeaderOverlay', function(event) {
+        headerState.hideSearch();
+      });
 
       $(this).on(
         'omnipediaSearchActive.OmnipediaSiteThemeHeaderOverlay',
       function(event) {
 
-        scrollBlocker.block($main);
+        if (!headerState.isCompact()) {
+          return;
+        }
 
-        $main.one('click.OmnipediaSiteThemeHeaderOverlay', function(event) {
-          headerState.hideSearch();
-        });
+        overlay.show();
 
       }).on(
         'omnipediaSearchInactive.OmnipediaSiteThemeHeaderOverlay',
       function(event) {
 
-        $main.off('click.OmnipediaSiteThemeHeaderOverlay');
-
-        scrollBlocker.unblock($main);
+        overlay.hide();
 
       });
+
+      headerElements.getSearchForm()
+        .on('focusin.OmnipediaSiteThemeHeaderOverlay', function(event) {
+
+          if (!headerState.isCompact()) {
+            return;
+          }
+
+          overlay.show();
+
+        })
+        .on('focusout.OmnipediaSiteThemeHeaderOverlay', function(event) {
+
+          if (headerElements.getSearchForm().find(
+            event.relatedTarget
+          ).length > 0) {
+            return;
+          }
+
+          overlay.hide();
+
+        });
 
     },
     function(context, settings, trigger) {
@@ -70,9 +119,10 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderOverlay', function(
        */
       var $main = $('main[role="main"]', context);
 
-      $main.off(
-        'click.OmnipediaSiteThemeHeaderOverlay'
-      );
+      headerElements.getSearchForm().off([
+        'focusin.OmnipediaSiteThemeHeaderOverlay',
+        'focusout.OmnipediaSiteThemeHeaderOverlay',
+      ].join(' '));
 
       $(this).off([
         'omnipediaSearchActive.OmnipediaSiteThemeHeaderOverlay',
@@ -80,19 +130,27 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderOverlay', function(
       ].join(' '));
 
       /**
-       * The scroll blocker instance.
+       * The overlay instance.
        *
-       * @type {scrollBlocker}
+       * @type {Object}
        */
-      let scrollBlocker = $main.prop('scrollBlocker');
+      let overlay = $main.prop('aiOverlay');
 
-      // Unblock scrolling if still blocked and destroy the scroll blocker
-      // instance if isn't blocking anything.
-      scrollBlocker.unblock($main);
-      scrollBlocker.destroy();
+      // Attach a one-off event handler to remove the overlay element and
+      // related properties/classes when the overlay has finished hiding.
+      overlay.$overlay.one('overlayHidden', function(event) {
 
-      // Remove the scroll blocker instance.
-      $main.removeProp('scrollBlocker');
+        overlay.$overlay.remove();
+
+        $main.removeProp('aiOverlay')
+
+        $main.removeClass(hasOverlayClass);
+
+      });
+
+      // Tell the overlay to hide itself, which will trigger the above handler
+      // when complete.
+      overlay.hide();
 
     }
   );
