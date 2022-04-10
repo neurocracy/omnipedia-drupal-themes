@@ -24,7 +24,7 @@ function(
    *
    * @type {String}
    */
-  var decideLaterButtonClass = 'eu-cookie-compliance-buttons__later';
+  const decideLaterButtonClass = 'eu-cookie-compliance-buttons__later';
 
   this.addBehaviour(
     'OmnipediaSiteThemeEuCookieComplianceDecideLater',
@@ -37,7 +37,7 @@ function(
        *
        * @type {jQuery}
        */
-      var $popUp = euCookieComplianceElements.getPopUp();
+      let $popUp = euCookieComplianceElements.getPopUp();
 
       // Bail if we can't find the pop-up.
       if ($popUp.length === 0) {
@@ -59,7 +59,7 @@ function(
        *
        * @type {jQuery}
        */
-      var $popUp = euCookieComplianceElements.getPopUp();
+      let $popUp = euCookieComplianceElements.getPopUp();
 
       // Bail if we can't find the pop-up.
       if ($popUp.length === 0) {

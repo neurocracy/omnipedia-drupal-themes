@@ -27,7 +27,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderFocus', function(
    *
    * @type {String}
    */
-  var searchTargetFormFocusClass = 'search-target--form-has-focus';
+  const searchTargetFormFocusClass = 'search-target--form-has-focus';
 
   /**
    * Whether a focus event should be ignored.

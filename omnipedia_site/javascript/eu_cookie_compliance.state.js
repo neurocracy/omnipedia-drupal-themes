@@ -31,14 +31,14 @@ function(
    *
    * @type {String}
    */
-  var containingElementOpenClass = 'eu-cookie-compliance-popup-open';
+  const containingElementOpenClass = 'eu-cookie-compliance-popup-open';
 
   /**
    * The transition duration for the cookie compliance pop-up.
    *
    * @type {Number}
    */
-  var transitionDuration = drupalSettings.eu_cookie_compliance.popup_delay;
+  let transitionDuration = drupalSettings.eu_cookie_compliance.popup_delay;
 
   /**
    * Whether the pop-up is currently open.
@@ -62,7 +62,7 @@ function(
        *
        * @type {jQuery}
        */
-      var $popUp = euCookieComplianceElements.getPopUp();
+      let $popUp = euCookieComplianceElements.getPopUp();
 
       // Bail if we can't find the pop-up.
       if ($popUp.length === 0) {
@@ -160,7 +160,7 @@ function(
        *
        * @type {jQuery}
        */
-      var $popUp = euCookieComplianceElements.getPopUp();
+      let $popUp = euCookieComplianceElements.getPopUp();
 
       // Bail if we can't find the pop-up.
       if ($popUp.length === 0) {

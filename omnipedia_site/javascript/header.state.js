@@ -19,7 +19,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
    *
    * @type {Boolean}
    */
-  var behaviourAttached = false;
+  let behaviourAttached = false;
 
   /**
    * Whether a hide has been requested, to prevent race conditions.
@@ -74,7 +74,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
      *
      * @type {String}
      */
-    var anchorState = getComputedStyle(headerElements.getSearchAnchor()[0])
+    let anchorState = getComputedStyle(headerElements.getSearchAnchor()[0])
       .getPropertyValue('--omnipedia-search-anchor-state').trim();
 
     return anchorState === 'visible';
@@ -164,21 +164,21 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
      *
      * @type {USVString}
      */
-    var hash = headerElements.getSearchAnchor().prop('hash');
+    let hash = headerElements.getSearchAnchor().prop('hash');
 
     /**
      * The hash value for the old URL the window navigated from.
      *
      * @type {USVString}
      */
-    var oldHash = new URL(event.originalEvent.oldURL).hash;
+    let oldHash = new URL(event.originalEvent.oldURL).hash;
 
     /**
      * The hash value for the new URL the window is navigating to.
      *
      * @type {USVString}
      */
-    var newHash = new URL(event.originalEvent.newURL).hash;
+    let newHash = new URL(event.originalEvent.newURL).hash;
 
     if (newHash === hash && oldHash !== hash) {
       setActive();

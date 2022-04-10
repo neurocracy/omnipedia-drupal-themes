@@ -20,7 +20,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderKeyboard', function(
    *
    * @see https://allyjs.io/api/when/key.html
    */
-  var allyWhenKeyHandle;
+  let allyWhenKeyHandle;
 
   this.addBehaviour(
     'OmnipediaSiteThemeHeaderKeyboard',

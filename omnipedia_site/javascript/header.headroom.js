@@ -25,7 +25,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderHeadroom', function(
    *
    * @type {String}
    */
-  var headroomElementsSelector = [
+  const headroomElementsSelector = [
     'header[role="banner"]',
     '.region-primary-menu',
     '.search-anchor',
@@ -42,9 +42,9 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderHeadroom', function(
        *
        * @type {jQuery}
        */
-      var $elements = $(headroomElementsSelector, context);
+      let $elements = $(headroomElementsSelector, context);
 
-      for (var i = 0; i < $elements.length; i++) {
+      for (let i = 0; i < $elements.length; i++) {
         aiHeadroom.init($elements[i], {
           // The headroom component has trouble setting a correct top offset, so
           // this ensures that the top/not top classes get set when expected.
@@ -57,17 +57,17 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderHeadroom', function(
       // when focus is inside one of them.
       $elements
       .on('headroomPin.OmnipediaSiteThemeHeader', function(event) {
-        for (var i = 0; i < $elements.length; i++) {
+        for (let i = 0; i < $elements.length; i++) {
           $elements[i].headroom.pin();
         }
       })
       .on('headroomFreeze.OmnipediaSiteThemeHeader', function(event) {
-        for (var i = 0; i < $elements.length; i++) {
+        for (let i = 0; i < $elements.length; i++) {
           $elements[i].headroom.freeze();
         }
       })
       .on('headroomUnfreeze.OmnipediaSiteThemeHeader', function(event) {
-        for (var i = 0; i < $elements.length; i++) {
+        for (let i = 0; i < $elements.length; i++) {
           $elements[i].headroom.unfreeze();
         }
       });
@@ -80,7 +80,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderHeadroom', function(
        *
        * @type {jQuery}
        */
-      var $elements = $(headroomElementsSelector, context);
+      let $elements = $(headroomElementsSelector, context);
 
       $elements.off([
         'headroomPin.OmnipediaSiteThemeHeader',
@@ -89,7 +89,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderHeadroom', function(
       ].join(' '));
 
       // Destroy Headroom.js instances if found.
-      for (var i = 0; i < $elements.length; i++) {
+      for (let i = 0; i < $elements.length; i++) {
         if (
           AmbientImpact.objectPathExists('headroom.destroy', $elements[i]) &&
           typeof $elements[i].headroom.destroy === 'function'

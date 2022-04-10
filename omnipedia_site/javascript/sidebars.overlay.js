@@ -26,7 +26,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsOverlay', function(
    *
    * @todo This shouldn't be hard-coded here.
    */
-  var menuClosedAnchorDisabledClass =
+  const menuClosedAnchorDisabledClass =
     'layout-sidebars__closed-anchor--disabled';
 
   this.addBehaviour(
@@ -44,7 +44,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsOverlay', function(
        *
        * @type {jQuery}
        */
-      var $overlay = $('.layout-sidebars__closed-target', context);
+      let $overlay = $('.layout-sidebars__closed-target', context);
 
       /**
        * The scroll blocker instance.
@@ -85,7 +85,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsOverlay', function(
        *
        * @type {jQuery}
        */
-      var $overlay = $('.layout-sidebars__closed-target', context);
+      let $overlay = $('.layout-sidebars__closed-target', context);
 
       $overlay.off(
         'click.OmnipediaSiteThemeSidebarsOverlay'

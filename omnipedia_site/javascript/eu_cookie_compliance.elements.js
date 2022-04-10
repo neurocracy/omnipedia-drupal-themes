@@ -30,7 +30,7 @@ function(
    *
    * @type {jQuery}
    */
-  var $popUp = $();
+  let $popUp = $();
 
   /**
    * The containing element, if any, wrapped in a jQuery collection.
@@ -40,14 +40,14 @@ function(
    *
    * @type {jQuery}
    */
-  var $containingElement = $();
+  let $containingElement = $();
 
   /**
    * Whether we've attached the behaviour.
    *
    * @type {Boolean}
    */
-  var behaviourAttached = false;
+  let behaviourAttached = false;
 
   /**
    * Get the pop-up element jQuery collection.

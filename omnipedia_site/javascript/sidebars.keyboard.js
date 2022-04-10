@@ -21,7 +21,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsKeyboard', function(
    *
    * @see https://allyjs.io/api/when/key.html
    */
-  var allyWhenKeyHandle;
+  let allyWhenKeyHandle;
 
   this.addBehaviour(
     'OmnipediaSiteThemeSidebarsKeyboard',

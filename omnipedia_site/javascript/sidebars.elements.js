@@ -16,28 +16,28 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsElements', function(
    *
    * @type {jQuery}
    */
-  var $container = $();
+  let $container = $();
 
   /**
    * The sidebars close control, if any, wrapped in a jQuery collection.
    *
    * @type {jQuery}
    */
-  var $menuClose = $();
+  let $menuClose = $();
 
   /**
    * The sidebars closed anchor, if any, wrapped in a jQuery collection.
    *
    * @type {jQuery}
    */
-  var $menuClosedAnchor = $();
+  let $menuClosedAnchor = $();
 
   /**
    * Whether we've attached the behaviour.
    *
    * @type {Boolean}
    */
-  var behaviourAttached = false;
+  let behaviourAttached = false;
 
   /**
    * Get the sidebars container jQuery collection.

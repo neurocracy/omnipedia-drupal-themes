@@ -37,7 +37,7 @@ function(
        *
        * @type {jQuery}
        */
-      var $popUp = euCookieComplianceElements.getPopUp();
+      let $popUp = euCookieComplianceElements.getPopUp();
 
       // Bail if we can't find the pop-up.
       if ($popUp.length === 0) {
@@ -49,7 +49,7 @@ function(
        *
        * @type {jQuery}
        */
-      var $overlay = aiOverlay.create({
+      let $overlay = aiOverlay.create({
         modal:        true,
         modalFilter:  $popUp
       });
@@ -124,7 +124,7 @@ function(
        *
        * @type {jQuery}
        */
-      var $popUp = euCookieComplianceElements.getPopUp();
+      let $popUp = euCookieComplianceElements.getPopUp();
 
       // Bail if we can't find the pop-up.
       if ($popUp.length === 0) {

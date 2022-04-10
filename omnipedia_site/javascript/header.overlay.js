@@ -41,7 +41,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderOverlay', function(
        *
        * @type {jQuery}
        */
-      var $main = $('main[role="main"]', context);
+      let $main = $('main[role="main"]', context);
 
       /**
        * The header overlay, wrapped in a jQuery object.
@@ -117,7 +117,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderOverlay', function(
        *
        * @type {jQuery}
        */
-      var $main = $('main[role="main"]', context);
+      let $main = $('main[role="main"]', context);
 
       headerElements.getSearchForm().off([
         'focusin.OmnipediaSiteThemeHeaderOverlay',

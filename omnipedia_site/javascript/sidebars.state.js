@@ -21,7 +21,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
    *
    * @type {Boolean}
    */
-  var behaviourAttached = false;
+  let behaviourAttached = false;
 
   /**
    * Whether the sidebars are currently off-canvas, i.e. on a narrow screen.
@@ -59,7 +59,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
      *
      * @type {String}
      */
-    var offCanvasState = getComputedStyle(
+    let offCanvasState = getComputedStyle(
       sidebarsElements.getSidebarsContainer()[0]
     ).getPropertyValue('--omnipedia-sidebars-off-canvas').trim();
 
@@ -153,21 +153,21 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
      *
      * @type {USVString}
      */
-    var hash = sidebarsElements.getSidebarsMenuOpen().prop('hash');
+    let hash = sidebarsElements.getSidebarsMenuOpen().prop('hash');
 
     /**
      * The hash value for the old URL the window navigated from.
      *
      * @type {USVString}
      */
-    var oldHash = new URL(event.originalEvent.oldURL).hash;
+    let oldHash = new URL(event.originalEvent.oldURL).hash;
 
     /**
      * The hash value for the new URL the window is navigating to.
      *
      * @type {USVString}
      */
-    var newHash = new URL(event.originalEvent.newURL).hash;
+    let newHash = new URL(event.originalEvent.newURL).hash;
 
     if (newHash === hash && oldHash !== hash) {
       setOpen();

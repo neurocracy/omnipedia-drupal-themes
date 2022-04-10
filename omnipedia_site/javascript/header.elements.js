@@ -12,42 +12,42 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderElements', function(
    *
    * @type {jQuery}
    */
-  var $searchAnchor = $();
+  let $searchAnchor = $();
 
   /**
    * The search target element, if any, wrapped in a jQuery collection.
    *
    * @type {jQuery}
    */
-  var $searchTarget = $();
+  let $searchTarget = $();
 
   /**
    * The header search form, if any, wrapped in a jQuery collection.
    *
    * @type {jQuery}
    */
-  var $searchForm = $();
+  let $searchForm = $();
 
   /**
    * The header search field, if any, wrapped in a jQuery collection.
    *
    * @type {jQuery}
    */
-  var $searchField = $();
+  let $searchField = $();
 
   /**
    * The menu open control, if any, wrapped in a jQuery collection.
    *
    * @type {jQuery}
    */
-  var $menuOpen = $();
+  let $menuOpen = $();
 
   /**
    * Whether we've attached the behaviour.
    *
    * @type {Boolean}
    */
-  var behaviourAttached = false;
+  let behaviourAttached = false;
 
   /**
    * Get the search anchor jQuery collection.

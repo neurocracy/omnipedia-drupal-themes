@@ -46,7 +46,7 @@ function(
    * @see https://allyjs.io/api/style/focus-source.html
    *   ally.js documentation.
    */
-  var focusSourceHandle = ally.style.focusSource();
+  let focusSourceHandle = ally.style.focusSource();
 
   this.addBehaviour(
     'OmnipediaSiteThemeEuCookieComplianceFocus',
@@ -59,7 +59,7 @@ function(
        *
        * @type {jQuery}
        */
-      var $popUp = euCookieComplianceElements.getPopUp();
+      let $popUp = euCookieComplianceElements.getPopUp();
 
       // Bail if we can't find the pop-up.
       if ($popUp.length === 0) {
@@ -126,7 +126,7 @@ function(
        *
        * @type {jQuery}
        */
-      var $popUp = euCookieComplianceElements.getPopUp();
+      let $popUp = euCookieComplianceElements.getPopUp();
 
       // Bail if we can't find the pop-up.
       if ($popUp.length === 0) {
