@@ -36,6 +36,9 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
    * does anything, as there are some situations where the location hash hasn't
    * changed yet and we can erroneously call history.back() twice.
    *
+   * Note that this should start off as true to prevent unexpected behaviour
+   * if a hide is requested right after initialization.
+   *
    * @type {Boolean}
    *
    * @see setActive()
@@ -43,8 +46,11 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
    *
    * @see setInactive()
    *   Sets this to true.
+   *
+   * @todo Can this be initialized as true or false depending on the initial
+   *   state of the hash in the URL?
    */
-  let hideRequested = false;
+  let hideRequested = true;
 
   /**
    * Whether the header is currently in compact mode, i.e. on a narrow screen.
