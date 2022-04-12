@@ -6,9 +6,10 @@
 // that this assumes there is only once instance of the header on the page, and
 // in the edge case that more than one is present, only the first will be used.
 
-AmbientImpact.on('OmnipediaSiteThemeHeaderElements', function(
-  headerElements, $
-) {
+AmbientImpact.on([
+  'hashMatcher',
+  'OmnipediaSiteThemeHeaderElements',
+], function(aiHashMatcher, headerElements, $) {
 AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
   headerState, $
 ) {
@@ -28,29 +29,6 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
    * @type {String}
    */
   const eventNamespace = this.getName();
-
-  /**
-   * Whether a hide has been requested, to prevent race conditions.
-   *
-   * This acts as a failsafe to ensure only the first request to hide the search
-   * does anything, as there are some situations where the location hash hasn't
-   * changed yet and we can erroneously call history.back() twice.
-   *
-   * Note that this should start off as true to prevent unexpected behaviour
-   * if a hide is requested right after initialization.
-   *
-   * @type {Boolean}
-   *
-   * @see setActive()
-   *   Resets this to false.
-   *
-   * @see setInactive()
-   *   Sets this to true.
-   *
-   * @todo Can this be initialized as true or false depending on the initial
-   *   state of the hash in the URL?
-   */
-  let hideRequested = true;
 
   /**
    * Whether the header is currently in compact mode, i.e. on a narrow screen.
@@ -107,7 +85,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
    * @see this.isCompact()
    */
   this.isSearchOpen = function() {
-    return location.hash === headerElements.getSearchAnchor().prop('hash');
+    return headerElements.getSearchAnchor().prop('hashMatcher').matches();
   };
 
   /**
@@ -120,90 +98,17 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
   };
 
   /**
-   * Set the search form as active.
-   */
-  function setActive() {
-
-    hideRequested = false;
-
-    headerElements.getSearchForm().trigger('omnipediaSearchActive');
-
-  };
-
-  /**
    * Show the search form.
    */
   this.showSearch = function() {
-
-    if (this.isSearchOpen() === true) {
-      return;
-    }
-
-    setActive();
-
+    headerElements.getSearchAnchor().prop('hashMatcher').setActive();
   };
-
-  /**
-   * Set the search form as inactive.
-   */
-  function setInactive() {
-
-    hideRequested = true;
-
-    headerElements.getSearchForm().trigger('omnipediaSearchInactive');
-
-  }
 
   /**
    * Hide the search form.
    */
   this.hideSearch = function() {
-
-    if (this.isSearchOpen() === false || hideRequested === true) {
-      return;
-    }
-
-    history.back();
-
-    setInactive();
-
-  };
-
-  /**
-   * hashchange event handler.
-   *
-   * @param {jQuery.Event} event
-   *   The jQuery Event object.
-   */
-  function hashChangeHandler(event) {
-
-    /**
-     * The hash value stored in the search anchor's 'hash' property.
-     *
-     * @type {USVString}
-     */
-    let hash = headerElements.getSearchAnchor().prop('hash');
-
-    /**
-     * The hash value for the old URL the window navigated from.
-     *
-     * @type {USVString}
-     */
-    let oldHash = new URL(event.originalEvent.oldURL).hash;
-
-    /**
-     * The hash value for the new URL the window is navigating to.
-     *
-     * @type {USVString}
-     */
-    let newHash = new URL(event.originalEvent.newURL).hash;
-
-    if (newHash === hash && oldHash !== hash) {
-      setActive();
-    } else if (oldHash === hash && newHash !== hash) {
-      setInactive();
-    }
-
+    headerElements.getSearchAnchor().prop('hashMatcher').setInactive();
   };
 
   this.addBehaviour(
@@ -216,9 +121,35 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
         return;
       }
 
-      $(window).on('hashchange.' + eventNamespace, hashChangeHandler);
-
       behaviourAttached = true;
+
+      let searchAnchorHash = headerElements.getSearchAnchor().prop('hash');
+
+      /**
+       * Hash matcher instance.
+       *
+       * @type {hashMatcher}
+       */
+      let hashMatcher = aiHashMatcher.create(searchAnchorHash);
+
+      headerElements.getSearchAnchor().prop('hashMatcher', hashMatcher);
+
+      $(document).on('hashMatchChange.' + eventNamespace, function(
+        event, hash, matches
+      ) {
+
+        if (hash !== searchAnchorHash) {
+          return;
+        }
+
+        if (matches === true) {
+          headerElements.getSearchForm().trigger('omnipediaSearchActive');
+
+        } else {
+          headerElements.getSearchForm().trigger('omnipediaSearchInactive');
+        }
+
+      });
 
     },
     function(context, settings, trigger) {
@@ -227,7 +158,18 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
         return;
       }
 
-      $(window).off('hashchange.' + eventNamespace, hashChangeHandler);
+      $(document).off('hashMatchChange.' + eventNamespace);
+
+      /**
+       * The search anchor jQuery collection.
+       *
+       * @type {jQuery}
+       */
+      let searchAnchor = headerElements.getSearchAnchor();
+
+      searchAnchor.prop('hashMatcher').destroy();
+
+      searchAnchor.removeProp('hashMatcher');
 
       behaviourAttached = false;
 

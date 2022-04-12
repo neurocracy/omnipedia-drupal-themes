@@ -103,18 +103,9 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderFocus', function(
             return;
           }
 
-          /**
-           * The URL hash the search anchor points to, starting with a '#'.
-           *
-           * @type {USVString}
-           */
-          let searchAnchorHash = headerElements.getSearchAnchor().prop('hash');
-
           // Update the location hash to the search anchor's for consistency
           // with other methods of opening the search.
-          if (location.hash !== searchAnchorHash) {
-            location.hash = searchAnchorHash;
-          }
+          headerState.showSearch();
 
           headerElements.getSearchTarget()
             .addClass(searchTargetFormFocusClass);

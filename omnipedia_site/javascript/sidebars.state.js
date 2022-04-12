@@ -7,9 +7,10 @@
 // page, and in the edge case that more than one is present, only the first will
 // be used.
 
-AmbientImpact.on('OmnipediaSiteThemeSidebarsElements', function(
-  sidebarsElements, $
-) {
+AmbientImpact.on([
+  'hashMatcher',
+  'OmnipediaSiteThemeSidebarsElements',
+], function(aiHashMatcher, sidebarsElements, $) {
 AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
   sidebarsState, $
 ) {
@@ -86,51 +87,21 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
    * @see this.isOffCanvas()
    */
   this.isMenuOpen = function() {
-    return (
-      location.hash === sidebarsElements.getSidebarsMenuOpen().prop('hash')
-    );
-  };
-
-  /**
-   * Set the menu as open.
-   */
-  function setOpen() {
-    sidebarsElements.getSidebarsContainer()
-      .trigger('omnipediaSidebarsMenuOpen');
+    return sidebarsElements.getSidebarsMenuOpen().prop('hashMatcher').matches();
   };
 
   /**
    * Open the menu.
    */
   this.openMenu = function() {
-    if (this.isMenuOpen() === true) {
-      return;
-    }
-
-    setOpen();
-  };
-
-  /**
-   * Set the menu as closed.
-   */
-  function setClosed() {
-    sidebarsElements.getSidebarsContainer()
-      .trigger('omnipediaSidebarsMenuClose');
+    sidebarsElements.getSidebarsMenuOpen().prop('hashMatcher').setActive();
   };
 
   /**
    * Close the menu.
    */
   this.closeMenu = function() {
-
-    if (this.isMenuOpen() === false) {
-      return;
-    }
-
-    history.back();
-
-    setClosed();
-
+    sidebarsElements.getSidebarsMenuOpen().prop('hashMatcher').setInactive();
   };
 
   /**
@@ -149,43 +120,6 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
 
   };
 
-  /**
-   * hashchange event handler.
-   *
-   * @param {jQuery.Event} event
-   *   The jQuery Event object.
-   */
-  function hashChangeHandler(event) {
-
-    /**
-     * The hash value stored in the open link's 'hash' property.
-     *
-     * @type {USVString}
-     */
-    let hash = sidebarsElements.getSidebarsMenuOpen().prop('hash');
-
-    /**
-     * The hash value for the old URL the window navigated from.
-     *
-     * @type {USVString}
-     */
-    let oldHash = new URL(event.originalEvent.oldURL).hash;
-
-    /**
-     * The hash value for the new URL the window is navigating to.
-     *
-     * @type {USVString}
-     */
-    let newHash = new URL(event.originalEvent.newURL).hash;
-
-    if (newHash === hash && oldHash !== hash) {
-      setOpen();
-    } else if (oldHash === hash && newHash !== hash) {
-      setClosed();
-    }
-
-  };
-
   this.addBehaviour(
     'OmnipediaSiteThemeSidebarsState',
     'omnipedia-site-theme-sidebars-state',
@@ -196,7 +130,42 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
         return;
       }
 
-      $(window).on('hashchange.' + eventNamespace, hashChangeHandler);
+      /**
+       * The hash value stored in the open link's 'hash' property.
+       *
+       * @type {USVString}
+       */
+      let menuOpenHash = sidebarsElements.getSidebarsMenuOpen().prop('hash');
+
+      /**
+       * Hash matcher instance.
+       *
+       * @type {hashMatcher}
+       */
+      let hashMatcher = aiHashMatcher.create(menuOpenHash);
+
+      sidebarsElements.getSidebarsMenuOpen().prop('hashMatcher', hashMatcher);
+
+      $(document).on('hashMatchChange.' + eventNamespace, function(
+        event, hash, matches
+      ) {
+
+        if (hash !== menuOpenHash) {
+          return;
+        }
+
+        if (matches === true) {
+          sidebarsElements.getSidebarsContainer().trigger(
+            'omnipediaSidebarsMenuOpen'
+          );
+
+        } else {
+          sidebarsElements.getSidebarsContainer().trigger(
+            'omnipediaSidebarsMenuClose'
+          );
+        }
+
+      });
 
       sidebarsElements.getSidebarsMenuClose().on(
         'click.' + eventNamespace, menuCloseClickHandler
@@ -215,7 +184,18 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
         'click.' + eventNamespace, menuCloseClickHandler
       );
 
-      $(window).off('hashchange.' + eventNamespace, hashChangeHandler);
+      $(document).off('hashMatchChange.' + eventNamespace);
+
+      /**
+       * The menu open anchor jQuery collection.
+       *
+       * @type {jQuery}
+       */
+      let openAnchor = sidebarsElements.getSidebarsMenuOpen();
+
+      openAnchor.prop('hashMatcher').destroy();
+
+      openAnchor.removeProp('hashMatcher');
 
       behaviourAttached = false;
 

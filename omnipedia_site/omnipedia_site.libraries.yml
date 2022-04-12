@@ -81,6 +81,7 @@ header:
     javascript/header.state.js: {}
   dependencies:
     - ambientimpact_core/ally.js
+    - ambientimpact_ux/component.hash_matcher
     - ambientimpact_ux/component.headroom
     - ambientimpact_ux/component.overlay
     - omnipedia_site/current_date # Required for the current date element.
@@ -162,6 +163,7 @@ sidebars:
     javascript/sidebars.keyboard.js: {}
   dependencies:
     - ambientimpact_core/ally.js
+    - ambientimpact_ux/component.hash_matcher
     - ambientimpact_ux/component.headroom
     - ambientimpact_ux/component.pointer_focus_hide
     - ambientimpact_ux/component.scrollbar_gutter
