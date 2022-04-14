@@ -9,7 +9,8 @@
 AmbientImpact.on([
   'hashMatcher',
   'OmnipediaSiteThemeHeaderElements',
-], function(aiHashMatcher, headerElements, $) {
+  'responsiveStyleProperty',
+], function(aiHashMatcher, headerElements, aiResponsiveStyleProperty, $) {
 AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
   headerState, $
 ) {
@@ -31,12 +32,27 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
   const eventNamespace = this.getName();
 
   /**
+   * The CSS custom property name that we watch for the search anchor state.
+   *
+   * The expected value should be a string of either:
+   *
+   * - 'visible': the layout is in compact mode with the anchor visible.
+   *
+   * - 'hidden': the layout has the sidebars beside the content column, so the
+   *   anchor is hidden.
+   *
+   * This allows us to detect the current state of the search anchor, which
+   * delegates the state to CSS, without having to hard code any media queries
+   * in JavaScript.
+   *
+   * @type {String}
+   */
+  const searchStatePropertyName = '--omnipedia-search-anchor-state';
+
+  /**
    * Whether the header is currently in compact mode, i.e. on a narrow screen.
    *
    * @return {Boolean}
-   *
-   * @todo Determine if window.getComputedStyle() or
-   *   CSSStyleDeclaration.getPropertyValue() is causing layout reflow.
    */
   this.isCompact = function() {
 
@@ -44,32 +60,10 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
       return false;
     }
 
-    /**
-     * The current state of the search anchor.
-     *
-     * This should be a string of either:
-     *
-     * - 'visible': the layout is in compact mode with the anchor visible.
-     *
-     * - 'hidden': the layout has the sidebars beside the content column, so
-     *   the anchor is hidden.
-     *
-     * This allows us to detect the current state of the search anchor, which
-     * delegates the state to CSS, without having to hard code any media
-     * queries in JavaScript.
-     *
-     * Note that we have to use the .trim() method to remove white-space that
-     * may be present because browsers will preserve the exact characters
-     * after the colon (:), and this would then never match. This behaviour
-     * seems to be cross-browser and likely part of the custom properties
-     * specification.
-     *
-     * @type {String}
-     */
-    let anchorState = getComputedStyle(headerElements.getSearchAnchor()[0])
-      .getPropertyValue('--omnipedia-search-anchor-state').trim();
-
-    return anchorState === 'visible';
+    return (
+      headerElements.getSearchAnchor().prop('responsiveStyleProperty')
+      .getValue() === 'visible'
+    );
 
   };
 
@@ -151,6 +145,20 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
 
       });
 
+      /**
+       * A responsive style property instance; watches search state.
+       *
+       * @type {responsiveStyleProperty}
+       */
+
+      let responsiveStyleProperty = aiResponsiveStyleProperty.create(
+        searchStatePropertyName, headerElements.getSearchAnchor()
+      );
+
+      headerElements.getSearchAnchor().prop(
+        'responsiveStyleProperty', responsiveStyleProperty
+      );
+
     },
     function(context, settings, trigger) {
 
@@ -170,6 +178,10 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
       searchAnchor.prop('hashMatcher').destroy();
 
       searchAnchor.removeProp('hashMatcher');
+
+      searchAnchor.prop('responsiveStyleProperty').destroy();
+
+      searchAnchor.removeProp('responsiveStyleProperty');
 
       behaviourAttached = false;
 

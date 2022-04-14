@@ -84,6 +84,7 @@ header:
     - ambientimpact_ux/component.hash_matcher
     - ambientimpact_ux/component.headroom
     - ambientimpact_ux/component.overlay
+    - ambientimpact_ux/component.responsive_style_property
     - omnipedia_site/current_date # Required for the current date element.
     - omnipedia_site/offcanvas_immerse
     - omnipedia_site/search_form
