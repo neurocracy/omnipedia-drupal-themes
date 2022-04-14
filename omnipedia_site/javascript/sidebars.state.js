@@ -10,7 +10,8 @@
 AmbientImpact.on([
   'hashMatcher',
   'OmnipediaSiteThemeSidebarsElements',
-], function(aiHashMatcher, sidebarsElements, $) {
+  'responsiveStyleProperty',
+], function(aiHashMatcher, sidebarsElements, aiResponsiveStyleProperty, $) {
 AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
   sidebarsState, $
 ) {
@@ -32,12 +33,27 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
   const eventNamespace = this.getName();
 
   /**
+   * The CSS custom property name that we watch for the off-canvas state.
+   *
+   * The expected value should be a string of either:
+   *
+   * - 'true': the layout is in compact mode with the anchor visible.
+   *
+   * - 'false': the layout has the sidebars beside the content column, so the
+   *   anchor is hidden.
+   *
+   * This allows us to detect the current state of the sidebars, which
+   * delegates the state to CSS without having to hard code any media queries
+   * in JavaScript.
+   *
+   * @type {String}
+   */
+  const offCanvasStatePropertyName = '--omnipedia-sidebars-off-canvas';
+
+  /**
    * Whether the sidebars are currently off-canvas, i.e. on a narrow screen.
    *
    * @return {Boolean}
-   *
-   * @todo Determine if window.getComputedStyle() or
-   *   CSSStyleDeclaration.getPropertyValue() is causing layout reflow.
    */
   this.isOffCanvas = function() {
 
@@ -45,33 +61,10 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
       return false;
     }
 
-    /**
-     * The current off-canvas state of the sidebars.
-     *
-     * This should be a string of either:
-     *
-     * - 'true': the layout is in compact mode with the anchor visible.
-     *
-     * - 'false': the layout has the sidebars beside the content column, so
-     * the anchor is hidden.
-     *
-     * This allows us to detect the current state of the sidebars, which
-     * delegates the state to CSS without having to hard code any media
-     * queries in JavaScript.
-     *
-     * Note that we have to use the .trim() method to remove white-space that
-     * may be present because browsers will preserve the exact characters
-     * after the colon (:), and this would then never match. This behaviour
-     * seems to be cross-browser and likely part of the custom properties
-     * specification.
-     *
-     * @type {String}
-     */
-    let offCanvasState = getComputedStyle(
-      sidebarsElements.getSidebarsContainer()[0]
-    ).getPropertyValue('--omnipedia-sidebars-off-canvas').trim();
-
-    return offCanvasState === 'true';
+    return (
+      sidebarsElements.getSidebarsContainer().prop('responsiveStyleProperty')
+      .getValue() === 'true'
+    );
 
   };
 
@@ -171,6 +164,19 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
         'click.' + eventNamespace, menuCloseClickHandler
       );
 
+      /**
+       * A responsive style property instance; watches off canvas state.
+       *
+       * @type {responsiveStyleProperty}
+       */
+      let responsiveStyleProperty = aiResponsiveStyleProperty.create(
+        offCanvasStatePropertyName, sidebarsElements.getSidebarsContainer()
+      );
+
+      sidebarsElements.getSidebarsContainer().prop(
+        'responsiveStyleProperty', responsiveStyleProperty
+      );
+
       behaviourAttached = true;
 
     },
@@ -196,6 +202,17 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
       openAnchor.prop('hashMatcher').destroy();
 
       openAnchor.removeProp('hashMatcher');
+
+      /**
+       * The sidebars container jQuery collection.
+       *
+       * @type {jQuery}
+       */
+      let sidebarsContainer = sidebarsElements.getSidebarsContainer();
+
+      sidebarsContainer.prop('responsiveStyleProperty').destroy();
+
+      sidebarsContainer.removeProp('responsiveStyleProperty');
 
       behaviourAttached = false;
 
