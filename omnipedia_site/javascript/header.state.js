@@ -117,7 +117,26 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
 
       behaviourAttached = true;
 
-      let searchAnchorHash = headerElements.getSearchAnchor().prop('hash');
+      /**
+       * The search anchor jQuery collection.
+       *
+       * @type {jQuery}
+       */
+      let $searchAnchor = headerElements.getSearchAnchor();
+
+      /**
+       * The header search form jQuery collection.
+       *
+       * @type {jQuery}
+       */
+      let $searchForm = headerElements.getSearchForm();
+
+      /**
+       * The search anchor hash, including the '#'.
+       *
+       * @type {String}
+       */
+      const searchAnchorHash = $searchAnchor.prop('hash');
 
       /**
        * Hash matcher instance.
@@ -126,7 +145,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
        */
       let hashMatcher = aiHashMatcher.create(searchAnchorHash);
 
-      headerElements.getSearchAnchor().prop('hashMatcher', hashMatcher);
+      $searchAnchor.prop('hashMatcher', hashMatcher);
 
       $(document).on('hashMatchChange.' + eventNamespace, function(
         event, hash, matches
@@ -137,10 +156,10 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
         }
 
         if (matches === true) {
-          headerElements.getSearchForm().trigger('omnipediaSearchActive');
+          $searchForm.trigger('omnipediaSearchActive');
 
         } else {
-          headerElements.getSearchForm().trigger('omnipediaSearchInactive');
+          $searchForm.trigger('omnipediaSearchInactive');
         }
 
       });
@@ -150,14 +169,11 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
        *
        * @type {responsiveStyleProperty}
        */
-
       let responsiveStyleProperty = aiResponsiveStyleProperty.create(
-        searchStatePropertyName, headerElements.getSearchAnchor()
+        searchStatePropertyName, $searchAnchor
       );
 
-      headerElements.getSearchAnchor().prop(
-        'responsiveStyleProperty', responsiveStyleProperty
-      );
+      $searchAnchor.prop('responsiveStyleProperty', responsiveStyleProperty);
 
     },
     function(context, settings, trigger) {
@@ -173,15 +189,15 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
        *
        * @type {jQuery}
        */
-      let searchAnchor = headerElements.getSearchAnchor();
+      let $searchAnchor = headerElements.getSearchAnchor();
 
-      searchAnchor.prop('hashMatcher').destroy();
+      $searchAnchor.prop('hashMatcher').destroy();
 
-      searchAnchor.removeProp('hashMatcher');
+      $searchAnchor.removeProp('hashMatcher');
 
-      searchAnchor.prop('responsiveStyleProperty').destroy();
+      $searchAnchor.prop('responsiveStyleProperty').destroy();
 
-      searchAnchor.removeProp('responsiveStyleProperty');
+      $searchAnchor.removeProp('responsiveStyleProperty');
 
       behaviourAttached = false;
 
