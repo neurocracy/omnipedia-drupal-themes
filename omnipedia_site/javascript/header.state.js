@@ -132,9 +132,9 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
       let $searchForm = headerElements.getSearchForm();
 
       /**
-       * The search anchor hash, including the '#'.
+       * The hash value stored in the search anchor's 'hash' property.
        *
-       * @type {String}
+       * @type {USVString}
        */
       const searchAnchorHash = $searchAnchor.prop('hash');
 
