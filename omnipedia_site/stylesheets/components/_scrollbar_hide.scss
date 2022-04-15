@@ -164,7 +164,9 @@ $extra-space: 1px;
 
   $scrollbar-edge: scrollbar-edge-from-text-dir($direction);
 
-  @include selector.root-conditions(('[dir=#{$direction}]'), 'html') {
+  @include selector.root-conditions((
+    '[dir=#{$direction}]:not([data-scrollbar-gutter="0"])'
+  ), 'html') {
 
     margin-#{$scrollbar-edge}: calc(
       var(--scrollbar-gutter, 0) * -1 - #{$extra-space}
@@ -204,7 +206,9 @@ $extra-space: 1px;
 
   $scrollbar-edge: scrollbar-edge-from-text-dir($direction);
 
-  @include selector.root-conditions(('[dir=#{$direction}]'), 'html') {
+  @include selector.root-conditions((
+    '[dir=#{$direction}]:not([data-scrollbar-gutter="0"])'
+  ), 'html') {
     margin-#{$scrollbar-edge}: 0;
   }
 
@@ -248,7 +252,9 @@ $extra-space: 1px;
 
   $scrollbar-edge: scrollbar-edge-from-text-dir($direction);
 
-  @include selector.root-conditions(('[dir=#{$direction}]'), 'html') {
+  @include selector.root-conditions((
+    '[dir=#{$direction}]:not([data-scrollbar-gutter="0"])'
+  ), 'html') {
 
     padding-#{$scrollbar-edge}: calc(
       var(--scrollbar-gutter, 0) + #{$extra-space}
@@ -284,7 +290,9 @@ $extra-space: 1px;
 
   $scrollbar-edge: scrollbar-edge-from-text-dir($direction);
 
-  @include selector.root-conditions(('[dir=#{$direction}]'), 'html') {
+  @include selector.root-conditions((
+    '[dir=#{$direction}]:not([data-scrollbar-gutter="0"])'
+  ), 'html') {
     padding-#{$scrollbar-edge}: 0;
   }
 
@@ -375,12 +383,16 @@ $extra-space: 1px;
 
   transition-timing-function: var(--scrollbar-hide-easing-showing);
 
-  @include selector.root-conditions(('[dir=ltr]'), 'html') {
+  @include selector.root-conditions((
+    '[dir=ltr]:not([data-scrollbar-gutter="0"])'
+  ), 'html') {
     transform: translateX(calc(
       0% - var(--scrollbar-gutter, 0) + #{$extra-space}
     ));
   }
-  @include selector.root-conditions(('[dir=rtl]'), 'html') {
+  @include selector.root-conditions((
+    '[dir=rtl]:not([data-scrollbar-gutter="0"])'
+  ), 'html') {
     transform: translateX(calc(
       0% + var(--scrollbar-gutter, 0) + #{$extra-space}
     ));
