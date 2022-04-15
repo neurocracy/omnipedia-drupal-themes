@@ -89,5 +89,22 @@
         transform: none;
       }
     }
+
+    // This prevents any chance of accidentally clicking/tapping the search
+    // button if the search form isn't open in compact mode.
+    .form-submit {
+      pointer-events: none;
+
+      @include layout-sidebars.on-sidebar-beside-content(any) {
+        pointer-events: auto;
+      }
+    }
+
+    &:focus-within,
+    .search-target:target ~ * & {
+      .form-submit {
+        pointer-events: auto;
+      }
+    }
   }
 }
