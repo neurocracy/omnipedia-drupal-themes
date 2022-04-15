@@ -124,11 +124,18 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
       }
 
       /**
+       * The menu open control jQuery collection.
+       *
+       * @type {jQuery}
+       */
+      let $menuOpen = sidebarsElements.getSidebarsMenuOpen();
+
+      /**
        * The hash value stored in the open link's 'hash' property.
        *
        * @type {USVString}
        */
-      let menuOpenHash = sidebarsElements.getSidebarsMenuOpen().prop('hash');
+      const menuOpenHash = $menuOpen.prop('hash');
 
       /**
        * Hash matcher instance.
@@ -137,7 +144,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
        */
       let hashMatcher = aiHashMatcher.create(menuOpenHash);
 
-      sidebarsElements.getSidebarsMenuOpen().prop('hashMatcher', hashMatcher);
+      $menuOpen.prop('hashMatcher', hashMatcher);
 
       $(document).on('hashMatchChange.' + eventNamespace, function(
         event, hash, matches
@@ -198,35 +205,35 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
         return;
       }
 
+      /**
+       * The sidebars container jQuery collection.
+       *
+       * @type {jQuery}
+       */
+      let $sidebarsContainer = sidebarsElements.getSidebarsContainer();
+
+      /**
+       * The menu open control jQuery collection.
+       *
+       * @type {jQuery}
+       */
+      let $menuOpen = sidebarsElements.getSidebarsMenuOpen();
+
       sidebarsElements.getSidebarsMenuClose().off(
         'click.' + eventNamespace, menuCloseClickHandler
       );
 
       $(document).off('hashMatchChange.' + eventNamespace);
 
-      /**
-       * The menu open anchor jQuery collection.
-       *
-       * @type {jQuery}
-       */
-      let openAnchor = sidebarsElements.getSidebarsMenuOpen();
+      $menuOpen.prop('hashMatcher').destroy();
 
-      openAnchor.prop('hashMatcher').destroy();
+      $menuOpen.removeProp('hashMatcher');
 
-      openAnchor.removeProp('hashMatcher');
+      $sidebarsContainer.off('responsivePropertyChange.' + eventNamespace);
 
-      /**
-       * The sidebars container jQuery collection.
-       *
-       * @type {jQuery}
-       */
-      let sidebarsContainer = sidebarsElements.getSidebarsContainer();
+      $sidebarsContainer.prop('responsiveStyleProperty').destroy();
 
-      sidebarsContainer.off('responsivePropertyChange.' + eventNamespace);
-
-      sidebarsContainer.prop('responsiveStyleProperty').destroy();
-
-      sidebarsContainer.removeProp('responsiveStyleProperty');
+      $sidebarsContainer.removeProp('responsiveStyleProperty');
 
       behaviourAttached = false;
 
