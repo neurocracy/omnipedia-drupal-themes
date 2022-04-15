@@ -166,10 +166,10 @@ sidebars:
     - ambientimpact_core/ally.js
     - ambientimpact_ux/component.hash_matcher
     - ambientimpact_ux/component.headroom
+    - ambientimpact_ux/component.overlay
     - ambientimpact_ux/component.pointer_focus_hide
     - ambientimpact_ux/component.responsive_style_property
     - ambientimpact_ux/component.scrollbar_gutter
-    - ambientimpact_ux/component.scroll_blocker
     - omnipedia_site/header
 
 site_branding:

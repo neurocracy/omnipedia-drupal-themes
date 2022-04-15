@@ -11,8 +11,8 @@
 AmbientImpact.on([
   'OmnipediaSiteThemeSidebarsElements',
   'OmnipediaSiteThemeSidebarsState',
-  'scrollBlocker',
-], function(sidebarsElements, sidebarsState, aiScrollBlocker, $) {
+  'overlay',
+], function(sidebarsElements, sidebarsState, aiOverlay, $) {
 AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsOverlay', function(
   sidebarsOverlay, $
 ) {
@@ -36,6 +36,20 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsOverlay', function(
   const menuClosedAnchorDisabledClass =
     'layout-sidebars__closed-anchor--disabled';
 
+  /**
+   * Class applied to the close element when the JavaScript overlay is present.
+   *
+   * @type {String}
+   */
+  const hasOverlayClass = 'layout-sidebars__closed-target--has-overlay';
+
+  /**
+   * Class applied to the overlay element for CSS.
+   *
+   * @type {String}
+   */
+  const overlayClass = 'overlay--layout-sidebars';
+
   this.addBehaviour(
     'OmnipediaSiteThemeSidebarsOverlay',
     'omnipedia-site-theme-sidebars-overlay',
@@ -47,50 +61,56 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsOverlay', function(
       );
 
       /**
-       * The sidebars overlay element, wrapped in a jQuery collection.
+       * The header overlay, wrapped in a jQuery object.
        *
        * @type {jQuery}
        */
-      let $overlay = $('.layout-sidebars__closed-target', context);
+      let $overlay = aiOverlay.create();
 
       /**
-       * The scroll blocker instance.
+       * The overlay instance.
        *
-       * @type {scrollBlocker}
+       * @type {Object}
        */
-      let scrollBlocker = aiScrollBlocker.create();
+      let overlay = $overlay.prop('aiOverlay');
 
-      $overlay.prop('scrollBlocker', scrollBlocker);
+      /**
+       * The sidebars closed target jQuery collection.
+       *
+       * @type {jQuery}
+       */
+      let $menuClosedTarget = sidebarsElements.getSidebarsMenuClosedTarget();
+
+      // Save overlay instance to a property for the detach handler.
+      $menuClosedTarget.prop('aiOverlay', overlay);
+
+      $overlay.addClass(overlayClass).insertBefore($menuClosedTarget);
+
+      // Add class indicating JavaScript overlay is active.
+      $menuClosedTarget.addClass(hasOverlayClass);
+
+      $overlay.on('click.' + eventNamespace, function(event) {
+        sidebarsState.closeMenu();
+      });
 
       $(this).on(
         'omnipediaSidebarsMenuOpen.' + eventNamespace,
       function(event) {
 
-        scrollBlocker.block($overlay);
+        if (!sidebarsState.isOffCanvas()) {
+          return;
+        }
 
-        $overlay.one('click.' + eventNamespace, function(event) {
-          sidebarsState.closeMenu();
-        });
+        overlay.show();
 
       }).on('omnipediaSidebarsMenuClose.' + eventNamespace, function(event) {
 
-        $overlay.off('click.' + eventNamespace);
-
-        scrollBlocker.unblock($overlay);
+        overlay.hide();
 
       });
 
     },
     function(context, settings, trigger) {
-
-      /**
-       * The sidebars overlay element, wrapped in a jQuery collection.
-       *
-       * @type {jQuery}
-       */
-      let $overlay = $('.layout-sidebars__closed-target', context);
-
-      $overlay.off('click.' + eventNamespace);
 
       $(this).off([
         'omnipediaSidebarsMenuOpen.'  + eventNamespace,
@@ -98,19 +118,34 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsOverlay', function(
       ].join(' '));
 
       /**
-       * The scroll blocker instance.
+       * The sidebars closed target jQuery collection.
        *
-       * @type {scrollBlocker}
+       * @type {jQuery}
        */
-      let scrollBlocker = $overlay.prop('scrollBlocker');
+      let $menuClosedTarget = sidebarsElements.getSidebarsMenuClosedTarget();
 
-      // Unblock scrolling if still blocked and destroy the scroll blocker
-      // instance if isn't blocking anything.
-      scrollBlocker.unblock($overlay);
-      scrollBlocker.destroy();
+      /**
+       * The overlay instance.
+       *
+       * @type {Object}
+       */
+      let overlay = $menuClosedTarget.prop('aiOverlay');
 
-      // Remove the scroll blocker instance.
-      $overlay.removeProp('scrollBlocker');
+      // Attach a one-off event handler to remove the overlay element and
+      // related properties/classes when the overlay has finished hiding.
+      overlay.$overlay.one('overlayHidden', function(event) {
+
+        overlay.$overlay.remove();
+
+        $menuClosedTarget.removeProp('aiOverlay')
+
+        $menuClosedTarget.removeClass(hasOverlayClass);
+
+      });
+
+      // Tell the overlay to hide itself, which will trigger the above handler
+      // when complete.
+      overlay.hide();
 
       sidebarsElements.getSidebarsMenuClosedAnchor().removeClass(
         menuClosedAnchorDisabledClass

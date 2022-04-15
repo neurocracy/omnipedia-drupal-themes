@@ -39,7 +39,9 @@
 //   the overlay using just HTML and CSS. This element also doubles as the
 //   overlay when the panel is open. Using an in-page anchor to open and
 //   close the panel allows it to function without any hacks if JavaScript fails
-//   for any reason, and allows the browser back button to close the panel.
+//   for any reason, and allows the browser back button to close the panel. When
+//   a JavaScript-powered overlay is attached for the sidebars, this element no
+//   longer functions as an overlay.
 //
 // - .layout-sidebars__closed-anchor: This is layered on top of the overlay but
 //   below the panel to allow closing the panel without any JavaScript if the
@@ -145,7 +147,7 @@
     }
 
     // See documentation at the top of this partial for these.
-    &__closed-target,
+    &__closed-target, // Applies even when the JavaScript overlay is attached.
     &__closed-anchor:not(&__closed-anchor--disabled) {
       display: block;
 
@@ -162,9 +164,9 @@
     }
 
     // When the panel is open, these register clicks/taps to close the panel.
-    &:target ~ &__closed-target,
+    &:target ~ &__closed-target:not(&__closed-target--has-overlay),
     &:target ~ &__closed-anchor,
-    &:focus-within ~ &__closed-target,
+    &:focus-within ~ &__closed-target:not(&__closed-target--has-overlay),
     &:focus-within ~ &__closed-anchor {
       pointer-events: auto;
     }

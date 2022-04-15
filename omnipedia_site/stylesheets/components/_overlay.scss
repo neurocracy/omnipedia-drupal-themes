@@ -14,7 +14,8 @@
 //
 // @see ../components/header/_overlay.scss
 main[role="main"]:not(.header-has-overlay)::before,
-.layout-sidebars__closed-target {
+// The sidebars off-canvas overlay if the JavaScript overlay is not present.
+.layout-sidebars__closed-target:not(.layout-sidebars__closed-target--has-overlay) {
   @include colour.set(
     $background: rgba(colour.$background-light, 0.8)
   );
