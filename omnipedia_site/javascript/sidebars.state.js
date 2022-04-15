@@ -173,6 +173,18 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
         offCanvasStatePropertyName, sidebarsElements.getSidebarsContainer()
       );
 
+      // If the menu is open and the viewport is resized so the sidebars are no
+      // longer off-canvas, close the menu so that the page isn't left in a
+      // state that may make it unusable.
+      sidebarsElements.getSidebarsContainer()
+      .on('responsivePropertyChange.' + eventNamespace, function(
+        event, instance
+      ) {
+        if (sidebarsState.isOffCanvas() === false) {
+          sidebarsState.closeMenu();
+        }
+      });
+
       sidebarsElements.getSidebarsContainer().prop(
         'responsiveStyleProperty', responsiveStyleProperty
       );
@@ -209,6 +221,8 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
        * @type {jQuery}
        */
       let sidebarsContainer = sidebarsElements.getSidebarsContainer();
+
+      sidebarsContainer.off('responsivePropertyChange.' + eventNamespace);
 
       sidebarsContainer.prop('responsiveStyleProperty').destroy();
 
