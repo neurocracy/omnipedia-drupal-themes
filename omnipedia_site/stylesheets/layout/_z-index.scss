@@ -40,7 +40,7 @@ header[role='banner'] {
 //
 // @see ../components/header/_overlay.scss
 main[role="main"]:not(.header-has-overlay)::before,
-.header-overlay {
+.overlay--header {
   @include z-index.get(floating-below);
 }
 

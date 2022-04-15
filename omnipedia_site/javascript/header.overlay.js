@@ -36,7 +36,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderOverlay', function(
    *
    * @type {String}
    */
-  const overlayClass = 'header-overlay';
+  const overlayClass = 'overlay--header';
 
   this.addBehaviour(
     'OmnipediaSiteThemeHeaderOverlay',
