@@ -33,6 +33,13 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsElements', function(
   let $menuClosedAnchor = $();
 
   /**
+   * The sidebars closed target, if any, wrapped in a jQuery collection.
+   *
+   * @type {jQuery}
+   */
+  let $menuClosedTarget = $();
+
+  /**
    * Whether we've attached the behaviour.
    *
    * @type {Boolean}
@@ -76,6 +83,15 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsElements', function(
   };
 
   /**
+   * Get the sidebars menu closed target jQuery collection.
+   *
+   * @return {jQuery}
+   */
+  this.getSidebarsMenuClosedTarget = function() {
+    return $menuClosedTarget;
+  };
+
+  /**
    * Get the selector to attach sidebars behaviours to.
    *
    * @return {String}
@@ -100,15 +116,18 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsElements', function(
 
       $menuClosedAnchor = $('.layout-sidebars__closed-anchor', context);
 
+      $menuClosedTarget = $('.layout-sidebars__closed-target', context);
+
       // Reset jQuery collections and bail if we can't find one of the required
       // elements.
       if (
         $container.length === 0 ||
-        $menuClose.length === 0
+        $menuClose.length === 0 ||
+        $menuClosedTarget.length === 0
       ) {
         console.error(
           'Could not find one of the required elements. Found:',
-          $container, $menuClose, $menuClosedAnchor
+          $container, $menuClose, $menuClosedAnchor, $menuClosedTarget
         );
 
         $container = $();
@@ -116,6 +135,8 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsElements', function(
         $menuClose = $();
 
         $menuClosedAnchor = $();
+
+        $menuClosedTarget = $();
 
         return;
       }
@@ -134,6 +155,8 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsElements', function(
       $menuClose = $();
 
       $menuClosedAnchor = $();
+
+      $menuClosedTarget = $();
 
       behaviourAttached = false;
 
