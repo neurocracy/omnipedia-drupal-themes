@@ -123,6 +123,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsElements', function(
       if (
         $container.length === 0 ||
         $menuClose.length === 0 ||
+        $menuClosedAnchor.length === 0 ||
         $menuClosedTarget.length === 0
       ) {
         console.error(
