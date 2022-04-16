@@ -15,6 +15,11 @@
     ///
     $shadow-buffer: 10px;
 
+    ///
+    /// Rounding error adjustment.
+    ///
+    $rounding-adjust: 1px;
+
     // These are applied to the region container rather than to the generated
     // content because doing the latter causes some rounding errors in
     // Chromium and the shadow leaks a bit on the sides.
@@ -26,10 +31,10 @@
           -#{layout-config.$gap},
 
         calc(100% + #{search.$button-spacing} - #{general-variables.$divider-thickness})
-          calc(100% + #{layout-config.$gap} - #{general-variables.$divider-thickness}),
+          calc(100% + #{layout-config.$gap} - #{general-variables.$divider-thickness} - #{$rounding-adjust}),
 
         calc(100% - #{general-variables.$divider-thickness})
-          calc(100% + #{layout-config.$gap} - #{general-variables.$divider-thickness}),
+          calc(100% + #{layout-config.$gap} - #{general-variables.$divider-thickness} - #{$rounding-adjust}),
 
         calc(100% - #{general-variables.$divider-thickness})
           calc(100% + #{layout-config.$gap} + #{$shadow-buffer}),
