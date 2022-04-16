@@ -5,9 +5,12 @@
 @use '../../variables/colours'; // Configure colours.
 @use 'sass/helpers/colour';
 @use '../../variables/general' as general-variables;
+@use '../../layout/config' as layout-config; // Configure layout.
+@use 'base:layout/sidebars' as layout-sidebars;
 
-.omnipedia-header,
+header[role='banner'],
 .region-primary-menu {
+
   &::before {
     border-bottom:
       general-variables.$divider-thickness solid colours.$divider-on-light;
@@ -16,11 +19,16 @@
       border-bottom-color: colours.$divider-on-dark;
     }
   }
+
 }
 
-.region-primary-menu {
-  &:not(.headroom)::before,
-  &.headroom--top::before {
-    border-bottom-color: transparent !important;
+@include layout-sidebars.on-sidebar-beside-content(both) {
+
+  .region-primary-menu {
+    &:not(.headroom)::before,
+    &.headroom--top::before {
+      border-bottom-color: transparent !important;
+    }
   }
+
 }

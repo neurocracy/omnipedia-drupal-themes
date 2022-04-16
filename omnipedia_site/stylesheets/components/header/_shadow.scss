@@ -14,8 +14,9 @@ $shadow-on-light: 0 2px 3px rgba(0, 0, 0, 0.3);
 ///
 $shadow-on-dark: 0 1px 3px rgba(0, 0, 0, 0.8);
 
-.omnipedia-header,
+header[role='banner'],
 .region-primary-menu {
+
   &::after {
     box-shadow: $shadow-on-light;
 
@@ -28,20 +29,11 @@ $shadow-on-dark: 0 1px 3px rgba(0, 0, 0, 0.8);
     // Opacity transitions look more natural with linear easing.
     transition-timing-function: linear;
   }
-}
 
-.omnipedia-header {
-  &::after {
-    .headroom--top &,
-    .headroom--unpinned & {
+  &.headroom--top,
+  &.headroom--unpinned {
+    &::after {
       opacity: 0;
     }
-  }
-}
-
-.region-primary-menu {
-  &.headroom--top::after,
-  &.headroom--unpinned::after {
-    opacity: 0;
   }
 }

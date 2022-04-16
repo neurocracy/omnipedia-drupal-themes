@@ -11,9 +11,9 @@
 @use '../variables/general' as general-variables;
 
 // This positions the header and primary menu region as sticky elements along
-// the top of the viewport. Despite them being separate elements, generated
-// content on both are used to create the illusion of a shared container on
-// narrow screens.
+// the top of the viewport. The header provides the shared background, bottom
+// border, and shadow in compact mode. When not in compact mode, background,
+// bottom border, and shadow are provided by the primary menu region instead.
 //
 // Additionally, .form--inline::before generated content on the search form is
 // used to create a background along the entire width of the header, which
@@ -47,6 +47,21 @@ header[role='banner'],
   );
 }
 
+// The header region needs to be given the Headroom transform and transition
+// properties to allow it to slide in and out of view along with the adjacent
+// background element even though its parent isn't actually moving.
+header[role='banner'] .region-header {
+
+  @include headroom.headroom-base;
+
+  --headroom-translate-unpinned: calc(
+    -100% - #{layout-config.$gutter * 2} -
+    #{layout-config.$branding-spacing * 2} -
+    #{general-variables.$divider-thickness}
+  );
+
+}
+
 .region-primary-menu {
   @include layout-sidebars.on-sidebar-beside-content(both) {
     // Same as above, but on wide screens.
@@ -61,7 +76,8 @@ header[role='banner'],
   );
 }
 
-header[role='banner'] {
+header[role='banner'],
+header[role='banner'] .region-header {
   // The header is reverted to static positioning on wider screens and Headroom
   // transforms are set to zero.
   @include layout-sidebars.on-sidebar-beside-content(both) {
@@ -90,24 +106,29 @@ header[role='banner'],
   }
 }
 
-header[role='banner']::before {
-  position: absolute;
+header[role='banner'] {
+  &::before,
+  &::after {
+    content: '';
 
-  top:      layout-config.$gutter * -1;
-  bottom:   layout-config.$gutter * -1;
+    position: absolute;
 
-  @include selector.root-conditions(('[dir=ltr]'), 'html') {
-    left:   layout-config.$gutter * -1;
-    right:  layout-config.$header-distinct-gap * -1;
-  }
-  @include selector.root-conditions(('[dir=rtl]'), 'html') {
-    left:   layout-config.$header-distinct-gap * -1;
-    right:  layout-config.$gutter * -1;
-  }
+    top:      layout-config.$gutter * -1;
+    bottom:   layout-config.$gutter * -1;
 
-  // This has no use when the site branding is in the sidebar.
-  @include layout-sidebars.on-sidebar-beside-content(both) {
-    display: none;
+    width: 100vw;
+
+    @include selector.root-conditions(('[dir=ltr]'), 'html') {
+      left:   layout-config.$gutter * -1;
+    }
+    @include selector.root-conditions(('[dir=rtl]'), 'html') {
+      right:  layout-config.$gutter * -1;
+    }
+
+    // These are disabled when the site branding is in the sidebar.
+    @include layout-sidebars.on-sidebar-beside-content(both) {
+      display: none;
+    }
   }
 }
 
@@ -119,6 +140,15 @@ header[role='banner']::before {
   @include selector.root-conditions(('[dir=rtl]'), 'html') {
     margin-left:  layout-config.$gutter * -1;
   }
+
+  // Hidden in compact mode.
+  display: none;
+
+  // Displayed in non-compact mode.
+  @include layout-sidebars.on-sidebar-beside-content(both) {
+    display: block;
+  }
+
 }
 
 .region-primary-menu::before {
@@ -208,17 +238,23 @@ header[role='banner']::before {
   }
 }
 
-.search-target:target ~ header[role='banner'],
-.search-target--form-has-focus ~ header[role='banner'] {
-  // This hides the branding region when .search-target is the ID in the
-  // location, i.e. the in-page anchor target.
-  @include headroom.headroom-unpinned;
+.search-target:target,
+.search-target--form-has-focus {
 
-  // This reverts the above, making the branding always visible when the
-  // branding is in the sidebar.
-  @include layout-sidebars.on-sidebar-beside-content(any) {
-    @include headroom.headroom-pinned;
+  & ~ header[role='banner'] .region-header {
+
+    // This hides the branding region when .search-target is the ID in the
+    // location, i.e. the in-page anchor target.
+    @include headroom.headroom-unpinned;
+
+    // This reverts the above, making the branding always visible when the
+    // branding is in the sidebar.
+    @include layout-sidebars.on-sidebar-beside-content(any) {
+      @include headroom.headroom-pinned;
+    }
+
   }
+
 }
 
 .omnipedia-header {
@@ -240,8 +276,12 @@ header[role='banner']::before {
   &__search-form {
     // We have to use clip-path rather than overflow: hidden; as otherwise
     // Firefox would scroll the container to the search field when it gains
-    // focus.
-    clip-path: inset(0);
+    // focus. Note that the bottom is offset by the divider thickness to avoid
+    // sometimes overlaying over the bottom border.
+    //
+    // @todo Is this actually related to the divider thickness or just a 1 px
+    //   rounding error?
+    clip-path: inset(0 0 #{general-variables.$divider-thickness} 0);
 
     // Remove the clip-path when the site branding is in the sidebar.
     @include layout-sidebars.on-sidebar-beside-content(any) {
