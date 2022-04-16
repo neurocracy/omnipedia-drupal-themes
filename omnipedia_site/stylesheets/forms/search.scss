@@ -45,3 +45,9 @@
     }
   }
 }
+
+// This adjusts the label transform so that it doesn't travel up as far, as it
+// otherwise feels a bit too high due to the amount of vertical space available.
+.omnipedia-header__search-form .material-input__label:not(.visually-hidden) {
+  transform-origin: 0 1.5em;
+}
