@@ -42,3 +42,14 @@
     border-radius: material-general.$border-radius;
   }
 }
+
+// @see ../layout/_grid.scss
+.layout-container::after {
+
+  @include colour.set($background: colours.$primary-content-background-light);
+
+  @include colour.on-dark-scheme {
+    @include colour.set($background: colours.$primary-content-background-dark);
+  }
+
+}

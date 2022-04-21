@@ -69,6 +69,32 @@
     padding-right:  layout-config.$gap;
   }
 
+  // This adds a panel behind the compact header at the top of the page which
+  // is given the same background colour as the content area.
+  //
+  // @see ../global/_site_content.scss
+  &::after {
+
+    content: '';
+
+    grid-column-start:  branding-start;
+    grid-column-end:    menu-primary-end;
+    grid-row-start:     branding-start;
+    grid-row-end:       branding-end;
+
+    margin-left:    layout-config.$gutter * -1;
+    margin-right:   layout-config.$gutter * -1;
+    margin-top:     layout-config.$gutter * -1;
+    margin-bottom:  layout-config.$gutter * -1;
+
+    max-width: none;
+
+    @include layout-sidebars.on-sidebar-beside-content(both) {
+      display: none;
+    }
+
+  }
+
   header[role='banner'] {
     grid-area: branding;
   }
