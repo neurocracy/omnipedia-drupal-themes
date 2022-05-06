@@ -1,7 +1,7 @@
 This contains the source files for the [Omnipedia](https://omnipedia.app/)
 Drupal theme.
 
-***Here be potential spoilers. Proceed at your own risk.***
+⚠️⚠️⚠️ ***Here be potential spoilers. Proceed at your own risk.*** ⚠️⚠️⚠️
 
 ----
 
