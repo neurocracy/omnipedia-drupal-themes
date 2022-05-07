@@ -61,7 +61,7 @@ Then, in your project's root, run ```composer require
 "drupal/omnipedia_site:^2.0@dev"``` to have Composer install the required
 dependencies for you.
 
-## Assets
+## Building assets
 
 To build assets for this project, you'll need to have
 [Node.js](https://nodejs.org/) installed.
