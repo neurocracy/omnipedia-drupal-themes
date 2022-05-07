@@ -51,6 +51,11 @@ section:
 Note that this assumes your Drupal web root is under ```drupal/``` and this
 theme is placed under ```drupal/themes/```. Adjust the paths as needed.
 
+You'll also need to have the repository and installer types set up in your root
+```composer.json``` for [Asset Packagist](https://asset-packagist.org/) as
+detailed by the [Drupal.org Composer
+documentation](https://www.drupal.org/docs/develop/using-composer/using-composer-to-install-drupal-and-manage-dependencies#third-party-libraries).
+
 Then, in your project's root, run ```composer require
 "drupal/omnipedia_site:^2.0@dev"``` to have Composer install the required
 dependencies for you.
