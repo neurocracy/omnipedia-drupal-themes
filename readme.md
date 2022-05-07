@@ -48,8 +48,9 @@ section:
 }
 ```
 
-Note that this assumes your Drupal web root is under ```drupal/``` and this
-theme is placed under ```drupal/themes/```. Adjust the paths as needed.
+Note that this assumes your Drupal web root is under ```drupal/``` and the
+contents of this repository are placed under ```drupal/themes/```. Adjust the
+paths as needed if you use a different web root.
 
 You'll also need to have the repository and installer types set up in your root
 ```composer.json``` for [Asset Packagist](https://asset-packagist.org/) as
