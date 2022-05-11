@@ -24,7 +24,7 @@ Omnipedia's custom code; that will be open sourced at a later time.*
 
 * PHP 8
 
-* [Composer 2](https://getcomposer.org/)
+* [Composer](https://getcomposer.org/)
 
 ## Drupal dependencies
 
