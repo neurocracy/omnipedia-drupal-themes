@@ -30,7 +30,7 @@ Omnipedia's custom code; that will be open sourced at a later time.*
 
 * The [```ambientimpact_base```](https://github.com/Ambient-Impact/drupal-themes) theme must be present in your Drupal installation.
 
-* Several [```ambientimpact_*``` modules](https://github.com/Ambient-Impact/drupal-modules) are required (Drupal will install them automatically).
+* Several [```ambientimpact_*``` modules](https://github.com/Ambient-Impact/drupal-modules) must be present.
 
 * Several of the ```omnipedia_*``` modules are required; to be open sourced at a later date.
 
