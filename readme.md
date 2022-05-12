@@ -106,3 +106,11 @@ To build specific things:
 * ```grunt css``` - compiles CSS files from Sass; applies [Autoprefixer](https://github.com/postcss/autoprefixer).
 
 * ```grunt favicons``` - builds all the shortcut/browser icons for the theme, using [japrescott/grunt-favicons](https://github.com/japrescott/grunt-favicons); requires [ImageMagick](https://imagemagick.org/) to be installed.
+
+-----------------
+
+# Planned improvements
+
+* Port ```src/MediaSubtitleTracks.php``` to the [```ambientimpact_media``` module](https://github.com/Ambient-Impact/drupal-modules).
+
+* Refactor many of the stylesheets as [component plug-ins/libraries](https://github.com/Ambient-Impact/drupal-modules/blob/4.x/component_explainer.md).
