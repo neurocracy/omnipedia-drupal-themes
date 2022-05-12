@@ -38,8 +38,15 @@ Omnipedia's custom code; that will be open sourced at a later time.*
 
 ## Composer
 
-In your root ```composer.json```, add the following to the ```"repositories"```
-section:
+Check out or download the contents of this repository and place it in Drupal's
+```themes``` directory. The expected folder structure of this ```readme.md```
+relative to your root ```composer.json``` should be
+```drupal/themes/omnipedia/readme.md``` where ```drupal``` is your
+publicly-accessible web directory; adjust as needed if you have a different web
+directory name.
+
+Then, in your root ```composer.json```, add the following to the
+```"repositories"``` section:
 
 ```
 "drupal/omnipedia_site": {
@@ -47,10 +54,6 @@ section:
   "url": "drupal/themes/omnipedia/omnipedia_site"
 }
 ```
-
-Note that this assumes your Drupal web root is under ```drupal/``` and the
-contents of this repository are placed under ```drupal/themes/```. Adjust the
-paths as needed if you use a different web root.
 
 You'll also need to have the repository and installer types set up in your root
 ```composer.json``` for [Asset Packagist](https://asset-packagist.org/) as
