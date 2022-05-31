@@ -25,7 +25,9 @@ module.exports = function(grunt, options) {
   //   Open issue to add support for multiple importer support. When/if this is
   //   resolved, we can add a second importer:
   //   moduleImporter({basedir: path.join(__dirname, '..')})
-  includePaths.push(path.join(__dirname, '../../ambientimpact/node_modules/sassy-cast/dist'));
+  includePaths.push(path.join(
+    options.baseThemePath, '../node_modules/sassy-cast/dist'
+  ));
 
   /** @type {String} The base theme prefix. */
   const baseThemePrefix = 'base:';
