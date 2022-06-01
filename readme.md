@@ -38,31 +38,41 @@ Omnipedia's custom code; that will be open sourced at a later time.*
 
 ## Composer
 
-Check out or download the contents of this repository and place it in Drupal's
-```themes``` directory. The expected folder structure of this ```readme.md```
-relative to your root ```composer.json``` should be
-```drupal/themes/omnipedia/readme.md``` where ```drupal``` is your
-publicly-accessible web directory; adjust as needed if you have a different web
-directory name.
-
-Then, in your root ```composer.json```, add the following to the
-```"repositories"``` section:
-
-```
-"drupal/omnipedia_site": {
-  "type": "path",
-  "url": "drupal/themes/omnipedia/omnipedia_site"
-}
-```
+Ensure that you have your Drupal installation set up with the correct Composer
+installer types such as those provided by [the ```drupal\recommended-project```
+template](https://www.drupal.org/docs/develop/using-composer/starting-a-site-using-drupal-composer-project-templates#s-drupalrecommended-project).
+If you're starting from scratch, simply requiring that template and following
+[the Drupal.org Composer
+documentation](https://www.drupal.org/docs/develop/using-composer/starting-a-site-using-drupal-composer-project-templates)
+should get you up and running.
 
 You'll also need to have the repository and installer types set up in your root
 ```composer.json``` for [Asset Packagist](https://asset-packagist.org/) as
 detailed by the [Drupal.org Composer
 documentation](https://www.drupal.org/docs/develop/using-composer/using-composer-to-install-drupal-and-manage-dependencies#third-party-libraries).
 
+Then, in your root ```composer.json```, add the following to the
+```"repositories"``` section:
+
+```
+{
+  "type": "package",
+  "package": {
+    "name": "drupal/omnipedia_site",
+    "type": "drupal-custom-theme",
+    "version": "dev-3.x",
+    "source": {
+      "url": "https://github.com/neurocracy/drupal-omnipedia-site-theme.git",
+      "type": "git",
+      "reference": "3.x"
+    }
+  }
+}
+```
+
 Then, in your project's root, run ```composer require
-"drupal/omnipedia_site:^2.0@dev"``` to have Composer install the required
-dependencies for you.
+"drupal/omnipedia_site:^3.x@dev"``` to have Composer install the theme and its
+required dependencies for you.
 
 ## Building assets
 
