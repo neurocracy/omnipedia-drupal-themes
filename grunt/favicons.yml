@@ -6,5 +6,5 @@ options:
   # We provide our own rather than have them generated.
   windowsTile: false
 theme:
-  src:  'omnipedia_site/images/icons/icon.png'
-  dest: 'omnipedia_site/images/icons/generated'
+  src:  'images/icons/icon.png'
+  dest: 'images/icons/generated'

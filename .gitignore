@@ -6,4 +6,4 @@ node_modules
 **/*.css.map
 
 # Ignore generated icons.
-omnipedia_site/images/icons/generated/*
+images/icons/generated/*

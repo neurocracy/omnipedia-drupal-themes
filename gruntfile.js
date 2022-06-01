@@ -17,11 +17,6 @@ module.exports = function(grunt) {
   ).toString().trim());
 
   let pathTemplates = {
-    // Drupal extension directory names/paths relative to this gruntfile.
-    // Extensions are either modules or themes.
-    extensions: [
-      'omnipedia_site',
-    ],
     // Stylesheet directory names/paths, relative to extension directories.
     stylesheets: [
       'stylesheets',

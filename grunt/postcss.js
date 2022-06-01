@@ -14,9 +14,8 @@ module.exports = function(grunt, options) {
         ]
       },
       files: [{
-        src:
-          '<%= pathTemplates.extensions %>/<%= pathTemplates.stylesheets %>/**/*.css',
-        ext:  '.css',
+        src:    '<%= pathTemplates.stylesheets %>/**/*.css',
+        ext:    '.css',
         extDot: 'last',
         expand: true,
       }]
