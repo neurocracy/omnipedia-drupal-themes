@@ -58,7 +58,7 @@ Then, in your root ```composer.json```, add the following to the
 {
   "type": "package",
   "package": {
-    "name": "drupal/omnipedia_site",
+    "name": "drupal/omnipedia_site_theme",
     "type": "drupal-custom-theme",
     "version": "dev-3.x",
     "source": {
@@ -71,7 +71,7 @@ Then, in your root ```composer.json```, add the following to the
 ```
 
 Then, in your project's root, run ```composer require
-"drupal/omnipedia_site:^3.x@dev"``` to have Composer install the theme and its
+"drupal/omnipedia_site_theme:^3.x@dev"``` to have Composer install the theme and its
 required dependencies for you.
 
 ## Building assets
@@ -134,4 +134,4 @@ To build specific things:
 
 The following major version bumps indicate breaking changes:
 
-* 3.x - Changed Composer installer type to `drupal-custom-theme`.
+* 3.x - Changed Composer installer type to `drupal-custom-theme`; moved theme contents into root directory; renamed theme from `omnipedia_site` to `omnipedia_site_theme` for clarity.

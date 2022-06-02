@@ -2,10 +2,10 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
-use Drupal\omnipedia_site\EuCookieCompliancePopUpInfoPreprocess;
-use Drupal\omnipedia_site\MediaSubtitleTracks;
-use Drupal\omnipedia_site\SiteBrandingInliner;
-use Drupal\omnipedia_site\SiteBrandingMainPageLinks;
+use Drupal\omnipedia_site_theme\EuCookieCompliancePopUpInfoPreprocess;
+use Drupal\omnipedia_site_theme\MediaSubtitleTracks;
+use Drupal\omnipedia_site_theme\SiteBrandingInliner;
+use Drupal\omnipedia_site_theme\SiteBrandingMainPageLinks;
 
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
@@ -13,7 +13,7 @@ use Drupal\omnipedia_site\SiteBrandingMainPageLinks;
  * This adds 'html__extended' as a template suggestion so that we can extend
  * html.html.twig without re-implementing the whole template.
  */
-function omnipedia_site_theme_suggestions_html_alter(
+function omnipedia_site_theme_theme_suggestions_html_alter(
   array &$suggestions, array $variables
 ): void {
   $suggestions[] = 'html__extended';
@@ -28,7 +28,7 @@ function omnipedia_site_theme_suggestions_html_alter(
  *
  * @see \Drupal\omnipedia_core\Service\WikiNodeMainPageInterface::isCurrentRouteMainPage()
  */
-function omnipedia_site_preprocess_html(array &$variables): void {
+function omnipedia_site_theme_preprocess_html(array &$variables): void {
 
   /** @var bool */
   $variables['omnipedia_is_main_page'] = \Drupal::service(
@@ -46,7 +46,7 @@ function omnipedia_site_preprocess_html(array &$variables): void {
  *
  * @see \Drupal\omnipedia_search\Service\WikiSearchInterface::isCurrentRouteSearchPage()
  */
-function omnipedia_site_preprocess_page(array &$variables): void {
+function omnipedia_site_theme_preprocess_page(array &$variables): void {
 
   /** @var bool */
   $variables['omnipedia_is_search_page'] = \Drupal::service(
@@ -58,13 +58,13 @@ function omnipedia_site_preprocess_page(array &$variables): void {
 /**
  * Prepares variables for region templates.
  *
- * This attaches the 'omnipedia_site/sidebars' library to 'sidebar_first' and
+ * This attaches the 'omnipedia_site_theme/sidebars' library to 'sidebar_first' and
  * 'sidebar_second' regions.
  */
-function omnipedia_site_preprocess_region(array &$variables): void {
+function omnipedia_site_theme_preprocess_region(array &$variables): void {
 
   if (\in_array($variables['region'], ['sidebar_first', 'sidebar_second'])) {
-    $variables['#attached']['library'][] = 'omnipedia_site/sidebars';
+    $variables['#attached']['library'][] = 'omnipedia_site_theme/sidebars';
   }
 
 }
@@ -72,11 +72,12 @@ function omnipedia_site_preprocess_region(array &$variables): void {
 /**
  * Implements hook_element_info_alter().
  *
- * This attaches the 'omnipedia_site/form_radios' library to the 'radios'
+ * This attaches the 'omnipedia_site_theme/form_radios' library to the 'radios'
  * element.
  */
-function omnipedia_site_element_info_alter(array &$info): void {
-  $info['radios']['#attached']['library'][] = 'omnipedia_site/form_radios';
+function omnipedia_site_theme_element_info_alter(array &$info): void {
+  $info['radios']['#attached']['library'][] =
+    'omnipedia_site_theme/form_radios';
 }
 
 /**
@@ -97,7 +98,7 @@ function omnipedia_site_element_info_alter(array &$info): void {
  *   Template suggestion that outputs a <button> element rather than an <input>.
  *   Also documents rationale and links.
  */
-function omnipedia_site_form_views_exposed_form_alter(
+function omnipedia_site_theme_form_views_exposed_form_alter(
   array &$form, FormStateInterface $formState, string $formId
 ): void {
   if ($form['#id'] !== 'views-exposed-form-wiki-search-page') {
@@ -136,62 +137,64 @@ function omnipedia_site_form_views_exposed_form_alter(
 /**
  * Prepares variables for the 'help_block' block template.
  *
- * This attaches the 'omnipedia_site/help' library.
+ * This attaches the 'omnipedia_site_theme/help' library.
  */
-function omnipedia_site_preprocess_block__help_block(array &$variables): void {
-  $variables['#attached']['library'][] = 'omnipedia_site/help';
+function omnipedia_site_theme_preprocess_block__help_block(
+  array &$variables
+): void {
+  $variables['#attached']['library'][] = 'omnipedia_site_theme/help';
 }
 
 /**
  * Prepares variables for the 'omnipedia_current_date' block template.
  *
- * This attaches the 'omnipedia_site/current_date' library.
+ * This attaches the 'omnipedia_site_theme/current_date' library.
  */
-function omnipedia_site_preprocess_block__omnipedia_current_date(
+function omnipedia_site_theme_preprocess_block__omnipedia_current_date(
   array &$variables
 ): void {
-  $variables['#attached']['library'][] = 'omnipedia_site/current_date';
+  $variables['#attached']['library'][] = 'omnipedia_site_theme/current_date';
 }
 
 /**
  * Prepares variables for the 'omnipedia_join' block template.
  *
- * This attaches the 'omnipedia_site/join' library.
+ * This attaches the 'omnipedia_site_theme/join' library.
  */
-function omnipedia_site_preprocess_block__omnipedia_join(
+function omnipedia_site_theme_preprocess_block__omnipedia_join(
   array &$variables
 ): void {
-  $variables['#attached']['library'][] = 'omnipedia_site/join';
+  $variables['#attached']['library'][] = 'omnipedia_site_theme/join';
 }
 
 /**
  * Prepares variables for the 'omnipedia_page_revision_history' block template.
  *
- * This attaches the 'omnipedia_site/page_revision_history' library.
+ * This attaches the 'omnipedia_site_theme/page_revision_history' library.
  */
-function omnipedia_site_preprocess_block__omnipedia_page_revision_history(
+function omnipedia_site_theme_preprocess_block__omnipedia_page_revision_history(
   array &$variables
 ): void {
-  $variables['#attached']['library'][] = 'omnipedia_site/page_revision_history';
+  $variables['#attached']['library'][] = 'omnipedia_site_theme/page_revision_history';
 }
 
 /**
  * Prepares variables for the 'system_branding_block' block template.
  *
- * Attaches the 'omnipedia_site/site_branding' library.
+ * Attaches the 'omnipedia_site_theme/site_branding' library.
  *
- * @see \Drupal\omnipedia_site\SiteBrandingInliner
+ * @see \Drupal\omnipedia_site_theme\SiteBrandingInliner
  *   Attempts to inline the branding SVG elements so that their parts can be
  *   animated.
  *
- * @see \Drupal\omnipedia_site\SiteBrandingMainPageLinks
+ * @see \Drupal\omnipedia_site_theme\SiteBrandingMainPageLinks
  *   Alters the branding main page links.
  */
-function omnipedia_site_preprocess_block__system_branding_block(
+function omnipedia_site_theme_preprocess_block__system_branding_block(
   array &$variables
 ): void {
 
-  $variables['#attached']['library'][] = 'omnipedia_site/site_branding';
+  $variables['#attached']['library'][] = 'omnipedia_site_theme/site_branding';
 
   \Drupal::classResolver(SiteBrandingInliner::class)->alter($variables);
 
@@ -205,7 +208,7 @@ function omnipedia_site_preprocess_block__system_branding_block(
  * This switches 'field_media_image' from 'image_caption_formatter' back to
  * 'image_formatter'.
  *
- * @see \Drupal\omnipedia_site\MediaSubtitleTracks
+ * @see \Drupal\omnipedia_site_theme\MediaSubtitleTracks
  *   Builds subtitle tracks.
  *
  * @todo Remove the 'field_media_image' stuff once 'image_caption_formatter' is
@@ -214,7 +217,7 @@ function omnipedia_site_preprocess_block__system_branding_block(
  * @see \Drupal\ambientimpact_media\Plugin\Field\FieldFormatter\ImageFormatter::viewElements()
  *   'image_caption_formatter' set here.
  */
-function omnipedia_site_preprocess_media(array &$variables): void {
+function omnipedia_site_theme_preprocess_media(array &$variables): void {
 
   \Drupal::classResolver(MediaSubtitleTracks::class)->preprocess($variables);
 
@@ -240,26 +243,28 @@ function omnipedia_site_preprocess_media(array &$variables): void {
  *
  * This adds a 'button-placeholder' class to the 'menu_link' element.
  *
- * This attaches the 'omnipedia_site/header' library to this template.
+ * This attaches the 'omnipedia_site_theme/header' library to this template.
  *
  * @see \Drupal\omnipedia_block\Plugin\Block\Header
  *   Used by this block.
  */
-function omnipedia_site_preprocess_omnipedia_header(array &$variables): void {
+function omnipedia_site_theme_preprocess_omnipedia_header(
+  array &$variables
+): void {
 
   $variables['menu_link']['#attributes']['class'][] = 'button-placeholder';
 
-  $variables['#attached']['library'][] = 'omnipedia_site/header';
+  $variables['#attached']['library'][] = 'omnipedia_site_theme/header';
 
 }
 
 /**
  * Prepares variables for page title templates.
  *
- * This attaches the 'omnipedia_site/page_title' library.
+ * This attaches the 'omnipedia_site_theme/page_title' library.
  */
-function omnipedia_site_preprocess_page_title(array &$variables): void {
-  $variables['#attached']['library'][] = 'omnipedia_site/page_title';
+function omnipedia_site_theme_preprocess_page_title(array &$variables): void {
+  $variables['#attached']['library'][] = 'omnipedia_site_theme/page_title';
 }
 
 /**
@@ -269,50 +274,50 @@ function omnipedia_site_preprocess_page_title(array &$variables): void {
  * \template_preprocess_commerce_checkout_pane__PANE(), likely because the order
  * summary has its own separate template.
  *
- * This attaches the 'omnipedia_site/commerce_checkout_summary' library.
+ * This attaches the 'omnipedia_site_theme/commerce_checkout_summary' library.
  *
  * @see \Drupal\commerce_checkout\Plugin\Commerce\CheckoutPane\OrderSummary
  */
-function omnipedia_site_preprocess_commerce_checkout_order_summary(
+function omnipedia_site_theme_preprocess_commerce_checkout_order_summary(
   array &$variables
 ): void {
   $variables['#attached']['library'][] =
-    'omnipedia_site/commerce_checkout_summary';
+    'omnipedia_site_theme/commerce_checkout_summary';
 }
 
 /**
  * Preprocess variables for our billing info commerce-checkout-pane.html.twig.
  *
- * This attaches the 'omnipedia_site/help' library.
+ * This attaches the 'omnipedia_site_theme/help' library.
  *
  * @see \Drupal\omnipedia_commerce\Plugin\Commerce\CheckoutPane\BillingInformationMessagePane
  */
-function omnipedia_site_preprocess_commerce_checkout_pane__omnipedia_billing_information_message(
+function omnipedia_site_theme_preprocess_commerce_checkout_pane__omnipedia_billing_information_message(
   array &$variables
 ): void {
-  $variables['#attached']['library'][] = 'omnipedia_site/help';
+  $variables['#attached']['library'][] = 'omnipedia_site_theme/help';
 }
 
 /**
  * Preprocess variables for the Commerce review checkout pane.
  *
- * This attaches the 'omnipedia_site/commerce_checkout_review' library.
+ * This attaches the 'omnipedia_site_theme/commerce_checkout_review' library.
  *
  * @see \Drupal\commerce_checkout\Plugin\Commerce\CheckoutPane\Review
  */
-function omnipedia_site_preprocess_commerce_checkout_pane__review(
+function omnipedia_site_theme_preprocess_commerce_checkout_pane__review(
   array &$variables
 ): void {
   $variables['#attached']['library'][] =
-    'omnipedia_site/commerce_checkout_review';
+    'omnipedia_site_theme/commerce_checkout_review';
 }
 
 /**
  * Prepares variables for the eu_cookie_compliance_popup_info.html.twig template.
  *
- * @see \Drupal\omnipedia_site\EuCookieCompliancePopUpInfoPreprocess
+ * @see \Drupal\omnipedia_site_theme\EuCookieCompliancePopUpInfoPreprocess
  */
-function omnipedia_site_preprocess_eu_cookie_compliance_popup_info(
+function omnipedia_site_theme_preprocess_eu_cookie_compliance_popup_info(
   array &$variables
 ): void {
 
@@ -327,14 +332,17 @@ function omnipedia_site_preprocess_eu_cookie_compliance_popup_info(
  *
  * Default template: views-exposed-form.html.twig.
  *
- * This attaches the 'omnipedia_site/search_form' library to to the wiki search
+ * This attaches the 'omnipedia_site_theme/search_form' library to to the wiki search
  * page view exposed form.
  */
-function omnipedia_site_preprocess_views_exposed_form(array &$variables): void {
+function omnipedia_site_theme_preprocess_views_exposed_form(
+  array &$variables
+): void {
 
   if ($variables['form']['#id'] === 'views-exposed-form-wiki-search-page') {
 
-    $variables['form']['#attached']['library'][] = 'omnipedia_site/search_form';
+    $variables['form']['#attached']['library'][] =
+      'omnipedia_site_theme/search_form';
 
   }
 

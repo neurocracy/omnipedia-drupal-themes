@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Drupal\omnipedia_site;
+namespace Drupal\omnipedia_site_theme;
 
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Language\LanguageManagerInterface;

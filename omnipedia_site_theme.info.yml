@@ -41,48 +41,48 @@ regions:
   footer: 'Footer'
 
 libraries:
-  - omnipedia_site/global-styling
+  - omnipedia_site_theme/global-styling
 
 libraries-override:
 
   # Replace the Classy media embed error with our own.
-  classy/media_embed_error: omnipedia_site/media_embed_error
+  classy/media_embed_error: omnipedia_site_theme/media_embed_error
 
   # Replace Commerce checkout libraries with our own.
-  commerce_checkout/form:       omnipedia_site/commerce_checkout_form
-  commerce_checkout/login_pane: omnipedia_site/commerce_checkout_login
+  commerce_checkout/form:       omnipedia_site_theme/commerce_checkout_form
+  commerce_checkout/login_pane: omnipedia_site_theme/commerce_checkout_login
 
 libraries-extend:
 
   ambientimpact_ux/component.offcanvas:
-    - omnipedia_site/offcanvas_immerse
+    - omnipedia_site_theme/offcanvas_immerse
 
   classy/base:
-    - omnipedia_site/menu
+    - omnipedia_site_theme/menu
 
   commerce_checkout/checkout_progress:
-    - omnipedia_site/commerce_checkout_progress
+    - omnipedia_site_theme/commerce_checkout_progress
 
   eu_cookie_compliance/eu_cookie_compliance:
-    - omnipedia_site/eu_cookie_compliance
+    - omnipedia_site_theme/eu_cookie_compliance
 
   omnipedia_block/component.founder_message:
-    - omnipedia_site/founder_message
+    - omnipedia_site_theme/founder_message
 
   omnipedia_content/component.infobox:
-    - omnipedia_site/omnipedia_infobox
+    - omnipedia_site_theme/omnipedia_infobox
 
   omnipedia_content/component.main_page:
-    - omnipedia_site/omnipedia_main_page
+    - omnipedia_site_theme/omnipedia_main_page
 
   omnipedia_content/component.reference:
-    - omnipedia_site/references
+    - omnipedia_site_theme/references
 
   omnipedia_media/component.media:
-    - omnipedia_site/omnipedia_media
+    - omnipedia_site_theme/omnipedia_media
 
   omnipedia_media/component.media_group:
-    - omnipedia_site/omnipedia_media_group
+    - omnipedia_site_theme/omnipedia_media_group
 
   omnipedia_content_changes/component.changes:
-    - omnipedia_site/changes
+    - omnipedia_site_theme/changes

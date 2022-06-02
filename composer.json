@@ -1,5 +1,5 @@
 {
-  "name": "drupal/omnipedia_site",
+  "name": "drupal/omnipedia_site_theme",
   "description": "Omnipedia - Site theme",
   "type": "drupal-custom-theme",
   "license": "GPL-2.0-or-later",

@@ -18,7 +18,7 @@ global-styling:
       stylesheets/theme.css: {}
   dependencies:
     - ambientimpact_ux/component.material.ripple
-    - omnipedia_site/font-exo-2
+    - omnipedia_site_theme/font-exo-2
 
 changes:
   css:
@@ -70,7 +70,7 @@ eu_cookie_compliance:
     - ambientimpact_ux/component.overlay
     - ambientimpact_ux/component.pointer_focus_hide
     - omnipedia_block/component.privacy_settings
-    - omnipedia_site/offcanvas_immerse
+    - omnipedia_site_theme/offcanvas_immerse
 
 founder_message:
   css:
@@ -100,9 +100,9 @@ header:
     - ambientimpact_ux/component.headroom
     - ambientimpact_ux/component.overlay
     - ambientimpact_ux/component.responsive_style_property
-    - omnipedia_site/current_date # Required for the current date element.
-    - omnipedia_site/offcanvas_immerse
-    - omnipedia_site/search_form
+    - omnipedia_site_theme/current_date # Required for the current date element.
+    - omnipedia_site_theme/offcanvas_immerse
+    - omnipedia_site_theme/search_form
 
 help:
   css:
@@ -185,7 +185,7 @@ sidebars:
     - ambientimpact_ux/component.pointer_focus_hide
     - ambientimpact_ux/component.responsive_style_property
     - ambientimpact_ux/component.scrollbar_gutter
-    - omnipedia_site/header
+    - omnipedia_site_theme/header
 
 site_branding:
   css:
