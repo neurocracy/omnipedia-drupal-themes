@@ -81,7 +81,7 @@ module.exports = function(grunt, options) {
         sourceMap:      true
       },
       files: [{
-        src:    '<%= pathTemplates.stylesheets %>/**/*.css',
+        src:    '<%= pathTemplates.stylesheets %>/**/*.scss',
         ext:    '.css',
         extDot: 'last',
         expand: true,
