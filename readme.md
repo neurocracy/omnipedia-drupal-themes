@@ -126,7 +126,7 @@ To build specific things:
 
 * Port ```src/MediaSubtitleTracks.php``` to the [```ambientimpact_media``` module](https://github.com/Ambient-Impact/drupal-modules).
 
-* Refactor many of the stylesheets as [component plug-ins/libraries](https://github.com/Ambient-Impact/drupal-modules/blob/4.x/component_explainer.md).
+* Refactor most of the stylesheets and JavaScript as [component plug-ins/libraries](https://github.com/Ambient-Impact/drupal-modules/blob/4.x/component_explainer.md).
 
 -----------------
 
