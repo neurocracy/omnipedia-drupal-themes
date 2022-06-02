@@ -71,8 +71,8 @@ Then, in your root ```composer.json```, add the following to the
 ```
 
 Then, in your project's root, run ```composer require
-"drupal/omnipedia_site_theme:^3.x@dev"``` to have Composer install the theme and its
-required dependencies for you.
+"drupal/omnipedia_site_theme:dev-3.x@dev"``` to have Composer install the theme
+and its required dependencies for you.
 
 ## Building assets
 
