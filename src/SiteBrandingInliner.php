@@ -84,7 +84,7 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
    *
    * @var string
    */
-  protected const LOGO_CACHE_ID = 'omnipedia_site_branding_logo_inline';
+  protected const LOGO_CACHE_ID = 'omnipedia_site_theme_branding_logo_inline';
 
   /**
    * The cache backend to store inlined render arrays in.
@@ -409,11 +409,12 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
    * the logo doesn't change between any cache contexts. The only cache tags
    * added are:
    *
-   * - 'config:block.block.omnipedia_site_branding': Invalidated when the site
-   *   branding block configuration changes, e.g. the block form is saved, etc.
+   * - 'config:block.block.omnipedia_site_theme_branding': Invalidated when the
+   *   site branding block configuration changes, e.g. the block form is saved,
+   *   etc.
    *
-   * - 'omnipedia_site_inline_branding': Custom cache tag in case invalidating
-   *   this programmatically is necessary down the road.
+   * - 'omnipedia_site_theme_inline_branding': Custom cache tag in case
+   *   invalidating this programmatically is necessary down the road.
    *
    * @param array &$variables
    *   Variables from the 'system_branding_block' block template.
@@ -458,8 +459,8 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
       self::LOGO_CACHE_ID, $renderArray,
       CacheBackendInterface::CACHE_PERMANENT,
       [
-        'config:block.block.omnipedia_site_branding',
-        'omnipedia_site_inline_branding',
+        'config:block.block.omnipedia_site_theme_branding',
+        'omnipedia_site_theme_inline_branding',
       ]
     );
 
