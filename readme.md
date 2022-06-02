@@ -56,22 +56,13 @@ Then, in your root ```composer.json```, add the following to the
 
 ```
 {
-  "type": "package",
-  "package": {
-    "name": "drupal/omnipedia_site_theme",
-    "type": "drupal-custom-theme",
-    "version": "dev-3.x",
-    "source": {
-      "url": "https://github.com/neurocracy/drupal-omnipedia-site-theme.git",
-      "type": "git",
-      "reference": "3.x"
-    }
-  }
+  "type": "vcs",
+  "url": "https://github.com/neurocracy/drupal-omnipedia-site-theme.git"
 }
 ```
 
 Then, in your project's root, run ```composer require
-"drupal/omnipedia_site_theme:dev-3.x@dev"``` to have Composer install the theme
+"drupal/omnipedia_site_theme:3.x-dev@dev"``` to have Composer install the theme
 and its required dependencies for you.
 
 ## Building assets
