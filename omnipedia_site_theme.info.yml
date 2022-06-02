@@ -1,5 +1,5 @@
 name: Omnipedia - Site theme
-description: The theme for https://omnipedia.app.
+description: The front-end theme for Omnipedia.
 type: theme
 base theme: ambientimpact_base
 package: Omnipedia
