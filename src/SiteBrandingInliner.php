@@ -87,6 +87,29 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
   protected const LOGO_CACHE_ID = 'omnipedia_site_theme_branding_logo_inline';
 
   /**
+   * Branding block configuration cache tag.
+   *
+   * This is invalidated when the site branding block configuration changes,
+   * e.g. the block form is saved or the configuration is changed
+   * programmatically.
+   *
+   * @var string
+   */
+  protected const BRANDING_BLOCK_CACHE_TAG =
+    'config:block.block.omnipedia_site_theme_branding';
+
+  /**
+   * Custom cache tag for invalidating inlined branding.
+   *
+   * This is applied in case invalidating the cached inline branding
+   * programmatically is necessary down the road.
+   *
+   * @var string
+   */
+  public const INLINE_BRANDING_CACHE_TAG =
+    'omnipedia_site_theme_inline_branding';
+
+  /**
    * The cache backend to store inlined render arrays in.
    *
    * @var \Drupal\Core\Cache\CacheBackendInterface
@@ -406,18 +429,18 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
    *
    * Note that while we could use the render cache and pass on cache contexts
    * and tags from $variables, that would defeat the purpose of this caching as
-   * the logo doesn't change between any cache contexts. The only cache tags
-   * added are:
-   *
-   * - 'config:block.block.omnipedia_site_theme_branding': Invalidated when the
-   *   site branding block configuration changes, e.g. the block form is saved,
-   *   etc.
-   *
-   * - 'omnipedia_site_theme_inline_branding': Custom cache tag in case
-   *   invalidating this programmatically is necessary down the road.
+   * the logo doesn't change between any cache contexts. The only cache tags we
+   * add are for the branding block configuration and a custom cache tag to
+   * invalidate only the inline branding if later needed.
    *
    * @param array &$variables
    *   Variables from the 'system_branding_block' block template.
+   *
+   * @see self::BRANDING_BLOCK_CACHE_TAG
+   *   Branding block configuration tag applied to cached logo.
+   *
+   * @see self::INLINE_BRANDING_CACHE_TAG
+   *   Custom cache tag applied to inlined cached logo.
    */
   public function alterLogo(array &$variables): void {
 
@@ -459,8 +482,8 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
       self::LOGO_CACHE_ID, $renderArray,
       CacheBackendInterface::CACHE_PERMANENT,
       [
-        'config:block.block.omnipedia_site_theme_branding',
-        'omnipedia_site_theme_inline_branding',
+        self::BRANDING_BLOCK_CACHE_TAG,
+        self::INLINE_BRANDING_CACHE_TAG,
       ]
     );
 
