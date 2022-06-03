@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
