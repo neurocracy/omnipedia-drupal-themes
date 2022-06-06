@@ -69,6 +69,9 @@ libraries-extend:
   omnipedia_block/component.founder_message:
     - omnipedia_site_theme/founder_message
 
+  omnipedia_changes/component.changes:
+    - omnipedia_site_theme/changes
+
   omnipedia_content/component.infobox:
     - omnipedia_site_theme/omnipedia_infobox
 
@@ -83,6 +86,3 @@ libraries-extend:
 
   omnipedia_media/component.media_group:
     - omnipedia_site_theme/omnipedia_media_group
-
-  omnipedia_content_changes/component.changes:
-    - omnipedia_site_theme/changes
