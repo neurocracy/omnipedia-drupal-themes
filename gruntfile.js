@@ -61,15 +61,16 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('all', [
-    'sass',
-    'postcss',
-    'favicons',
-  ]);
-
   grunt.registerTask('css', [
     'sass',
     'postcss',
   ]);
+
+  grunt.registerTask('all', [
+    'css',
+    'favicons',
+  ]);
+
+  grunt.registerTask('default', ['all']);
 
 };
