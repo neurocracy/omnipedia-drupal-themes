@@ -67,7 +67,7 @@ module.exports = function(grunt, options) {
   };
 
   return {
-    theme: {
+    stylesheets: {
       options: {
         implementation: sass,
         importer: [
