@@ -13,9 +13,6 @@ day when projects are cancelled. We've gotten to where we are by building upon
 the work of countless others, and we want to keep that going. We hope that some
 part of this codebase is useful or will inspire someone out there.
 
-*Note that this repository does not contain the majority of the logic that powers
-Omnipedia's custom code; that will be open sourced at a later time.*
-
 ----
 
 # Requirements
@@ -32,7 +29,7 @@ Omnipedia's custom code; that will be open sourced at a later time.*
 
 * Several [```ambientimpact_*``` modules](https://github.com/Ambient-Impact/drupal-modules) must be present.
 
-* Several of the ```omnipedia_*``` modules are required; to be open sourced at a later date.
+* Several of the [```omnipedia_*``` modules](https://github.com/neurocracy) are required.
 
 # Installation
 
