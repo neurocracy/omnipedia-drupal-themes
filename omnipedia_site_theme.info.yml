@@ -86,3 +86,6 @@ libraries-extend:
 
   omnipedia_media/component.media_group:
     - omnipedia_site_theme/omnipedia_media_group
+
+  refreshless/refreshless:
+    - omnipedia_site_theme/refreshless

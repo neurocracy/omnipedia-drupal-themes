@@ -165,6 +165,12 @@ references:
     theme:
       stylesheets/components/references.css: {}
 
+refreshless:
+  js:
+    javascript/refreshless.js: {}
+  dependencies:
+    - ambientimpact_core/framework
+
 search_form:
   css:
     theme:
