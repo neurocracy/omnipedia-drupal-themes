@@ -4,6 +4,7 @@
 
 @use 'config' as layout-config; // Configure layout.
 @use 'base:layout/sidebars' as layout-sidebars;
+@use 'base:layout/vertical_spacing' as vertical-spacing;
 @use 'sass/helpers/breakpoint';
 
 .layout-content {
@@ -26,9 +27,12 @@
     padding-right:  layout-config.$gap;
   }
 
-  .region + .region {
-    margin-top: layout-config.$gap;
-  }
+  @include vertical-spacing.against-previous(
+    '.region',
+    $spacing-small: layout-config.$gap,
+    $spacing-large: layout-config.$gap,
+  );
+
 }
 
 .region-content {
