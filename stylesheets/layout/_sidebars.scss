@@ -202,6 +202,13 @@
   }
 }
 
+.layout-sidebar-first,
+.layout-sidebar-second {
+  @include layout-sidebars.on-sidebar-beside-content(both) {
+    align-self: start;
+  }
+}
+
 .region-sidebar-second {
   @include layout-sidebars.on-sidebar-beside-content(both) {
     // This adjusts the top of the first block's title with the adjacent main
