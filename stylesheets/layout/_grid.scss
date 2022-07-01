@@ -291,6 +291,12 @@
           // name, and slogan, all divided by the width of the column.
           padding-top: math.div(128 + 20 + 13, 128) * 100%;
 
+          // This pulls the pseudo-element up to match the space taken up by
+          // the branding block.
+          margin-top: (
+            layout-config.$gap + layout-config.$header-row-height
+          ) * -1;
+
           // Don't forget the spacing between elements!
           margin-bottom:
             layout-config.$branding-spacing * 2 + layout-config.$gap;
