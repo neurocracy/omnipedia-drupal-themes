@@ -281,8 +281,8 @@
     }
 
     .layout-sidebar-first {
+      // @todo Why doesn't 'first' parameter work here?
       @include layout-sidebars.on-sidebar-beside-content(both) {
-        // @todo Why doesn't 'first' parameter work here?
         &::before {
           content: '';
           display: block;
@@ -297,7 +297,7 @@
             layout-config.$gap + layout-config.$header-row-height
           ) * -1;
 
-          // Don't forget the spacing between elements!
+          // This adds the spacing between the branding elements.
           margin-bottom:
             layout-config.$branding-spacing * 2 + layout-config.$gap;
         }
