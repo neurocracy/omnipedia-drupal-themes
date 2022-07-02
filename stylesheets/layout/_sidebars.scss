@@ -173,6 +173,13 @@
   }
 
   @include layout-sidebars.on-sidebar-beside-content(both) {
+
+    // Make sure the closed target cannot affect layout on larger screens.
+    // Chrome seems to have some issues with this but Firefox does not.
+    &__closed-target {
+      display: none;
+    }
+
     // This causes the container's children to act as if the container doesn't
     // exist for layout purposes, including grid placement. This has better
     // support currently than subgrid, which is not available in Chrome as of
