@@ -56,3 +56,7 @@ main[role="main"]:not(.header-has-overlay)::before,
     z-index: z-index.get(modal) + 1;
   }
 }
+
+.layout-sidebar-first {
+  @include z-index.get('floating-above');
+}

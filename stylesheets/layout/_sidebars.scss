@@ -205,7 +205,32 @@
 .layout-sidebar-first,
 .layout-sidebar-second {
   @include layout-sidebars.on-sidebar-beside-content(both) {
+
+    position: sticky;
+
     align-self: start;
+
+  }
+}
+.layout-sidebar-first {
+  @include layout-sidebars.on-sidebar-beside-content(both) {
+
+    @supports (grid-template-columns: subgrid) {
+      // @todo The 12.25em is a magic number that's intended to account for the
+      //   site branding. This should be reworked so we can remove the value and
+      //   derive it automatically from the branding.
+      top: layout-config.$gap * 2 + layout-config.$header-row-height + 12.25em;
+    }
+
+    @supports not (grid-template-columns: subgrid) {
+      top: layout-config.$gap * 2 + layout-config.$header-row-height;
+    }
+
+  }
+}
+.layout-sidebar-second {
+  @include layout-sidebars.on-sidebar-beside-content(both) {
+    top: layout-config.$gap;
   }
 }
 

@@ -6,6 +6,7 @@
 @use 'base:layout/sidebars' as layout-sidebars;
 @use 'base:forms/search';
 @use 'headroom';
+@use 'sass/helpers/breakpoint';
 @use 'sass/helpers/selector';
 @use 'sass:list';
 @use '../variables/general' as general-variables;
@@ -28,13 +29,34 @@
 ///
 $stacking-order: shadow, background, border, content;
 
-header[role='banner'],
-.region-primary-menu {
-  // This takes viewport top displacement into account, if there is any, and
-  // falls back to a value of 0em displacement if the custom property is not
-  // defined. Note that we have to specify a unit rather than just "0" for
-  // calc().
+
+///
+/// Headroom top value that takes viewport displacement and gutter into account.
+///
+/// This takes viewport top displacement into account, if there is any, and
+/// falls back to a value of 0em displacement if the custom property is not
+/// defined.
+///
+@mixin headroom-top {
+  // Note that we have to specify a unit rather than just "0" for for calc().
   top: calc(var(--displace-top, 0em) + #{layout-config.$gutter}) !important;
+}
+
+// @todo Magic numbers. These should be provided as individual custom properties
+//   on the root element via \omnipedia_site_theme_preprocess_html() as it can
+//   read the values from the theme info.
+:root {
+  --branding-intrinsic-ratio: calc((128 + 20 + 13) / 128 * 100%);
+}
+
+header[role='banner'] {
+  @include breakpoint.on('<layout-with-both-sidebars') {
+    @include headroom-top;
+  }
+}
+
+.region-primary-menu {
+  @include headroom-top;
 }
 
 header[role='banner'],
@@ -380,6 +402,24 @@ header[role='banner'] {
       right:  0;
       top:    layout-config.$gap * -1;
       bottom: layout-config.$gap * -1;
+    }
+  }
+}
+
+header[role='banner'] {
+  @include layout-sidebars.on-sidebar-beside-content(both) {
+    position: relative;
+
+    // @todo Magic number. This is intended to stand in for the first sidebar
+    //   height. This will break when the sidebar contents change and so needs
+    //   to be reworked somehow to derive this dynamically based on the content
+    //   of the sidebar.
+    padding-bottom: 7em;
+
+    .region-header {
+      position: sticky;
+
+      top: layout-config.$gap;
     }
   }
 }

@@ -96,7 +96,13 @@
   }
 
   header[role='banner'] {
+
     grid-area: branding;
+
+    @include layout-sidebars.on-sidebar-beside-content(both) {
+      grid-row-end: sidebar-first-end;
+    }
+
   }
 
   .region-primary-menu {
