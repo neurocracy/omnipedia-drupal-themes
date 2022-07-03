@@ -58,5 +58,5 @@ main[role="main"]:not(.header-has-overlay)::before,
 }
 
 .layout-sidebar-first {
-  @include z-index.get('floating-above');
+  @include z-index.get('floating');
 }
