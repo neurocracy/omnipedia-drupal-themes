@@ -12,6 +12,16 @@ font-exo-2:
       /libraries/fontsource--exo-2/500.css: {}
       /libraries/fontsource--exo-2/500-italic.css: {}
 
+sticky-sidebar:
+  remote: https://github.com/abouolia/sticky-sidebar
+  version: 3.3.3
+  license:
+    name: MIT
+    url: https://github.com/abouolia/sticky-sidebar/blob/master/LICENSE.md
+    gpl-compatible: true
+  js:
+    /libraries/sticky-sidebar/dist/sticky-sidebar.min.js: { minified: true }
+
 global-styling:
   css:
     theme:
@@ -183,15 +193,19 @@ sidebars:
     javascript/sidebars.focus.js: {}
     javascript/sidebars.overlay.js: {}
     javascript/sidebars.keyboard.js: {}
+    javascript/sidebars.sticky.js: {}
   dependencies:
     - ambientimpact_core/ally.js
+    - ambientimpact_core/component.fastdom
     - ambientimpact_ux/component.hash_matcher
     - ambientimpact_ux/component.headroom
+    - ambientimpact_ux/component.layout_size_change
     - ambientimpact_ux/component.overlay
     - ambientimpact_ux/component.pointer_focus_hide
     - ambientimpact_ux/component.responsive_style_property
     - ambientimpact_ux/component.scrollbar_gutter
     - omnipedia_site_theme/header
+    - omnipedia_site_theme/sticky-sidebar
 
 site_branding:
   css:

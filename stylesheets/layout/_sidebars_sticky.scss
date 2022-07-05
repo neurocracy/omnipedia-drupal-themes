@@ -11,12 +11,24 @@
 // @see _header_sticky.scss
 //   Contains header sticky layout stuff on wider screens.
 
+// Can't be :root as the sidebar mixin won't work due to root-conditions mixin
+// selector rewriting.
+.layout-container {
+  --sticky-sidebar-top-offset:    #{layout-config.$gap};
+  --sticky-sidebar-bottom-offset: #{layout-config.$gap};
+
+  --sidebars-are-sticky: false;
+
+  @include layout-sidebars.on-sidebar-beside-content(both) {
+    --sidebars-are-sticky: true;
+  }
+
+}
+
 .layout-sidebar-first,
 .layout-sidebar-second {
   @include layout-sidebars.on-sidebar-beside-content(both) {
-
     position: sticky;
-
   }
 }
 
@@ -27,18 +39,52 @@
       // @todo The 12.25em is a magic number that's intended to account for the
       //   site branding. This should be reworked so we can remove the value and
       //   derive it automatically from the branding.
-      top: layout-config.$gap * 2 + layout-config.$header-row-height + 12.25em;
+      --sticky-sidebar-first-top-offset: calc(
+        var(--sticky-sidebar-top-offset) * 2 +
+        #{layout-config.$header-row-height} + 12.25em
+      );
     }
 
     @supports not (grid-template-columns: subgrid) {
-      top: layout-config.$gap * 2 + layout-config.$header-row-height;
+      --sticky-sidebar-first-top-offset: calc(
+        var(--sticky-sidebar-top-offset) * 2 +
+        #{layout-config.$header-row-height}
+      );
     }
+
+    top: var(--sticky-sidebar-first-top-offset);
 
   }
 }
 
 .layout-sidebar-second {
   @include layout-sidebars.on-sidebar-beside-content(both) {
-    top: layout-config.$gap;
+    top: var(--sticky-sidebar-top-offset);
+  }
+}
+
+.layout-sidebars--is-enhanced-sticky {
+  @include layout-sidebars.on-sidebar-beside-content(both) {
+
+    .layout-sidebar-second {
+      position: static;
+      top:      0;
+    }
+
+    // Default CSS required by the Sticky Sidebar library.
+    //
+    // @see https://abouolia.github.io/sticky-sidebar/#configure-your-css
+
+    .layout-sidebar-second {
+      will-change: min-height;
+    }
+
+    .region-sidebar-second {
+
+      transform:    translate3d(0, 0, 0);
+      will-change:  position, transform;
+
+    }
+
   }
 }

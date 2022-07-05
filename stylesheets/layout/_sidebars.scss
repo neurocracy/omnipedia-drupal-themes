@@ -213,10 +213,20 @@
 
 .region-sidebar-second {
   @include layout-sidebars.on-sidebar-beside-content(both) {
-    // This adjusts the top of the first block's title with the adjacent main
-    // content box .
-    .block:first-child .block__title {
-      margin-top: -0.55em;
+    .block:first-child {
+
+      // This adjusts the top of the first block's title with the adjacent main
+      // content box .
+      .block__title {
+        margin-top: -0.55em;
+      }
+
+      // Required for the Sticky Sidebar library to not miscalculate the sidebar
+      // height due to the negative top margin bove.
+      //
+      // @todo Find a way to fix this miscalculation without overflow hidden.
+      overflow-y: hidden;
+
     }
   }
 }
