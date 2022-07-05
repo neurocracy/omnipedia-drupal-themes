@@ -51,6 +51,16 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
   const offCanvasStatePropertyName = '--omnipedia-sidebars-off-canvas';
 
   /**
+   * The name that the responsive property instance is saved under.
+   *
+   * This should be unique so it doesn't potentially colide with another
+   * instance saved to the same element.
+   *
+   * @type {String}
+   */
+  const responsivePropertyInstanceName = 'offCanvasResponsiveStyleProperty';
+
+  /**
    * Whether the sidebars are currently off-canvas, i.e. on a narrow screen.
    *
    * @return {Boolean}
@@ -62,8 +72,8 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
     }
 
     return (
-      sidebarsElements.getSidebarsContainer().prop('responsiveStyleProperty')
-      .getValue() === 'true'
+      sidebarsElements.getSidebarsContainer()
+      .prop(responsivePropertyInstanceName).getValue() === 'true'
     );
 
   };
@@ -187,13 +197,20 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
       .on('responsivePropertyChange.' + eventNamespace, function(
         event, instance
       ) {
+
+        // Ignore any other instance's events.
+        if (instance.getPropertyName() !== offCanvasStatePropertyName) {
+          return;
+        }
+
         if (sidebarsState.isOffCanvas() === false) {
           sidebarsState.closeMenu();
         }
+
       });
 
       sidebarsElements.getSidebarsContainer().prop(
-        'responsiveStyleProperty', responsiveStyleProperty
+        responsivePropertyInstanceName, responsiveStyleProperty
       );
 
       behaviourAttached = true;
@@ -231,9 +248,9 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
 
       $sidebarsContainer.off('responsivePropertyChange.' + eventNamespace);
 
-      $sidebarsContainer.prop('responsiveStyleProperty').destroy();
+      $sidebarsContainer.prop(responsivePropertyInstanceName).destroy();
 
-      $sidebarsContainer.removeProp('responsiveStyleProperty');
+      $sidebarsContainer.removeProp(responsivePropertyInstanceName);
 
       behaviourAttached = false;
 
