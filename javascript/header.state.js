@@ -32,6 +32,16 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
   const eventNamespace = this.getName();
 
   /**
+   * The name that the responsive property instance is saved under.
+   *
+   * This should be unique so it doesn't potentially colide with another
+   * instance saved to the same element.
+   *
+   * @type {String}
+   */
+  const responsivePropertyInstanceName = 'searchStateResponsiveStyleProperty';
+
+  /**
    * The CSS custom property name that we watch for the search anchor state.
    *
    * The expected value should be a string of either:
@@ -61,7 +71,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
     }
 
     return (
-      headerElements.getSearchAnchor().prop('responsiveStyleProperty')
+      headerElements.getSearchAnchor().prop(responsivePropertyInstanceName)
       .getValue() === 'visible'
     );
 
@@ -173,7 +183,9 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
         searchStatePropertyName, $searchAnchor
       );
 
-      $searchAnchor.prop('responsiveStyleProperty', responsiveStyleProperty);
+      $searchAnchor.prop(
+        responsivePropertyInstanceName, responsiveStyleProperty
+      );
 
     },
     function(context, settings, trigger) {
@@ -195,9 +207,9 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
 
       $searchAnchor.removeProp('hashMatcher');
 
-      $searchAnchor.prop('responsiveStyleProperty').destroy();
+      $searchAnchor.prop(responsivePropertyInstanceName).destroy();
 
-      $searchAnchor.removeProp('responsiveStyleProperty');
+      $searchAnchor.removeProp(responsivePropertyInstanceName);
 
       behaviourAttached = false;
 
