@@ -1,0 +1,32 @@
+// -----------------------------------------------------------------------------
+//   Site layout - Header sticky functionality
+// -----------------------------------------------------------------------------
+
+@use 'config' as layout-config; // Configure layout.
+@use 'base:layout/sidebars' as layout-sidebars;
+
+// This contains most of the layout stuff relevant to making the header/branding
+// sticky on wider screens. Note that this is placed in the first sidebar to
+// make it appear as if it's part of that column, though in fact it's not, which
+// introduces additional complexity.
+//
+// @see _sidebars_sticky.scss
+//   Contains sidebars sticky layout on wider screens.
+
+header[role='banner'] {
+  @include layout-sidebars.on-sidebar-beside-content(both) {
+    position: relative;
+
+    // @todo Magic number. This is intended to stand in for the first sidebar
+    //   height. This will break when the sidebar contents change and so needs
+    //   to be reworked somehow to derive this dynamically based on the content
+    //   of the sidebar.
+    padding-bottom: 7em;
+
+    .region-header {
+      position: sticky;
+
+      top: layout-config.$gap;
+    }
+  }
+}
