@@ -37,6 +37,18 @@ header[role='banner'],
   top: calc(var(--displace-top, 0em) + #{layout-config.$gutter}) !important;
 }
 
+:root {
+  ///
+  /// Branding intrinsic ratio.
+  ///
+  /// This is a unitless float calculated from the branding dimensions via the
+  /// custom properties set by the theme on the <html> element.
+  ///
+  --branding-intrinsic-ratio: calc(
+    var(--branding-total-height) / var(--branding-max-width)
+  );
+}
+
 header[role='banner'],
 .region-primary-menu,
 .search-anchor {
