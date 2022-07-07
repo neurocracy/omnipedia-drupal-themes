@@ -21,6 +21,11 @@ function(sidebarsSticky, $) {
 
   'use strict';
 
+  /**
+   * Class added to the sidebars container when JavaScript sticky is in use.
+   *
+   * @type {String}
+   */
   const containerEnhancedStickyClass = 'layout-sidebars--is-enhanced-sticky';
 
   /**
@@ -37,6 +42,13 @@ function(sidebarsSticky, $) {
    */
   const fastdom = aiFastDom.getInstance();
 
+  /**
+   * CSS custom property name indicating whether sidebars are to be sticky.
+   *
+   * This changes based on a media query breakpoint.
+   *
+   * @type {String}
+   */
   const isStickyPropertyName = '--sidebars-are-sticky';
 
   /**
@@ -49,14 +61,39 @@ function(sidebarsSticky, $) {
    */
   const responsivePropertyInstanceName = 'isStickyResponsiveStyleProperty';
 
+  /**
+   * CSS custom property name defining the sticky bottom offset value.
+   *
+   * @type {String}
+   */
   const bottomOffsetPropertyName = '--sticky-sidebar-bottom-offset';
 
+  /**
+   * CSS custom property name defining the sticky top offset value.
+   *
+   * @type {String}
+   */
   const topOffsetPropertyName = '--sticky-sidebar-top-offset';
 
+  /**
+   * Get top and bottom spacing values.
+   *
+   * @param {jQuery} $container
+   *   The sidebars container element wrapped in a jQuery collection.
+   *
+   * @return {Promise}
+   *   A Promise that resolves with an object containing bottomSpacing and
+   *   topSpacing keys as integer pixel values.
+   */
   function getSpacingValues($container) {
 
     return fastdom.measure(function() {
 
+      /**
+       * Sidebars container computed style object.
+       *
+       * @type {CSSStyleDeclaration}
+       */
       let computedStyle = getComputedStyle($container[0]);
 
       return {
@@ -67,8 +104,6 @@ function(sidebarsSticky, $) {
       }
 
     }).then(function(values) { return fastdom.mutate(function() {
-
-      // console.log(values);
 
       return {
         bottom: $('<div></div>').attr('aria-hidden', true).css({
@@ -109,9 +144,19 @@ function(sidebarsSticky, $) {
 
   };
 
+  /**
+   * Build a Sticky Sidebar instance for the provided sidebars container.
+   *
+   * @param {jQuery} $container
+   *   The sidebars container, wrapped in a jQuery object, to build a Sticky
+   *   Sidebars instance for.
+   *
+   * @return {Promise}
+   *   A Promise object that resolves when the Sticky Sidebars instance is
+   *   initialized. If one is already active, this will be an already resolved
+   *   Promise object.
+   */
   function build($container) {
-
-    // console.log('build()', typeof $container.prop('stickySidebar'));
 
     if (typeof $container.prop('stickySidebar') !== 'undefined') {
       return Promise.resolve();
@@ -132,15 +177,23 @@ function(sidebarsSticky, $) {
 
       $container.prop('stickySidebar', stickySidebar);
 
-      // console.log('Sticky Sidebar built.');
-
     });
 
   };
 
+  /**
+   * Destroy a Sticky Sidebar instance for the provided sidebars container.
+   *
+   * @param {jQuery} $container
+   *   The sidebars container, wrapped in a jQuery object, to destroy a Sticky
+   *   Sidebars instance for.
+   *
+   * @return {Promise}
+   *   A Promise object that resolves when the Sticky Sidebars instance is
+   *   destroyed. If one isn't active, this will be an already resolved Promise
+   *   object.
+   */
   function destroy($container) {
-
-    // console.log('destroy()', typeof $container.prop('stickySidebar'));
 
     if (typeof $container.prop('stickySidebar') === 'undefined') {
       return Promise.resolve();
@@ -153,8 +206,6 @@ function(sidebarsSticky, $) {
       $container
       .removeProp('stickySidebar')
       .removeClass(containerEnhancedStickyClass);
-
-      // console.log('Sticky Sidebar destroyed.');
 
     });
 
@@ -178,13 +229,17 @@ function(sidebarsSticky, $) {
         event, instance
       ) {
 
+        // Ignore any other responsive properties that may be watched on this
+        // or descendent elements.
         if (instance.getPropertyName() !== isStickyPropertyName) {
           return;
         }
 
+        // Attempt to build an instance if one is not already active.
         if (instance.getValue() === 'true') {
           build($sidebarsContainer);
 
+        // Attempt to destroy an instance if one is active.
         } else if (instance.getValue() === 'false') {
           destroy($sidebarsContainer);
         }
@@ -200,6 +255,7 @@ function(sidebarsSticky, $) {
         isStickyPropertyName, $sidebarsContainer
       );
 
+      // Save the responsiveStyleProperty to the container for detach.
       $sidebarsContainer.prop(
         responsivePropertyInstanceName, responsiveStyleProperty
       );
