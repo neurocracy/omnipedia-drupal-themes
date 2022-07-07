@@ -6,6 +6,7 @@
 @use 'base:layout/sidebars' as layout-sidebars;
 @use 'base:forms/search';
 @use 'headroom';
+@use 'sass/helpers/breakpoint';
 @use 'sass/helpers/selector';
 @use 'sass:list';
 @use '../variables/general' as general-variables;
@@ -28,12 +29,15 @@
 ///
 $stacking-order: shadow, background, border, content;
 
-header[role='banner'],
-.region-primary-menu {
-  // This takes viewport top displacement into account, if there is any, and
-  // falls back to a value of 0em displacement if the custom property is not
-  // defined. Note that we have to specify a unit rather than just "0" for
-  // calc().
+///
+/// Headroom top value that takes viewport displacement and gutter into account.
+///
+/// This takes viewport top displacement into account, if there is any, and
+/// falls back to a value of 0em displacement if the custom property is not
+/// defined.
+///
+@mixin headroom-top {
+  // Note that we have to specify a unit rather than just "0" for for calc().
   top: calc(var(--displace-top, 0em) + #{layout-config.$gutter}) !important;
 }
 
@@ -47,6 +51,16 @@ header[role='banner'],
   --branding-intrinsic-ratio: calc(
     var(--branding-total-height) / var(--branding-max-width)
   );
+}
+
+header[role='banner'] {
+  @include breakpoint.on('<layout-with-both-sidebars') {
+    @include headroom-top;
+  }
+}
+
+.region-primary-menu {
+  @include headroom-top;
 }
 
 header[role='banner'],
