@@ -41,11 +41,16 @@ $stacking-order: shadow, background, border, content;
   top: calc(var(--displace-top, 0em) + #{layout-config.$gutter}) !important;
 }
 
-// @todo Magic numbers. These should be provided as individual custom properties
-//   on the root element via \omnipedia_site_theme_preprocess_html() as it can
-//   read the values from the theme info.
 :root {
-  --branding-intrinsic-ratio: calc((128 + 20 + 13) / 128 * 100%);
+  ///
+  /// Branding intrinsic ratio.
+  ///
+  /// This is a unitless float calculated from the branding dimensions via the
+  /// custom properties set by the theme on the <html> element.
+  ///
+  --branding-intrinsic-ratio: calc(
+    var(--branding-total-height) / var(--branding-max-width)
+  );
 }
 
 header[role='banner'] {

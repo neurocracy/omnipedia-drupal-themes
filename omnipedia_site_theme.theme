@@ -4,6 +4,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\omnipedia_site_theme\EuCookieCompliancePopUpInfoPreprocess;
 use Drupal\omnipedia_site_theme\MediaSubtitleTracks;
+use Drupal\omnipedia_site_theme\SiteBrandingCustomProperties;
 use Drupal\omnipedia_site_theme\SiteBrandingInliner;
 use Drupal\omnipedia_site_theme\SiteBrandingMainPageLinks;
 
@@ -34,6 +35,10 @@ function omnipedia_site_theme_preprocess_html(array &$variables): void {
   $variables['omnipedia_is_main_page'] = \Drupal::service(
     'omnipedia.wiki_node_main_page'
   )->isCurrentRouteMainPage();
+
+  \Drupal::classResolver(SiteBrandingCustomProperties::class)->preprocessHtml(
+    $variables
+  );
 
 }
 
