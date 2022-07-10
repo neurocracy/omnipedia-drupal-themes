@@ -108,8 +108,18 @@ function(sidebarsSticky, $) {
     return $container.prop(propertyConverterInstanceName).getValues()
     .then(function(values) {
 
+      /**
+       * Second sidebar.
+       *
+       * @type {HTMLElement}
+       */
       let sidebarSecond = $container.find('.layout-sidebar-second')[0];
 
+      /**
+       * Sticky Sidebar instance.
+       *
+       * @type {StickySidebar}
+       */
       let stickySidebar = new StickySidebar(sidebarSecond, {
         innerWrapperSelector: '.region-sidebar-second',
         containerSelector:    'main',
