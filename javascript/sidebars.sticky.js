@@ -11,9 +11,11 @@
 AmbientImpact.onGlobals(['StickySidebar'], function() {
 AmbientImpact.on([
   'fastdom', 'layoutSizeChange', 'OmnipediaSiteThemeSidebarsElements',
+  'propertyToPixelConverter',
   'responsiveStyleProperty',
 ], function(
-  aiFastDom, aiLayoutSizeChange, sidebarsElements, aiResponsiveStyleProperty
+  aiFastDom, aiLayoutSizeChange, sidebarsElements, aiPropertyToPixelConverter,
+  aiResponsiveStyleProperty
 ) {
 AmbientImpact.addComponent(
   'OmnipediaSiteThemeSidebarsSticky',
@@ -62,6 +64,16 @@ function(sidebarsSticky, $) {
   const responsivePropertyInstanceName = 'isStickyResponsiveStyleProperty';
 
   /**
+   * The name that the property converter instance is saved under.
+   *
+   * This should be unique so it doesn't potentially colide with another
+   * instance saved to the same element.
+   *
+   * @type {String}
+   */
+  const propertyConverterInstanceName = 'stickyPropertiesConverter';
+
+  /**
    * CSS custom property name defining the sticky bottom offset value.
    *
    * @type {String}
@@ -74,75 +86,6 @@ function(sidebarsSticky, $) {
    * @type {String}
    */
   const topOffsetPropertyName = '--sticky-sidebar-top-offset';
-
-  /**
-   * Get top and bottom spacing values.
-   *
-   * @param {jQuery} $container
-   *   The sidebars container element wrapped in a jQuery collection.
-   *
-   * @return {Promise}
-   *   A Promise that resolves with an object containing bottomSpacing and
-   *   topSpacing keys as integer pixel values.
-   */
-  function getSpacingValues($container) {
-
-    return fastdom.measure(function() {
-
-      /**
-       * Sidebars container computed style object.
-       *
-       * @type {CSSStyleDeclaration}
-       */
-      let computedStyle = getComputedStyle($container[0]);
-
-      return {
-        topSpacing:     computedStyle.getPropertyValue(topOffsetPropertyName),
-        bottomSpacing:  computedStyle.getPropertyValue(
-          bottomOffsetPropertyName
-        )
-      }
-
-    }).then(function(values) { return fastdom.mutate(function() {
-
-      return {
-        bottom: $('<div></div>').attr('aria-hidden', true).css({
-          position: 'absolute',
-          // Placed just out of view. Note that a negative top value shouldn't
-          // cause any scrolling upwards on any platforms/browsers.
-          top:      '-110vh',
-          width:    '1px',
-          height:   values.bottomSpacing
-        }).appendTo($container),
-        top: $('<div></div>').attr('aria-hidden', true).css({
-          position: 'absolute',
-          // Placed just out of view. Note that a negative top value shouldn't
-          // cause any scrolling upwards on any platforms/browsers.
-          top:      '-110vh',
-          width:    '1px',
-          height:   values.topSpacing
-        }).appendTo($container),
-
-      };
-
-    }); }).then(function(elements) { return fastdom.measure(function() {
-      return {
-        elements: elements,
-        values:   {
-          bottomSpacing:  elements.bottom.height(),
-          topSpacing:     elements.top.height()
-        }
-      }
-    }); }).then(function(data) { return fastdom.mutate(function() {
-
-      data.elements.top.remove();
-      data.elements.bottom.remove();
-
-      return data.values;
-
-    }); });
-
-  };
 
   /**
    * Build a Sticky Sidebar instance for the provided sidebars container.
@@ -162,15 +105,16 @@ function(sidebarsSticky, $) {
       return Promise.resolve();
     }
 
-    return getSpacingValues($container).then(function(values) {
+    return $container.prop(propertyConverterInstanceName).getValues()
+    .then(function(values) {
 
       let sidebarSecond = $container.find('.layout-sidebar-second')[0];
 
       let stickySidebar = new StickySidebar(sidebarSecond, {
         innerWrapperSelector: '.region-sidebar-second',
         containerSelector:    'main',
-        bottomSpacing:        values.bottomSpacing,
-        topSpacing:           values.topSpacing
+        bottomSpacing:        values[bottomOffsetPropertyName],
+        topSpacing:           values[topOffsetPropertyName]
       });
 
       $container.addClass(containerEnhancedStickyClass);
@@ -247,6 +191,19 @@ function(sidebarsSticky, $) {
       });
 
       /**
+       * Property to pixel converter instance.
+       *
+       * @type {converter}
+       */
+      let propertyConverter = aiPropertyToPixelConverter.create(
+        $sidebarsContainer, [bottomOffsetPropertyName, topOffsetPropertyName]
+      );
+
+      $sidebarsContainer.prop(
+        propertyConverterInstanceName, propertyConverter
+      );
+
+      /**
        * A responsive style property instance; watches sticky state.
        *
        * @type {responsiveStyleProperty}
@@ -274,7 +231,9 @@ function(sidebarsSticky, $) {
 
       $sidebarsContainer.prop(responsivePropertyInstanceName).destroy();
 
-      $sidebarsContainer.removeProp(responsivePropertyInstanceName);
+      $sidebarsContainer
+      .removeProp(responsivePropertyInstanceName)
+      .removeProp(propertyConverterInstanceName);
 
     }
   );

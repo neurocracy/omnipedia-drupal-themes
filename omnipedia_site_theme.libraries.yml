@@ -202,6 +202,7 @@ sidebars:
     - ambientimpact_ux/component.layout_size_change
     - ambientimpact_ux/component.overlay
     - ambientimpact_ux/component.pointer_focus_hide
+    - ambientimpact_ux/component.property_to_pixel_converter
     - ambientimpact_ux/component.responsive_style_property
     - ambientimpact_ux/component.scrollbar_gutter
     - omnipedia_site_theme/header
