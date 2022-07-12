@@ -63,7 +63,7 @@
   }
 }
 
-.layout-sidebars--is-enhanced-sticky {
+.layout-container--is-enhanced-sticky {
   @include layout-sidebars.on-sidebar-beside-content(both) {
 
     .layout-sidebar-second {
