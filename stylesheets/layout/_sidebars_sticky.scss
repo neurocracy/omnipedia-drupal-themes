@@ -46,10 +46,20 @@
     }
 
     @supports not (grid-template-columns: subgrid) {
+
       --sticky-sidebar-first-top-offset: calc(
         var(--sticky-sidebar-top-offset) * 2 +
         #{layout-config.$header-row-height}
       );
+
+      // This prevents the ::before pseudo-element blocking clicks to the
+      // <header>. This is a bit simpler than messing with the z-indexes.
+      pointer-events: none;
+
+      .region-sidebar-first {
+        pointer-events: auto;
+      }
+
     }
 
     top: var(--sticky-sidebar-first-top-offset);
