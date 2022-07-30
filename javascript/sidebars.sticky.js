@@ -133,7 +133,7 @@ function(sidebarsSticky, $) {
      *
      * @type {StickySidebar}
      */
-    let stickySidebarsInstance;
+    let stickySidebarInstance;
 
     /**
      * Property to pixel converter instance.
@@ -195,7 +195,7 @@ function(sidebarsSticky, $) {
 
       // If a Sticky Sidebar instance is already initialized, return an already
       // resolved Promise.
-      if (typeof stickySidebarsInstance !== 'undefined') {
+      if (typeof stickySidebarInstance !== 'undefined') {
         return Promise.resolve();
       }
 
@@ -206,7 +206,7 @@ function(sidebarsSticky, $) {
          *
          * @type {StickySidebar}
          */
-        stickySidebarsInstance = new StickySidebar(
+        stickySidebarInstance = new StickySidebar(
           $element[0],
           $.extend({}, stickySettings, {
             bottomSpacing:  values[bottomOffsetPropertyName],
@@ -228,16 +228,16 @@ function(sidebarsSticky, $) {
 
       // If no Sticky Sidebar instance is currently initialized, return an
       // already resolved Promise.
-      if (typeof stickySidebarsInstance === 'undefined') {
+      if (typeof stickySidebarInstance === 'undefined') {
         return Promise.resolve();
       }
 
       // Destroy and unset the Sticky Sidebar instance.
       return fastdom.mutate(function() {
 
-        stickySidebarsInstance.destroy();
+        stickySidebarInstance.destroy();
 
-        stickySidebarsInstance = undefined;
+        stickySidebarInstance = undefined;
 
       });
 
