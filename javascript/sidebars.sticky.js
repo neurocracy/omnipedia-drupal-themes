@@ -45,6 +45,20 @@ function(sidebarsSticky, $) {
   const fastdom = aiFastDom.getInstance();
 
   /**
+   * Event name triggered on an element when a sticky instance is attached.
+   *
+   * @type {String}
+   */
+  const attachedEventName = 'stickySidebarAttached';
+
+  /**
+   * Event name triggered on an element when a sticky instance is detached.
+   *
+   * @type {String}
+   */
+  const detachedEventName = 'stickySidebarDetached';
+
+  /**
    * CSS custom property name indicating whether sidebars are to be sticky.
    *
    * This changes based on a media query breakpoint.
@@ -96,17 +110,6 @@ function(sidebarsSticky, $) {
    * @type {String}
    */
   const stickyElementInstancePropertyName = 'stickyElementInstance';
-
-  /**
-   * Active sticky element instances
-   *
-   * @type {Object}
-   *
-   * @todo Convert this to a reusable instance manager that can trigger an event
-   *   (so we know when to remove the .layout-container class for example) when
-   *   all instances or values have been removed/destroyed.
-   */
-  let activeInstances = {};
 
   /**
    * Sticky element object.
@@ -185,6 +188,8 @@ function(sidebarsSticky, $) {
       'responsivePropertyChange.' + eventNamespace, responsivePropertyHandler
     );
 
+    $element.trigger(attachedEventName, [this]);
+
     /**
      * Enable this instance.
      *
@@ -255,11 +260,84 @@ function(sidebarsSticky, $) {
         'responsivePropertyChange.' + eventNamespace, responsivePropertyHandler
       );
 
+      $element.trigger(detachedEventName, [this]);
+
       return this.disable();
 
     };
 
   };
+
+  // This keeps track of active instances via the attached and detached events,
+  // adding the enhanced sticky class to the layout container when one is
+  // attached and removing the class when all instances detach.
+  this.addBehaviour(
+    'OmnipediaSiteThemeSidebarStickyManager',
+    'omnipedia-site-theme-sidebar-sticky-manager',
+    '.layout-container',
+    function(context, settings) {
+
+      /**
+       * Array of active sticky element instances.
+       *
+       * @type {Array}
+       */
+      let activeInstances = [];
+
+      /**
+       * The layout container wrapped in a jQuery collection.
+       *
+       * @type {jQuery}
+       */
+      let $container = $(this);
+
+      $container.on(attachedEventName + '.manager', function(event, instance) {
+
+        // Don't add an instance if it's already in the array.
+        if (activeInstances.indexOf(instance) > -1) {
+          return;
+        }
+
+        activeInstances.push(instance);
+
+        $container.addClass(containerEnhancedStickyClass);
+
+      }).on(detachedEventName + '.manager', function(event, instance) {
+
+        /**
+         * Index of the detached instance in activeInstances.
+         *
+         * @type {Number}
+         */
+        let index = activeInstances.indexOf(instance);
+
+        if (index === -1) {
+          return;
+        }
+
+        activeInstances.splice(index, 1);
+
+        // If there are no more active instances, remove the enhanced sticky
+        // class from the layout container.
+        if (activeInstances.length === 0) {
+
+          $container.removeClass(containerEnhancedStickyClass);
+
+        }
+
+      });
+
+    },
+    function(context, settings, trigger) {
+
+      $(this).off([
+        attachedEventName + '.manager',
+        detachedEventName + '.manager',
+      ].join(' '))
+      .removeClass(containerEnhancedStickyClass);
+
+    }
+  );
 
   this.addBehaviour(
     'OmnipediaSiteThemeSidebarSecondSticky',
@@ -289,17 +367,8 @@ function(sidebarsSticky, $) {
 
       $element.prop(stickyElementInstancePropertyName, instance);
 
-      $element.closest('.layout-container').addClass(
-        containerEnhancedStickyClass
-      );
-
-      // @todo Instance manager.
-      activeInstances.sidebarSecond = instance;
-
     },
     function(context, settings, trigger) {
-
-      delete activeInstances.sidebarSecond;
 
       /**
        * The sidebar element jQuery collection.
@@ -311,15 +380,6 @@ function(sidebarsSticky, $) {
       $element.prop(stickyElementInstancePropertyName).destroy();
 
       $element.removeProp(stickyElementInstancePropertyName);
-
-      // @todo Instance manager.
-      if (Object.values(activeInstances).length === 0) {
-
-        $element.closest('.layout-container').removeClass(
-          containerEnhancedStickyClass
-        );
-
-      }
 
     }
   );
