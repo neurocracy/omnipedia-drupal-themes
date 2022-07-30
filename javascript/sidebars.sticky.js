@@ -54,7 +54,7 @@ function(sidebarsSticky, $) {
   const isStickyPropertyName = '--sidebars-are-sticky';
 
   /**
-   * The name that the responsive property instance is saved under.
+   * The property name that the responsive property instance is saved under.
    *
    * This should be unique so it doesn't potentially colide with another
    * instance saved to the same element.
@@ -64,7 +64,7 @@ function(sidebarsSticky, $) {
   const responsivePropertyInstanceName = 'isStickyResponsiveStyleProperty';
 
   /**
-   * The name that the property converter instance is saved under.
+   * The property name that the property converter instance is saved under.
    *
    * This should be unique so it doesn't potentially colide with another
    * instance saved to the same element.
@@ -87,6 +87,14 @@ function(sidebarsSticky, $) {
    */
   const topOffsetPropertyName = '--sticky-sidebar-top-offset';
 
+  /**
+   * The property name that the sticky element instance is saved under.
+   *
+   * This should be unique so it doesn't potentially colide with another
+   * instance saved to the same element.
+   *
+   * @type {String}
+   */
   const stickyElementInstancePropertyName = 'stickyElementInstance';
 
   /**
@@ -100,8 +108,24 @@ function(sidebarsSticky, $) {
    */
   let activeInstances = {};
 
+  /**
+   * Sticky element object.
+   *
+   * @param {jQuery} $element
+   *   The element to be made sticky, wrapped in a jQuery object.
+   *
+   * @param {Object} stickySettings
+   *   Options for the associated Sticky Sidebar instance.
+   *
+   * @constructor
+   */
   function stickyElement($element, stickySettings) {
 
+    /**
+     * Reference to this instance for use in closures where 'this' is different.
+     *
+     * @type {this}
+     */
     let thisInstance = this;
 
     /**
@@ -129,6 +153,15 @@ function(sidebarsSticky, $) {
       isStickyPropertyName, $element
     );
 
+    /**
+     * Responsive style property event handler.
+     *
+     * @param {jQuery.Event} event
+     *   The event object.
+     *
+     * @param {responsiveStyleProperty} instance
+     *   The responsive style property instance this event was triggered for.
+     */
     function responsivePropertyHandler(event, instance) {
 
       // Ignore any other responsive properties that may be watched on this
@@ -152,8 +185,16 @@ function(sidebarsSticky, $) {
       'responsivePropertyChange.' + eventNamespace, responsivePropertyHandler
     );
 
+    /**
+     * Enable this instance.
+     *
+     * @return {Promise}
+     *   A Promise object that resolves once the instance is enabled.
+     */
     this.enable = function() {
 
+      // If a Sticky Sidebar instance is already initialized, return an already
+      // resolved Promise.
       if (typeof stickySidebarsInstance !== 'undefined') {
         return Promise.resolve();
       }
@@ -177,12 +218,21 @@ function(sidebarsSticky, $) {
 
     };
 
+    /**
+     * Disable this instance without destroying it.
+     *
+     * @return {Promise}
+     *   A Promise object that resolves once the instance is disabled.
+     */
     this.disable = function() {
 
+      // If no Sticky Sidebar instance is currently initialized, return an
+      // already resolved Promise.
       if (typeof stickySidebarsInstance === 'undefined') {
         return Promise.resolve();
       }
 
+      // Destroy and unset the Sticky Sidebar instance.
       return fastdom.mutate(function() {
 
         stickySidebarsInstance.destroy();
@@ -193,6 +243,12 @@ function(sidebarsSticky, $) {
 
     };
 
+    /**
+     * Destroy this instance.
+     *
+     * @return {Promise}
+     *   A Promise object that resolves once the instance is destroyed.
+     */
     this.destroy = function() {
 
       $element.off(
@@ -205,92 +261,24 @@ function(sidebarsSticky, $) {
 
   };
 
-  /**
-   * Build a Sticky Sidebar instance for the provided sidebars container.
-   *
-   * @param {jQuery} $container
-   *   The sidebars container, wrapped in a jQuery object, to build a Sticky
-   *   Sidebars instance for.
-   *
-   * @return {Promise}
-   *   A Promise object that resolves when the Sticky Sidebars instance is
-   *   initialized. If one is already active, this will be an already resolved
-   *   Promise object.
-   */
-  // function build($container) {
-
-    // if (typeof $container.prop('stickySidebar') !== 'undefined') {
-    //   return Promise.resolve();
-    // }
-
-    // return $container.prop(propertyConverterInstanceName).getValues()
-    // .then(function(values) {
-
-      /**
-       * Second sidebar.
-       *
-       * @type {HTMLElement}
-       */
-    //   let sidebarSecond = $container.find('.layout-sidebar-second')[0];
-
-      /**
-       * Sticky Sidebar instance.
-       *
-       * @type {StickySidebar}
-       */
-  //     let stickySidebar = new StickySidebar(sidebarSecond, {
-  //       innerWrapperSelector: '.region-sidebar-second',
-  //       containerSelector:    'main',
-  //       bottomSpacing:        values[bottomOffsetPropertyName],
-  //       topSpacing:           values[topOffsetPropertyName]
-  //     });
-
-  //     $container.addClass(containerEnhancedStickyClass);
-
-  //     $container.prop('stickySidebar', stickySidebar);
-
-  //   });
-
-  // };
-
-  /**
-   * Destroy a Sticky Sidebar instance for the provided sidebars container.
-   *
-   * @param {jQuery} $container
-   *   The sidebars container, wrapped in a jQuery object, to destroy a Sticky
-   *   Sidebars instance for.
-   *
-   * @return {Promise}
-   *   A Promise object that resolves when the Sticky Sidebars instance is
-   *   destroyed. If one isn't active, this will be an already resolved Promise
-   *   object.
-   */
-  // function destroy($container) {
-
-  //   if (typeof $container.prop('stickySidebar') === 'undefined') {
-  //     return Promise.resolve();
-  //   }
-
-  //   return fastdom.mutate(function() {
-
-  //     $container.prop('stickySidebar').destroy();
-
-  //     $container
-  //     .removeProp('stickySidebar')
-  //     .removeClass(containerEnhancedStickyClass);
-
-  //   });
-
-  // };
-
   this.addBehaviour(
     'OmnipediaSiteThemeSidebarSecondSticky',
     'omnipedia-site-theme-sidebar-second-sticky',
     '.region-sidebar-second',
     function(context, settings) {
 
+      /**
+       * The sidebar element jQuery collection.
+       *
+       * @type {jQuery}
+       */
       let $element = $(this);
 
+      /**
+       * The sticky element instance.
+       *
+       * @type {stickyElement}
+       */
       let instance = new stickyElement(
         $element.closest('.layout-sidebar-second'),
         {
@@ -313,6 +301,11 @@ function(sidebarsSticky, $) {
 
       delete activeInstances.sidebarSecond;
 
+      /**
+       * The sidebar element jQuery collection.
+       *
+       * @type {jQuery}
+       */
       let $element = $(this);
 
       $element.prop(stickyElementInstancePropertyName).destroy();
@@ -330,89 +323,6 @@ function(sidebarsSticky, $) {
 
     }
   );
-
-  // this.addBehaviour(
-  //   'OmnipediaSiteThemeSidebarsSticky',
-  //   'omnipedia-site-theme-sidebars-sticky',
-  //   sidebarsElements.getSidebarsBehaviourSelector(),
-  //   function(context, settings) {
-
-      /**
-       * The sidebars container jQuery collection.
-       *
-       * @type {jQuery}
-       */
-      // let $sidebarsContainer = sidebarsElements.getSidebarsContainer();
-
-      // $sidebarsContainer
-      // .on('responsivePropertyChange.' + eventNamespace, function(
-      //   event, instance
-      // ) {
-
-      //   // Ignore any other responsive properties that may be watched on this
-      //   // or descendent elements.
-      //   if (instance.getPropertyName() !== isStickyPropertyName) {
-      //     return;
-      //   }
-
-      //   // Attempt to build an instance if one is not already active.
-      //   if (instance.getValue() === 'true') {
-      //     build($sidebarsContainer);
-
-      //   // Attempt to destroy an instance if one is active.
-      //   } else if (instance.getValue() === 'false') {
-      //     destroy($sidebarsContainer);
-      //   }
-
-      // });
-
-      /**
-       * Property to pixel converter instance.
-       *
-       * @type {converter}
-       */
-      // let propertyConverter = aiPropertyToPixelConverter.create(
-      //   $sidebarsContainer, [bottomOffsetPropertyName, topOffsetPropertyName]
-      // );
-
-      // $sidebarsContainer.prop(
-      //   propertyConverterInstanceName, propertyConverter
-      // );
-
-      /**
-       * A responsive style property instance; watches sticky state.
-       *
-       * @type {responsiveStyleProperty}
-       */
-      // let responsiveStyleProperty = aiResponsiveStyleProperty.create(
-      //   isStickyPropertyName, $sidebarsContainer
-      // );
-
-      // // Save the responsiveStyleProperty to the container for detach.
-      // $sidebarsContainer.prop(
-      //   responsivePropertyInstanceName, responsiveStyleProperty
-      // );
-
-    // },
-    // function(context, settings, trigger) {
-
-      /**
-       * The sidebars container jQuery collection.
-       *
-       * @type {jQuery}
-       */
-      // let $sidebarsContainer = sidebarsElements.getSidebarsContainer();
-
-      // $sidebarsContainer.off('responsivePropertyChange.' + eventNamespace);
-
-      // $sidebarsContainer.prop(responsivePropertyInstanceName).destroy();
-
-      // $sidebarsContainer
-      // .removeProp(responsivePropertyInstanceName)
-      // .removeProp(propertyConverterInstanceName);
-
-  //   }
-  // );
 
 });
 });
