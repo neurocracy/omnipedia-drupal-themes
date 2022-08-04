@@ -206,6 +206,8 @@ function(sidebarsSticky, $) {
 
       return propertyConverterInstance.getValues().then(function(values) {
 
+        // console.log($element[0], values[bottomOffsetPropertyName], values[topOffsetPropertyName]);
+
         /**
          * Sticky Sidebar instance.
          *
@@ -335,6 +337,96 @@ function(sidebarsSticky, $) {
         detachedEventName + '.manager',
       ].join(' '))
       .removeClass(containerEnhancedStickyClass);
+
+    }
+  );
+
+  // this.addBehaviour(
+  //   'OmnipediaSiteThemeSidebarHeaderSticky',
+  //   'omnipedia-site-theme-sidebar-header-sticky',
+  //   '.region-header',
+  //   function(context, settings) {
+
+  //     /**
+  //      * The sidebar element jQuery collection.
+  //      *
+  //      * @type {jQuery}
+  //      */
+  //     let $element = $(this);
+
+  //     /**
+  //      * The sticky element instance.
+  //      *
+  //      * @type {stickyElement}
+  //      */
+  //     let instance = new stickyElement(
+  //       $element.closest('header'),
+  //       {
+  //         innerWrapperSelector: '.region-header',
+  //         containerSelector:    '[data-off-canvas-main-canvas]',
+  //       }
+  //     );
+
+  //     $element.prop(stickyElementInstancePropertyName, instance);
+
+  //   },
+  //   function(context, settings, trigger) {
+
+  //     /**
+  //      * The sidebar element jQuery collection.
+  //      *
+  //      * @type {jQuery}
+  //      */
+  //     let $element = $(this);
+
+  //     $element.prop(stickyElementInstancePropertyName).destroy();
+
+  //     $element.removeProp(stickyElementInstancePropertyName);
+
+  //   }
+  // );
+
+  this.addBehaviour(
+    'OmnipediaSiteThemeSidebarFirstSticky',
+    'omnipedia-site-theme-sidebar-first-sticky',
+    '.region-sidebar-first',
+    function(context, settings) {
+
+      /**
+       * The sidebar element jQuery collection.
+       *
+       * @type {jQuery}
+       */
+      let $element = $(this);
+
+      /**
+       * The sticky element instance.
+       *
+       * @type {stickyElement}
+       */
+      let instance = new stickyElement(
+        $element.closest('.layout-sidebar-first'),
+        {
+          innerWrapperSelector: '.region-sidebar-first',
+          containerSelector:    'main',
+        }
+      );
+
+      $element.prop(stickyElementInstancePropertyName, instance);
+
+    },
+    function(context, settings, trigger) {
+
+      /**
+       * The sidebar element jQuery collection.
+       *
+       * @type {jQuery}
+       */
+      let $element = $(this);
+
+      $element.prop(stickyElementInstancePropertyName).destroy();
+
+      $element.removeProp(stickyElementInstancePropertyName);
 
     }
   );

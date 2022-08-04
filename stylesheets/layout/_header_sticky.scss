@@ -15,18 +15,21 @@
 
 header[role='banner'] {
   @include layout-sidebars.on-sidebar-beside-content(both) {
-    position: relative;
 
-    // @todo Magic number. This is intended to stand in for the first sidebar
-    //   height. This will break when the sidebar contents change and so needs
-    //   to be reworked somehow to derive this dynamically based on the content
-    //   of the sidebar.
-    padding-bottom: 7em;
+    display: none;
 
-    .region-header {
-      position: sticky;
+    // position: relative;
 
-      top: layout-config.$gap;
-    }
+    // // @todo Magic number. This is intended to stand in for the first sidebar
+    // //   height. This will break when the sidebar contents change and so needs
+    // //   to be reworked somehow to derive this dynamically based on the content
+    // //   of the sidebar.
+    // padding-bottom: 7em;
+
+    // .region-header {
+    //   position: sticky;
+
+    //   top: layout-config.$gap;
+    // }
   }
 }

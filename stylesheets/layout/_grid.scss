@@ -105,6 +105,22 @@
 
   }
 
+  &--is-enhanced-sticky {
+
+    // header[role='banner'] {
+
+    //   @include layout-sidebars.on-sidebar-beside-content(both) {
+    //     grid-row-end: branding-end;
+    //   }
+
+    // }
+
+    main[role='main'] .layout-sidebar-first {
+      grid-row-start: branding-start;
+    }
+
+  }
+
   .region-primary-menu {
     @include breakpoint.on('<layout-with-both-sidebars') {
       &,
@@ -184,7 +200,7 @@
       }
 
       main[role='main'] {
-        grid-row-start: main-content;
+        grid-row-start: menu-primary;
         grid-row-end:   main-content;
       }
 

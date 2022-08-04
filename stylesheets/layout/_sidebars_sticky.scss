@@ -33,40 +33,51 @@
 }
 
 .layout-sidebar-first {
+
+  .block-system-branding-block {
+    display: none;
+  }
+
   @include layout-sidebars.on-sidebar-beside-content(both) {
 
-    @supports (grid-template-columns: subgrid) {
-      // @todo The 12.25em is a magic number that's intended to account for the
-      //   site branding. This should be reworked so we can remove the value and
-      //   derive it automatically from the branding.
-      --sticky-sidebar-first-top-offset: calc(
-        var(--sticky-sidebar-top-offset) * 2 +
-        #{layout-config.$header-row-height} + 12.25em
-      );
+    .block-system-branding-block {
+      display: block;
     }
 
-    @supports not (grid-template-columns: subgrid) {
+    // @supports (grid-template-columns: subgrid) {
+    //   // @todo The 12.25em is a magic number that's intended to account for the
+    //   //   site branding. This should be reworked so we can remove the value and
+    //   //   derive it automatically from the branding.
+    //   --sticky-sidebar-first-top-offset: calc(
+    //     var(--sticky-sidebar-top-offset) * 2 +
+    //     #{layout-config.$header-row-height} + 12.25em
+    //   );
+    // }
 
-      --sticky-sidebar-first-top-offset: calc(
-        var(--sticky-sidebar-top-offset) * 2 +
-        #{layout-config.$header-row-height}
-      );
+    // @supports not (grid-template-columns: subgrid) {
 
-      // This prevents the ::before pseudo-element blocking clicks to the
-      // <header>. This is a bit simpler than messing with the z-indexes.
-      pointer-events: none;
+    //   --sticky-sidebar-first-top-offset: calc(
+    //     var(--sticky-sidebar-top-offset) * 2 +
+    //     #{layout-config.$header-row-height}
+    //   );
 
-      .region-sidebar-first {
-        pointer-events: auto;
-      }
+    //   // This prevents the ::before pseudo-element blocking clicks to the
+    //   // <header>. This is a bit simpler than messing with the z-indexes.
+    //   pointer-events: none;
 
-    }
+    //   .region-sidebar-first {
+    //     pointer-events: auto;
+    //   }
 
-    top: var(--sticky-sidebar-first-top-offset);
+    // }
+
+    // top: var(--sticky-sidebar-first-top-offset);
 
   }
+
 }
 
+.layout-sidebar-first,
 .layout-sidebar-second {
   @include layout-sidebars.on-sidebar-beside-content(both) {
     top: var(--sticky-sidebar-top-offset);
@@ -76,19 +87,38 @@
 .layout-container--is-enhanced-sticky {
   @include layout-sidebars.on-sidebar-beside-content(both) {
 
+    position: relative;
+
+    // header[role='banner'],
+    .layout-sidebar-first,
     .layout-sidebar-second {
       position: static;
       top:      0;
     }
 
+    // header[role='banner'] {
+
+    //   padding-bottom: 0;
+
+    //   .region-header {
+    //     position: static;
+    //     top: 0;
+    //   }
+
+    // }
+
     // Default CSS required by the Sticky Sidebar library.
     //
     // @see https://abouolia.github.io/sticky-sidebar/#configure-your-css
 
+    // .region-header,
+    .layout-sidebar-first,
     .layout-sidebar-second {
       will-change: min-height;
     }
 
+    // .block-system-branding-block,
+    .region-sidebar-first,
     .region-sidebar-second {
 
       transform:    translate3d(0, 0, 0);
