@@ -1,0 +1,26 @@
+{#
+/**
+ * @file
+ * Default theme implementation to output an Omnipedia region placeholder.
+ *
+ * Available variables:
+ *
+ * - 'content': The content for this region, typically blocks.
+ *
+ * - 'attributes': An Attribute object for the region placeholder.
+ *
+ * - 'region_from': The name of the region that the content has been copied
+ *   from.
+ *
+ * - 'region_to': The name of the region that this placeholder is being placed
+ *   in.
+ *
+ * @see \Drupal\omnipedia_site_theme\OmnipediaRegionPlaceholder
+ *   Defines the theme element for this and preprocesses variables.
+ */
+#}
+{% if content %}
+  <div{{ attributes.addClass('omnipedia-region-placeholder') }}>
+    {{ content }}
+  </div>
+{% endif %}

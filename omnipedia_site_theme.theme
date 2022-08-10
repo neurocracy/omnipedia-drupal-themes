@@ -6,9 +6,25 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\omnipedia_site_theme\EuCookieCompliancePopUpInfoPreprocess;
 use Drupal\omnipedia_site_theme\MediaSubtitleTracks;
+use Drupal\omnipedia_site_theme\OmnipediaRegionPlaceholder;
 use Drupal\omnipedia_site_theme\SiteBrandingCustomProperties;
 use Drupal\omnipedia_site_theme\SiteBrandingInliner;
 use Drupal\omnipedia_site_theme\SiteBrandingMainPageLinks;
+
+/**
+ * Implements \hook_theme().
+ *
+ * @see \Drupal\omnipedia_site_theme\OmnipediaRegionPlaceholder::theme()
+ */
+function omnipedia_site_theme_theme(
+  array $existing, string $type, string $theme, string $path
+): array {
+
+  return \Drupal::classResolver(OmnipediaRegionPlaceholder::class)->theme(
+    $existing, $type, $theme, $path
+  );
+
+}
 
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
@@ -73,6 +89,21 @@ function omnipedia_site_theme_preprocess_region(array &$variables): void {
   if (\in_array($variables['region'], ['sidebar_first', 'sidebar_second'])) {
     $variables['#attached']['library'][] = 'omnipedia_site_theme/sidebars';
   }
+
+}
+
+/**
+ * Prepares variables for Omnipedia region placeholder templates.
+ *
+ * Default template: layout/omnipedia-region-placeholder.html.twig.
+ */
+function omnipedia_site_theme_preprocess_omnipedia_region_placeholder(
+  array &$variables
+): void {
+
+  \Drupal::classResolver(OmnipediaRegionPlaceholder::class)->preprocess(
+    $variables
+  );
 
 }
 
