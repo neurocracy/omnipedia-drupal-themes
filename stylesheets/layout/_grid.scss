@@ -222,9 +222,8 @@
   }
 }
 
-// If subgrid is not supported, this approximates the subgrid layout by nesting
-// two grids, one on .layout-container, and the pre-existing one on
-// main[role='main'].
+// If subgrid is not supported, this approximates the subgrid layout by layering
+// two grids, one on .layout-container, and the other on main[role='main'].
 @supports not (grid-template-columns: subgrid) {
   .layout-container {
     // These have to be placed outside of the @include layout.use-grid because they
@@ -280,28 +279,51 @@
       }
     }
 
-    .layout-sidebar-first {
-      // @todo Why doesn't 'first' parameter work here?
-      @include layout-sidebars.on-sidebar-beside-content(both) {
-        &::before {
-          content: '';
-          display: block;
+    @include layout-sidebars.on-sidebar-beside-content(both) {
 
-          // This creates an intrinsic ratio with the heights of the site logo,
-          // name, and slogan, all divided by the width of the column.
-          padding-top: calc(var(--branding-intrinsic-ratio) * 100%);
+      main[role='main'] {
 
-          // This pulls the pseudo-element up to match the space taken up by
-          // the branding block.
-          margin-top: (
-            layout-config.$gap + layout-config.$header-row-height
-          ) * -1;
+        display: grid;
 
-          // This adds the spacing between the branding elements.
-          margin-bottom:
-            layout-config.$branding-spacing * 2 + layout-config.$gap;
-        }
+        @include grid-wide;
+
+        grid-row-start: branding;
+
+        // Remove the row gap because it causes double gaps since this doesn't
+        // place anything in the 'footer' area.
+        row-gap: 0;
+
       }
+
+      .layout-content {
+        // Replaces row-gap.
+        margin-top: layout-config.$gap;
+      }
+
+      .layout-sidebar-first {
+        grid-row-start: branding;
+      }
+
+      .region-sidebar-first {
+
+        display: grid;
+
+        .omnipedia-region-placeholder[data-region-from='header'] {
+          display:    block;
+          visibility: hidden;
+          order:      -1;
+
+          margin-bottom: layout-config.$gap;
+        }
+
+      }
+
+      .layout-sidebar-second {
+        // Replaces row-gap.
+        margin-top: layout-config.$gap;
+      }
+
     }
+
   }
 }
