@@ -102,8 +102,7 @@ header[role='banner'] .region-header {
   );
 }
 
-header[role='banner'],
-header[role='banner'] .region-header {
+header[role='banner'] {
   // The header is reverted to static positioning on wider screens and Headroom
   // transforms are set to zero.
   @include layout-sidebars.on-sidebar-beside-content(both) {

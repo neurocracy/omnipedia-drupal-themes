@@ -1,0 +1,23 @@
+// -----------------------------------------------------------------------------
+//   Site layout - Wide layout sticky regions
+// -----------------------------------------------------------------------------
+
+@use 'config' as layout-config; // Configure layout.
+@use 'base:layout/sidebars' as layout-sidebars;
+@use 'sass/helpers/layout';
+
+@include layout-sidebars.on-sidebar-beside-content(both) {
+  @include layout.use-grid {
+
+    .region-header,
+    .region-sidebar-first,
+    .region-sidebar-second {
+
+      position: sticky;
+
+      top: layout-config.$gap;
+
+    }
+
+  }
+}
