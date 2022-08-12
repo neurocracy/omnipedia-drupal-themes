@@ -198,42 +198,6 @@
         grid-row-end:   main-content;
       }
 
-      // Not working stuff follows:
-
-      // .layout-container {
-      //   grid-template-areas:
-      //     '....           menu-primary  ....'
-      //     'branding       main-content  sidebar-second'
-      //     'branding       main-content  sidebar-second'
-      //     'branding       main-content  sidebar-second'
-      //     'sidebar-first  main-content  sidebar-second'
-      //     'footer         footer        footer';
-      //   grid-template-rows: repeat(6, min-content);
-      // }
-
-      // header[role='banner'] {
-      //   grid-area: branding;
-      // }
-
-      // .region-highlighted {
-      //   grid-column-start:  main-content;
-      //   grid-column-end:    main-content;
-      //   grid-row-start:     main-content;
-      // }
-
-      // main[role='main'] {
-      //   grid-template-rows: subgrid;
-      //   grid-row-start:     main-content;
-      //   grid-row-end:       main-content;
-
-      //   .layout-content {
-      //     grid-column-start:  main-content;
-      //     grid-column-end:    main-content;
-      //     grid-row-end:       main-content;
-      //   }
-      // }
-
-      // /Not working ends.
     }
   }
 }
