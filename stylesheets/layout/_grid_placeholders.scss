@@ -1,0 +1,57 @@
+// -----------------------------------------------------------------------------
+//   Site layout - Grid placeholders
+// -----------------------------------------------------------------------------
+
+@use 'config' as layout-config; // Configure layout.
+@use 'base:layout/sidebars' as layout-sidebars;
+@use 'sass/helpers/layout';
+
+@include layout-sidebars.on-sidebar-beside-content(both) {
+  @include layout.use-grid {
+
+    // These need to not register pointer clicks/taps as they overlap.
+    header[role='banner'],
+    .layout-sidebar-first {
+      pointer-events: none;
+    }
+
+    // This restores pointer clicks/taps to the visible blocks so they work as
+    // expected.
+    .region-header,
+    .region-sidebar-first {
+      .block {
+        pointer-events: auto;
+      }
+    }
+
+    .region-header,
+    .region-sidebar-first {
+      // Required to be able to change location of placeholders within these
+      // regions.
+      display: grid;
+    }
+
+    .region-header .omnipedia-region-placeholder[data-region-from='sidebar-first'],
+    .region-sidebar-first .omnipedia-region-placeholder[data-region-from='header'] {
+      display:    block;
+      visibility: hidden;
+    }
+
+    .region-sidebar-first .omnipedia-region-placeholder[data-region-from='header'] {
+
+      order: -1;
+
+      margin-bottom: layout-config.$gap;
+
+    }
+
+    .region-header .omnipedia-region-placeholder[data-region-from='sidebar-first'] {
+
+      order: 1;
+
+      margin-top: layout-config.$gap;
+
+    }
+
+  }
+}

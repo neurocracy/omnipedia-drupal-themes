@@ -96,7 +96,15 @@
   }
 
   header[role='banner'] {
+
     grid-area: branding;
+
+    @include layout-sidebars.on-sidebar-beside-content(both) {
+      // This has to overlap the first sidebar region entirely for the
+      // placeholder of that sidebar to be accurate.
+      grid-row-end: sidebar-first-end;
+    }
+
   }
 
   .region-primary-menu {
@@ -114,6 +122,14 @@
     // when that applies its wider screen layout grid.
     @include layout-sidebars.on-sidebar-beside-content(both) {
       grid-area: menu-primary;
+    }
+  }
+
+  @include layout-sidebars.on-sidebar-beside-content(both) {
+    // This has to overlap the branding region entirely for the placeholder of
+    // the header to be accurate.
+    .layout-sidebar-first {
+      grid-row-start: branding;
     }
   }
 
@@ -178,7 +194,7 @@
       }
 
       main[role='main'] {
-        grid-row-start: main-content;
+        grid-row-start: branding;
         grid-row-end:   main-content;
       }
 
@@ -298,24 +314,6 @@
       .layout-content {
         // Replaces row-gap.
         margin-top: layout-config.$gap;
-      }
-
-      .layout-sidebar-first {
-        grid-row-start: branding;
-      }
-
-      .region-sidebar-first {
-
-        display: grid;
-
-        .omnipedia-region-placeholder[data-region-from='header'] {
-          display:    block;
-          visibility: hidden;
-          order:      -1;
-
-          margin-bottom: layout-config.$gap;
-        }
-
       }
 
       .layout-sidebar-second {
