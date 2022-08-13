@@ -5,7 +5,8 @@
 @use 'abbr';
 @use '../typography/config' as typography-config;
 
-.layout-container {
+.layout-container,
+.offcanvas-panel {
   @include abbr.abbr {
     text-underline-offset: typography-config.$text-decoration-offset;
 
