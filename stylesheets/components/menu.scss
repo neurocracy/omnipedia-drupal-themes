@@ -3,13 +3,36 @@
 // -----------------------------------------------------------------------------
 
 @use 'sass/helpers/selector';
+@use 'sass/helpers/layout';
 
-// This primarily removes margins and padding set by the Classy CSS in:
-// core/themes/classy/css/components/menu.css
+///
+/// Menu item row gap.
+///
+$menu-item-row-gap: 0.5em;
+
+///
+/// Menu item column gap.
+///
+$menu-item-column-gap: 1em;
+
+:root {
+  --menu-item-row-gap:    #{$menu-item-row-gap};
+  --menu-item-column-gap: #{$menu-item-column-gap};
+}
 
 ul.menu {
-  margin-top: 0;
-  margin-bottom: 0;
+
+  @include layout.use-grid {
+
+    display: grid;
+
+    row-gap:    var(--menu-item-row-gap);
+    column-gap: var(--menu-item-column-gap);
+
+  }
+
+  margin-top:     0;
+  margin-bottom:  0;
 
   @include selector.root-conditions(('[dir=ltr]'), 'html') {
     margin-left: 0;
@@ -17,6 +40,7 @@ ul.menu {
   @include selector.root-conditions(('[dir=rtl]'), 'html') {
     margin-right: 0;
   }
+
 }
 
 .menu-item {

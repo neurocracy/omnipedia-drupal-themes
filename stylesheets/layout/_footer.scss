@@ -2,7 +2,10 @@
 //   Site layout - Footer
 // -----------------------------------------------------------------------------
 
+@use 'sass/helpers/layout';
+
 footer {
+
   nav {
     max-width: max-content;
   }
@@ -10,11 +13,16 @@ footer {
   // This lays out menus (like the footer menu) horizontally, making use of the
   // *-gap properties in browsers that support them for flexbox.
   .menu {
+
     display: flex;
+
+    // Make sure this is using flexbox even when menus are using grid layout.
+    @include layout.use-grid {
+      display: flex;
+    }
 
     flex-wrap: wrap;
 
-    column-gap: 1em;
-    row-gap:    0.3em;
   }
+
 }
