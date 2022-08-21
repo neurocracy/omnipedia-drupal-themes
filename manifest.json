@@ -10,6 +10,18 @@
       "src":    "/themes/custom/omnipedia_site_theme/images/icons/generated/pwa-icon-256x256.png?v=1",
       "sizes":  "256x256",
       "type":   "image/png"
+    },
+    {
+      "src":    "/themes/custom/omnipedia_site_theme/images/icons/icon_maskable_192.png?v=1",
+      "sizes":  "192x192",
+      "type":   "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src":    "/themes/custom/omnipedia_site_theme/images/icons/icon_maskable_256.png?v=1",
+      "sizes":  "256x256",
+      "type":   "image/png",
+      "purpose": "maskable"
     }
   ],
   "theme_color":      "#0d47a1",
