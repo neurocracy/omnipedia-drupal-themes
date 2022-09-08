@@ -1,6 +1,6 @@
 font-exo-2:
   remote: https://fontsource.org/fonts/exo-2
-  version: 4.5.8
+  version: 4.5.9
   license:
     name: OFL
     url: https://github.com/NDISCOVER/Exo-2.0/blob/master/OFL.txt
