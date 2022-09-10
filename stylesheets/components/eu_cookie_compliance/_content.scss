@@ -73,14 +73,21 @@
 
     @extend .form-actions;
 
-    // Only show the "Decide later" button if the current user agreement status
-    // is null, i.e. they haven't agreed to anything yet.
-    @include selector.root-conditions(
-      (':not(.eu-cookie-compliance-status-null)'), 'body'
-    ) {
+    // Only show the "Decide later" button if neither of status classes are set.
+    @include selector.root-conditions((
+      '.eu-cookie-compliance-status-1', '.eu-cookie-compliance-status-2'
+    ), 'body') {
       &__later {
         display: none;
       }
+    }
+
+    // Hide the "Decide later" button if the preceding withdraw button is not
+    // visually hidden. This catches the edge case when a user has just clicked
+    // the withdraw button which causes the decide later button to show right
+    // before the page is reloaded due to the above rule no longer matching.
+    .eu-cookie-withdraw-button:not(.visually-hidden) + .eu-cookie-compliance-buttons__later {
+      display: none;
     }
 
   }
