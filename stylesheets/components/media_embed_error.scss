@@ -50,6 +50,7 @@
 
     margin-left: math.div($error-icon-size, 2) * -1;
 
+    /* webpackIgnore: true */
     background-image:     url(
       '../../../../core/modules/media/images/icons/no-thumbnail.png'
     );
