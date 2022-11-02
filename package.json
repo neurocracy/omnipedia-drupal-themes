@@ -23,7 +23,7 @@
     "webpack-remove-empty-scripts": "^1.0.1"
   },
   "dependencies": {
-    "ambientimpact-drupal-modules": "^5",
-    "ambientimpact-drupal-themes": "^4"
+    "ambientimpact-drupal-modules": "workspace:^5",
+    "ambientimpact-drupal-themes": "workspace:^4"
   }
 }
