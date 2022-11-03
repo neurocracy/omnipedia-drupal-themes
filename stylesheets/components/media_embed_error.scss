@@ -50,7 +50,12 @@
 
     margin-left: math.div($error-icon-size, 2) * -1;
 
-    /* webpackIgnore: true */
+    // Instruct Webpack to not try and resolve this path. Additionally, the '!'
+    // instructs CssMinimizerWebpackPlugin to not discard this comment when
+    // minimizing.
+    //
+    // @see https://cssnano.co/docs/optimisations/discardcomments/
+    /*! webpackIgnore: true */
     background-image:     url(
       '../../../../core/modules/media/images/icons/no-thumbnail.png'
     );
