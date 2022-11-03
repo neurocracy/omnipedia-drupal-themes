@@ -5,6 +5,7 @@ const baseThemeImporter = require(
   'ambientimpact-drupal-themes/baseThemeImporter'
 );
 const componentPaths = require('ambientimpact-drupal-modules/componentPaths');
+const easingGradients = require('postcss-easing-gradients');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const glob = require('glob');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -169,6 +170,7 @@ module.exports = {
               sourceMap: isDev,
               postcssOptions: {
                 plugins: [
+                  easingGradients(),
                   autoprefixer(),
                 ],
               },
