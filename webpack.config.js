@@ -139,7 +139,8 @@ Encore
     // theme_color: '#c07300',
 
     display:  'standalone',
-    // lang:     'en-CA',
+    lang:     'en-GB',
+
     // @todo This doesn't seem to add a version query string?
     version:  '1',
 
