@@ -116,14 +116,10 @@ Encore
 //   browserconfig.xml? The paths don't seem easily customizable.
 .addPlugin(new FaviconsWebpackPlugin({
 
-  logo: './images/icons/icon.png',
+  logo:         './images/icons/icon.png',
+  logoMaskable: './images/icons/icon_maskable.png',
 
-  // @todo Automate generating the maskable logo variant for the logoMaskable
-  //   config option.
-  //
-  // @see https://maskable.app/
-
-  outputPath: './images/icons/generated',
+  outputPath:   './images/icons/generated',
 
   favicons: {
 
