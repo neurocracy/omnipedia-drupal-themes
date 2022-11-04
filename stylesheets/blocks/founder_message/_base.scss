@@ -12,12 +12,9 @@
 @use 'sass/helpers/selector';
 
 ///
-/// Founder block background logo URL.
+/// Founder block background logo URL relative to this partial.
 ///
-/// Note that this is relative to the location of the compiled stylesheet, not
-/// this partial.
-///
-$block-background-logo-url: '../../images/logo_faded_greyscale.svg?v=1';
+$block-background-logo-url: '../../../images/logo_faded_greyscale.svg?v=1';
 
 ///
 /// Founder message stacking order. Later in the list means a higher z-index.
