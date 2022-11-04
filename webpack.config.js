@@ -125,9 +125,6 @@ Encore
 
   outputPath: './images/icons/generated',
 
-  mode:     'webapp',
-  devMode:  'webapp',
-
   favicons: {
 
     appName:      'Omnipedia',
