@@ -43,11 +43,6 @@ If you're starting from scratch, simply requiring that template and following
 documentation](https://www.drupal.org/docs/develop/using-composer/starting-a-site-using-drupal-composer-project-templates)
 should get you up and running.
 
-You'll also need to have the repository and installer types set up in your root
-```composer.json``` for [Asset Packagist](https://asset-packagist.org/) as
-detailed by the [Drupal.org Composer
-documentation](https://www.drupal.org/docs/develop/using-composer/using-composer-to-install-drupal-and-manage-dependencies#third-party-libraries).
-
 Then, in your root ```composer.json```, add the following to the
 ```"repositories"``` section:
 
