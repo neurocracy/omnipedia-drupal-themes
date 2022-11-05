@@ -26,6 +26,7 @@
     "webpack-remove-empty-scripts": "^1.0.1"
   },
   "dependencies": {
+    "@fontsource/exo-2": "^4.5.10",
     "ambientimpact-drupal-modules": "workspace:^5",
     "ambientimpact-drupal-themes": "workspace:^4"
   }

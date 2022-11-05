@@ -95,7 +95,7 @@ Encore
 
 // Clean out any previously built files in case of source files being removed or
 // renamed.
-.cleanupOutputBeforeBuild(['**/*.css', '**/*.css.map'])
+.cleanupOutputBeforeBuild(['**/*.css', '**/*.css.map', 'fonts/vendor/**'])
 
 .enableSourceMaps(!Encore.isProduction())
 
@@ -174,15 +174,24 @@ Encore
 // Disable the Encore image rule because we provide our own loader config.
 .configureImageRule({enabled: false})
 
-// This disables asset bundling/copying for now.
+// This disables asset bundling/copying for certain asset types.
 //
 // @see https://stackoverflow.com/questions/68737296/disable-asset-bundling-in-webpack-5#68768905
 .addLoader({
-  test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
+  test: /\.(png|jpe?g|gif|svg)$/i,
   type: 'asset/resource',
   generator: {
     emit: false,
   },
+})
+
+// Output referenced fonts to fonts/vendor.
+//
+// @todo Can we add a condition to only do this for fonts installed from
+//   Yarn/npm?
+.configureFontRule({
+  type:     'asset/resource',
+  filename: 'fonts/vendor/[name].[hash:8][ext][query]',
 });
 
 module.exports = Encore.getWebpackConfig();

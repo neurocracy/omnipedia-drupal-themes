@@ -5,6 +5,29 @@
 @use '../layout/config' as layout-config; // Configure layout.
 @use 'base:layout/vertical_spacing' as vertical-spacing;
 @use 'config' as typography-config; // Configure typography.
+@use '@fontsource/exo-2/scss/mixins' as exo-2-font;
+
+///
+/// Exo 2 @font-face output.
+///
+/// @link https://fontsource.org/fonts/exo-2
+///
+/// @todo This font supports the variable font format. Start using that?
+///
+@include exo-2-font.fontFace(
+  $weight:  200,
+);
+@include exo-2-font.fontFace(
+  $weight:  200,
+  $style:   italic,
+);
+@include exo-2-font.fontFace(
+  $weight:  500,
+);
+@include exo-2-font.fontFace(
+  $weight:  500,
+  $style:   italic,
+);
 
 // The primary purpose of the styles in this partial is to match Wikipedia's
 // heading typography as closely as possible.

@@ -1,24 +1,9 @@
-font-exo-2:
-  remote: https://fontsource.org/fonts/exo-2
-  version: 4.5.9
-  license:
-    name: OFL
-    url: https://github.com/NDISCOVER/Exo-2.0/blob/master/OFL.txt
-    gpl-compatible: false
-  css:
-    theme:
-      /libraries/fontsource--exo-2/200.css: {}
-      /libraries/fontsource--exo-2/200-italic.css: {}
-      /libraries/fontsource--exo-2/500.css: {}
-      /libraries/fontsource--exo-2/500-italic.css: {}
-
 global-styling:
   css:
     theme:
       stylesheets/theme.css: {}
   dependencies:
     - ambientimpact_ux/component.material.ripple
-    - omnipedia_site_theme/font-exo-2
 
 changes:
   css:
