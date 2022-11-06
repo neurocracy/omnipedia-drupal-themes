@@ -54,6 +54,34 @@ function getGlobbedEntries() {
 
 };
 
+/**
+ * Webpack filename callback to place assets into a local vendor directory.
+ *
+ * @param {Object} pathData
+ *
+ * @return {String}
+ *
+ * @todo Can we detect if the referenced asset is coming from Yarn only put it
+ *   into vendor in that case, falling back to leaving them at their default
+ *   location otherwise?
+ */
+function vendorAssetFileName(pathData) {
+
+  /**
+   * Path parts as parsed by path.parse().
+   *
+   * @type {Object}
+   */
+  const pathParts = path.parse(pathData.module.rawRequest);
+
+  // Note that pathData.contentHash doesn't always seem to contain a valid hash,
+  // but the longer pathData.module.buildInfo.hash always seems to.
+  return `vendor/${pathParts.dir}/${pathParts.name}.${
+    pathData.module.buildInfo.hash
+  }${pathParts.ext}`;
+
+};
+
 // @see https://symfony.com/doc/current/frontend/encore/installation.html#creating-the-webpack-config-js-file
 if (!Encore.isRuntimeEnvironmentConfigured()) {
   Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
@@ -95,7 +123,7 @@ Encore
 
 // Clean out any previously built files in case of source files being removed or
 // renamed.
-.cleanupOutputBeforeBuild(['**/*.css', '**/*.css.map', 'fonts/vendor/**'])
+.cleanupOutputBeforeBuild(['**/*.css', '**/*.css.map', 'vendor/**'])
 
 .enableSourceMaps(!Encore.isProduction())
 
@@ -185,13 +213,14 @@ Encore
   },
 })
 
-// Output referenced fonts to fonts/vendor.
+// Output referenced fonts to vendor directory.
 //
 // @todo Can we add a condition to only do this for fonts installed from
-//   Yarn/npm?
+//   Yarn/npm? Can we add a loader rule condition to test for node_modules via
+//   the second parameter to configureFontRule()?
 .configureFontRule({
   type:     'asset/resource',
-  filename: 'fonts/vendor/[name].[hash:8][ext][query]',
+  filename: vendorAssetFileName,
 });
 
 module.exports = Encore.getWebpackConfig();
