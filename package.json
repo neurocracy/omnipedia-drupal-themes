@@ -6,6 +6,16 @@
   "scripts": {
     "build": "webpack --progress --config webpack.config.js"
   },
+  "yarn.build": {
+    "input": [
+      "stylesheets/**/*.scss",
+      "images/icons/*.{png,svg}"
+    ],
+    "output": [
+      "stylesheets/**/*.css",
+      "images/icons/generated/*"
+    ]
+  },
   "devDependencies": {
     "@babel/core": "^7.20.2",
     "@babel/preset-env": "^7.20.2",
