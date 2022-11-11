@@ -38,6 +38,9 @@
   "dependencies": {
     "@fontsource/exo-2": "^4.5.10",
     "ambientimpact-drupal-modules": "workspace:^6",
-    "ambientimpact-drupal-themes": "workspace:^5"
+    "ambientimpact-drupal-themes": "workspace:^5",
+    "drupal-omnipedia-block": "workspace:^4",
+    "drupal-omnipedia-content": "workspace:^4",
+    "drupal-omnipedia-media": "workspace:^4"
   }
 }
