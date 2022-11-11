@@ -54,7 +54,7 @@ Then, in your root ```composer.json```, add the following to the
 ```"repositories"``` section:
 
 ```json
-{
+"drupal/omnipedia_site_theme": {
   "type": "vcs",
   "url": "https://github.com/neurocracy/drupal-omnipedia-site-theme.git"
 }
