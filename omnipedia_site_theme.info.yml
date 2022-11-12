@@ -55,6 +55,7 @@ libraries-override:
 libraries-extend:
 
   ambientimpact_ux/component.offcanvas:
+    - omnipedia_site_theme/offcanvas_history
     - omnipedia_site_theme/offcanvas_immerse
 
   classy/base:

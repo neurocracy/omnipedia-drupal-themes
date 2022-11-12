@@ -115,6 +115,10 @@ offcanvas_immerse:
   dependencies:
     - ambientimpact_ux/component.immerse
 
+offcanvas_history:
+  js:
+    javascript/offcanvas.history.js: {}
+
 omnipedia_infobox:
   css:
     theme:
