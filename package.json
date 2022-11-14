@@ -8,6 +8,7 @@
   },
   "yarn.build": {
     "input": [
+      "webpack.config.js",
       "stylesheets/**/*.scss",
       "images/icons/*.{png,svg}"
     ],
