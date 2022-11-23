@@ -25,7 +25,7 @@ part of this codebase is useful or will inspire someone out there.
 
 ## Drupal dependencies
 
-* The [```ambientimpact_base```](https://github.com/Ambient-Impact/drupal-themes) theme must be present in your Drupal installation.
+* The [```ambientimpact_base```](https://github.com/Ambient-Impact/drupal-ambientimpact-base) theme is required. Follow the installation instructions for that before requiring this theme.
 
 * Several [```ambientimpact_*``` modules](https://github.com/Ambient-Impact/drupal-modules) must be present.
 

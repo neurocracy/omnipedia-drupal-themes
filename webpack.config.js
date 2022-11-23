@@ -2,7 +2,7 @@
 
 const autoprefixer = require('autoprefixer');
 const baseThemeImporter = require(
-  'ambientimpact-drupal-themes/baseThemeImporter'
+  'drupal-ambientimpact-base/baseThemeImporter'
 );
 const componentPaths = require('ambientimpact-drupal-modules/componentPaths');
 const easingGradients = require('postcss-easing-gradients');
