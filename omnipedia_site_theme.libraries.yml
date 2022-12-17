@@ -45,11 +45,11 @@ eu_cookie_compliance:
     theme:
       stylesheets/components/eu_cookie_compliance.css: {}
   js:
-    javascript/eu_cookie_compliance.elements.js: {}
-    javascript/eu_cookie_compliance.state.js: {}
-    javascript/eu_cookie_compliance.focus.js: {}
-    javascript/eu_cookie_compliance.decide_later.js: {}
-    javascript/eu_cookie_compliance.overlay.js: {}
+    javascript/eu_cookie_compliance.elements.js: { attributes: { defer: true } }
+    javascript/eu_cookie_compliance.state.js: { attributes: { defer: true } }
+    javascript/eu_cookie_compliance.focus.js: { attributes: { defer: true } }
+    javascript/eu_cookie_compliance.decide_later.js: { attributes: { defer: true } }
+    javascript/eu_cookie_compliance.overlay.js: { attributes: { defer: true } }
   dependencies:
     - ambientimpact_core/ally.js
     - ambientimpact_ux/component.overlay
@@ -73,12 +73,12 @@ header:
       stylesheets/blocks/header.css: {}
       stylesheets/components/header.css: {}
   js:
-    javascript/header.elements.js: {}
-    javascript/header.focus.js: {}
-    javascript/header.headroom.js: {}
-    javascript/header.keyboard.js: {}
-    javascript/header.overlay.js: {}
-    javascript/header.state.js: {}
+    javascript/header.elements.js: { attributes: { defer: true } }
+    javascript/header.focus.js: { attributes: { defer: true } }
+    javascript/header.headroom.js: { attributes: { defer: true } }
+    javascript/header.keyboard.js: { attributes: { defer: true } }
+    javascript/header.overlay.js: { attributes: { defer: true } }
+    javascript/header.state.js: { attributes: { defer: true } }
   dependencies:
     - ambientimpact_core/ally.js
     - ambientimpact_ux/component.hash_matcher
@@ -111,13 +111,13 @@ menu:
 
 offcanvas_immerse:
   js:
-    javascript/offcanvas.immerse.js: {}
+    javascript/offcanvas.immerse.js: { attributes: { defer: true } }
   dependencies:
     - ambientimpact_ux/component.immerse
 
 offcanvas_history:
   js:
-    javascript/offcanvas.history.js: {}
+    javascript/offcanvas.history.js: { attributes: { defer: true } }
 
 omnipedia_infobox:
   css:
@@ -156,7 +156,7 @@ references:
 
 refreshless:
   js:
-    javascript/refreshless.js: {}
+    javascript/refreshless.js: { attributes: { defer: true } }
   dependencies:
     - ambientimpact_core/framework
 
@@ -167,11 +167,11 @@ search_form:
 
 sidebars:
   js:
-    javascript/sidebars.elements.js: {}
-    javascript/sidebars.state.js: {}
-    javascript/sidebars.focus.js: {}
-    javascript/sidebars.overlay.js: {}
-    javascript/sidebars.keyboard.js: {}
+    javascript/sidebars.elements.js: { attributes: { defer: true } }
+    javascript/sidebars.state.js: { attributes: { defer: true } }
+    javascript/sidebars.focus.js: { attributes: { defer: true } }
+    javascript/sidebars.overlay.js: { attributes: { defer: true } }
+    javascript/sidebars.keyboard.js: { attributes: { defer: true } }
   dependencies:
     - ambientimpact_core/ally.js
     - ambientimpact_ux/component.hash_matcher
