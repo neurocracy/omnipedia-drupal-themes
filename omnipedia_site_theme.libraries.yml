@@ -52,6 +52,7 @@ eu_cookie_compliance:
     javascript/eu_cookie_compliance.overlay.js: { attributes: { defer: true } }
   dependencies:
     - ambientimpact_core/ally.js
+    - ambientimpact_core/framework
     - ambientimpact_ux/component.overlay
     - ambientimpact_ux/component.pointer_focus_hide
     - omnipedia_block/component.privacy_settings
@@ -81,6 +82,7 @@ header:
     javascript/header.state.js: { attributes: { defer: true } }
   dependencies:
     - ambientimpact_core/ally.js
+    - ambientimpact_core/framework
     - ambientimpact_ux/component.hash_matcher
     - ambientimpact_ux/component.headroom
     - ambientimpact_ux/component.overlay
@@ -113,11 +115,14 @@ offcanvas_immerse:
   js:
     javascript/offcanvas.immerse.js: { attributes: { defer: true } }
   dependencies:
+    - ambientimpact_core/framework
     - ambientimpact_ux/component.immerse
 
 offcanvas_history:
   js:
     javascript/offcanvas.history.js: { attributes: { defer: true } }
+  dependencies:
+    - ambientimpact_core/framework
 
 omnipedia_infobox:
   css:
@@ -174,6 +179,7 @@ sidebars:
     javascript/sidebars.keyboard.js: { attributes: { defer: true } }
   dependencies:
     - ambientimpact_core/ally.js
+    - ambientimpact_core/framework
     - ambientimpact_ux/component.hash_matcher
     - ambientimpact_ux/component.headroom
     - ambientimpact_ux/component.overlay
