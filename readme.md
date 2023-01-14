@@ -25,11 +25,13 @@ part of this codebase is useful or will inspire someone out there.
 
 ## Drupal dependencies
 
-* The [```ambientimpact_base```](https://github.com/Ambient-Impact/drupal-ambientimpact-base) theme is required. Follow the installation instructions for that before requiring this theme.
+Follow the Composer installation instructions for these dependencies first:
 
-* Several [```ambientimpact_*``` modules](https://github.com/Ambient-Impact/drupal-modules) must be present.
+* The [`ambientimpact_base` theme](https://github.com/Ambient-Impact/drupal-ambientimpact-base).
 
-* Several of the [```omnipedia_*``` modules](https://github.com/neurocracy) are required.
+* Several of the [`ambientimpact_*` modules](https://github.com/Ambient-Impact/drupal-modules).
+
+* The `omnipedia_block` (not yet open source), [`omnipedia_content`](https://github.com/neurocracy/drupal-omnipedia-content), and [`omnipedia_media`](https://github.com/neurocracy/drupal-omnipedia-media) modules.
 
 ## Front-end dependencies
 
