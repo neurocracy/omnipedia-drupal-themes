@@ -1,6 +1,6 @@
 {
   "name": "drupal-omnipedia-site-theme",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "license": "GPL-2.0",
   "repository": "github:neurocracy/drupal-omnipedia-site-theme",
   "scripts": {
@@ -39,9 +39,9 @@
   "dependencies": {
     "@fontsource/exo-2": "^4.5.10",
     "ambientimpact-drupal-modules": "workspace:^6 || ^7",
-    "drupal-ambientimpact-base": "workspace:^5",
-    "drupal-omnipedia-block": "workspace:^4",
-    "drupal-omnipedia-content": "workspace:^4",
-    "drupal-omnipedia-media": "workspace:^4"
+    "drupal-ambientimpact-base": "workspace:^6",
+    "drupal-omnipedia-block": "workspace:^5",
+    "drupal-omnipedia-content": "workspace:^5",
+    "drupal-omnipedia-media": "workspace:^5"
   }
 }

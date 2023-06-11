@@ -17,7 +17,7 @@ part of this codebase is useful or will inspire someone out there.
 
 # Requirements
 
-* [Drupal 9 or 10](https://www.drupal.org/download) ([Drupal 8 is end-of-life](https://www.drupal.org/psa-2021-11-30))
+* [Drupal 9.5 or 10](https://www.drupal.org/download) ([Drupal 8 is end-of-life](https://www.drupal.org/psa-2021-11-30))
 
 * PHP 8
 
@@ -63,7 +63,7 @@ section:
 ```
 
 Then, in your project's root, run `composer require
-"drupal/omnipedia_site_theme:4.x-dev@dev"` to have Composer install the theme
+"drupal/omnipedia_site_theme:5.x-dev@dev"` to have Composer install the theme
 and its required dependencies for you.
 
 ## Front-end assets
@@ -87,7 +87,7 @@ Once those are defined, add the following to the `"dependencies"` section of
 your top-level `package.json`:
 
 ```json
-"drupal-omnipedia-site-theme": "workspace:^4"
+"drupal-omnipedia-site-theme": "workspace:^5"
 ```
 
 Then run `yarn install` and let Yarn do the rest.
@@ -152,3 +152,5 @@ The following major version bumps indicate breaking changes:
 * 3.x - Changed Composer installer type to `drupal-custom-theme`; moved theme contents into root directory; renamed theme from `omnipedia_site` to `omnipedia_site_theme` for clarity.
 
 * 4.x - Front-end dependencies now installed via [Yarn](https://yarnpkg.com/), removing all use of [Asset Packagist](https://asset-packagist.org/); front-end build process ported to [Webpack](https://webpack.js.org/).
+
+* 5.x - Requires Drupal 9.5 or [Drupal 10](https://www.drupal.org/project/drupal/releases/10.0.0).
