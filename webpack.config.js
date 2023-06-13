@@ -4,7 +4,7 @@ const autoprefixer = require('autoprefixer');
 const baseThemeImporter = require(
   'drupal-ambientimpact-base/baseThemeImporter'
 );
-const componentPaths = require('ambientimpact-drupal-modules/componentPaths');
+const componentPaths = require('drupal-ambientimpact-core/componentPaths');
 const easingGradients = require('postcss-easing-gradients');
 const Encore = require('@symfony/webpack-encore');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');

@@ -38,8 +38,10 @@
   },
   "dependencies": {
     "@fontsource/exo-2": "^4.5.10",
-    "ambientimpact-drupal-modules": "workspace:^6 || ^7",
     "drupal-ambientimpact-base": "workspace:^6",
+    "drupal-ambientimpact-core": "workspace:^1",
+    "drupal-ambientimpact-icon": "workspace:^1",
+    "drupal-ambientimpact-ux": "workspace:^1",
     "drupal-omnipedia-block": "workspace:^5",
     "drupal-omnipedia-content": "workspace:^5",
     "drupal-omnipedia-media": "workspace:^5"

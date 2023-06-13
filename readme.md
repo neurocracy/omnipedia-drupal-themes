@@ -30,7 +30,7 @@ described in the installation instructions for these dependencies:
 
 * The [`ambientimpact_base` theme](https://github.com/Ambient-Impact/drupal-ambientimpact-base).
 
-* Several of the [`ambientimpact_*` modules](https://github.com/Ambient-Impact/drupal-modules).
+* The [`ambientimpact_core`](https://github.com/Ambient-Impact/drupal-ambientimpact-core), [`ambientimpact_icon`](https://github.com/Ambient-Impact/drupal-ambientimpact-icon), and [`ambientimpact_ux`](https://github.com/Ambient-Impact/drupal-ambientimpact-ux) modules.
 
 * The `omnipedia_block` (not yet open source), [`omnipedia_content`](https://github.com/neurocracy/drupal-omnipedia-content), and [`omnipedia_media`](https://github.com/neurocracy/drupal-omnipedia-media) modules.
 
