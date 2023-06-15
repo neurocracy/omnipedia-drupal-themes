@@ -14,7 +14,7 @@
     "php": "^8",
     "drupal/core": "^10.0",
     "drupal/ambientimpact_base": "6.x-dev@dev",
-    "drupal/ambientimpact_core": "1.x-dev@dev",
+    "drupal/ambientimpact_core": "2.x-dev@dev",
     "drupal/ambientimpact_icon": "1.x-dev@dev",
     "drupal/ambientimpact_ux": "1.x-dev@dev",
     "drupal/omnipedia_block": "5.x-dev@dev",
