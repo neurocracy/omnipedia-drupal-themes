@@ -43,7 +43,7 @@
     "drupal-ambientimpact-icon": "workspace:^1",
     "drupal-ambientimpact-ux": "workspace:^1",
     "drupal-omnipedia-block": "workspace:^5",
-    "drupal-omnipedia-content": "workspace:^5",
+    "drupal-omnipedia-content": "workspace:^6",
     "drupal-omnipedia-media": "workspace:^6"
   }
 }
