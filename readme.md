@@ -165,6 +165,8 @@ The following major version bumps indicate breaking changes:
 
   * Requires [Drupal 10.0](https://www.drupal.org/project/drupal/releases/10.0.0).
 
-  * Requires [`drupal/omnipedia_media` 6.x](https://github.com/neurocracy/drupal-omnipedia-media/tree/6.x), which requires [`drupal/ambientimpact_media` 2.x](https://github.com/Ambient-Impact/drupal-ambientimpact-media/tree/2.x), which in turn requires Drupal 10.0.
+  * Requires [`drupal/ambientimpact_core` 2.x](https://github.com/Ambient-Impact/drupal-ambientimpact-core/tree/2.x) for Drupal 10 support.
+
+  * Requires [`drupal/omnipedia_content` 6.x](https://github.com/neurocracy/drupal-omnipedia-content/tree/6.x) and [`drupal/omnipedia_media` 6.x](https://github.com/neurocracy/drupal-omnipedia-media/tree/6.x) for Drupal 10 support.
 
   * Increases minimum version of `symfony/css-selector` and `symfony/dom-crawler` to ^6.2 as that's what's supported by Drupal 10.
