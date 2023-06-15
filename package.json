@@ -1,6 +1,6 @@
 {
   "name": "drupal-omnipedia-site-theme",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "license": "GPL-2.0",
   "repository": "github:neurocracy/drupal-omnipedia-site-theme",
   "scripts": {
@@ -44,6 +44,6 @@
     "drupal-ambientimpact-ux": "workspace:^1",
     "drupal-omnipedia-block": "workspace:^5",
     "drupal-omnipedia-content": "workspace:^5",
-    "drupal-omnipedia-media": "workspace:^5"
+    "drupal-omnipedia-media": "workspace:^6"
   }
 }

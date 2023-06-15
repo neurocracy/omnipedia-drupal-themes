@@ -12,15 +12,15 @@
   ],
   "require": {
     "php": "^8",
-    "drupal/core": "^9.5 || ^10.0",
+    "drupal/core": "^10.0",
     "drupal/ambientimpact_base": "6.x-dev@dev",
     "drupal/ambientimpact_core": "1.x-dev@dev",
     "drupal/ambientimpact_icon": "1.x-dev@dev",
     "drupal/ambientimpact_ux": "1.x-dev@dev",
     "drupal/omnipedia_block": "5.x-dev@dev",
     "drupal/omnipedia_content": "5.x-dev@dev",
-    "drupal/omnipedia_media": "5.x-dev@dev",
-    "symfony/css-selector": "^4.4 || ^6.2",
-    "symfony/dom-crawler": "^4.4 || ^6.2"
+    "drupal/omnipedia_media": "6.x-dev@dev",
+    "symfony/css-selector": "^6.2",
+    "symfony/dom-crawler": "^6.2"
   }
 }

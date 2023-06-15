@@ -17,7 +17,7 @@ part of this codebase is useful or will inspire someone out there.
 
 # Requirements
 
-* [Drupal 9.5 or 10](https://www.drupal.org/download) ([Drupal 8 is end-of-life](https://www.drupal.org/psa-2021-11-30))
+* [Drupal 10.0](https://www.drupal.org/download)
 
 * PHP 8
 
@@ -69,7 +69,7 @@ In your root `composer.json`, add the following to the `"repositories"` section:
 ### Installing
 
 Once you've completed all of the above, run `composer require
-"drupal/omnipedia_site_theme:5.x-dev@dev"` in the root of your project to have
+"drupal/omnipedia_site_theme:6.x-dev@dev"` in the root of your project to have
 Composer install this and its required dependencies for you.
 
 ## Front-end assets
@@ -93,7 +93,7 @@ Once those are defined, add the following to the `"dependencies"` section of
 your top-level `package.json`:
 
 ```json
-"drupal-omnipedia-site-theme": "workspace:^5"
+"drupal-omnipedia-site-theme": "workspace:^6"
 ```
 
 Then run `yarn install` and let Yarn do the rest.
@@ -160,3 +160,11 @@ The following major version bumps indicate breaking changes:
 * 4.x - Front-end dependencies now installed via [Yarn](https://yarnpkg.com/), removing all use of [Asset Packagist](https://asset-packagist.org/); front-end build process ported to [Webpack](https://webpack.js.org/).
 
 * 5.x - Requires Drupal 9.5 or [Drupal 10](https://www.drupal.org/project/drupal/releases/10.0.0).
+
+* 6.x:
+
+  * Requires [Drupal 10.0](https://www.drupal.org/project/drupal/releases/10.0.0).
+
+  * Requires [`drupal/omnipedia_media` 6.x](https://github.com/neurocracy/drupal-omnipedia-media/tree/6.x), which requires [`drupal/ambientimpact_media` 2.x](https://github.com/Ambient-Impact/drupal-ambientimpact-media/tree/2.x), which in turn requires Drupal 10.0.
+
+  * Increases minimum version of `symfony/css-selector` and `symfony/dom-crawler` to ^6.2 as that's what's supported by Drupal 10.
