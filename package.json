@@ -4,7 +4,9 @@
   "license": "GPL-2.0",
   "repository": "github:neurocracy/drupal-omnipedia-site-theme",
   "scripts": {
-    "build": "webpack --progress --config webpack.config.js"
+    "build": "webpack --progress --config webpack.config.js",
+    "build:vendor": "webpack --progress --config webpack.vendor.js",
+    "postinstall": "yarn run build:vendor"
   },
   "yarn.build": {
     "input": [
@@ -25,6 +27,7 @@
     "css-loader": "^6.7.1",
     "favicons": "^7.0.2",
     "favicons-webpack-plugin": "^6.0.0-alpha.2",
+    "file-loader": "^6.0.0",
     "glob": "^8.0.3",
     "mini-css-extract-plugin": "^2.6.1",
     "postcss": "^8.3.5",
@@ -44,6 +47,7 @@
     "drupal-ambientimpact-ux": "workspace:^1",
     "drupal-omnipedia-block": "workspace:^5",
     "drupal-omnipedia-content": "workspace:^6",
-    "drupal-omnipedia-media": "workspace:^6"
+    "drupal-omnipedia-media": "workspace:^6",
+    "js-cookie": "^3.0.5"
   }
 }

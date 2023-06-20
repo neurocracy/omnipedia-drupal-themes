@@ -65,6 +65,19 @@ libraries-extend:
     - omnipedia_site_theme/commerce_checkout_progress
 
   eu_cookie_compliance/eu_cookie_compliance:
+    # Workaround for Drupal 10.1 deprecating this and somehow not getting it to
+    # attach properly to be used by the EU Cookie Compliance module when
+    # JavaScript aggregation is enabled. Attaching this via libraries-extend
+    # does seem to fix the issue.
+    #
+    # @see https://www.drupal.org/project/eu_cookie_compliance/issues/3367774
+    #   EU Cookie Compliance module issue.
+    #
+    # @see https://www.drupal.org/node/3322720
+    #   Drupal core change record.
+    #
+    # @todo Remove this when the issue is resolved.
+    - omnipedia_site_theme/js-cookie
     - omnipedia_site_theme/eu_cookie_compliance
 
   omnipedia_block/component.founder_message:

@@ -123,7 +123,7 @@ Encore
 
 // Clean out any previously built files in case of source files being removed or
 // renamed.
-.cleanupOutputBeforeBuild(['**/*.css', '**/*.css.map', 'vendor/**'])
+.cleanupOutputBeforeBuild(['**/*.css', '**/*.css.map', 'vendor/@fontsource/**'])
 
 .enableSourceMaps(!Encore.isProduction())
 
