@@ -21,7 +21,7 @@
     "drupal/ambientimpact_core": "2.x-dev@dev",
     "drupal/ambientimpact_icon": "1.x-dev@dev",
     "drupal/ambientimpact_ux": "1.x-dev@dev",
-    "drupal/omnipedia_block": "5.x-dev@dev",
+    "drupal/omnipedia_block": "5.x-dev@dev || 6.x-dev@dev",
     "drupal/omnipedia_content": "6.x-dev@dev",
     "drupal/omnipedia_media": "6.x-dev@dev",
     "symfony/css-selector": "^6.2",
