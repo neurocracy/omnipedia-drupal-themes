@@ -45,7 +45,7 @@
     "drupal-ambientimpact-core": "workspace:^2",
     "drupal-ambientimpact-icon": "workspace:^1",
     "drupal-ambientimpact-ux": "workspace:^1",
-    "drupal-omnipedia-block": "workspace:^5",
+    "drupal-omnipedia-block": "workspace:^5 || ^6",
     "drupal-omnipedia-content": "workspace:^6",
     "drupal-omnipedia-media": "workspace:^6",
     "js-cookie": "^3.0.5"
