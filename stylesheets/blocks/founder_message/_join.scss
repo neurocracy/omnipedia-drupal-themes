@@ -109,7 +109,7 @@ $link-background-colour-base: white;
       );
 
       @include gradient(color.adjust(
-        colours.$omnipedia-blue, $lightness: +50%, $saturation: +40%
+        colours.$omnipedia-blue, $lightness: +40%, $saturation: +40%
       ));
 
       @include colour.on-dark-scheme {
