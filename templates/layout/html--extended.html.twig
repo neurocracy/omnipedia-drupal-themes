@@ -26,6 +26,8 @@
 {# @todo Should we even output this at all on on 403 pages to reduce information
    being leaked about how the site works? #}
 {% set attributes = attributes.addClass([
-  omnipedia_is_main_page ?
+  omnipedia_is_main_page and not omnipedia_is_maintenance_page ?
     'omnipedia--is-main-page' : 'omnipedia--is-not-main-page',
+  omnipedia_is_maintenance_page ?
+    'omnipedia--is-maintenance-page' : 'omnipedia--is-not-maintenance-page',
 ]) %}

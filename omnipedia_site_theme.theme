@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\omnipedia_site_theme\EuCookieCompliancePopUpInfoPreprocess;
+use Drupal\omnipedia_site_theme\MaintenancePage;
 use Drupal\omnipedia_site_theme\MediaSubtitleTracks;
 use Drupal\omnipedia_site_theme\OmnipediaRegionPlaceholder;
 use Drupal\omnipedia_site_theme\PageRegionPlaceholdersPreprocess;
@@ -47,6 +48,8 @@ function omnipedia_site_theme_theme_suggestions_html_alter(
  * Default template: html.html.twig.
  *
  * @see \Drupal\omnipedia_core\Service\WikiNodeMainPageInterface::isCurrentRouteMainPage()
+ *
+ * @see \Drupal\omnipedia_site_theme\MaintenancePage::preprocessHtml()
  */
 function omnipedia_site_theme_preprocess_html(array &$variables): void {
 
@@ -58,6 +61,8 @@ function omnipedia_site_theme_preprocess_html(array &$variables): void {
   \Drupal::classResolver(SiteBrandingCustomProperties::class)->preprocessHtml(
     $variables
   );
+
+  \Drupal::classResolver(MaintenancePage::class)->preprocessHtml($variables);
 
 }
 
@@ -82,6 +87,21 @@ function omnipedia_site_theme_preprocess_page(array &$variables): void {
   )->isCurrentRouteSearchPage();
 
   \Drupal::classResolver(PageRegionPlaceholdersPreprocess::class)->preprocess(
+    $variables
+  );
+
+}
+
+/**
+ * Prepares variables for the page template when in maintenance mode.
+ *
+ * @see \Drupal\omnipedia_site_theme\MaintenancePage::preprocessMaintenancePage()
+ */
+function omnipedia_site_theme_preprocess_maintenance_page(
+  array &$variables
+): void {
+
+  \Drupal::classResolver(MaintenancePage::class)->preprocessMaintenancePage(
     $variables
   );
 

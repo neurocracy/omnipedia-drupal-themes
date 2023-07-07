@@ -103,3 +103,6 @@ libraries-extend:
 
   refreshless/refreshless:
     - omnipedia_site_theme/refreshless
+
+  system/maintenance:
+    - omnipedia_site_theme/maintenance_page

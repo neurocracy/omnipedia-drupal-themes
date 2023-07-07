@@ -1,0 +1,33 @@
+// -----------------------------------------------------------------------------
+//   Omnipedia maintenance page background partial
+// -----------------------------------------------------------------------------
+
+@use 'sass/helpers/selector';
+
+///
+/// Background logo URL relative to this partial.
+///
+$background-logo-url: '../../../images/logo_faded_greyscale.svg?v=1';
+
+.omnipedia--is-maintenance-page {
+
+  .layout-container {
+
+    background-image:     url($background-logo-url);
+    background-repeat:    no-repeat;
+    background-size:      contain;
+
+    @include selector.root-conditions(('[dir=ltr]'), 'html') {
+      background-position:  100% 100%;
+    }
+    @include selector.root-conditions(('[dir=rtl]'), 'html') {
+      background-position: 0 100%;
+    }
+
+  }
+
+  main {
+    backdrop-filter: blur(4px);
+  }
+
+}

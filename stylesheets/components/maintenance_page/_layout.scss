@@ -1,0 +1,39 @@
+// -----------------------------------------------------------------------------
+//   Omnipedia maintenance page layout partial
+// -----------------------------------------------------------------------------
+
+@use '../../layout/config' as layout-config; // Configure layout.
+
+.omnipedia--is-maintenance-page {
+
+  --max-width: #{layout-config.$no-sidebars-max-width};
+
+  --gutter: #{layout-config.$gutter};
+
+  --spacing-vertical: 2em;
+
+  .layout-container {
+
+    max-width: var(--max-width);
+
+    margin-left:  auto;
+    margin-right: auto;
+
+  }
+
+  main {
+
+    height:     30em;
+    max-height: calc(80vh - (var(--spacing-vertical) * 2));
+
+    padding-top:    var(--spacing-vertical);
+    padding-bottom: var(--spacing-vertical);
+    padding-left:   var(--gutter);
+    padding-right:  var(--gutter);
+
+    display: grid;
+    align-content: center;
+
+  }
+
+}

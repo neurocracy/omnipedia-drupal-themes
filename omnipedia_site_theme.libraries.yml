@@ -123,6 +123,11 @@ js-cookie:
   js:
     vendor/js-cookie/dist/js.cookie.min.js: { minified: true }
 
+maintenance_page:
+  css:
+    theme:
+      stylesheets/components/maintenance_page.css: {}
+
 media_embed_error:
   css:
     theme:
