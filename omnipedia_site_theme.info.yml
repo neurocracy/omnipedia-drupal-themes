@@ -4,6 +4,8 @@ type: theme
 base theme: ambientimpact_base
 package: Omnipedia
 screenshot: images/screenshot.png
+# Requires patch from: https://www.drupal.org/project/drupal/issues/3037922
+favicon: images/icons/generated/favicon-48x48.png
 logo: images/site_logo.svg?v=1
 logo_alt: 'The Omnipedia logo: a checkered globe with several squares missing at the top.'
 logo_width: 128
