@@ -23,8 +23,8 @@
 
   main {
 
-    height:     30em;
-    max-height: calc(80vh - (var(--spacing-vertical) * 2));
+    height:     35em;
+    max-height: 100vh;
 
     padding-top:    var(--spacing-vertical);
     padding-bottom: var(--spacing-vertical);
@@ -33,6 +33,8 @@
 
     display: grid;
     align-content: center;
+
+    box-sizing: border-box;
 
   }
 
