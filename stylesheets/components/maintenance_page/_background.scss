@@ -18,10 +18,10 @@ $background-logo-url: '../../../images/logo_faded_greyscale.svg?v=1';
     background-size:      contain;
 
     @include selector.root-conditions(('[dir=ltr]'), 'html') {
-      background-position:  100% 100%;
+      background-position:  100% 50%;
     }
     @include selector.root-conditions(('[dir=rtl]'), 'html') {
-      background-position: 0 100%;
+      background-position: 0 50%;
     }
 
   }
