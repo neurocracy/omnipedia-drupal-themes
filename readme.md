@@ -133,14 +133,6 @@ yarn workspace drupal-omnipedia-site-theme run build
 
 -----------------
 
-# Planned improvements
-
-* Port `src/MediaSubtitleTracks.php` to the [`ambientimpact_media` module](https://github.com/Ambient-Impact/drupal-modules).
-
-* Refactor most of the stylesheets and JavaScript as [component plug-ins/libraries](https://github.com/Ambient-Impact/drupal-modules/blob/4.x/component_explainer.md).
-
------------------
-
 # Breaking changes
 
 The following major version bumps indicate breaking changes:
