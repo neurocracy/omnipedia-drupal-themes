@@ -50,20 +50,6 @@ class SiteBrandingCustomProperties implements ContainerInjectionInterface {
   ];
 
   /**
-   * The Drupal theme handler service.
-   *
-   * @var \Drupal\Core\Extension\ThemeHandlerInterface
-   */
-  protected ThemeHandlerInterface $themeHandler;
-
-  /**
-   * The Drupal theme manager.
-   *
-   * @var \Drupal\Core\Theme\ThemeManagerInterface
-   */
-  protected ThemeManagerInterface $themeManager;
-
-  /**
    * Constructor; saves dependencies.
    *
    * @param \Drupal\Core\Extension\ThemeHandlerInterface $themeHandler
@@ -73,12 +59,9 @@ class SiteBrandingCustomProperties implements ContainerInjectionInterface {
    *   The Drupal theme manager.
    */
   public function __construct(
-    ThemeHandlerInterface $themeHandler,
-    ThemeManagerInterface $themeManager
-  ) {
-    $this->themeHandler = $themeHandler;
-    $this->themeManager = $themeManager;
-  }
+    protected readonly ThemeHandlerInterface $themeHandler,
+    protected readonly ThemeManagerInterface $themeManager,
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -86,7 +69,7 @@ class SiteBrandingCustomProperties implements ContainerInjectionInterface {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('theme_handler'),
-      $container->get('theme.manager')
+      $container->get('theme.manager'),
     );
   }
 
@@ -147,7 +130,7 @@ class SiteBrandingCustomProperties implements ContainerInjectionInterface {
     // properties into it rather than overwriting it.
     if ($attributes->offsetExists('style')) {
       $styleArray = AttributeHelper::parseStyleAttribute(
-        $attributes->offsetGet('style')
+        $attributes->offsetGet('style'),
       );
 
       $styleArray = \array_merge($styleArray, $properties);
@@ -158,7 +141,7 @@ class SiteBrandingCustomProperties implements ContainerInjectionInterface {
     }
 
     $attributes->offsetSet('style', AttributeHelper::serializeStyleArray(
-      $styleArray
+      $styleArray,
     ));
 
   }

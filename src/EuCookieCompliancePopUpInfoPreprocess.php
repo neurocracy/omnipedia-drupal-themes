@@ -33,28 +33,21 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class EuCookieCompliancePopUpInfoPreprocess implements ContainerInjectionInterface {
 
   /**
-   * The Drupal configuration factory service.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected ConfigFactoryInterface $configFactory;
-
-  /**
    * Constructor; saves dependencies.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   The Drupal configuration factory service.
    */
-  public function __construct(ConfigFactoryInterface $configFactory) {
-    $this->configFactory = $configFactory;
-  }
+  public function __construct(
+    protected readonly ConfigFactoryInterface $configFactory,
+  ) {}
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('config.factory')
+      $container->get('config.factory'),
     );
   }
 
@@ -87,7 +80,7 @@ class EuCookieCompliancePopUpInfoPreprocess implements ContainerInjectionInterfa
 
     /** @var \Drupal\Core\Url */
     $variables['privacy_policy_link_url'] = Url::fromUserInput(
-      $config->get('popup_link')
+      $config->get('popup_link'),
     );
 
     unset($variables['more_info_button']);

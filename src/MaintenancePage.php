@@ -7,7 +7,6 @@ namespace Drupal\omnipedia_site_theme;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\omnipedia_site_theme\SiteBrandingInliner;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -29,20 +28,6 @@ class MaintenancePage implements ContainerInjectionInterface {
   use StringTranslationTrait;
 
   /**
-   * The Drupal configuration object factory service.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected ConfigFactoryInterface $configFactory;
-
-  /**
-   * The Omnipedia site branding SVG inliner.
-   *
-   * @var \Drupal\omnipedia_site_theme\SiteBrandingInliner
-   */
-  protected SiteBrandingInliner $siteBrandingInliner;
-
-  /**
    * Constructor; saves dependencies.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
@@ -52,16 +37,10 @@ class MaintenancePage implements ContainerInjectionInterface {
    *   The Drupal string translation service.
    */
   public function __construct(
-    ConfigFactoryInterface  $configFactory,
-    SiteBrandingInliner     $siteBrandingInliner,
-    TranslationInterface    $stringTranslation
-  ) {
-
-    $this->configFactory        = $configFactory;
-    $this->siteBrandingInliner  = $siteBrandingInliner;
-    $this->stringTranslation    = $stringTranslation;
-
-  }
+    protected readonly ConfigFactoryInterface $configFactory,
+    protected readonly SiteBrandingInliner    $siteBrandingInliner,
+    protected $stringTranslation,
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -72,7 +51,7 @@ class MaintenancePage implements ContainerInjectionInterface {
       $container->get('class_resolver')->getInstanceFromDefinition(
         SiteBrandingInliner::class
       ),
-      $container->get('string_translation')
+      $container->get('string_translation'),
     );
   }
 
@@ -91,7 +70,7 @@ class MaintenancePage implements ContainerInjectionInterface {
 
     $globalStyling = \array_search(
       'omnipedia_site_theme/global-styling',
-      $libraries
+      $libraries,
     );
 
     if (\is_int($globalStyling)) {
@@ -126,7 +105,7 @@ class MaintenancePage implements ContainerInjectionInterface {
     // @todo Make configurable.
     $variables['head_title']['title'] = $this->t(
       '@siteName will return',
-      ['@siteName' => $siteName]
+      ['@siteName' => $siteName],
     );
 
     $this->removeGlobalStyling($variables['page']);

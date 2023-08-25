@@ -112,27 +112,6 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
     'omnipedia_site_theme_inline_branding';
 
   /**
-   * The cache backend to store inlined render arrays in.
-   *
-   * @var \Drupal\Core\Cache\CacheBackendInterface
-   */
-  protected CacheBackendInterface $cache;
-
-  /**
-   * The Drupal file system service.
-   *
-   * @var \Drupal\Core\File\FileSystemInterface
-   */
-  protected FileSystemInterface $fileSystem;
-
-  /**
-   * The Drupal kernel.
-   *
-   * @var \Drupal\Core\DrupalKernelInterface
-   */
-  protected DrupalKernelInterface $kernel;
-
-  /**
    * Constructor; saves dependencies.
    *
    * @param \Drupal\Core\Cache\CacheBackendInterface $cache
@@ -145,16 +124,10 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
    *   The Drupal kernel.
    */
   public function __construct(
-    CacheBackendInterface $cache,
-    FileSystemInterface   $fileSystem,
-    DrupalKernelInterface $kernel
-  ) {
-
-    $this->cache      = $cache;
-    $this->fileSystem = $fileSystem;
-    $this->kernel     = $kernel;
-
-  }
+    protected readonly CacheBackendInterface  $cache,
+    protected readonly FileSystemInterface    $fileSystem,
+    protected readonly DrupalKernelInterface  $kernel,
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -163,7 +136,7 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
     return new static(
       $container->get('cache.default'),
       $container->get('file_system'),
-      $container->get('kernel')
+      $container->get('kernel'),
     );
   }
 
@@ -189,7 +162,7 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
 
     /** @var string|false */
     $absoluteFilePath = $this->fileSystem->realpath(
-      $this->kernel->getAppRoot() . $parsedUrl['path']
+      $this->kernel->getAppRoot() . $parsedUrl['path'],
     );
 
     // Bail if the absolute path couldn't be resolved.
@@ -309,7 +282,7 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
     Html::setElementClassAttribute(
       $svgElement,
       Html::getElementClassAttribute($svgElement)
-        ->addClass(self::LOGO_SVG_CLASS)
+        ->addClass(self::LOGO_SVG_CLASS),
     );
 
     // Transfer the <img> width and height to the <svg> element.
@@ -325,7 +298,7 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
 
     // Detach all children of the <svg> that aren't the expanded globe group.
     foreach ($svgCrawler->children(
-      '*:not(#' . self::LOGO_SVG_GLOBE_ID . ')'
+      '*:not(#' . self::LOGO_SVG_GLOBE_ID . ')',
     ) as $node) {
       $svgElement->removeChild($node);
     }
@@ -337,7 +310,7 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
     foreach ($svgCrawler->filter('g[id^="row"]') as $node) {
 
       \preg_match(
-        self::LOGO_SVG_ROW_ID_REGEX, $node->getAttribute('id'), $matches
+        self::LOGO_SVG_ROW_ID_REGEX, $node->getAttribute('id'), $matches,
       );
 
       if (empty($matches['row'])) {
@@ -369,7 +342,7 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
 
       \preg_match(
         self::LOGO_SVG_PATH_ID_REGEX,
-        $node->getAttribute('id'), $matches
+        $node->getAttribute('id'), $matches,
       );
 
       if (empty($matches['row']) || empty($matches['column'])) {
@@ -418,7 +391,7 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
     // Add a class to the logo link so that we can target styles when the inline
     // SVG is present.
     $variables['site_logo_link_attributes']->addClass(
-      self::LOGO_LINK_HAS_SVG_CLASS
+      self::LOGO_LINK_HAS_SVG_CLASS,
     );
 
   }
@@ -473,7 +446,7 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
     // thrown by the Symfony DomCrawler if one is thrown.
     try {
       $this->cleanUpLogo(
-        $renderArray, $variables['content']['site_logo']
+        $renderArray, $variables['content']['site_logo'],
       );
 
     } catch (\Exception $exception) {
@@ -486,7 +459,7 @@ class SiteBrandingInliner implements ContainerInjectionInterface {
       [
         self::BRANDING_BLOCK_CACHE_TAG,
         self::INLINE_BRANDING_CACHE_TAG,
-      ]
+      ],
     );
 
     $this->replaceLogo($renderArray, $variables);

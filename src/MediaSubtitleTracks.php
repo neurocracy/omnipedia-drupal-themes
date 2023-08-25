@@ -37,28 +37,21 @@ class MediaSubtitleTracks implements ContainerInjectionInterface {
   protected const VIDEO_FIELD = 'field_media_video_file';
 
   /**
-   * The Drupal configuration factory service.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface
-   */
-  protected LanguageManagerInterface $languageManager;
-
-  /**
    * Constructor; saves dependencies.
    *
    * @param \Drupal\Core\Language\LanguageManagerInterface $languageManager
    *   The Drupal configuration factory service.
    */
-  public function __construct(LanguageManagerInterface $languageManager) {
-    $this->languageManager = $languageManager;
-  }
+  public function __construct(
+    protected readonly LanguageManagerInterface $languageManager,
+  ) {}
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('language_manager')
+      $container->get('language_manager'),
     );
   }
 
@@ -108,7 +101,7 @@ class MediaSubtitleTracks implements ContainerInjectionInterface {
     if (!empty($tracks)) {
 
       foreach (Element::children(
-        $variables['content'][self::VIDEO_FIELD]
+        $variables['content'][self::VIDEO_FIELD],
       ) as $key) {
         $variables['content'][self::VIDEO_FIELD][$key]['#tracks'] = $tracks;
       }

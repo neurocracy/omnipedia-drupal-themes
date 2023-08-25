@@ -6,7 +6,6 @@ namespace Drupal\omnipedia_site_theme;
 
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\Core\Url;
 use Drupal\omnipedia_core\Service\WikiNodeMainPageInterface;
 use Drupal\omnipedia_date\Service\TimelineInterface;
@@ -18,20 +17,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class SiteBrandingMainPageLinks implements ContainerInjectionInterface {
 
   use StringTranslationTrait;
-
-  /**
-   * The Omnipedia timeline service.
-   *
-   * @var \Drupal\omnipedia_date\Service\TimelineInterface
-   */
-  protected TimelineInterface $timeline;
-
-  /**
-   * The Omnipedia wiki node main page service.
-   *
-   * @var \Drupal\omnipedia_core\Service\WikiNodeMainPageInterface
-   */
-  protected WikiNodeMainPageInterface $wikiNodeMainPage;
 
   /**
    * Constructor; saves dependencies.
@@ -46,16 +31,10 @@ class SiteBrandingMainPageLinks implements ContainerInjectionInterface {
    *   The Omnipedia wiki node main page service.
    */
   public function __construct(
-    TranslationInterface        $stringTranslation,
-    TimelineInterface           $timeline,
-    WikiNodeMainPageInterface   $wikiNodeMainPage
-  ) {
-
-    $this->stringTranslation  = $stringTranslation;
-    $this->timeline           = $timeline;
-    $this->wikiNodeMainPage   = $wikiNodeMainPage;
-
-  }
+    protected $stringTranslation,
+    protected readonly TimelineInterface          $timeline,
+    protected readonly WikiNodeMainPageInterface  $wikiNodeMainPage,
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -64,7 +43,7 @@ class SiteBrandingMainPageLinks implements ContainerInjectionInterface {
     return new static(
       $container->get('string_translation'),
       $container->get('omnipedia.timeline'),
-      $container->get('omnipedia.wiki_node_main_page')
+      $container->get('omnipedia.wiki_node_main_page'),
     );
   }
 
@@ -108,12 +87,12 @@ class SiteBrandingMainPageLinks implements ContainerInjectionInterface {
 
     $variables['front_page_url'] = Url::fromRoute(
       $this->wikiNodeMainPage->getMainPageRouteName(),
-      $this->wikiNodeMainPage->getMainPageRouteParameters($currentDate)
+      $this->wikiNodeMainPage->getMainPageRouteParameters($currentDate),
     );
 
     foreach (['site_logo', 'site_name'] as $key) {
       $variables[$key . '_link_attributes']->setAttribute(
-        'title', $this->t('Main Page')
+        'title', $this->t('Main Page'),
       );
     }
 

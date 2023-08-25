@@ -18,28 +18,19 @@ use Symfony\Component\DomCrawler\Crawler;
 class OmnipediaRegionPlaceholder implements ContainerInjectionInterface {
 
   /**
-   * The Drupal renderer service.
-   *
-   * @var \Drupal\Core\Render\RendererInterface
-   */
-  protected RendererInterface $renderer;
-
-  /**
    * Constructor; saves dependencies.
    *
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   The Drupal renderer service.
    */
-  public function __construct(RendererInterface $renderer) {
-    $this->renderer = $renderer;
-  }
+  public function __construct(protected readonly RendererInterface $renderer) {}
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('renderer')
+      $container->get('renderer'),
     );
   }
 
@@ -64,7 +55,7 @@ class OmnipediaRegionPlaceholder implements ContainerInjectionInterface {
    * @see \hook_theme()
    */
   public function theme(
-    array $existing, string $type, string $theme, string $path
+    array $existing, string $type, string $theme, string $path,
   ): array {
 
     return ['omnipedia_region_placeholder' => [
@@ -88,7 +79,7 @@ class OmnipediaRegionPlaceholder implements ContainerInjectionInterface {
 
     /** @var \Symfony\Component\DomCrawler\Crawler */
     $idCrawler = $crawler->filter(
-      '#omnipedia-region-placeholder-root [id]'
+      '#omnipedia-region-placeholder-root [id]',
     );
 
     foreach ($idCrawler as $element) {
@@ -122,7 +113,7 @@ class OmnipediaRegionPlaceholder implements ContainerInjectionInterface {
       Html::setElementClassAttribute(
         $element,
         Html::getElementClassAttribute($element)
-          ->removeClass('contextual-region')
+          ->removeClass('contextual-region'),
       );
 
     }
@@ -140,7 +131,7 @@ class OmnipediaRegionPlaceholder implements ContainerInjectionInterface {
     if (isset($variables['elements']['#attributes'])) {
 
       $variables['attributes'] = new Attribute(
-        $variables['elements']['#attributes']
+        $variables['elements']['#attributes'],
       );
 
     } else {
@@ -156,10 +147,10 @@ class OmnipediaRegionPlaceholder implements ContainerInjectionInterface {
       // Hidden visually and from the accessibility tree by default.
       ->setAttribute('hidden', true)
       ->setAttribute(
-        'data-region-from', Html::cleanCssIdentifier($variables['region_from'])
+        'data-region-from', Html::cleanCssIdentifier($variables['region_from']),
       )
       ->setAttribute(
-        'data-region-to', Html::cleanCssIdentifier($variables['region_to'])
+        'data-region-to', Html::cleanCssIdentifier($variables['region_to']),
       );
 
     /** @var \Symfony\Component\DomCrawler\Crawler */
@@ -177,7 +168,7 @@ class OmnipediaRegionPlaceholder implements ContainerInjectionInterface {
     $contentRenderArray = [
       '#type'     => 'inline_template',
       '#template' => $contentCrawler->filter(
-        '#omnipedia-region-placeholder-root'
+        '#omnipedia-region-placeholder-root',
       )->html(),
     ];
 
@@ -186,7 +177,7 @@ class OmnipediaRegionPlaceholder implements ContainerInjectionInterface {
     // an already rendered string of HTML, this shouldn't result in new
     // attachments or cache metadata so we just render as plain.
     $variables['elements']['#children'] = $this->renderer->renderPlain(
-      $contentRenderArray
+      $contentRenderArray,
     );
 
     $variables['content'] = $variables['elements']['#children'];
