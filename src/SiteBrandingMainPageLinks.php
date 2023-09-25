@@ -7,8 +7,9 @@ namespace Drupal\omnipedia_site_theme;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
-use Drupal\omnipedia_core\Service\WikiNodeMainPageInterface;
 use Drupal\omnipedia_date\Service\TimelineInterface;
+use Drupal\omnipedia_main_page\Service\MainPageResolverInterface;
+use Drupal\omnipedia_main_page\Service\MainPageRouteInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -24,16 +25,20 @@ class SiteBrandingMainPageLinks implements ContainerInjectionInterface {
    * @param \Drupal\Core\StringTranslation\TranslationInterface $stringTranslation
    *   The Drupal string translation service.
    *
+   * @param \Drupal\omnipedia_main_page\Service\MainPageResolverInterface $mainPageResolver
+   *   The Omnipedia main page resolver service.
+   *
+   * @param \Drupal\omnipedia_main_page\Service\MainPageRouteInterface $mainPageRoute
+   *   The Omnipedia main page route service interface.
+   *
    * @param \Drupal\omnipedia_date\Service\TimelineInterface $timeline
    *   The Omnipedia timeline service.
-   *
-   * @param \Drupal\omnipedia_core\Service\WikiNodeMainPageInterface $wikiNodeMainPage
-   *   The Omnipedia wiki node main page service.
    */
   public function __construct(
     protected $stringTranslation,
+    protected readonly MainPageResolverInterface  $mainPageResolver,
+    protected readonly MainPageRouteInterface     $mainPageRoute,
     protected readonly TimelineInterface          $timeline,
-    protected readonly WikiNodeMainPageInterface  $wikiNodeMainPage,
   ) {}
 
   /**
@@ -42,8 +47,9 @@ class SiteBrandingMainPageLinks implements ContainerInjectionInterface {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('string_translation'),
+      $container->get('omnipedia_main_page.resolver'),
+      $container->get('omnipedia_main_page.route'),
       $container->get('omnipedia.timeline'),
-      $container->get('omnipedia.wiki_node_main_page'),
     );
   }
 
@@ -77,7 +83,7 @@ class SiteBrandingMainPageLinks implements ContainerInjectionInterface {
     $currentDate = $this->timeline->getDateFormatted('current', 'storage');
 
     /** @var \Drupal\omnipedia_core\Entity\NodeInterface|null */
-    $currentMainPage = $this->wikiNodeMainPage->getMainPage($currentDate);
+    $currentMainPage = $this->mainPageResolver->get($currentDate);
 
     // Don't alter the URL if no main page was found for this date or the user
     // does not have access to said main page.
@@ -86,8 +92,8 @@ class SiteBrandingMainPageLinks implements ContainerInjectionInterface {
     }
 
     $variables['front_page_url'] = Url::fromRoute(
-      $this->wikiNodeMainPage->getMainPageRouteName(),
-      $this->wikiNodeMainPage->getMainPageRouteParameters($currentDate),
+      $this->mainPageRoute->getName(),
+      $this->mainPageRoute->getParameters($currentDate),
     );
 
     foreach (['site_logo', 'site_name'] as $key) {

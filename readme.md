@@ -22,7 +22,7 @@ described in the installation instructions for these dependencies:
 
 * The [`ambientimpact_core`](https://github.com/Ambient-Impact/drupal-ambientimpact-core), [`ambientimpact_icon`](https://github.com/Ambient-Impact/drupal-ambientimpact-icon), and [`ambientimpact_ux`](https://github.com/Ambient-Impact/drupal-ambientimpact-ux) modules.
 
-* The [`omnipedia_block`](https://github.com/neurocracy/drupal-omnipedia-block), [`omnipedia_content`](https://github.com/neurocracy/drupal-omnipedia-content), and [`omnipedia_media`](https://github.com/neurocracy/drupal-omnipedia-media) modules.
+* The [`omnipedia_block`](https://github.com/neurocracy/drupal-omnipedia-block), [`omnipedia_content`](https://github.com/neurocracy/drupal-omnipedia-content), [`omnipedia_main_page`](https://github.com/neurocracy/drupal-omnipedia-main-page), and [`omnipedia_media`](https://github.com/neurocracy/drupal-omnipedia-media) modules.
 
 ## Front-end dependencies
 

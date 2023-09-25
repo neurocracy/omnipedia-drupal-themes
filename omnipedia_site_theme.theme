@@ -47,7 +47,7 @@ function omnipedia_site_theme_theme_suggestions_html_alter(
  *
  * Default template: html.html.twig.
  *
- * @see \Drupal\omnipedia_core\Service\WikiNodeMainPageInterface::isCurrentRouteMainPage()
+ * @see \Drupal\omnipedia_main_page\Service\MainPageRouteInterface::isCurrent()
  *
  * @see \Drupal\omnipedia_site_theme\MaintenancePage::preprocessHtml()
  */
@@ -55,8 +55,8 @@ function omnipedia_site_theme_preprocess_html(array &$variables): void {
 
   /** @var bool */
   $variables['omnipedia_is_main_page'] = \Drupal::service(
-    'omnipedia.wiki_node_main_page'
-  )->isCurrentRouteMainPage();
+    'omnipedia_main_page.route',
+  )->isCurrent();
 
   \Drupal::classResolver(SiteBrandingCustomProperties::class)->preprocessHtml(
     $variables

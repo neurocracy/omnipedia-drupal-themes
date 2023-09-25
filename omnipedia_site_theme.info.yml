@@ -25,6 +25,7 @@ dependencies:
   - ambientimpact_ux:ambientimpact_ux
   - omnipedia_block:omnipedia_block
   - omnipedia_content:omnipedia_content
+  - omnipedia_main_page:omnipedia_main_page
   - omnipedia_media:omnipedia_media
 
 # These are identical to those in ambientimpact_base, duplicated here because
