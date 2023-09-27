@@ -82,7 +82,7 @@ class SiteBrandingMainPageLinks implements ContainerInjectionInterface {
     /** @var string */
     $currentDate = $this->timeline->getDateFormatted('current', 'storage');
 
-    /** @var \Drupal\omnipedia_core\Entity\NodeInterface|null */
+    /** @var \Drupal\node\NodeInterface|null */
     $currentMainPage = $this->mainPageResolver->get($currentDate);
 
     // Don't alter the URL if no main page was found for this date or the user
