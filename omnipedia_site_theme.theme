@@ -110,8 +110,8 @@ function omnipedia_site_theme_preprocess_maintenance_page(
 /**
  * Prepares variables for region templates.
  *
- * This attaches the 'omnipedia_site_theme/sidebars' library to 'sidebar_first' and
- * 'sidebar_second' regions.
+ * This attaches the 'omnipedia_site_theme/sidebars' library to 'sidebar_first'
+ * and 'sidebar_second' regions.
  */
 function omnipedia_site_theme_preprocess_region(array &$variables): void {
 
@@ -380,7 +380,7 @@ function omnipedia_site_theme_preprocess_commerce_checkout_pane__review(
 }
 
 /**
- * Prepares variables for the eu_cookie_compliance_popup_info.html.twig template.
+ * Prepares variables for the eu_cookie_compliance_popup_info template.
  *
  * @see \Drupal\omnipedia_site_theme\EuCookieCompliancePopUpInfoPreprocess
  */
