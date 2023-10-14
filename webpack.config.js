@@ -10,7 +10,9 @@ const Encore = require('@symfony/webpack-encore');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const glob = require('glob');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const nodeModule = require('node:module');
 const path = require('path');
+const pnp = require('pnpapi');
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 
 const distPath = '.webpack-dist';
@@ -62,6 +64,52 @@ function getGlobbedEntries() {
 };
 
 /**
+ * Get a package's version from Yarn if possible.
+ *
+ * @param {PackageLocator} packageLocator
+ *   The Yarn package locator for the package.
+ *
+ * @return {String|null}
+ *   The package version or null if it couldn't be found.
+ *
+ * @see https://github.com/yarnpkg/berry/blob/d181aa62bec96ff5d7c4b60ce1a54e6f89d935f0/packages/plugin-essentials/sources/commands/info.ts#L308
+ *   At the time of writing, Yarn 3 doesn't seem to expose an easy way to get
+ *   just the semver without the 'npm:' (or other registry?) prefix. This is
+ *   what the 'yarn info' command does.
+ *
+ * @see https://yarnpkg.com/advanced/rulebook#packages-should-only-ever-require-what-they-formally-list-in-their-dependencies
+ *
+ * @see https://nodejs.org/api/module.html#modulecreaterequirefilename
+ *   We use this to require the package.json of the package as itself, which
+ *   avoids Yarn throwing an error if the package is not directly required by
+ *   the current one.
+ *
+ * @see https://www.npmjs.com/package/semver#coercion
+ *   Alternatively, we could use the semver package to coerce the version string
+ *   returned by Yarn instead of loading the package.json.
+ */
+function getPackageVersion(packageLocator) {
+
+  const packageInfo = pnp.getPackageInformation(packageLocator);
+
+  /**
+   * The package.json contents, parsed into an object.
+   *
+   * @type {Object}
+   */
+  const packageJson = nodeModule.createRequire(`${
+    packageInfo.packageLocation
+  }`)(`${packageInfo.packageLocation}/package.json`);
+
+  if (!('version' in packageJson)) {
+    return null;
+  }
+
+  return packageJson.version;
+
+}
+
+/**
  * Webpack filename callback to place assets into a local vendor directory.
  *
  * @param {Object} pathData
@@ -75,16 +123,44 @@ function getGlobbedEntries() {
 function vendorAssetFileName(pathData) {
 
   /**
+   * PnP package locator, or null if one can't be found.
+   *
+   * @type {PackageLocator|null}
+   *
+   * @see https://yarnpkg.com/advanced/pnpapi#findpackagelocator
+   */
+  const packageLocator = pnp.findPackageLocator(pathData.module.request);
+
+  if (
+    typeof packageLocator === 'null'
+  ) {
+    return pathData.module.rawRequest;
+  }
+
+  /**
+   * The package version.
+   *
+   * @type {String|null}
+   */
+  let packageVersion = getPackageVersion(packageLocator);
+
+  // If the package version couldn't be found, fall back to using the hash.
+  //
+  // Note that pathData.contentHash doesn't always seem to contain a valid hash,
+  // but the longer pathData.module.buildInfo.hash always seems to.
+  if (typeof packageVersion === 'null') {
+    packageVersion = pathData.module.buildInfo.hash;
+  }
+
+  /**
    * Path parts as parsed by path.parse().
    *
    * @type {Object}
    */
   const pathParts = path.parse(pathData.module.rawRequest);
 
-  // Note that pathData.contentHash doesn't always seem to contain a valid hash,
-  // but the longer pathData.module.buildInfo.hash always seems to.
-  return `${vendorDir}/${pathParts.dir}/${pathParts.name}${pathParts.ext}?${
-    pathData.module.buildInfo.hash
+  return `${vendorDir}/${pathParts.dir}/${pathParts.name}${pathParts.ext}?v=${
+    packageVersion
   }`;
 
 };
