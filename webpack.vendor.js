@@ -45,7 +45,7 @@ const vendorDir = './vendor';
  *
  * @type {String[]}
  */
-const packageNames = ['js-cookie'];
+const packageNames = ['@fontsource/exo-2', 'js-cookie'];
 
 /**
  * Configuration array for Encore.copyFiles().
