@@ -16,6 +16,13 @@ const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 const distPath = '.webpack-dist';
 
 /**
+ * The front-end vendor directory, relative to our package.json.
+ *
+ * @type {String}
+ */
+const vendorDir = 'vendor';
+
+/**
  * Whether to output to the paths where the source files are found.
  *
  * If this is true, compiled Sass files, source maps, etc. will be placed
@@ -41,7 +48,7 @@ function getGlobbedEntries() {
   return glob.sync(
     // This specifically only searches for SCSS files that aren't partials, i.e.
     // do not start with '_'.
-    `./!(${distPath})/**/!(_)*.scss`
+    `./!(${distPath}|${vendorDir})/**/!(_)*.scss`
   ).reduce(function(entries, currentPath) {
 
       const parsed = path.parse(currentPath);
@@ -76,7 +83,7 @@ function vendorAssetFileName(pathData) {
 
   // Note that pathData.contentHash doesn't always seem to contain a valid hash,
   // but the longer pathData.module.buildInfo.hash always seems to.
-  return `vendor/${pathParts.dir}/${pathParts.name}.${
+  return `${vendorDir}/${pathParts.dir}/${pathParts.name}.${
     pathData.module.buildInfo.hash
   }${pathParts.ext}`;
 
@@ -122,8 +129,11 @@ Encore
 .addEntries(getGlobbedEntries())
 
 // Clean out any previously built files in case of source files being removed or
-// renamed.
-.cleanupOutputBeforeBuild(['**/*.css', '**/*.css.map', 'vendor/@fontsource/**'])
+// renamed. We need to exclude the vendor directory or CSS bundled with
+// libraries will get deleted.
+//
+// @see https://github.com/johnagan/clean-webpack-plugin
+.cleanupOutputBeforeBuild(['**/*.css', '**/*.css.map', `!${vendorDir}/**`])
 
 .enableSourceMaps(!Encore.isProduction())
 
