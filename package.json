@@ -49,5 +49,6 @@
     "drupal-omnipedia-content": "workspace:^6",
     "drupal-omnipedia-media": "workspace:^6",
     "js-cookie": "^3.0.5"
-  }
+  },
+  "vendorize": ["@fontsource/exo-2", "js-cookie"]
 }

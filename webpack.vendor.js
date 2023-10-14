@@ -7,9 +7,6 @@
  * latter are for building the front-end assets but not intended to be publicly
  * accessible themselves.
  *
- * @todo Refactor this script so it can dynamically fetch "dependencies" from
- *   whatever the current package is calling it, so that it can be reused.
- *
  * @todo Have this script also update *.libraries.yml versions when pulling in
  *   updated packages so that version strings change, forcing clients to
  *   download the correct versions?
@@ -26,15 +23,45 @@ const Encore = require('@symfony/webpack-encore');
 const path = require('path');
 
 /**
+ * The package.json key containing vendorize configuration.
+ *
+ * @type {String}
+ */
+const packageKey = 'vendorize';
+
+/**
+ * The current package.json parsed into an object.
+ *
+ * @type {Object}
+ */
+const packageInfo = require('./package.json');
+
+if (!(packageKey in packageInfo)) {
+  throw new Error(`No "${packageKey}" found for this package.'`);
+}
+
+if (
+  !Array.isArray(packageInfo[packageKey]) &&
+  !('packages' in packageInfo[packageKey])
+) {
+
+  throw new Error(`'${
+    packageKey
+  }' must either be an array or an object containing a "packages" key.`);
+
+}
+
+/**
  * The vendor directory, relative to the current script location.
  *
  * @type {String}
  *
  * @todo Make this relative to the calling package and not the script.
- *
- * @todo Make this configurable?
  */
-const vendorDir = './vendor';
+const vendorDir = (
+  'dir' in packageInfo[packageKey] &&
+  typeof packageInfo[packageKey].dir === 'string'
+) ? packageInfo[packageKey].dir : 'vendor';
 
 /**
  * Array of package names to be copied to the public vendor directory.
@@ -45,7 +72,20 @@ const vendorDir = './vendor';
  *
  * @type {String[]}
  */
-const packageNames = ['@fontsource/exo-2', 'js-cookie'];
+const packageNames = Array.isArray(packageInfo[packageKey]) ?
+  packageInfo[packageKey] : packageInfo[packageKey].packages;
+
+for (let i = 0; i < packageNames.length; i++) {
+
+  if (packageNames[i] in packageInfo.dependencies) {
+    continue;
+  }
+
+  throw new Error(`"${
+    packageNames[i]
+  }" must be declared under "dependencies" in your package.json to vendorize.`);
+
+}
 
 /**
  * Configuration array for Encore.copyFiles().
@@ -84,7 +124,7 @@ for (let i = 0; i < packageNames.length; i++) {
     });
 
   } catch (error) {
-    console.error(
+    throw new Error(
       `Could not access ${packageNames[i]}/package.json; this can occur if the package defines an "exports" field that doesn't contain a "./package.json" key. See: https://nodejs.org/api/packages.html#exports
       Error was:`, error);
   }
@@ -107,6 +147,6 @@ Encore
 // Encore will refuse to run.
 .disableSingleRuntimeChunk()
 
-.copyFiles(copyConfig)
+.copyFiles(copyConfig);
 
 module.exports = Encore.getWebpackConfig();
