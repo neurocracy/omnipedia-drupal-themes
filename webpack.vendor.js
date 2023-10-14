@@ -64,6 +64,16 @@ const vendorDir = (
 ) ? packageInfo[packageKey].dir : 'vendor';
 
 /**
+ * Whether to clean out the vendor directory before copying. Defaults to true.
+ *
+ * @type {Boolean}
+ */
+const cleanBefore = (
+  'clean' in packageInfo[packageKey] &&
+  typeof packageInfo[packageKey].clean === 'boolean'
+) ? packageInfo[packageKey].clean : true;
+
+/**
  * Array of package names to be copied to the public vendor directory.
  *
  * Note that all of these must be declared as direct dependencies of this
@@ -148,5 +158,10 @@ Encore
 .disableSingleRuntimeChunk()
 
 .copyFiles(copyConfig);
+
+// Delete any previous vendor directory contents.
+if (cleanBefore === true) {
+  Encore.cleanupOutputBeforeBuild([`${path.resolve(__dirname, vendorDir)}/**`]);
+}
 
 module.exports = Encore.getWebpackConfig();
