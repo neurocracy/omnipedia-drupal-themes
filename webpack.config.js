@@ -83,9 +83,9 @@ function vendorAssetFileName(pathData) {
 
   // Note that pathData.contentHash doesn't always seem to contain a valid hash,
   // but the longer pathData.module.buildInfo.hash always seems to.
-  return `${vendorDir}/${pathParts.dir}/${pathParts.name}.${
+  return `${vendorDir}/${pathParts.dir}/${pathParts.name}${pathParts.ext}?${
     pathData.module.buildInfo.hash
-  }${pathParts.ext}`;
+  }`;
 
 };
 
