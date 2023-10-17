@@ -1,28 +1,31 @@
-'use strict';
+import Encore from '@symfony/webpack-encore';
+// import { glob } from 'glob'; // @todo Upgrade to glob 10.x which has ESM.
+import * as path from 'node:path';
+import { default as vendorize } from 'webpack-yarn-vendorize';
 
-const autoprefixer = require('autoprefixer');
-const baseThemeImporter = require(
+// The remaining modules do not yet have ESM versions and so are CommonJS only.
+// Because of this, they must be import()ed and destructured like so to behave
+// similarly to ESM imports.
+const { default: autoprefixer } = await import('autoprefixer');
+const { default: baseThemeImporter } = await import(
   'drupal-ambientimpact-base/baseThemeImporter'
 );
-const componentPaths = require('drupal-ambientimpact-core/componentPaths');
-const easingGradients = require('postcss-easing-gradients');
-const Encore = require('@symfony/webpack-encore');
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
-const glob = require('glob');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const nodeModule = require('node:module');
-const path = require('path');
-const pnp = require('pnpapi');
-const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
+const { default: componentPaths } = await import(
+  'drupal-ambientimpact-core/componentPaths'
+);
+const { default: easingGradients } = await import('postcss-easing-gradients');
+const { default: glob } = await import('glob');
+const { default: FaviconsWebpackPlugin } = await import(
+  'favicons-webpack-plugin'
+);
+const { default: MiniCssExtractPlugin } = await import(
+  'mini-css-extract-plugin'
+);
+const { default: RemoveEmptyScriptsPlugin } = await import(
+  'webpack-remove-empty-scripts'
+);
 
 const distPath = '.webpack-dist';
-
-/**
- * The front-end vendor directory, relative to our package.json.
- *
- * @type {String}
- */
-const vendorDir = 'vendor';
 
 /**
  * Whether to output to the paths where the source files are found.
@@ -50,7 +53,7 @@ function getGlobbedEntries() {
   return glob.sync(
     // This specifically only searches for SCSS files that aren't partials, i.e.
     // do not start with '_'.
-    `./!(${distPath}|${vendorDir})/**/!(_)*.scss`
+    `./!(${distPath}|${vendorize.getVendorDirName()})/**/!(_)*.scss`
   ).reduce(function(entries, currentPath) {
 
       const parsed = path.parse(currentPath);
@@ -63,115 +66,15 @@ function getGlobbedEntries() {
 
 };
 
-/**
- * Get a package's version from Yarn if possible.
- *
- * @param {PackageLocator} packageLocator
- *   The Yarn package locator for the package.
- *
- * @return {String|null}
- *   The package version or null if it couldn't be found.
- *
- * @see https://github.com/yarnpkg/berry/blob/d181aa62bec96ff5d7c4b60ce1a54e6f89d935f0/packages/plugin-essentials/sources/commands/info.ts#L308
- *   At the time of writing, Yarn 3 doesn't seem to expose an easy way to get
- *   just the semver without the 'npm:' (or other registry?) prefix. This is
- *   what the 'yarn info' command does.
- *
- * @see https://yarnpkg.com/advanced/rulebook#packages-should-only-ever-require-what-they-formally-list-in-their-dependencies
- *
- * @see https://nodejs.org/api/module.html#modulecreaterequirefilename
- *   We use this to require the package.json of the package as itself, which
- *   avoids Yarn throwing an error if the package is not directly required by
- *   the current one.
- *
- * @see https://www.npmjs.com/package/semver#coercion
- *   Alternatively, we could use the semver package to coerce the version string
- *   returned by Yarn instead of loading the package.json.
- */
-function getPackageVersion(packageLocator) {
-
-  const packageInfo = pnp.getPackageInformation(packageLocator);
-
-  /**
-   * The package.json contents, parsed into an object.
-   *
-   * @type {Object}
-   */
-  const packageJson = nodeModule.createRequire(`${
-    packageInfo.packageLocation
-  }`)(`${packageInfo.packageLocation}/package.json`);
-
-  if (!('version' in packageJson)) {
-    return null;
-  }
-
-  return packageJson.version;
-
-}
-
-/**
- * Webpack filename callback to place assets into a local vendor directory.
- *
- * @param {Object} pathData
- *
- * @return {String}
- *
- * @todo Can we detect if the referenced asset is coming from Yarn only put it
- *   into vendor in that case, falling back to leaving them at their default
- *   location otherwise?
- */
-function vendorAssetFileName(pathData) {
-
-  /**
-   * PnP package locator, or null if one can't be found.
-   *
-   * @type {PackageLocator|null}
-   *
-   * @see https://yarnpkg.com/advanced/pnpapi#findpackagelocator
-   */
-  const packageLocator = pnp.findPackageLocator(pathData.module.request);
-
-  if (
-    typeof packageLocator === 'null'
-  ) {
-    return pathData.module.rawRequest;
-  }
-
-  /**
-   * The package version.
-   *
-   * @type {String|null}
-   */
-  let packageVersion = getPackageVersion(packageLocator);
-
-  // If the package version couldn't be found, fall back to using the hash.
-  //
-  // Note that pathData.contentHash doesn't always seem to contain a valid hash,
-  // but the longer pathData.module.buildInfo.hash always seems to.
-  if (typeof packageVersion === 'null') {
-    packageVersion = pathData.module.buildInfo.hash;
-  }
-
-  /**
-   * Path parts as parsed by path.parse().
-   *
-   * @type {Object}
-   */
-  const pathParts = path.parse(pathData.module.rawRequest);
-
-  return `${vendorDir}/${pathParts.dir}/${pathParts.name}${pathParts.ext}?v=${
-    packageVersion
-  }`;
-
-};
-
 // @see https://symfony.com/doc/current/frontend/encore/installation.html#creating-the-webpack-config-js-file
 if (!Encore.isRuntimeEnvironmentConfigured()) {
   Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
 }
 
-Encore
-.setOutputPath(path.resolve(__dirname, (outputToSourcePaths ? '.' : distPath)))
+Encore.setOutputPath(path.resolve(
+  path.dirname(new URL(import.meta.url).pathname),
+  (outputToSourcePaths ? '.' : distPath)
+))
 
 // Encore will complain if the public path doesn't start with a slash.
 // Unfortunately, it doesn't seem Webpack's automatic public path works here.
@@ -209,7 +112,9 @@ Encore
 // libraries will get deleted.
 //
 // @see https://github.com/johnagan/clean-webpack-plugin
-.cleanupOutputBeforeBuild(['**/*.css', '**/*.css.map', `!${vendorDir}/**`])
+.cleanupOutputBeforeBuild([
+  '**/*.css', '**/*.css.map', `!${vendorize.getVendorDirName()}/**`
+])
 
 .enableSourceMaps(!Encore.isProduction())
 
@@ -299,14 +204,12 @@ Encore
   },
 })
 
-// Output referenced fonts to vendor directory.
-//
-// @todo Can we add a condition to only do this for fonts installed from
-//   Yarn/npm? Can we add a loader rule condition to test for node_modules via
-//   the second parameter to configureFontRule()?
+// Rewrite referenced vendor font paths to vendor directory.
 .configureFontRule({
   type:     'asset/resource',
-  filename: vendorAssetFileName,
+  filename: function(pathData) {
+    return vendorize.assetFileName(pathData);
+  },
 });
 
-module.exports = Encore.getWebpackConfig();
+export default Encore.getWebpackConfig();
