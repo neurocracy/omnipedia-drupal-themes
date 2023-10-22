@@ -5,7 +5,3 @@
 # Webpack Encore generated files.
 entrypoints.json
 manifest.json
-
-# Vendor directory from Webpack builds.
-vendor
-vendor/*
