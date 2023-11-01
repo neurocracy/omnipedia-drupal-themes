@@ -150,7 +150,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderOverlay', function(
 
         overlay.$overlay.remove();
 
-        $main.removeProp('aiOverlay')
+        $main.removeProp('aiOverlay');
 
         $main.removeClass(hasOverlayClass);
 
