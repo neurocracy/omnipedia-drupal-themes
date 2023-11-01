@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------------
-//   Omnipedia - Site theme - RefreshLess support
+//   Omnipedia - Site theme - RefreshLess support when using Ajax implementation
 // -----------------------------------------------------------------------------
 
 // This works around a limitation of RefreshLess as it currently exists:

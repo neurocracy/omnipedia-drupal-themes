@@ -186,9 +186,9 @@ references:
     theme:
       stylesheets/components/references.css: {}
 
-refreshless:
+refreshless_ajax:
   js:
-    javascript/refreshless.js: { attributes: { defer: true } }
+    javascript/refreshless_ajax.js: { attributes: { defer: true } }
   dependencies:
     - ambientimpact_core/framework
 
