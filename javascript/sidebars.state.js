@@ -242,15 +242,23 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
 
       $(document).off('hashMatchChange.' + eventNamespace);
 
-      $menuOpen.prop('hashMatcher').destroy();
+      if ($menuOpen.length > 0) {
 
-      $menuOpen.removeProp('hashMatcher');
+        $menuOpen.prop('hashMatcher').destroy();
 
-      $sidebarsContainer.off('responsivePropertyChange.' + eventNamespace);
+        $menuOpen.removeProp('hashMatcher');
 
-      $sidebarsContainer.prop(responsivePropertyInstanceName).destroy();
+      }
 
-      $sidebarsContainer.removeProp(responsivePropertyInstanceName);
+      if ($sidebarsContainer.length > 0) {
+
+        $sidebarsContainer.off('responsivePropertyChange.' + eventNamespace);
+
+        $sidebarsContainer.prop(responsivePropertyInstanceName).destroy();
+
+        $sidebarsContainer.removeProp(responsivePropertyInstanceName);
+
+      }
 
       behaviourAttached = false;
 

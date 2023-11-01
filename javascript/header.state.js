@@ -203,13 +203,17 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
        */
       let $searchAnchor = headerElements.getSearchAnchor();
 
-      $searchAnchor.prop('hashMatcher').destroy();
+      if ($searchAnchor.length > 0) {
 
-      $searchAnchor.removeProp('hashMatcher');
+        $searchAnchor.prop('hashMatcher').destroy();
 
-      $searchAnchor.prop(responsivePropertyInstanceName).destroy();
+        $searchAnchor.removeProp('hashMatcher');
 
-      $searchAnchor.removeProp(responsivePropertyInstanceName);
+        $searchAnchor.prop(responsivePropertyInstanceName).destroy();
+
+        $searchAnchor.removeProp(responsivePropertyInstanceName);
+
+      }
 
       behaviourAttached = false;
 

@@ -131,21 +131,25 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsOverlay', function(
        */
       let overlay = $menuClosedTarget.prop('aiOverlay');
 
-      // Attach a one-off event handler to remove the overlay element and
-      // related properties/classes when the overlay has finished hiding.
-      overlay.$overlay.one('overlayHidden', function(event) {
+      if (typeof overlay !== 'undefined') {
 
-        overlay.$overlay.remove();
+        // Attach a one-off event handler to remove the overlay element and
+        // related properties/classes when the overlay has finished hiding.
+        overlay.$overlay.one('overlayHidden', function(event) {
 
-        $menuClosedTarget.removeProp('aiOverlay')
+          overlay.$overlay.remove();
 
-        $menuClosedTarget.removeClass(hasOverlayClass);
+          $menuClosedTarget.removeProp('aiOverlay');
 
-      });
+          $menuClosedTarget.removeClass(hasOverlayClass);
 
-      // Tell the overlay to hide itself, which will trigger the above handler
-      // when complete.
-      overlay.hide();
+        });
+
+        // Tell the overlay to hide itself, which will trigger the above handler
+        // when complete.
+        overlay.hide();
+
+      }
 
       sidebarsElements.getSidebarsMenuClosedAnchor().removeClass(
         menuClosedAnchorDisabledClass

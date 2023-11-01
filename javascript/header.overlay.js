@@ -140,6 +140,10 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderOverlay', function(
        */
       let overlay = $main.prop('aiOverlay');
 
+      if (typeof overlay === 'undefined') {
+        return;
+      }
+
       // Attach a one-off event handler to remove the overlay element and
       // related properties/classes when the overlay has finished hiding.
       overlay.$overlay.one('overlayHidden', function(event) {
