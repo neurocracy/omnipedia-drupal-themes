@@ -219,3 +219,8 @@ site_branding:
   css:
     theme:
       stylesheets/blocks/site_branding.css: {}
+
+turbo:
+  css:
+    theme:
+      stylesheets/components/turbo.css: {}
