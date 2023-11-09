@@ -18,13 +18,6 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
   'use strict';
 
   /**
-   * Whether we've attached the behaviour.
-   *
-   * @type {Boolean}
-   */
-  let behaviourAttached = false;
-
-  /**
    * Event namespace name.
    *
    * @type {String}
@@ -65,10 +58,6 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
    * @return {Boolean}
    */
   this.isCompact = function() {
-
-    if (behaviourAttached === false) {
-      return false;
-    }
 
     return (
       headerElements.getSearchAnchor().prop(responsivePropertyInstanceName)
@@ -120,12 +109,6 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
     'omnipedia-site-theme-header-state',
     headerElements.getHeaderBehaviourSelector(),
     function(context, settings) {
-
-      if (behaviourAttached === true) {
-        return;
-      }
-
-      behaviourAttached = true;
 
       /**
        * The search anchor jQuery collection.
@@ -190,10 +173,6 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
     },
     function(context, settings, trigger) {
 
-      if (behaviourAttached === false) {
-        return;
-      }
-
       $(document).off('hashMatchChange.' + eventNamespace);
 
       /**
@@ -214,8 +193,6 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
         $searchAnchor.removeProp(responsivePropertyInstanceName);
 
       }
-
-      behaviourAttached = false;
 
     }
   );

@@ -43,13 +43,6 @@ function(
   let $containingElement = $();
 
   /**
-   * Whether we've attached the behaviour.
-   *
-   * @type {Boolean}
-   */
-  let behaviourAttached = false;
-
-  /**
    * Get the pop-up element jQuery collection.
    *
    * @return {jQuery}
@@ -100,10 +93,6 @@ function(
     this.getBehaviourSelector(),
     function(context, settings) {
 
-      if (behaviourAttached === true) {
-        return;
-      }
-
       $popUp = $(this);
 
       $popUp.addClass(euCookieComplianceElements.getPopUpBaseClass());
@@ -118,14 +107,8 @@ function(
         drupalSettings.eu_cookie_compliance.containing_element
       );
 
-      behaviourAttached = true;
-
     },
     function(context, settings, trigger) {
-
-      if (behaviourAttached === false) {
-        return;
-      }
 
       $popUp.removeClass(
         euCookieComplianceElements.getPopUpHasInPageToggleClass()
@@ -134,8 +117,6 @@ function(
       $popUp = $();
 
       $containingElement = $();
-
-      behaviourAttached = false;
 
     }
   );

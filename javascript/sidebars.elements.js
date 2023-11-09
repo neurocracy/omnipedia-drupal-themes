@@ -40,13 +40,6 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsElements', function(
   let $menuClosedTarget = $();
 
   /**
-   * Whether we've attached the behaviour.
-   *
-   * @type {Boolean}
-   */
-  let behaviourAttached = false;
-
-  /**
    * Get the sidebars container jQuery collection.
    *
    * @return {jQuery}
@@ -106,10 +99,6 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsElements', function(
     this.getSidebarsBehaviourSelector(),
     function(context, settings) {
 
-      if (behaviourAttached === true) {
-        return;
-      }
-
       $container = $('.layout-sidebars', context);
 
       $menuClose = $container.find('.layout-sidebars__close', context);
@@ -142,14 +131,8 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsElements', function(
         return;
       }
 
-      behaviourAttached = true;
-
     },
     function(context, settings, trigger) {
-
-      if (behaviourAttached === false) {
-        return;
-      }
 
       $container = $();
 
@@ -158,8 +141,6 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsElements', function(
       $menuClosedAnchor = $();
 
       $menuClosedTarget = $();
-
-      behaviourAttached = false;
 
     }
   );

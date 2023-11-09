@@ -19,13 +19,6 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
   'use strict';
 
   /**
-   * Whether we've attached the behaviour.
-   *
-   * @type {Boolean}
-   */
-  let behaviourAttached = false;
-
-  /**
    * Event namespace name.
    *
    * @type {String}
@@ -66,10 +59,6 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
    * @return {Boolean}
    */
   this.isOffCanvas = function() {
-
-    if (behaviourAttached === false) {
-      return false;
-    }
 
     return (
       sidebarsElements.getSidebarsContainer()
@@ -128,10 +117,6 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
     'omnipedia-site-theme-sidebars-state',
     sidebarsElements.getSidebarsBehaviourSelector(),
     function(context, settings) {
-
-      if (behaviourAttached === true) {
-        return;
-      }
 
       /**
        * The menu open control jQuery collection.
@@ -213,14 +198,8 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
         responsivePropertyInstanceName, responsiveStyleProperty
       );
 
-      behaviourAttached = true;
-
     },
     function(context, settings, trigger) {
-
-      if (behaviourAttached === false) {
-        return;
-      }
 
       /**
        * The sidebars container jQuery collection.
@@ -259,8 +238,6 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsState', function(
         $sidebarsContainer.removeProp(responsivePropertyInstanceName);
 
       }
-
-      behaviourAttached = false;
 
     }
   );

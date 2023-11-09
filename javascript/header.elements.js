@@ -44,13 +44,6 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderElements', function(
   let $menuOpen = $();
 
   /**
-   * Whether we've attached the behaviour.
-   *
-   * @type {Boolean}
-   */
-  let behaviourAttached = false;
-
-  /**
    * Get the search anchor jQuery collection.
    *
    * @return {jQuery}
@@ -110,10 +103,6 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderElements', function(
     this.getHeaderBehaviourSelector(),
     function(context, settings) {
 
-      if (behaviourAttached === true) {
-        return;
-      }
-
       $searchAnchor = $('.search-anchor', context);
 
       $searchTarget = $('.search-target', context);
@@ -151,14 +140,8 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderElements', function(
         return;
       }
 
-      behaviourAttached = true;
-
     },
     function(context, settings, trigger) {
-
-      if (behaviourAttached === false) {
-        return;
-      }
 
       $searchAnchor = $();
 
@@ -169,8 +152,6 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderElements', function(
       $searchField = $();
 
       $menuOpen = $();
-
-      behaviourAttached = false;
 
     }
   );
