@@ -18,9 +18,6 @@ const { default: glob } = await import('glob');
 const { default: FaviconsWebpackPlugin } = await import(
   'favicons-webpack-plugin'
 );
-const { default: MiniCssExtractPlugin } = await import(
-  'mini-css-extract-plugin'
-);
 const { default: RemoveEmptyScriptsPlugin } = await import(
   'webpack-remove-empty-scripts'
 );
