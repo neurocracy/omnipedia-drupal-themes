@@ -10,6 +10,7 @@
   },
   "yarn.build": {
     "input": [
+      "package.json",
       "webpack.config.mjs",
       "stylesheets/**/*.scss",
       "images/icons/*.{png,svg}"
