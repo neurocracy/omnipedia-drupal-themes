@@ -9,7 +9,10 @@
 @use 'sass/helpers/colour';
 
 :root,
-:root[data-gin-accent] {
+// Double attribute for specificity to fix a brief flash of the Gin accent
+// colour when navigating away from a page that triggers the progress bar to
+// display.
+:root[data-gin-accent][data-gin-accent] {
 
   --turbo-progress-colour: #{color.scale(
     material-colour.$primary, $lightness: 35%, $saturation: 90%
