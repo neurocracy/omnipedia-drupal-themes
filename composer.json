@@ -17,14 +17,14 @@
   "require": {
     "php": "^8.1",
     "drupal/core": "^10.0",
-    "drupal/ambientimpact_base": "6.x-dev@dev",
-    "drupal/ambientimpact_core": "2.x-dev@dev",
-    "drupal/ambientimpact_icon": "1.x-dev@dev",
-    "drupal/ambientimpact_ux": "1.x-dev@dev",
-    "drupal/omnipedia_block": "5.x-dev@dev || 6.x-dev@dev",
-    "drupal/omnipedia_content": "6.x-dev@dev",
-    "drupal/omnipedia_main_page": "1.x-dev@dev",
-    "drupal/omnipedia_media": "6.x-dev@dev || 7.x-dev@dev",
+    "drupal/ambientimpact_base": "^6.0@dev",
+    "drupal/ambientimpact_core": "^2.0@dev",
+    "drupal/ambientimpact_icon": "^1.0@dev",
+    "drupal/ambientimpact_ux": "^1.0@dev",
+    "drupal/omnipedia_block": "^5.0@dev || ^6.0@dev",
+    "drupal/omnipedia_content": "^6.0@dev",
+    "drupal/omnipedia_main_page": "^1.0@dev",
+    "drupal/omnipedia_media": "^6.0@dev || ^7.0@dev",
     "symfony/css-selector": "^6.2",
     "symfony/dom-crawler": "^6.2"
   }
