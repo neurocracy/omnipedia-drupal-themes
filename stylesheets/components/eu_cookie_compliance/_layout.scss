@@ -28,18 +28,24 @@
 
   $self: &;
 
-  // This compensates for the scrollbar gutter when the pop-up is closing so
-  // that the pop-up contents don't shift when the viewport scrollbar appears.
+  // Note that we need to compensate for the scrollbar gutter when the pop-up is
+  // closing so that the pop-up contents don't shift when the viewport
+  // scrollbar appears.
   @include selector.root-conditions(('[dir=ltr]'), 'html') {
-    right: calc(var(--scrollbar-gutter, 0) * -1);
+    left:   0;
+    right:  calc(var(--scrollbar-gutter, 0) * -1);
   }
   @include selector.root-conditions(('[dir=rtl]'), 'html') {
-    left: calc(var(--scrollbar-gutter, 0) * -1);
+    left:   calc(var(--scrollbar-gutter, 0) * -1);
+    right:  0;
   }
 
   @include scroll-blocker.on-scroll-blocked {
     #{$self} {
 
+      // Overrides the scrollbar gutter compensation above when scrolling is
+      // blocked since the viewport scrollbar won't be present and taking up
+      // space.
       @include selector.root-conditions(('[dir=ltr]'), 'html') {
         right: 0;
       }
