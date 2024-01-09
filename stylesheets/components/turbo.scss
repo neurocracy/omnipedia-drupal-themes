@@ -4,6 +4,7 @@
 
 // @see https://www.drupal.org/project/refreshless
 
+@use '../variables/colours'; // Configure colours.
 @use 'material.common/material.colour' as material-colour;
 @use 'sass:color';
 @use 'sass/helpers/colour';
