@@ -10,13 +10,15 @@
 // - 'omnipediaSidebarsMenuClose': will move focus to the menu open control if
 //   sidebars are off-canvas.
 
+AmbientImpact.onGlobals([
+  'ally.query.tabbable',
+], function() {
 AmbientImpact.on([
-  'OmnipediaSiteThemeSidebarsElements',
-  'OmnipediaSiteThemeSidebarsState',
+  'OmnipediaSiteThemeSidebars',
   'pointerFocusHide',
-], function(sidebarsElements, sidebarsState, aiPointerFocusHide, $) {
+], function(sidebars, aiPointerFocusHide, $) {
 AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsFocus', function(
-  sidebarsFocus, $
+  sidebarsFocus, $,
 ) {
 
   'use strict';
@@ -31,34 +33,39 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsFocus', function(
   this.addBehaviour(
     'OmnipediaSiteThemeSidebarsFocus',
     'omnipedia-site-theme-sidebars-focus',
-    sidebarsElements.getSidebarsBehaviourSelector(),
+    'body',
     function(context, settings) {
 
-      $(this).on(
-        'omnipediaSidebarsMenuOpen.' + eventNamespace,
-      function(event) {
+      $(this).on(`omnipediaSidebarsMenuOpen.${eventNamespace}`, function(
+        event, instance,
+      ) {
 
-        if (sidebarsState.isOffCanvas() === true) {
-
-          aiPointerFocusHide.lock();
-
-          sidebarsElements.getSidebarsContainer().focus();
-
-          aiPointerFocusHide.unlock();
-
+        if (instance.isOffCanvas() !== true) {
+          return;
         }
 
-      }).on('omnipediaSidebarsMenuClose.' + eventNamespace, function(event) {
+        aiPointerFocusHide.lock();
 
-        if (sidebarsState.isOffCanvas() === true) {
+        $(ally.query.tabbable({
+          context:        instance.$sidebars,
+          includeContext: true,
+        })).first().focus();
 
-          aiPointerFocusHide.lock();
+        aiPointerFocusHide.unlock();
 
-          sidebarsElements.getSidebarsMenuOpen().focus();
+      }).on(`omnipediaSidebarsMenuClose.${eventNamespace}`, function(
+        event, instance,
+      ) {
 
-          aiPointerFocusHide.unlock();
-
+        if (instance.isOffCanvas() !== true) {
+          return;
         }
+
+        aiPointerFocusHide.lock();
+
+        instance.$menuOpen.focus();
+
+        aiPointerFocusHide.unlock();
 
       });
 
@@ -66,12 +73,13 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsFocus', function(
     function(context, settings, trigger) {
 
       $(this).off([
-        'omnipediaSidebarsMenuOpen.'  + eventNamespace,
-        'omnipediaSidebarsMenuClose.' + eventNamespace,
+        `omnipediaSidebarsMenuOpen.${eventNamespace}`,
+        `omnipediaSidebarsMenuClose.${eventNamespace}`,
       ].join(' '));
 
     }
   );
 
+});
 });
 });

@@ -199,13 +199,13 @@ search_form:
 
 sidebars:
   js:
-    javascript/sidebars.elements.js: { attributes: { defer: true } }
-    javascript/sidebars.state.js: { attributes: { defer: true } }
+    javascript/sidebars.js: { attributes: { defer: true } }
     javascript/sidebars.focus.js: { attributes: { defer: true } }
-    javascript/sidebars.overlay.js: { attributes: { defer: true } }
     javascript/sidebars.keyboard.js: { attributes: { defer: true } }
+    javascript/sidebars.overlay.js: { attributes: { defer: true } }
   dependencies:
     - ambientimpact_core/ally.js
+    - ambientimpact_core/component.fastdom
     - ambientimpact_core/framework
     - ambientimpact_ux/component.hash_matcher
     - ambientimpact_ux/component.headroom
@@ -213,7 +213,6 @@ sidebars:
     - ambientimpact_ux/component.pointer_focus_hide
     - ambientimpact_ux/component.responsive_style_property
     - ambientimpact_ux/component.scrollbar_gutter
-    - omnipedia_site_theme/header
 
 site_branding:
   css:

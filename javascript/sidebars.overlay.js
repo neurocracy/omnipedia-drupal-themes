@@ -2,19 +2,16 @@
 //   Omnipedia - Site theme - Sidebars overlay
 // -----------------------------------------------------------------------------
 
-// This adds a one off click handler to the menu closed anchor element (which
-// doubles as the overlay) when the off-canvas sidebars container is open,
-// allowing a click or tap on the overlay to close the menu and overlay.
-// Additionally, this marks that same element as being an active overlay for the
-// purpose of preventing viewport scrolling while the overlay is open.
+// This progressively enhances the CSS-based overlay with the JavaScript-powered
+// overlay that prevents viewport scrolling when open for better UX.
 
 AmbientImpact.on([
-  'OmnipediaSiteThemeSidebarsElements',
-  'OmnipediaSiteThemeSidebarsState',
+  'fastdom',
+  'OmnipediaSiteThemeSidebars',
   'overlay',
-], function(sidebarsElements, sidebarsState, aiOverlay, $) {
+], function(aiFastDom, sidebars, aiOverlay) {
 AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsOverlay', function(
-  sidebarsOverlay, $
+  sidebarsOverlay, $,
 ) {
 
   'use strict';
@@ -25,6 +22,13 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsOverlay', function(
    * @type {String}
    */
   const eventNamespace = this.getName();
+
+  /**
+   * FastDom instance.
+   *
+   * @type {FastDom}
+   */
+  const fastdom = aiFastDom.getInstance();
 
   /**
    * Class applied to the sidebars menu closed anchor when disabled.
@@ -50,110 +54,203 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsOverlay', function(
    */
   const overlayClass = 'overlay--layout-sidebars';
 
-  this.addBehaviour(
-    'OmnipediaSiteThemeSidebarsOverlay',
-    'omnipedia-site-theme-sidebars-overlay',
-    sidebarsElements.getSidebarsBehaviourSelector(),
-    function(context, settings) {
+  /**
+   * Represents the sidebars overlay.
+   */
+  class SidebarsOverlay {
 
-      sidebarsElements.getSidebarsMenuClosedAnchor().addClass(
-        menuClosedAnchorDisabledClass
-      );
+    /**
+     * The overlay instance.
+     *
+     * @type {Object}
+     */
+    #overlay;
+
+    /**
+     * The overlay element wrapped in a jQuery collection.
+     *
+     * @type {jQuery}
+     */
+    #$overlay;
+
+    /**
+     * The Sidebars instance we're providing an overlay for.
+     *
+     * @type {Sidebars}
+     */
+    #sidebars;
+
+    /**
+     * Constructor.
+     *
+     * @param {Sidebars} sidebars
+     *   A Sidebars instance.
+     */
+    constructor(sidebars) {
+
+      this.#sidebars = sidebars;
+
+      this.#$overlay = aiOverlay.create();
+
+      this.#$overlay.addClass(overlayClass);
+
+      this.#overlay = this.#$overlay.prop('aiOverlay');
+
+      this.#bindEventHandlers();
 
       /**
-       * The header overlay, wrapped in a jQuery object.
+       * Reference to the current instance.
        *
-       * @type {jQuery}
+       * @type {SidebarsOverlay}
        */
-      let $overlay = aiOverlay.create();
+      const that = this;
 
-      /**
-       * The overlay instance.
-       *
-       * @type {Object}
-       */
-      let overlay = $overlay.prop('aiOverlay');
+      fastdom.mutate(function() {
 
-      /**
-       * The sidebars closed target jQuery collection.
-       *
-       * @type {jQuery}
-       */
-      let $menuClosedTarget = sidebarsElements.getSidebarsMenuClosedTarget();
+        that.#sidebars.$menuClosedTarget
+        .before(that.#$overlay)
+        .addClass(hasOverlayClass);
 
-      // Save overlay instance to a property for the detach handler.
-      $menuClosedTarget.prop('aiOverlay', overlay);
+        that.#sidebars.$menuClosedAnchor.addClass(
+          menuClosedAnchorDisabledClass,
+        );
 
-      $overlay.addClass(overlayClass).insertBefore($menuClosedTarget);
-
-      // Add class indicating JavaScript overlay is active.
-      $menuClosedTarget.addClass(hasOverlayClass);
-
-      $overlay.on('click.' + eventNamespace, function(event) {
-        sidebarsState.closeMenu();
       });
 
-      $(this).on(
-        'omnipediaSidebarsMenuOpen.' + eventNamespace,
-      function(event) {
+    }
 
-        if (!sidebarsState.isOffCanvas()) {
+    /**
+     * Destroy this instance.
+     *
+     * @return {Promise}
+     *   A Promise that resolves when various DOM tasks are complete.
+     */
+    destroy() {
+
+      /**
+       * Reference to the current instance.
+       *
+       * @type {SidebarsOverlay}
+       */
+      const that = this;
+
+      this.#unbindEventHandlers();
+
+      return fastdom.measure(function() {
+
+        return that.#overlay.isActive();
+
+      }).then(function(isOverlayActive) {return fastdom.mutate(function() {
+
+        that.#sidebars.$menuClosedTarget.removeClass(hasOverlayClass);
+
+        that.#sidebars.$menuClosedAnchor.removeClass(
+          menuClosedAnchorDisabledClass,
+        );
+
+        if (isOverlayActive === false) {
+
+          that.#$overlay.detach();
+
           return;
+
         }
-
-        overlay.show();
-
-      }).on('omnipediaSidebarsMenuClose.' + eventNamespace, function(event) {
-
-        overlay.hide();
-
-      });
-
-    },
-    function(context, settings, trigger) {
-
-      $(this).off([
-        'omnipediaSidebarsMenuOpen.'  + eventNamespace,
-        'omnipediaSidebarsMenuClose.' + eventNamespace,
-      ].join(' '));
-
-      /**
-       * The sidebars closed target jQuery collection.
-       *
-       * @type {jQuery}
-       */
-      let $menuClosedTarget = sidebarsElements.getSidebarsMenuClosedTarget();
-
-      /**
-       * The overlay instance.
-       *
-       * @type {Object}
-       */
-      let overlay = $menuClosedTarget.prop('aiOverlay');
-
-      if (typeof overlay !== 'undefined') {
 
         // Attach a one-off event handler to remove the overlay element and
         // related properties/classes when the overlay has finished hiding.
-        overlay.$overlay.one('overlayHidden', function(event) {
+        that.#$overlay.one('overlayHidden', function(event) {
 
-          overlay.$overlay.remove();
-
-          $menuClosedTarget.removeProp('aiOverlay');
-
-          $menuClosedTarget.removeClass(hasOverlayClass);
+          that.#$overlay.detach();
 
         });
 
         // Tell the overlay to hide itself, which will trigger the above handler
         // when complete.
-        overlay.hide();
+        that.#overlay.hide();
 
-      }
+      })});
 
-      sidebarsElements.getSidebarsMenuClosedAnchor().removeClass(
-        menuClosedAnchorDisabledClass
-      );
+    }
+
+    /**
+     * Bind all of our event handlers.
+     *
+     * @see this~#unbindEventHandlers()
+     */
+    #bindEventHandlers() {
+
+      /**
+       * Reference to the current instance.
+       *
+       * @type {SidebarsOverlay}
+       */
+      const that = this;
+
+      this.#$overlay.on(`click.${eventNamespace}`, function(event) {
+        that.#sidebars.close();
+      });
+
+      this.#sidebars.$sidebars.on(
+        `omnipediaSidebarsMenuOpen.${eventNamespace}`,
+      function(event, sidebars) {
+
+        if (sidebars.isOffCanvas() !== true) {
+          return;
+        }
+
+        that.#overlay.show();
+
+      }).on(`omnipediaSidebarsMenuClose.${eventNamespace}`, function(
+        event, sidebars,
+      ) {
+
+        that.#overlay.hide();
+
+      }).one(`OmnipediaSidebarsDestroyed.${eventNamespace}`, function(
+        event, sidebars,
+      ) {
+        that.destroy();
+      });
+
+    }
+
+    /**
+     * Unbind all of our event handlers.
+     *
+     * @see this~#bindEventHandlers()
+     */
+    #unbindEventHandlers() {
+
+      this.#$overlay.off(`click.${eventNamespace}`);
+
+      this.#sidebars.$sidebars.off([
+        `omnipediaSidebarsMenuOpen.${eventNamespace}`,
+        `omnipediaSidebarsMenuClose.${eventNamespace}`,
+        // Don't unbind the one-off OmnipediaSidebarsDestroyed event handler as
+        // that auto destroys this instance.
+      ].join(' '));
+
+    }
+
+  }
+
+  this.addBehaviour(
+    'OmnipediaSiteThemeSidebarsOverlay',
+    'omnipedia-site-theme-sidebars-overlay',
+    '.layout-container',
+    function(context, settings) {
+
+      $(this).prop('OmnipediaSidebarsOverlay', new SidebarsOverlay(
+        $(this).prop('OmnipediaSidebars'),
+      ));
+
+    },
+    function(context, settings, trigger) {
+
+      // SidebarsOverlay destroys itself on the OmnipediaSidebarsDestroyed event
+      // so we just need to remove the property and let browser garbage
+      // collection handle the rest.
+      $(this).removeProp('OmnipediaSidebarsOverlay');
 
     }
   );
