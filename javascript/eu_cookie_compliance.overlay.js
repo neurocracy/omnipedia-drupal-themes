@@ -1,27 +1,22 @@
 // -----------------------------------------------------------------------------
-//   Omnipedia - Site theme - EU cookie compliance overlay
+//   Omnipedia - Site theme - EU Cookie Compliance overlay component
 // -----------------------------------------------------------------------------
 
-// This marks the pop-up as having opened and closed for the scroll blocker
-// component.
-
 AmbientImpact.on([
+  'fastdom',
   'OmnipediaPrivacySettings',
-  'OmnipediaSiteThemeEuCookieComplianceElements',
-  'OmnipediaSiteThemeEuCookieComplianceState',
-  'OmnipediaSiteThemeSidebarsState',
+  'OmnipediaSiteThemeEuCookieCompliance',
   'overlay',
 ], function(
+  aiFastDom,
   OmnipediaPrivacySettings,
-  euCookieComplianceElements,
-  euCookieComplianceState,
-  sidebarsState,
-  aiOverlay
+  euCookieCompliance,
+  aiOverlay,
 ) {
 AmbientImpact.addComponent(
   'OmnipediaSiteThemeEuCookieComplianceOverlay',
 function(
-  euCookieComplianceOverlay, $
+  euCookieComplianceOverlay, $,
 ) {
 
   'use strict';
@@ -33,121 +28,253 @@ function(
    */
   const eventNamespace = this.getName();
 
-  this.addBehaviour(
-    'OmnipediaSiteThemeEuCookieComplianceOverlay',
-    'omnipedia-site-theme-eu-cookie-compliance-overlay',
-    euCookieComplianceElements.getBehaviourSelector(),
-    function(context, settings) {
+  /**
+   * FastDom instance.
+   *
+   * @type {FastDom}
+   */
+  const fastdom = aiFastDom.getInstance();
 
-      /**
-       * The cookie compliance pop-up, if any, wrapped in a jQuery collection.
-       *
-       * @type {jQuery}
-       */
-      let $popUp = euCookieComplianceElements.getPopUp();
+  /**
+   * Class applied to the overlay element for CSS.
+   *
+   * @type {String}
+   */
+  const overlayClass = 'overlay--eu-cookie-compliance-popup';
 
-      // Bail if we can't find the pop-up.
-      if ($popUp.length === 0) {
-        return;
-      }
+  /**
+   * Represents a privacy pop-up overlay.
+   */
+  class PrivacyPopupOverlay {
 
-      /**
-       * The primary menu region's overlay, wrapped in a jQuery object.
-       *
-       * @type {jQuery}
-       */
-      let $overlay = aiOverlay.create({
+    /**
+     * The overlay instance.
+     *
+     * @type {Object}
+     */
+    #overlay;
+
+    /**
+     * The overlay element wrapped in a jQuery collection.
+     *
+     * @type {jQuery}
+     */
+    #$overlay;
+
+    /**
+     * The PrivacyPopup instance we're providing an overlay for.
+     *
+     * @type {PrivacyPopup}
+     */
+    #popup;
+
+    /**
+     * The pop-up element wrapped in a jQuery collection.
+     *
+     * @type {jQuery}
+     */
+    #$popup;
+
+    /**
+     * Constructor.
+     *
+     * @param {PrivacyPopup} popup
+     *   A PrivacyPopup instance.
+     */
+    constructor(popup) {
+
+      this.#popup = popup;
+
+      this.#$popup = popup.$popup;
+
+      this.#$overlay = aiOverlay.create({
         modal:        true,
-        modalFilter:  $popUp
+        modalFilter:  this.#$popup,
       });
 
-      $popUp.prop('aiOverlay', $overlay.prop('aiOverlay'));
+      this.#$overlay.addClass(overlayClass);
 
-      $overlay.insertBefore($popUp);
+      this.#overlay = this.#$overlay.prop('aiOverlay');
+
+      this.#bindEventHandlers();
 
       /**
-       * Open the overlay and related tasks.
+       * Reference to the current instance.
+       *
+       * @type {PrivacyPopupOverlay}
        */
-      function openOverlay() {
+      const that = this;
 
-        // Only show the overlay if the sidebars are not off-canvas, as the
-        // the sidebars create their own overlay and this would result in two
-        // overlays.
-        //
-        // @todo Find a way to show an overlay over everything, including the
-        //   sidebars?
-        if (!sidebarsState.isOffCanvas() || !sidebarsState.isMenuOpen()) {
-          $overlay.prop('aiOverlay').show();
-        }
+      fastdom.mutate(function() {
 
-        // Failsafe to prevent disabling scroll if the pop-up is not visible or
-        // has been removed for any reason, such as an add-on, e.g. uBlock
-        // Origin, or some other software.
-        if (
-          $popUp.is(':hidden') ||
-          $popUp.width() < 10 ||
-          $popUp.height() < 10 ||
-          $popUp.css('visibility') === 'hidden'
-        ) {
+        that.#$overlay.insertBefore(that.#$popup);
+
+      }).then(function() {
+
+        if (that.#popup.isOpen() === false) {
           return;
         }
 
-        // We trigger immerse events to pause any animations on the page while
-        // the overlay/pop-up are open for both performance reasons and so as to
-        // not distract users.
-        $popUp.trigger('immerseEnter');
+        // If the pop-up is open when we attach, show the overlay.
+        that.show();
 
-      };
-
-      // If the pop-up is open when we attach, mark it as such to the overlay
-      // scroll component.
-      if (euCookieComplianceState.isPopUpOpen()) {
-        openOverlay();
-      }
-
-      $popUp.on(
-        'euCookieCompliancePopUpOpen.' + eventNamespace,
-        openOverlay
-      )
-      .on(
-        'euCookieCompliancePopUpClose.' + eventNamespace,
-      function(event) {
-
-        $overlay.prop('aiOverlay').hide();
-
-      })
-      .on(
-        'euCookieCompliancePopUpClosed.' + eventNamespace,
-      function(event) {
-        $popUp.trigger('immerseExit');
       });
+
+    }
+
+    /**
+     * Destroy this instance.
+     *
+     * @return {Promise}
+     *   A Promise that resolves when various DOM tasks are complete.
+     */
+    destroy() {
+
+      this.#unbindEventHandlers();
+
+      /**
+       * Reference to the current instance.
+       *
+       * @type {PrivacyPopupOverlay}
+       */
+      const that = this;
+
+      return fastdom.mutate(function() {
+        // This also removes scroll blocking and disengages focus blocking so we
+        // don't need to call #overlay.hide().
+        that.#overlay.destroy();
+      });
+
+    }
+
+    /**
+     * Bind all of our event handlers.
+     *
+     * @see this~#unbindEventHandlers()
+     */
+    #bindEventHandlers() {
+
+      /**
+       * Reference to the current instance.
+       *
+       * @type {PrivacyPopupOverlay}
+       */
+      const that = this;
+
+      this.#$popup.on(`PrivacyPopupBeforeOpen.${eventNamespace}`, function(
+        event,
+      ) {
+
+        that.show();
+
+      }).on(`PrivacyPopupBeforeClose.${eventNamespace}`, function(event) {
+
+        that.hide();
+
+      }).on(`PrivacyPopupClosed.${eventNamespace}`, function(event) {
+
+        that.#$popup.trigger('immerseExit');
+
+      }).one(`PrivacyPopupDestroyed.${eventNamespace}`, function(event) {
+
+        that.destroy();
+
+      });
+
+    }
+
+    /**
+     * Unbind all of our event handlers.
+     *
+     * @see this~#bindEventHandlers()
+     */
+    #unbindEventHandlers() {
+
+      this.#$popup.off([
+        `PrivacyPopupBeforeOpen.${eventNamespace}`,
+        `PrivacyPopupBeforeClose.${eventNamespace}`,
+        `PrivacyPopupClosed.${eventNamespace}`,
+        // Don't unbind the one-off PrivacyPopupDestroyed event handler as that
+        // auto destroys this instance.
+      ].join(' '));
+
+    }
+
+    /**
+     * Show the overlay and perform related tasks.
+     *
+     * @return {Promise}
+     *   A Promise that resolves when various DOM tasks are complete.
+     */
+    show() {
+
+      this.#overlay.show();
+
+      /**
+       * Reference to the current instance.
+       *
+       * @type {PrivacyPopupOverlay}
+       */
+      const that = this;
+
+      // Failsafe to prevent disabling scroll if the pop-up is not visible or
+      // has been removed for any reason, such as an add-on, e.g. uBlock
+      // Origin, or some other software.
+      return fastdom.measure(function() {
+        return (
+          that.#$popup.is(':hidden') ||
+          that.#$popup.width() < 10 ||
+          that.#$popup.height() < 10 ||
+          that.#$popup.css('visibility') === 'hidden'
+        );
+
+      }).then(function(popupBlocked) {
+
+        if (popupBlocked === true) {
+          return;
+        }
+
+        that.#$popup.trigger('immerseEnter');
+
+      });
+
+    }
+
+    /**
+     * Hide the overlay and perform related tasks.
+     *
+     * @return {Promise}
+     *   A Promise that resolves when various DOM tasks are complete.
+     */
+    hide() {
+
+      this.#overlay.hide();
+
+      // @todo A real FastDom Promise when the overlay component has been
+      //   refactored to return one.
+      return Promise.resolve();
+
+    }
+
+  };
+
+  this.addBehaviour(
+    'OmnipediaSiteThemeEuCookieComplianceOverlay',
+    'omnipedia-site-theme-eu-cookie-compliance-overlay',
+    '#sliding-popup',
+    function(context, settings) {
+
+      $(this).prop('PrivacyPopupOverlay', new PrivacyPopupOverlay(
+        $(this).prop('PrivacyPopup'),
+      ));
 
     },
     function(context, settings, trigger) {
 
-      /**
-       * The cookie compliance pop-up, if any, wrapped in a jQuery collection.
-       *
-       * @type {jQuery}
-       */
-      let $popUp = euCookieComplianceElements.getPopUp();
-
-      // Bail if we can't find the pop-up.
-      if ($popUp.length === 0) {
-        return;
-      }
-
-      $popUp.off([
-        'euCookieCompliancePopUpOpen.'    + eventNamespace,
-        'euCookieCompliancePopUpClose.'   + eventNamespace,
-        'euCookieCompliancePopUpClosed.'  + eventNamespace,
-      ].join(' '));
-
-      // Destroy the overlay instance if found. Note that the destroy method
-      // also deletes the aiOverlay property so we don't have to.
-      if (!(typeof $popUp.prop('aiOverlay') === 'undefined')) {
-        $popUp.prop('aiOverlay').destroy();
-      }
+      // PrivacyPopupOverlay destroys itself on the PrivacyPopupDestroyed event
+      // so we just need to remove the property and let browser garbage
+      // collection handle the rest.
+      $(this).removeProp('PrivacyPopupOverlay');
 
     }
   );

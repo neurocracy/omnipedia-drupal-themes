@@ -1,14 +1,12 @@
 // -----------------------------------------------------------------------------
-//   Omnipedia - Site theme - EU cookie compliance focus management
+//   Omnipedia - Site theme - EU Cookie Compliance focus management component
 // -----------------------------------------------------------------------------
 
-// This manages focus on the following events:
-//
-// - 'euCookieCompliancePopUpOpened': moves focus to the first tabbable element
-//   in the pop-up.
-//
-// - 'euCookieCompliancePopUpClosed': moves focus to the privacy settings
-//   toggle.
+// This moves focus to the first tabble element inside the pop-up when opened
+// and moves focus back to the privacy toggle when the pop-up is closed. It also
+// locks the pointer focus source during pop-up opening and closing so that it
+// remains set to keyboard or pointer, depending on which was used, and doesn't
+// change to script focus source.
 
 AmbientImpact.onGlobals([
   'ally.query.tabbable',
@@ -17,20 +15,16 @@ AmbientImpact.onGlobals([
 AmbientImpact.on([
   'pointerFocusHide',
   'OmnipediaPrivacySettings',
-  'OmnipediaSiteThemeEuCookieComplianceElements',
-  'OmnipediaSiteThemeEuCookieComplianceState',
-  'OmnipediaSiteThemeSidebarsState',
+  'OmnipediaSiteThemeEuCookieCompliance',
 ], function(
   aiPointerFocusHide,
   OmnipediaPrivacySettings,
-  euCookieComplianceElements,
-  euCookieComplianceState,
-  sidebarsState
+  euCookieCompliance,
 ) {
 AmbientImpact.addComponent(
   'OmnipediaSiteThemeEuCookieComplianceFocus',
 function(
-  euCookieComplianceFocus, $
+  euCookieComplianceFocus, $,
 ) {
 
   'use strict';
@@ -43,107 +37,186 @@ function(
   const eventNamespace = this.getName();
 
   /**
-   * The ally.js focus source global service object.
-   *
-   * This initializes ally.js' focus source service, which starts watching the
-   * document and applies the data-focus-source attribute to the <html> element.
-   *
-   * @type {Object}
-   *
-   * @see https://allyjs.io/api/style/focus-source.html
-   *   ally.js documentation.
+   * Represents privacy pop-up focus management.
    */
-  let focusSourceHandle = ally.style.focusSource();
+  class PrivacyPopupFocus {
 
-  this.addBehaviour(
-    'OmnipediaSiteThemeEuCookieComplianceFocus',
-    'omnipedia-site-theme-eu-cookie-compliance-focus',
-    euCookieComplianceElements.getBehaviourSelector(),
-    function(context, settings) {
+    /**
+     * ally.js focus source global service object.
+     *
+     * @type {Object}
+     *
+     * @see https://allyjs.io/api/style/focus-source.html
+     */
+    #focusSourceHandle;
+
+    /**
+     * The PrivacyPopup instance we're providing an overlay for.
+     *
+     * @type {PrivacyPopup}
+     */
+    #popup;
+
+    /**
+     * The pop-up element wrapped in a jQuery collection.
+     *
+     * @type {jQuery}
+     */
+    #$popup;
+
+    #sidebarsOffcanvasOpened = false;
+
+    /**
+     * Constructor.
+     *
+     * @param {PrivacyPopup} popup
+     *   A PrivacyPopup instance.
+     */
+    constructor(popup) {
+
+      this.#popup = popup;
+
+      this.#$popup = popup.$popup;
+
+      this.#focusSourceHandle = ally.style.focusSource();
+
+      this.#bindEventHandlers();
+
+    }
+
+    /**
+     * Destroy this instance.
+     *
+     * @return {Promise}
+     *   A Promise that resolves when various DOM tasks are complete.
+     */
+    destroy() {
+
+      this.#focusSourceHandle.disengage();
+
+      this.#unbindEventHandlers();
+
+      return Promise.resolve();
+
+    }
+
+    /**
+     * Bind all of our event handlers.
+     *
+     * @see this~#unbindEventHandlers()
+     */
+    #bindEventHandlers() {
 
       /**
-       * The cookie compliance pop-up, if any, wrapped in a jQuery collection.
+       * Reference to the current instance.
        *
-       * @type {jQuery}
+       * @type {PrivacyPopupFocus}
        */
-      let $popUp = euCookieComplianceElements.getPopUp();
+      const that = this;
 
-      // Bail if we can't find the pop-up.
-      if ($popUp.length === 0) {
-        return;
-      }
-
-      $popUp.on(
-        'euCookieCompliancePopUpOpened.' + eventNamespace,
-      function(event) {
+      this.#$popup.on(`PrivacyPopupBeforeOpen.${eventNamespace}`, function(
+        event, popup,
+      ) {
 
         aiPointerFocusHide.lock();
+
+      }).on(`PrivacyPopupOpened.${eventNamespace}`, function(event, popup) {
 
         // We have to find the first tabbable element in the pop-up because the
         // pop-up itself does not seem to be focusable for some reason.
         $(ally.query.tabbable({
-          context:        $popUp,
-          includeContext: true
+          context:        that.#$popup,
+          includeContext: true,
         })).first().focus();
 
         aiPointerFocusHide.unlock();
 
-      })
-      .on(
-        'euCookieCompliancePopUpClose.' + eventNamespace,
-      function(event) {
+      }).on(`PrivacyPopupBeforeClose.${eventNamespace}`, function(
+        event, popup,
+      ) {
 
         aiPointerFocusHide.lock();
 
-      })
-      .on(
-        'euCookieCompliancePopUpClosed.' + eventNamespace,
-      function(event) {
+      }).on(`PrivacyPopupClosed.${eventNamespace}`, function(event, popup) {
 
-        // Only focus the toggle if the focus source was not the pointer, or if
-        // sidebars are not off-canvas. This is to prevent the sidebar menu
-        // unexpectedly opening if the pop-up was open due to some other reason,
-        // and not because it was invoked via the toggle in the sidebar. The
-        // most likely reason for this would be when the user has not yet agreed
-        // to anything in the pop-up, either on first navigating to the site or
-        // because they clicked "Decide later" on a previous page.
-        //
-        // @todo We need a better way of handling this that allows focus to be
-        //   moved into the sidebar for the purpose of maintaining tabbing order
-        //   but without causing the sidebar menu to open. One way to do this
-        //   could be to alter the CSS to only show on :focus-within if
-        //   html:not([data-focus-source="pointer"])
-        if (
-          focusSourceHandle.current() !== 'pointer' ||
-          !sidebarsState.isOffCanvas()
-        ) {
+        // Only focus the toggle if it looks like the sidebars were opened and
+        // off-canvas. This is to prevent the pop-up opening the sidebars if
+        // the pop-up was not opened via the toggle in the sidebars, such as on
+        // a page load where the user has not yet agreed and the pop-up shows
+        // itself on page load.
+        if (that.#sidebarsOffcanvasOpened === true) {
           OmnipediaPrivacySettings.getToggle().focus();
         }
 
         aiPointerFocusHide.unlock();
 
+      // Bind a one-off handler to the PrivacyPopupDestroyed event which
+      // disengages and removes the focus source handle.
+      }).one(`PrivacyPopupDestroyed.${eventNamespace}`, function(event, popup) {
+
+        that.destroy();
+
       });
+
+      $(document).on(`omnipediaSidebarsMenuOpen.${eventNamespace}`, function(
+        event, sidebars,
+      ) {
+
+        console.debug(sidebars.isOffCanvas());
+
+        // that.#sidebarsOffcanvasOpened = sidebars.isOffCanvas();
+
+        // @todo This kind of a hack and doesn't give us context as to when the
+        //   sidebars were opened, i.e. were they opened right before opening
+        //   the privacy pop-up or was it unrelated and/or a while ago?
+        if (sidebars.isOffCanvas() === true) {
+          that.#sidebarsOffcanvasOpened = true;
+        }
+
+      });
+
+    }
+
+    /**
+     * Unbind all of our event handlers.
+     *
+     * @see this~#bindEventHandlers()
+     */
+    #unbindEventHandlers() {
+
+      this.#$popup.off([
+        `PrivacyPopupBeforeOpen.${eventNamespace}`,
+        `PrivacyPopupOpened.${eventNamespace}`,
+        `PrivacyPopupBeforeClose.${eventNamespace}`,
+        `PrivacyPopupClosed.${eventNamespace}`,
+        // Don't remove the PrivacyPopupDestroyed handler as it's a one-off and
+        // must be triggered to destroy; removing it here will likely prevent it
+        // triggering.
+      ].join(' '));
+
+      $(document).off(`omnipediaSidebarsMenuOpen.${eventNamespace}`);
+
+    }
+
+  }
+
+  this.addBehaviour(
+    'OmnipediaSiteThemeEuCookieComplianceFocus',
+    'omnipedia-site-theme-eu-cookie-compliance-focus',
+    '#sliding-popup',
+    function(context, settings) {
+
+      $(this).prop('PrivacyPopupFocus', new PrivacyPopupFocus(
+        $(this).prop('PrivacyPopup'),
+      ));
 
     },
     function(context, settings, trigger) {
 
-      /**
-       * The cookie compliance pop-up, if any, wrapped in a jQuery collection.
-       *
-       * @type {jQuery}
-       */
-      let $popUp = euCookieComplianceElements.getPopUp();
-
-      // Bail if we can't find the pop-up.
-      if ($popUp.length === 0) {
-        return;
-      }
-
-      $popUp.off([
-        'euCookieCompliancePopUpOpened.'  + eventNamespace,
-        'euCookieCompliancePopUpClose.'   + eventNamespace,
-        'euCookieCompliancePopUpClosed.'  + eventNamespace,
-      ].join(' '));
+      // PrivacyPopupFocus destroys itself on the PrivacyPopupDestroyed event so
+      // we just need to remove the property and let browser garbage collection
+      // handle the rest.
+      $(this).removeProp('PrivacyPopupFocus');
 
     }
   );

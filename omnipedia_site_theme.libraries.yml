@@ -45,13 +45,13 @@ eu_cookie_compliance:
     theme:
       stylesheets/components/eu_cookie_compliance.css: {}
   js:
-    javascript/eu_cookie_compliance.elements.js: { attributes: { defer: true } }
-    javascript/eu_cookie_compliance.state.js: { attributes: { defer: true } }
-    javascript/eu_cookie_compliance.focus.js: { attributes: { defer: true } }
+    javascript/eu_cookie_compliance.js: { attributes: { defer: true } }
     javascript/eu_cookie_compliance.decide_later.js: { attributes: { defer: true } }
+    javascript/eu_cookie_compliance.focus.js: { attributes: { defer: true } }
     javascript/eu_cookie_compliance.overlay.js: { attributes: { defer: true } }
   dependencies:
     - ambientimpact_core/ally.js
+    - ambientimpact_core/component.fastdom
     - ambientimpact_core/framework
     - ambientimpact_ux/component.overlay
     - ambientimpact_ux/component.pointer_focus_hide

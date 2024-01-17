@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------------
-//   Omnipedia - Site theme - EU cookie compliance decide later button
+//   Omnipedia - Site theme - EU Cookie Compliance decide later button component
 // -----------------------------------------------------------------------------
 
 // This adds an event handler to close the pop-up when clicking the "Decide
@@ -9,12 +9,12 @@ AmbientImpact.onGlobals([
   'Drupal.eu_cookie_compliance',
 ], function() {
 AmbientImpact.on([
-  'OmnipediaSiteThemeEuCookieComplianceElements',
-], function(euCookieComplianceElements) {
+  'OmnipediaSiteThemeEuCookieCompliance',
+], function(euCookieCompliance) {
 AmbientImpact.addComponent(
   'OmnipediaSiteThemeEuCookieComplianceDecideLater',
 function(
-  euCookieComplianceDecideLater, $
+  euCookieComplianceDecideLater, $,
 ) {
 
   'use strict';
@@ -36,44 +36,35 @@ function(
   this.addBehaviour(
     'OmnipediaSiteThemeEuCookieComplianceDecideLater',
     'omnipedia-site-theme-eu-cookie-compliance-decide-later',
-    euCookieComplianceElements.getBehaviourSelector(),
+    '#sliding-popup',
     function(context, settings) {
 
-      /**
-       * The cookie compliance pop-up, if any, wrapped in a jQuery collection.
-       *
-       * @type {jQuery}
-       */
-      let $popUp = euCookieComplianceElements.getPopUp();
+      $(this).on(
+        `PrivacyPopupConstructed.${eventNamespace}`,
+      function(event, popup) {
 
-      // Bail if we can't find the pop-up.
-      if ($popUp.length === 0) {
-        return;
-      }
+        popup.$popup.find(`.${decideLaterButtonClass}`).on(
+          `click.${eventNamespace}`,
+          Drupal.eu_cookie_compliance.toggleWithdrawBanner,
+        );
 
-      // Event handler to close the pop-up when the "Decide later" button is
-      // clicked.
-      $popUp.find('.' + decideLaterButtonClass).on(
-        'click.' + eventNamespace,
-        Drupal.eu_cookie_compliance.toggleWithdrawBanner
-      );
+      // Attach binds a one-off handler to the PrivacyPopupDestroyed event which
+      // removes the click event handler.
+      }).one(`PrivacyPopupDestroyed.${eventNamespace}`, function(event, popup) {
+
+        popup.$popup.find(`.${decideLaterButtonClass}`).off(
+          `click.${eventNamespace}`,
+          Drupal.eu_cookie_compliance.toggleWithdrawBanner,
+        );
+
+      });
 
     },
     function(context, settings, trigger) {
 
-      /**
-       * The cookie compliance pop-up, if any, wrapped in a jQuery collection.
-       *
-       * @type {jQuery}
-       */
-      let $popUp = euCookieComplianceElements.getPopUp();
-
-      // Bail if we can't find the pop-up.
-      if ($popUp.length === 0) {
-        return;
-      }
-
-      $popUp.find('.' + decideLaterButtonClass).off('click.' + eventNamespace);
+      // Remove just the constructed event as the destroyed event needs to run
+      // and will be invoked and then removed as it's a one-off event.
+      $(this).off(`PrivacyPopupConstructed.${eventNamespace}`);
 
     }
   );
