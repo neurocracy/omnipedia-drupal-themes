@@ -152,3 +152,7 @@ The following major version bumps indicate breaking changes:
   * Requires [`drupal/omnipedia_content` 6.x](https://github.com/neurocracy/drupal-omnipedia-content/tree/6.x) and [`drupal/omnipedia_media` 6.x](https://github.com/neurocracy/drupal-omnipedia-media/tree/6.x) for Drupal 10 support.
 
   * Increases minimum version of `symfony/css-selector` and `symfony/dom-crawler` to ^6.2 as that's what's supported by Drupal 10.
+
+* 7.x:
+
+  * Much of the front-end JavaScript has been heavily reworked and modernized as object-oriented and self-contained so that they don't reference elements or other instances outside of behaviours. This makes them more robust and allows repeated detaching and re-attaching.
