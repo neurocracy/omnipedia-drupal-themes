@@ -162,10 +162,6 @@ function(
         event, sidebars,
       ) {
 
-        console.debug(sidebars.isOffCanvas());
-
-        // that.#sidebarsOffcanvasOpened = sidebars.isOffCanvas();
-
         // @todo This kind of a hack and doesn't give us context as to when the
         //   sidebars were opened, i.e. were they opened right before opening
         //   the privacy pop-up or was it unrelated and/or a while ago?
