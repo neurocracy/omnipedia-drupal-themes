@@ -29,13 +29,13 @@ AmbientImpact.addComponent('OmnipediaSiteThemeOffcanvasHistory', function(
     'body',
     function(context, settings) {
 
-      $(this).on('openOffcanvas.' + eventNamespace, function(event) {
+      $(this).on(`openOffcanvas.${eventNamespace}`, function(event) {
 
         let panel = event.target;
 
         history.pushState({offcanvasPanel: 'pushed'}, document.title);
 
-        $(window).one('popstate.' + eventNamespace, function(event) {
+        $(window).one(`popstate.${eventNamespace}`, function(event) {
 
           history.replaceState({offcanvasPanel: 'popped'}, document.title);
 
@@ -45,7 +45,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeOffcanvasHistory', function(
 
         });
 
-      }).on('closeOffcanvas.' + eventNamespace, function(event) {
+      }).on(`closeOffcanvas.${eventNamespace}`, function(event) {
 
         // Move back one entry in the browser history if the history state does
         // not indicate an off-canvas popstate has just occurred. This check is
@@ -64,11 +64,11 @@ AmbientImpact.addComponent('OmnipediaSiteThemeOffcanvasHistory', function(
     },
     function(context, settings, trigger) {
 
-      $(window).off('popstate.' + eventNamespace);
+      $(window).off(`popstate.${eventNamespace}`);
 
       $(this).off([
-        'openOffcanvas.'  + eventNamespace,
-        'closeOffcanvas.' + eventNamespace,
+        `openOffcanvas.${eventNamespace}`,
+        `closeOffcanvas.${eventNamespace}`,
       ].join(' '));
 
     }

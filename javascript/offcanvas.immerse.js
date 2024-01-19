@@ -26,10 +26,10 @@ AmbientImpact.addComponent('OmnipediaSiteThemeOffcanvasImmerse', function(
     'body',
     function(context, settings) {
 
-      $(this).on('openOffcanvas.' + eventNamespace, function(event) {
+      $(this).on(`openOffcanvas.${eventNamespace}`, function(event) {
         $(this).trigger('immerseEnter');
 
-      }).on('closeOffcanvas.' + eventNamespace, function(event) {
+      }).on(`closeOffcanvas.${eventNamespace}`, function(event) {
         $(this).trigger('immerseExit');
       });
 
@@ -37,8 +37,8 @@ AmbientImpact.addComponent('OmnipediaSiteThemeOffcanvasImmerse', function(
     function(context, settings, trigger) {
 
       $(this).off([
-        'openOffcanvas.'  + eventNamespace,
-        'closeOffcanvas.' + eventNamespace,
+        `openOffcanvas.${eventNamespace}`,
+        `closeOffcanvas.${eventNamespace}`,
       ].join(' '));
 
     }
