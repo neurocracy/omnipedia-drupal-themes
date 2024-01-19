@@ -26,7 +26,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeOffcanvasHistory', function(
   this.addBehaviour(
     'OmnipediaSiteThemeOffcanvasHistory',
     'omnipedia-site-theme-offcanvas-history',
-    '.offcanvas-panel',
+    'body',
     function(context, settings) {
 
       $(this).on('openOffcanvas.' + eventNamespace, function(event) {
