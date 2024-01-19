@@ -23,7 +23,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeOffcanvasImmerse', function(
   this.addBehaviour(
     'OmnipediaSiteThemeOffcanvasImmerse',
     'omnipedia-site-theme-offcanvas-immerse',
-    '.offcanvas-panel',
+    'body',
     function(context, settings) {
 
       $(this).on('openOffcanvas.' + eventNamespace, function(event) {
