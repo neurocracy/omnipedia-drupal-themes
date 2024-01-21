@@ -4,6 +4,7 @@
 
 @use '../../layout/config' as layout-config;
 @use 'base:layout/breakpoints' as layout-breakpoints;
+@use 'base:layout/sidebars' as layout-sidebars;
 @use 'base:elements/link' as base-link;
 @use '../../global/reveal';
 @use 'immerse';
@@ -178,10 +179,22 @@
       animation-iteration-count:  1, infinite;
 
       @include immerse.on-immerse {
-        animation-play-state: paused;
+        @include breakpoint.on('<layout-with-both-sidebars') {
+          animation-name: none;
+        }
+        @include breakpoint.on('>=layout-with-both-sidebars') {
+          animation-play-state: paused;
+        }
       }
       @include overlay.on-overlay-active {
         animation-play-state: paused;
+      }
+      header[role='banner'].headroom--unpinned & {
+
+        @include breakpoint.on('<layout-with-both-sidebars') {
+          animation-name: none;
+        }
+
       }
 
       // Don't animate if the user indicates they prefer reduced motion.
