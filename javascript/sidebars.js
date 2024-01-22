@@ -48,6 +48,19 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebars', function(sidebars, $) {
   const offCanvasStatePropertyName = '--omnipedia-sidebars-off-canvas';
 
   /**
+   * Class added to the sidebars when they're open.
+   *
+   * This is necessary to ensure the sidebars stay open if the :target selector
+   * doesn't kick in despite the hash in the location matching; this can happen
+   * when navigating via Hotwire Turbo at the time of writing.
+   *
+   * @type {String}
+   *
+   * @see https://www.drupal.org/project/refreshless/issues/3416085
+   */
+  const sidebarsOpenClass = 'layout-sidebars--open';
+
+  /**
    * Represents the sidebars.
    */
   class Sidebars {
@@ -266,10 +279,17 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebars', function(sidebars, $) {
         }
 
         if (matches === true) {
+
+          that.#$sidebars.addClass(sidebarsOpenClass);
+
           that.#$sidebars.trigger('omnipediaSidebarsMenuOpen', that);
 
         } else {
+
+          that.#$sidebars.removeClass(sidebarsOpenClass);
+
           that.#$sidebars.trigger('omnipediaSidebarsMenuClose', that);
+
         }
 
       });

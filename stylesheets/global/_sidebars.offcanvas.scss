@@ -52,7 +52,8 @@ $shadow-on-dark:
     transform: translateX(var(--offcanvas-sidebars-hidden-translate-x));
 
     &:target,
-    &:focus-within {
+    &:focus-within,
+    &--open {
       transform: translateX(0);
     }
 
@@ -69,7 +70,8 @@ $shadow-on-dark:
     // These are used when transitioning into view, i.e. is opening. The panel
     // comes in at full speed and decelerates to a stop.
     &:target,
-    &:focus-within {
+    &:focus-within,
+    &--open {
       transition-duration:        0.3s;
       transition-timing-function: motion.$easing-decelerate;
     }
@@ -141,6 +143,7 @@ $shadow-on-dark:
     }
 
     &:target::after,
+    &--open::after,
     &:target ~ &__closed-target,
     &:target ~ &__closed-anchor,
     &:focus-within::after,
