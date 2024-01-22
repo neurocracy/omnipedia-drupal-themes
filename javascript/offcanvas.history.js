@@ -31,7 +31,12 @@ AmbientImpact.addComponent('OmnipediaSiteThemeOffcanvasHistory', function(
 
       $(this).on(`openOffcanvas.${eventNamespace}`, function(event) {
 
-        let panel = event.target;
+        /**
+         * The off-canvas panel element.
+         *
+         * @type {HTMLElement}
+         */
+        const panel = event.target;
 
         history.pushState({offcanvasPanel: 'pushed'}, document.title);
 
