@@ -175,6 +175,34 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebars', function(sidebars, $) {
 
       this.#$sidebars.trigger(constructedEvent, [this]);
 
+      /**
+       * Reference to the current instance.
+       *
+       * @type {Sidebars}
+       */
+      const that = this;
+
+      // Note that the responsive style property will not have updated yet at
+      // this point, so we have to trigger an update and wait for it to
+      // complete to get the current value.
+      this.#responsiveStyleProperty.update().then(function() {
+
+        // If the sidebars are off-canvas and hash matches when we construct,
+        // add the open class and trigger the open event.
+
+        if (!(
+          that.isOffCanvas() === true &&
+          that.#hashMatcher.matches() === true
+        )) {
+          return;
+        }
+
+        that.#$sidebars.addClass(sidebarsOpenClass);
+
+        that.#$sidebars.trigger('omnipediaSidebarsMenuOpen', that);
+
+      });
+
     }
 
     /**
