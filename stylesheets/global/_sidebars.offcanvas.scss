@@ -57,6 +57,16 @@ $shadow-on-dark:
       transform: translateX(0);
     }
 
+    // This prevents the menu opening right before behaviours detach when
+    // navigating backwards via Turbo back to a different URL that also had the
+    // menu open with the hash in that URL. Without this, the menu would open,
+    // close, then open again quickly.
+    @include selector.root-conditions((
+      '[data-turbo-visit-direction="back"]',
+    ), 'html') {
+      transform: translateX(var(--offcanvas-sidebars-hidden-translate-x));
+    }
+
     transition-property: transform, opacity, visibility;
 
     // These are used when transitioning out of view, i.e. is closing. The panel
