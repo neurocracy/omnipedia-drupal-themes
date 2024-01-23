@@ -227,7 +227,18 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebars', function(sidebars, $) {
 
       this.#$sidebars.trigger(destroyedEvent, [this]);
 
-      return Promise.resolve();
+      /**
+       * Reference to the current instance.
+       *
+       * @type {Sidebars}
+       */
+      const that = this;
+
+      return fastdom.mutate(function() {
+
+        that.#$sidebars.removeClass(sidebarsOpenClass);
+
+      })
 
     }
 
