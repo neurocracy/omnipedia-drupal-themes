@@ -115,6 +115,20 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsOverlay', function(
           menuClosedAnchorDisabledClass,
         );
 
+      }).then(function() {
+
+        // If the sidebars are off-canvas and are open when we construct, show
+        // the overlay as the non-JavaScript overlay will now be hidden.
+
+        if (!(
+          that.#sidebars.isOffCanvas() === true &&
+          that.#sidebars.isOpen() === true
+        )) {
+          return;
+        }
+
+        that.#overlay.show();
+
       });
 
     }
