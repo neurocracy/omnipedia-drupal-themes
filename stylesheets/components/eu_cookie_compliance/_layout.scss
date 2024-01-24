@@ -24,6 +24,30 @@
   }
 }
 
+// Note the use of the ID the module uses; this is so we can catch it if our
+// JavaScript is delayed in attaching to avoid a flash of unstyled pop-up.
+#sliding-popup {
+
+  // This applies a delayed animation to fade in the pop-up when it's first
+  // inserted into the DOM to avoid it briefly peeking along the bottom. This
+  // will become unnecessary if/when the pop-up is refactored to use CSS
+  // transforms and transitions/animations.
+  animation-name:             eu-cookie-compliance-popup-consented-reveal;
+  animation-duration:         200ms;
+  animation-timing-function:  linear;
+  animation-fill-mode:        backwards;
+  animation-delay:            500ms;
+
+  // If the user has not yet consented to anything, don't apply the animation so
+  // that the JavaScript can slide the panel into view without it fading in.
+  body.eu-cookie-compliance-status-null & {
+    animation-name:     none;
+    animation-delay:    0;
+    animation-duration: 0;
+  }
+
+}
+
 .eu-cookie-compliance-popup {
 
   $self: &;
@@ -59,24 +83,6 @@
   bottom: 0;
 
   max-width: none;
-
-  // This applies a delayed animation to fade in the pop-up when it's first
-  // inserted into the DOM to avoid it briefly peeking along the bottom. This
-  // will become unnecessary if/when the pop-up is refactored to use CSS
-  // transforms and transitions/animations.
-  animation-name:             eu-cookie-compliance-popup-consented-reveal;
-  animation-duration:         200ms;
-  animation-timing-function:  linear;
-  animation-fill-mode:        backwards;
-  animation-delay:            500ms;
-
-  // If the user has not yet consented to anything, don't apply the animation so
-  // that the JavaScript can slide the panel into view without it fading in.
-  body.eu-cookie-compliance-status-null & {
-    animation-name:     none;
-    animation-delay:    0;
-    animation-duration: 0;
-  }
 
   opacity: 0;
 
