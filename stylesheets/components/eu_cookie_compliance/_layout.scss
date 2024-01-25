@@ -40,10 +40,11 @@
 
   // If the user has not yet consented to anything, don't apply the animation so
   // that the JavaScript can slide the panel into view without it fading in.
+  // Note that setting animation-name to none and/or animation-duration to 0ms
+  // will cause the animation to not play at all and the pop-up will appear
+  // instantly, so those should be avoided.
   body.eu-cookie-compliance-status-null & {
-    animation-name:     none;
-    animation-delay:    0;
-    animation-duration: 0;
+    animation-delay: 0ms;
   }
 
 }
