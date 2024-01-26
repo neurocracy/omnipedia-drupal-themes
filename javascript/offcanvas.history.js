@@ -43,7 +43,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeOffcanvasHistory', function(
         $(window).one(`popstate.${eventNamespace}`, function(event) {
 
           /**
-           * Copy of the history state we're popping to.
+           * Copy of the history state we're popping to or null if no data.
            *
            * Since we're using history.replaceState(), we need to make sure we
            * don't accidentally delete any existing history state data that may
@@ -52,9 +52,13 @@ AmbientImpact.addComponent('OmnipediaSiteThemeOffcanvasHistory', function(
            * case we would end up with back and forward navigation only changing
            * the URL but no page changes.
            *
-           * @type {Object}
+           * @type {Object|null}
            */
           let state = event.originalEvent.state;
+
+          if (typeof state !== 'object') {
+            state = {};
+          }
 
           state.offcanvasPanel = 'popped';
 
