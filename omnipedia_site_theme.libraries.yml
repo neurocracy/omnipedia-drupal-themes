@@ -5,6 +5,13 @@ global-styling:
   dependencies:
     - ambientimpact_ux/component.material.ripple
 
+anchor_scroll:
+  js:
+    javascript/anchor_scroll.js: { attributes: { defer: true } }
+  dependencies:
+    - ambientimpact_core/ally.js
+    - ambientimpact_core/framework
+
 changes:
   css:
     theme:

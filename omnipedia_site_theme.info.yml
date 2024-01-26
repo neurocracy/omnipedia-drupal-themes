@@ -46,6 +46,7 @@ regions:
 
 libraries:
   - omnipedia_site_theme/global-styling
+  - omnipedia_site_theme/anchor_scroll
 
 libraries-override:
 
