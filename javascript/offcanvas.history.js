@@ -56,7 +56,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeOffcanvasHistory', function(
            */
           let state = event.originalEvent.state;
 
-          if (typeof state !== 'object') {
+          if (state === null) {
             state = {};
           }
 
