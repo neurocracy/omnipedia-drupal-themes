@@ -192,6 +192,15 @@ refreshless_ajax:
   dependencies:
     - ambientimpact_core/framework
 
+refreshless_turbo:
+  css:
+    theme:
+      stylesheets/components/turbo.css: {}
+  js:
+    javascript/refreshless_turbo.js: { attributes: { defer: true } }
+  dependencies:
+    - ambientimpact_core/framework
+
 search_form:
   css:
     theme:
@@ -218,8 +227,3 @@ site_branding:
   css:
     theme:
       stylesheets/blocks/site_branding.css: {}
-
-turbo:
-  css:
-    theme:
-      stylesheets/components/turbo.css: {}

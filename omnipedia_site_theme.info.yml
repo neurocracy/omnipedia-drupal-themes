@@ -109,10 +109,10 @@ libraries-extend:
     - omnipedia_site_theme/refreshless_ajax
 
   refreshless_turbo/gin_accent:
-    - omnipedia_site_theme/turbo
+    - omnipedia_site_theme/refreshless_turbo
 
   refreshless_turbo/refreshless:
-    - omnipedia_site_theme/turbo
+    - omnipedia_site_theme/refreshless_turbo
 
   system/maintenance:
     - omnipedia_site_theme/maintenance_page
