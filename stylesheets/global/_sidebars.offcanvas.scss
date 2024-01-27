@@ -156,6 +156,12 @@ $shadow-on-dark:
     &--open::after,
     &:target ~ &__closed-target,
     &:target ~ &__closed-anchor,
+    // Attempts to prevent the non-JavaScript overlay not appearing when leaving
+    // a page on a Turbo visit to another as it currently doesn't update :target
+    // because browsers don't provide an API to do this.
+    //
+    // @see https://github.com/neurocracy/drupal-omnipedia-site-theme/issues/19
+    &--open ~ &__closed-anchor:not(&__closed-anchor--disabled),
     &:focus-within::after,
     &:focus-within ~ &__closed-target,
     &:focus-within ~ &__closed-anchor {

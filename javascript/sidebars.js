@@ -234,11 +234,20 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebars', function(sidebars, $) {
        */
       const that = this;
 
+      // Don't remove the open class to prevent the problem of the
+      // non-JavaScript overlay not applying when doing a Turbo visit since
+      // that currently does not trigger the browser to evaluate whether there
+      // are changes to the :target selector matching or not matching.
+      //
+      // @todo Reinstate this if/when :target evaluation changes are implemented
+      //   in some way or browsers start to expose an API to do this.
+      //
+      // @see https://github.com/neurocracy/drupal-omnipedia-site-theme/issues/19
       return fastdom.mutate(function() {
 
-        that.#$sidebars.removeClass(sidebarsOpenClass);
+        // that.#$sidebars.removeClass(sidebarsOpenClass);
 
-      })
+      });
 
     }
 
