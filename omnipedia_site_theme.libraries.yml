@@ -218,6 +218,12 @@ site_branding:
   css:
     theme:
       stylesheets/blocks/site_branding.css: {}
+  js:
+    javascript/site_branding.js: { attributes: { defer: true } }
+  dependencies:
+    - ambientimpact_core/framework
+    - ambientimpact_ux/component.headroom
+    - omnipedia_site_theme/header
 
 turbo:
   css:

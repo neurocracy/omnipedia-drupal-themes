@@ -178,23 +178,41 @@
         var(--reveal-animation-delay), var(--pulse-animation-delay);
       animation-iteration-count:  1, infinite;
 
-      @include immerse.on-immerse {
-        @include breakpoint.on('<layout-with-both-sidebars') {
+      // When the header is in compact mode and gets unpinned and then pinned
+      // again by Headroom, we remove the reveal animation and reset the the
+      // shimmer animation so that it plays immediately. This allows the reveal
+      // to play once as normal if the header is visible when it's rendered,
+      // then using the shimmer as a sort of reveal on pin.
+      @include breakpoint.on('<layout-with-both-sidebars') {
+
+        header[role='banner'].headroom--unpinned-once.headroom--pinned & {
+
+          --pulse-animation-delay: calc(
+            (var(--headroom-duration) * 0.5) +
+            (var(--row, 0) - 1) * var(--stagger-interval)
+          );
+
+          animation-name:             site-logo-pulse;
+          animation-duration:         var(--pulse-animation-duration);
+          animation-fill-mode:        none;
+          animation-delay:            var(--pulse-animation-delay);
+          animation-iteration-count:  infinite;
+
+        }
+
+        header[role='banner'].headroom--unpinned & {
+
           animation-name: none;
+
         }
-        @include breakpoint.on('>=layout-with-both-sidebars') {
-          animation-play-state: paused;
-        }
+
+      }
+
+      @include immerse.on-immerse {
+        animation-play-state: paused;
       }
       @include overlay.on-overlay-active {
         animation-play-state: paused;
-      }
-      header[role='banner'].headroom--unpinned & {
-
-        @include breakpoint.on('<layout-with-both-sidebars') {
-          animation-name: none;
-        }
-
       }
 
       // Don't animate if the user indicates they prefer reduced motion.
