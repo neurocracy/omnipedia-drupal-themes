@@ -507,6 +507,5 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebars', function(sidebars, $) {
     }
   );
 
-
 });
 });
