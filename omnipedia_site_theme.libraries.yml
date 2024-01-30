@@ -138,6 +138,11 @@ menu:
     theme:
       stylesheets/components/menu.css: {}
 
+offcanvas:
+  css:
+    theme:
+      stylesheets/components/offcanvas.css: {}
+
 offcanvas_immerse:
   js:
     javascript/offcanvas.immerse.js: { attributes: { defer: true } }
