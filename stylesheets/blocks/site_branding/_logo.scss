@@ -182,10 +182,13 @@
       // again by Headroom, we remove the reveal animation and reset the the
       // shimmer animation so that it plays immediately. This allows the reveal
       // to play once as normal if the header is visible when it's rendered,
-      // then using the shimmer as a sort of reveal on pin.
+      // then using the shimmer as a sort of reveal on pin. This also triggers
+      // when the header has been hidden at least once by an immerse event and
+      // is shown again.
       @include breakpoint.on('<layout-with-both-sidebars') {
 
-        header[role='banner'].headroom--unpinned-once.headroom--pinned & {
+        header[role='banner'].headroom--unpinned-once.headroom--pinned &,
+        header[role='banner'].header-immersed-once.headroom--pinned & {
 
           --pulse-animation-delay: calc(
             (var(--headroom-duration) * 0.5) +
@@ -200,10 +203,17 @@
 
         }
 
+        // Removes all animations so that they immediately start from their
+        // starting keyframe when applied again once the header is pinned.
         header[role='banner'].headroom--unpinned & {
-
           animation-name: none;
+        }
 
+        // Same as above but for immerse.
+        header[role='banner'].header-immersed-once.headroom--pinned & {
+          @include immerse.on-immerse {
+              animation-name: none;
+          }
         }
 
       }
