@@ -4,11 +4,22 @@
 
 @use 'sass/helpers/breakpoint';
 @use 'sass/helpers/z-index';
+@use 'photoswipe';
 
 // Branding and primary menu regions.
 header[role='banner'],
 .region-primary-menu {
   @include z-index.get(floating);
+}
+.region-primary-menu.headroom--not-top {
+  @include z-index.get(floating-below);
+}
+
+@include breakpoint.on('>=layout-with-both-sidebars') {
+  header[role='banner'],
+  .region-primary-menu {
+    @include z-index.get(floating-below);
+  }
 }
 
 .search-anchor {
@@ -32,6 +43,14 @@ header[role='banner'],
 // @see ../components/header/_overlay.scss
 main[role="main"]:not(.header-has-overlay)::before,
 .overlay--header {
+  @include z-index.get(floating-below);
+}
+
+// PhotoSwipe viewer (including thumbnail transition).
+//
+// This has to be a lower value than 'floating' since it's inserted near the
+// end of the <body> and thus would always be above
+.#{photoswipe.$photoswipe-root-class} {
   @include z-index.get(floating-below);
 }
 
