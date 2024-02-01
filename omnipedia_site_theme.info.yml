@@ -63,6 +63,9 @@ libraries-extend:
     - omnipedia_site_theme/offcanvas_history
     - omnipedia_site_theme/offcanvas_immerse
 
+  ambientimpact_ux/component.tooltip:
+    - omnipedia_site_theme/tooltip
+
   classy/base:
     - omnipedia_site_theme/menu
 

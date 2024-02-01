@@ -230,6 +230,11 @@ site_branding:
     - ambientimpact_ux/component.headroom
     - omnipedia_site_theme/header
 
+tooltip:
+  css:
+    theme:
+      stylesheets/components/tooltip.css: {}
+
 turbo:
   css:
     theme:

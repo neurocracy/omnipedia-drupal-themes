@@ -1,0 +1,117 @@
+// -----------------------------------------------------------------------------
+//   Tooltip component
+// -----------------------------------------------------------------------------
+
+@use '../variables/colours'; // Configure colours.
+@use 'material.common/material.colour' as material-colour;
+@use 'material.common/material.panel' as material-panel;
+@use 'sass:color';
+@use 'sass/helpers/colour';
+
+.tippy-tooltip {
+
+  // This limits the properties to just those required for Tippy as it defaults
+  // to all which results in our gradient position being transitioned if/when
+  // the tooltip changes orientation.
+  transition-property: opacity, perspective, transform, visibility;
+
+}
+
+// This adds a faint background gradient on tooltips using the dark Material
+// theme to attempt to have the tooltip contrast better against a dark page or
+// parent element. The gradient always starts at the edge of the tooltip that
+// has the arrow pointing to its triggering element and fades away from that
+// edge into the background colour.
+.tippy-tooltip.material-dark-theme {
+
+  ///
+  /// Tooltip gradient base colour; derived from Material panel dark background.
+  ///
+  $gradient-colour: color.adjust(
+    material-panel.$background-colour-dark,
+    $lightness: 15%,
+  );
+
+  ///
+  /// Tooltip gradient start colour.
+  ///
+  /// This is the most pronounced part of the gradient right on the edge with
+  /// the arrow.
+  ///
+  --tooltip-gradient-start-colour: #{$gradient-colour};
+
+  ///
+  /// Tooltip gradient end colour.
+  ///
+  /// This is where it fades into the tooltip background.
+  ///
+  --tooltip-gradient-end-colour: #{color.adjust($gradient-colour, $alpha: -1)};
+
+  ///
+  /// Tooltip gradient distance when tooltips are to the left or right.
+  ///
+  --tooltip-gradient-distance-horizontal: 20vw;
+
+  ///
+  /// Tooltip gradient distance when tooltips are above or below.
+  ///
+  --tooltip-gradient-distance-vertical: 20vh;
+
+  background-repeat: no-repeat;
+
+  background-image: linear-gradient(2
+    to var(--tooltip-gradient-to-direction),
+    var(--tooltip-gradient-start-colour),
+    var(--tooltip-gradient-end-colour),
+  );
+
+  .tippy-roundarrow.tippy-roundarrow svg { // Specificity.
+    fill: var(--tooltip-gradient-start-colour);
+  }
+
+}
+
+.tippy-popper {
+
+  &[x-placement^='top'] .tippy-tooltip.material-dark-theme,
+  &[x-placement^='bottom'] .tippy-tooltip.material-dark-theme {
+    background-size: 100% var(--tooltip-gradient-distance-vertical);
+  }
+
+  &[x-placement^='left'] .tippy-tooltip.material-dark-theme,
+  &[x-placement^='right'] .tippy-tooltip.material-dark-theme {
+    background-size: var(--tooltip-gradient-distance-horizontal) 100%;
+  }
+
+  &[x-placement^='top'] .tippy-tooltip.material-dark-theme {
+
+    --tooltip-gradient-to-direction: top;
+
+    background-position: center bottom;
+
+  }
+
+  &[x-placement^='bottom'] .tippy-tooltip.material-dark-theme {
+
+    --tooltip-gradient-to-direction: bottom;
+
+    background-position: center top;
+
+  }
+
+  &[x-placement^='left'] .tippy-tooltip.material-dark-theme {
+
+    --tooltip-gradient-to-direction: left;
+
+    background-position: right center;
+
+  }
+  &[x-placement^='right'] .tippy-tooltip.material-dark-theme {
+
+    --tooltip-gradient-to-direction: right;
+
+    background-position: left center;
+
+  }
+
+}
