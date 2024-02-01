@@ -45,7 +45,7 @@
     @include colour.on-dark-scheme {
       background-image: linear-gradient(
         to bottom,
-        hsla(0, 0, 100%, 0),
+        hsla(0, 0%, 100%, 0),
         #{motion.$easing-accelerate},
         white,
       );
