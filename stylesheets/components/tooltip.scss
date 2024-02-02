@@ -8,6 +8,55 @@
 @use 'sass:color';
 @use 'sass/helpers/colour';
 
+///
+/// Tooltip gradient base colour; derived from Material panel dark background.
+///
+$gradient-colour-on-dark: color.adjust(
+  material-panel.$background-colour-dark-on-dark,
+  $lightness: 7%,
+);
+
+:root {
+
+  ///
+  /// Tooltip background colour.
+  ///
+  /// @todo Custom properties for all the things. Also correctly vary by light/
+  ///   dark mode and whether light on light, dark on dark, etc.
+  ///
+  --tooltip-background-colour: #{
+    material-panel.$background-colour-dark-on-dark
+  };
+
+  ///
+  /// Tooltip gradient start colour.
+  ///
+  /// This is the most pronounced part of the gradient right on the edge with
+  /// the arrow.
+  ///
+  --tooltip-gradient-start-colour: #{$gradient-colour-on-dark};
+
+  ///
+  /// Tooltip gradient end colour.
+  ///
+  /// This is where it fades into the tooltip background.
+  ///
+  --tooltip-gradient-end-colour: #{color.adjust(
+    $gradient-colour-on-dark, $alpha: -1,
+  )};
+
+  ///
+  /// Tooltip gradient distance when tooltips are to the left or right.
+  ///
+  --tooltip-gradient-distance-horizontal: 20vw;
+
+  ///
+  /// Tooltip gradient distance when tooltips are above or below.
+  ///
+  --tooltip-gradient-distance-vertical: 20vh;
+
+}
+
 .tippy-tooltip {
 
   // This limits the properties to just those required for Tippy as it defaults
@@ -24,49 +73,25 @@
 // edge into the background colour.
 .tippy-tooltip.material-dark-theme {
 
-  ///
-  /// Tooltip gradient base colour; derived from Material panel dark background.
-  ///
-  $gradient-colour: color.adjust(
-    material-panel.$background-colour-dark,
-    $lightness: 15%,
-  );
-
-  ///
-  /// Tooltip gradient start colour.
-  ///
-  /// This is the most pronounced part of the gradient right on the edge with
-  /// the arrow.
-  ///
-  --tooltip-gradient-start-colour: #{$gradient-colour};
-
-  ///
-  /// Tooltip gradient end colour.
-  ///
-  /// This is where it fades into the tooltip background.
-  ///
-  --tooltip-gradient-end-colour: #{color.adjust($gradient-colour, $alpha: -1)};
-
-  ///
-  /// Tooltip gradient distance when tooltips are to the left or right.
-  ///
-  --tooltip-gradient-distance-horizontal: 20vw;
-
-  ///
-  /// Tooltip gradient distance when tooltips are above or below.
-  ///
-  --tooltip-gradient-distance-vertical: 20vh;
-
   background-repeat: no-repeat;
 
-  background-image: linear-gradient(
-    to var(--tooltip-gradient-to-direction),
-    var(--tooltip-gradient-start-colour),
-    var(--tooltip-gradient-end-colour),
-  );
+  @include colour.on-dark-scheme {
 
-  .tippy-roundarrow.tippy-roundarrow svg { // Specificity.
-    fill: var(--tooltip-gradient-start-colour);
+    background-image: linear-gradient(
+      to var(--tooltip-gradient-to-direction),
+      var(--tooltip-gradient-start-colour),
+      var(--tooltip-gradient-end-colour),
+    );
+
+    .tippy-roundarrow.tippy-roundarrow svg { // Specificity.
+      fill: var(--tooltip-gradient-start-colour);
+    }
+
+  }
+
+  &:not([data-animatefill]),
+  .tippy-backdrop {
+    background-color: var(--tooltip-background-colour);
   }
 
 }
