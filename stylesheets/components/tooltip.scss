@@ -28,6 +28,14 @@ $gradient-colour-on-dark: color.adjust(
   $lightness: 7%,
 );
 
+///
+/// Tooltip stroke colour used along edge with arrow.
+///
+$stroke-colour-on-dark: color.adjust(
+  material-panel.$background-colour-dark-on-dark,
+  $lightness: 6%,
+);
+
 :root {
 
   ///
@@ -81,7 +89,7 @@ $gradient-colour-on-dark: color.adjust(
     ///
     /// Tooltip stroke colour to enhance edge with arrow contrast.
     ///
-    --tooltip-contrast-stroke-colour: hsl(0, 0%, 40%);
+    --tooltip-contrast-stroke-colour: #{$stroke-colour-on-dark};
 
   }
 
