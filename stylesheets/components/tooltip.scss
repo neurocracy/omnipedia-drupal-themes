@@ -21,6 +21,11 @@ $use-gradient: false;
 $use-stroke: true;
 
 ///
+/// Whether to compile tooltip styles with an exaggerated shadow in dark mode.
+///
+$use-exaggerated-shadow: true;
+
+///
 /// Tooltip gradient base colour; derived from Material panel dark background.
 ///
 $gradient-colour-on-dark: color.adjust(
@@ -90,6 +95,39 @@ $stroke-colour-on-dark: color.adjust(
     /// Tooltip stroke colour to enhance edge with arrow contrast.
     ///
     --tooltip-contrast-stroke-colour: #{$stroke-colour-on-dark};
+
+  }
+
+  @if ($use-exaggerated-shadow == true) {
+
+    ///
+    /// Tooltip exaggerated shadow blur radius.
+    ///
+    --tooltip-exaggerated-shadow-blur-radius: 0.3rem;
+
+    ///
+    /// Tooltip exaggerated shadow colour.
+    ///
+    --tooltip-exaggerated-shadow-colour: black;
+
+    ///
+    /// Tooltip exaggerated shadow offset when to left/right of trigger.
+    ///
+    --tooltip-exaggerated-shadow-offset-horizontal: -0.1rem;
+
+    ///
+    /// Tooltip exaggerated shadow offset when above/below trigger.
+    ///
+    --tooltip-exaggerated-shadow-offset-vertical: -0.4rem;
+
+    ///
+    /// Tooltip exaggerated shadow size.
+    ///
+    /// This is used as the shadow element height when along the top or bottom
+    /// edge of the tooltip. When the tooltip is along the left or right edge,
+    /// this is the width of the shadow element.
+    ///
+    --tooltip-exaggerated-shadow-size: 1rem;
 
   }
 
@@ -168,6 +206,65 @@ $stroke-colour-on-dark: color.adjust(
     &[x-placement^='left'] .tippy-tooltip.material-dark-theme,
     &[x-placement^='right'] .tippy-tooltip.material-dark-theme {
       background-size: var(--tooltip-gradient-distance-horizontal) 100%;
+    }
+
+  }
+
+  @if ($use-exaggerated-shadow == true) {
+
+    @include colour.on-dark-scheme {
+
+      @supports (filter: blur(var(--tooltip-exaggerated-shadow-blur-radius))) {
+
+        &::after {
+
+          content: '';
+
+          position: absolute;
+          z-index: -1;
+
+          filter: blur(var(--tooltip-exaggerated-shadow-blur-radius));
+
+          background-color: var(--tooltip-exaggerated-shadow-colour);
+
+        }
+
+        &[x-placement^='top']::after,
+        &[x-placement^='bottom']::after {
+
+          width:  100%;
+          height: var(--tooltip-exaggerated-shadow-size);
+
+        }
+
+        &[x-placement^='left']::after,
+        &[x-placement^='right']::after {
+
+          top: 0
+
+          width:  var(--tooltip-exaggerated-shadow-size);
+          height: 100%;
+
+        }
+
+        &[x-placement^='top']::after {
+          bottom: var(--tooltip-exaggerated-shadow-offset-vertical);
+        }
+
+        &[x-placement^='bottom']::after {
+          top: var(--tooltip-exaggerated-shadow-offset-vertical);
+        }
+
+        &[x-placement^='left']::after {
+          right: var(--tooltip-exaggerated-shadow-offset-horizontal);
+        }
+
+        &[x-placement^='right']::after {
+          left: var(--tooltip-exaggerated-shadow-offset-horizontal);
+        }
+
+      }
+
     }
 
   }
