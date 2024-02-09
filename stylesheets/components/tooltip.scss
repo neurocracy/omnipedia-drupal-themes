@@ -240,7 +240,7 @@ $stroke-colour-on-dark: color.adjust(
         &[x-placement^='left']::after,
         &[x-placement^='right']::after {
 
-          top: 0
+          top: 0;
 
           width:  var(--tooltip-exaggerated-shadow-size);
           height: 100%;
