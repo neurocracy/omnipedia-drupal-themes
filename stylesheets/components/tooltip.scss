@@ -41,6 +41,48 @@ $stroke-colour-on-dark: color.adjust(
   $lightness: 6%,
 );
 
+///
+/// Tooltip filter property value on dark backgrounds.
+///
+$filter-on-dark:
+  drop-shadow(material-shadow.filter-downward(
+    tooltip.$tooltip-shadow-depth
+  ))
+  drop-shadow(material-shadow.filter-ambient(
+    tooltip.$tooltip-shadow-depth
+  ));
+
+@if ($use-exaggerated-shadow == true) {
+
+  // On dark backgrounds, the more conservative shadow values used above will
+  // barely register perceptually so we need to be much more heavy-handed to
+  // highlight the edges of the tooltip against the content below it.
+  $filter-on-dark:
+    drop-shadow(material-shadow.filter-downward(2))
+    drop-shadow(material-shadow.filter-downward(3))
+    drop-shadow(material-shadow.filter-ambient(2))
+    drop-shadow(material-shadow.filter-ambient(3))
+    drop-shadow(material-shadow.filter-ambient(3))
+    drop-shadow(material-shadow.filter-ambient(4))
+    drop-shadow(material-shadow.filter-ambient(4))
+    drop-shadow(material-shadow.filter-ambient(5))
+    drop-shadow(material-shadow.filter-ambient(5));
+
+}
+
+@if ($use-stroke == true) {
+
+  // If a stroke should be used, prepend it to the filter list so that it's
+  // layered on top of the shadows and not below them in the stacking order.
+  $filter-on-dark: drop-shadow(
+    var(--tooltip-contrast-stroke-offset-x, 0)
+    var(--tooltip-contrast-stroke-offset-y, 0)
+    var(--tooltip-contrast-stroke-blur-radius, 0)
+    var(--tooltip-contrast-stroke-colour)
+  ) $filter-on-dark;
+
+}
+
 :root {
 
   ///
@@ -98,39 +140,6 @@ $stroke-colour-on-dark: color.adjust(
 
   }
 
-  @if ($use-exaggerated-shadow == true) {
-
-    ///
-    /// Tooltip exaggerated shadow blur radius.
-    ///
-    --tooltip-exaggerated-shadow-blur-radius: 0.3rem;
-
-    ///
-    /// Tooltip exaggerated shadow colour.
-    ///
-    --tooltip-exaggerated-shadow-colour: black;
-
-    ///
-    /// Tooltip exaggerated shadow offset when to left/right of trigger.
-    ///
-    --tooltip-exaggerated-shadow-offset-horizontal: -0.1rem;
-
-    ///
-    /// Tooltip exaggerated shadow offset when above/below trigger.
-    ///
-    --tooltip-exaggerated-shadow-offset-vertical: -0.4rem;
-
-    ///
-    /// Tooltip exaggerated shadow size.
-    ///
-    /// This is used as the shadow element height when along the top or bottom
-    /// edge of the tooltip. When the tooltip is along the left or right edge,
-    /// this is the width of the shadow element.
-    ///
-    --tooltip-exaggerated-shadow-size: 1rem;
-
-  }
-
 }
 
 .tippy-tooltip {
@@ -151,23 +160,7 @@ $stroke-colour-on-dark: color.adjust(
 
   @include colour.on-dark-scheme {
 
-    @if ($use-stroke == true) {
-
-      filter:
-        drop-shadow(
-          var(--tooltip-contrast-stroke-offset-x, 0)
-          var(--tooltip-contrast-stroke-offset-y, 0)
-          var(--tooltip-contrast-stroke-blur-radius, 0)
-          var(--tooltip-contrast-stroke-colour)
-        )
-        drop-shadow(material-shadow.filter-downward(
-          tooltip.$tooltip-shadow-depth
-        ))
-        drop-shadow(material-shadow.filter-ambient(
-          tooltip.$tooltip-shadow-depth
-        ));
-
-    }
+    filter: $filter-on-dark;
 
     @if ($use-gradient == true) {
 
@@ -206,65 +199,6 @@ $stroke-colour-on-dark: color.adjust(
     &[x-placement^='left'] .tippy-tooltip.material-dark-theme,
     &[x-placement^='right'] .tippy-tooltip.material-dark-theme {
       background-size: var(--tooltip-gradient-distance-horizontal) 100%;
-    }
-
-  }
-
-  @if ($use-exaggerated-shadow == true) {
-
-    @include colour.on-dark-scheme {
-
-      @supports (filter: blur(var(--tooltip-exaggerated-shadow-blur-radius))) {
-
-        &::after {
-
-          content: '';
-
-          position: absolute;
-          z-index: -1;
-
-          filter: blur(var(--tooltip-exaggerated-shadow-blur-radius));
-
-          background-color: var(--tooltip-exaggerated-shadow-colour);
-
-        }
-
-        &[x-placement^='top']::after,
-        &[x-placement^='bottom']::after {
-
-          width:  100%;
-          height: var(--tooltip-exaggerated-shadow-size);
-
-        }
-
-        &[x-placement^='left']::after,
-        &[x-placement^='right']::after {
-
-          top: 0;
-
-          width:  var(--tooltip-exaggerated-shadow-size);
-          height: 100%;
-
-        }
-
-        &[x-placement^='top']::after {
-          bottom: var(--tooltip-exaggerated-shadow-offset-vertical);
-        }
-
-        &[x-placement^='bottom']::after {
-          top: var(--tooltip-exaggerated-shadow-offset-vertical);
-        }
-
-        &[x-placement^='left']::after {
-          right: var(--tooltip-exaggerated-shadow-offset-horizontal);
-        }
-
-        &[x-placement^='right']::after {
-          left: var(--tooltip-exaggerated-shadow-offset-horizontal);
-        }
-
-      }
-
     }
 
   }
