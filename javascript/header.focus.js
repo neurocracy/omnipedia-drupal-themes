@@ -43,14 +43,14 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderFocus', function(
    * @param {HTMLElement} element
    *
    * @return {Boolean}
-   *   True if the provided element is within the search form or the header is
-   *   not in compact mode. False otherwise.
+   *   True if the provided element is within the search form, is the form
+   *   itself, or the header is not in compact mode. False otherwise.
    */
   function shouldIgnoreFocusChange(element) {
 
     return (
-      // Is the element within the search form?
-      headerElements.getSearchForm().find(element).length > 0 ||
+      // Is the element within the search form or the form itself?
+      $(element).closest(headerElements.getSearchForm()).length > 0 ||
       // Is the header not in compact mode?
       !headerState.isCompact()
     );
