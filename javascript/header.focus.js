@@ -116,7 +116,13 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderFocus', function(
             return;
           }
 
-          headerState.hideSearch();
+          // Hide is commented out as it currently causes search to not work:
+          //
+          // @see https://github.com/neurocracy/drupal-omnipedia-site-theme/issues/22
+          //
+          // @todo Refactor and fix this.
+
+          // headerState.hideSearch();
 
           headerElements.getSearchTarget()
             .removeClass(searchTargetFormFocusClass);

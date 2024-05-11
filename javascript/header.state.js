@@ -155,6 +155,25 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
           $searchForm.trigger('omnipediaSearchInactive');
         }
 
+      })
+      // Click handler to close the search if compact and open as a partial
+      // band-aid for:
+      //
+      // @see https://github.com/neurocracy/drupal-omnipedia-site-theme/issues/22
+      .on(`click.${eventNamespace}`, function(event) {
+
+        if (
+          !headerState.isCompact() ||
+          !headerState.isSearchOpen() ||
+          // This ensures that any clicks on or inside of the search form or
+          // search anchor do not close the search.
+          $(event.target).closest($searchForm.add($searchAnchor)).length > 0
+        ) {
+          return;
+        }
+
+        headerState.hideSearch();
+
       });
 
       /**
@@ -173,7 +192,10 @@ AmbientImpact.addComponent('OmnipediaSiteThemeHeaderState', function(
     },
     function(context, settings, trigger) {
 
-      $(document).off('hashMatchChange.' + eventNamespace);
+      $(document).off([
+        `click.${eventNamespace}`,
+        `hashMatchChange.${eventNamespace}`,
+      ].join(' '));
 
       /**
        * The search anchor jQuery collection.
