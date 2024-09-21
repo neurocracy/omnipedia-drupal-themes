@@ -18,7 +18,7 @@
       // Takes viewport displacement into account if available. Note that the
       // fallback value must have a unit defined or the calc() won't work when
       // the custom property is not available.
-      top: calc(var(--displace-top, 0em) + #{layout-config.$gap});
+      top: calc(var(--drupal-displace-offset-top, 0em) + #{layout-config.$gap});
 
     }
 

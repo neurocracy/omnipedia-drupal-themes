@@ -38,7 +38,7 @@ $stacking-order: shadow, background, border, content;
 ///
 @mixin headroom-top {
   // Note that we have to specify a unit rather than just "0" for for calc().
-  top: calc(var(--displace-top, 0em) + #{layout-config.$gutter}) !important;
+  top: calc(var(--drupal-displace-offset-top, 0em) + #{layout-config.$gutter}) !important;
 }
 
 :root {
@@ -91,7 +91,7 @@ header[role='banner'] .region-header {
 .region-primary-menu {
   @include layout-sidebars.on-sidebar-beside-content(both) {
     // Same as above, but on wide screens.
-    top: calc(var(--displace-top, 0em) + #{layout-config.$gap}) !important;
+    top: calc(var(--drupal-displace-offset-top, 0em) + #{layout-config.$gap}) !important;
 
     // Because Chrome is being dumb with rounding errors on the right edge.
     width: calc(100% + #{general-variables.$divider-thickness});
@@ -235,7 +235,7 @@ header[role='banner'] {
   // button and form. This works together with the grid-*, align-*, and
   // justify-* properties set on this element and the container overall
   // font-size.
-  top: calc(var(--displace-top, 0em) + #{layout-config.$gutter} + 0.3em);
+  top: calc(var(--drupal-displace-offset-top, 0em) + #{layout-config.$gutter} + 0.3em);
 
   grid-area:    menu-primary;
   align-self:   center;
