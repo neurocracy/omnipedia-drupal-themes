@@ -12,7 +12,9 @@ const { default: baseThemeImporter } = await import(
 const { default: componentPaths } = await import(
   'drupal-ambientimpact-core/componentPaths',
 );
-const { default: easingGradients } = await import('postcss-easing-gradients');
+const { default: easingGradients } = await import(
+  '@neurocracy/postcss-easing-gradients',
+);
 const { default: FaviconsWebpackPlugin } = await import(
   'favicons-webpack-plugin',
 );
