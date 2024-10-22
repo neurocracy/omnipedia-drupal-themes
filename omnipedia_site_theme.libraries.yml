@@ -239,3 +239,7 @@ turbo:
   css:
     theme:
       stylesheets/components/turbo.css: {}
+  js:
+    javascript/refreshless_turbo.js: { attributes: { defer: true } }
+  dependencies:
+    - ambientimpact_core/framework
