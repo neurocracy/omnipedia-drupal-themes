@@ -435,11 +435,31 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebars', function(sidebars, $) {
     /**
      * Whether the sidebars are currently off-canvas, i.e. on a narrow screen.
      *
+     * Note that the state can lag behind the actual styles slightly due to
+     * async reads and writes to the DOM so if it's crucial that this value is
+     * completely up to date, you must call this.isOffCanvas() beforehand and
+     * wait for that to resolve before calling this method.
+     *
      * @return {Boolean}
+     *
+     * @see this.updateOffCanvas()
      */
     isOffCanvas() {
 
       return this.#responsiveStyleProperty.getValue() === 'true';
+
+    }
+
+    /**
+     * Update the off-canvas state.
+     *
+     * This should be used sparingly because it forces a read from the DOM.
+     *
+     * @see this.isOffCanvas()
+     */
+    async updateOffCanvas() {
+
+      await this.#responsiveStyleProperty.update();
 
     }
 
