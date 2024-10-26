@@ -115,7 +115,9 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsOverlay', function(
           menuClosedAnchorDisabledClass,
         );
 
-      }).then(function() {
+      }).then(async function() {
+
+        await that.#sidebars.updateOffCanvas();
 
         // If the sidebars are off-canvas and are open when we construct, show
         // the overlay as the non-JavaScript overlay will now be hidden.
