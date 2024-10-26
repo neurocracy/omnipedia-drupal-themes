@@ -28,7 +28,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsKeyboard', function(
   class SidebarsKeyboard {
 
     /**
-     * The Sidebars instance we're providing an overlay for.
+     * The Sidebars instance we're attaching to.
      *
      * @type {Sidebars}
      */
