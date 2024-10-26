@@ -42,6 +42,7 @@
     "webpack-remove-empty-scripts": "^1.0.1"
   },
   "dependencies": {
+    "@egjs/hammerjs": "^2.0.17",
     "@fontsource/exo-2": "^4.5.10",
     "drupal-ambientimpact-base": "workspace:^6",
     "drupal-ambientimpact-core": "workspace:^2",
@@ -53,6 +54,7 @@
     "js-cookie": "^3.0.5"
   },
   "vendorize": [
+    "@egjs/hammerjs",
     "@fontsource/exo-2",
     "js-cookie"
   ]

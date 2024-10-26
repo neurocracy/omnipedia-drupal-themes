@@ -68,6 +68,16 @@ form_radios:
     theme:
       stylesheets/components/form_radios.css: {}
 
+hammerjs:
+  remote: https://github.com/naver/hammer.js
+  version: "2.0.17"
+  license:
+    name: MIT
+    url: https://github.com/naver/hammer.js/blob/2.0.17/LICENSE.md
+    gpl-compatible: true
+  js:
+    vendor/@egjs/hammerjs/dist/hammer.min.js: { minified: true }
+
 header:
   css:
     theme:
@@ -206,6 +216,7 @@ sidebars:
   js:
     javascript/sidebars.js: { attributes: { defer: true } }
     javascript/sidebars.focus.js: { attributes: { defer: true } }
+    javascript/sidebars.gestures.js: { attributes: { defer: true } }
     javascript/sidebars.keyboard.js: { attributes: { defer: true } }
     javascript/sidebars.overlay.js: { attributes: { defer: true } }
   dependencies:
@@ -218,6 +229,7 @@ sidebars:
     - ambientimpact_ux/component.pointer_focus_hide
     - ambientimpact_ux/component.responsive_style_property
     - ambientimpact_ux/component.scrollbar_gutter
+    - omnipedia_site_theme/hammerjs
 
 site_branding:
   css:
