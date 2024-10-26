@@ -485,7 +485,17 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebars', function(sidebars, $) {
      */
     open() {
 
-      this.#hashMatcher.setActive();
+      // Pin (show) the Headroom element containing the open link to prevent
+      // unexpected scrolling when we invoke the click() as it may be off
+      // screen at this point if the Headroom element was unpinned.
+      this.#$menuOpen.closest('.headroom').prop('headroom').pin();
+
+      // Perform a click using the DOM method (not the jQuery method) so that
+      // this triggers everything applicable to create a new history state.
+      // This is especially useful with RefreshLess as calling
+      // this.#hashMatcher.setActive(); doesn't seem to create a Hotwire Turbo
+      // history state as expected.
+      this.#$menuOpen[0].click();
 
     };
 
