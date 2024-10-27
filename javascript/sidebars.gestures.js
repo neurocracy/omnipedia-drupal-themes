@@ -138,6 +138,22 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsGestures', function(
         that.destroy();
       });
 
+      // Disables the Hammer instance when entering immerse, i.e. PhotoSwipe or
+      // off-canvas panel opens, and re-enables when exiting immerse. This is
+      // necessary to prevent errors resulting in broken states, which is
+      // especially bad with PhotoSwipe.
+      $(document.documentElement).on(`immerseEnter.${eventNamespace}`, function(
+        event,
+      ) {
+
+        that.#hammer.set({enable: false});
+
+      }).on(`immerseExit.${eventNamespace}`, function(event) {
+
+        that.#hammer.set({enable: true});
+
+      });
+
     }
 
     /**
@@ -152,6 +168,11 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsGestures', function(
         `omnipediaSidebarsMenuClose.${eventNamespace}`,
         // Don't unbind the one-off OmnipediaSidebarsDestroyed event handler as
         // that auto destroys this instance.
+      ].join(' '));
+
+      $(document.documentElement).off([
+        `immerseEnter.${eventNamespace}`,
+        `immerseExit.${eventNamespace}`,
       ].join(' '));
 
       // We call this.#hammer.destroy() so we probably don't need to unbind from
