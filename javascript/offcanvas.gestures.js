@@ -48,7 +48,11 @@ AmbientImpact.addComponent('OmnipediaSiteThemeOffcanvasGestures', function(
         const panel = event.target;
 
         $(behaviourTarget).prop(hammerProp, new Hammer(
-          document.documentElement,
+          // Note that we're specifically targetting the panel content element
+          // because for whatever reason, Chrome does not register the swipe if
+          // we set this to the root panel element, nor if we set this to the
+          // <html> element.
+          $(panel).find('.offcanvas-panel__content')[0],
           {
             cssProps: {
               // Ensure text is still selectable; by default, Hammer sets this
@@ -85,7 +89,9 @@ AmbientImpact.addComponent('OmnipediaSiteThemeOffcanvasGestures', function(
         // Hammer doesn't remove this when destroyed.
         //
         // @see https://github.com/hammerjs/hammer.js/pull/965
-        $(document.documentElement).css('touch-action', '');
+        $(
+          $(behaviourTarget).prop(hammerProp).input.element,
+        ).css('touch-action', '');
 
       });
 
@@ -99,12 +105,14 @@ AmbientImpact.addComponent('OmnipediaSiteThemeOffcanvasGestures', function(
 
       if (typeof $(this).prop(hammerProp) !== 'undefined') {
 
-        $(this).prop(hammerProp).destroy();
-
         // Hammer doesn't remove this when destroyed.
         //
         // @see https://github.com/hammerjs/hammer.js/pull/965
-        $(document.documentElement).css('touch-action', '');
+        $(
+          $(behaviourTarget).prop(hammerProp).input.element,
+        ).css('touch-action', '');
+
+        $(this).prop(hammerProp).destroy();
 
       }
 
