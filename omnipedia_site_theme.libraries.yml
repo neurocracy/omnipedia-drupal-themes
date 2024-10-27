@@ -160,6 +160,13 @@ offcanvas_immerse:
     - ambientimpact_core/framework
     - ambientimpact_ux/component.immerse
 
+offcanvas_gestures:
+  js:
+    javascript/offcanvas.gestures.js: { attributes: { defer: true } }
+  dependencies:
+    - ambientimpact_core/framework
+    - omnipedia_site_theme/hammerjs
+
 offcanvas_history:
   js:
     javascript/offcanvas.history.js: { attributes: { defer: true } }

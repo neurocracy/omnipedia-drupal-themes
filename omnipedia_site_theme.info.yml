@@ -60,6 +60,7 @@ libraries-extend:
 
   ambientimpact_ux/component.offcanvas:
     - omnipedia_site_theme/offcanvas
+    - omnipedia_site_theme/offcanvas_gestures
     - omnipedia_site_theme/offcanvas_history
     - omnipedia_site_theme/offcanvas_immerse
 
