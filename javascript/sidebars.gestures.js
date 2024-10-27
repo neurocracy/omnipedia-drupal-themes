@@ -93,7 +93,7 @@ AmbientImpact.addComponent('OmnipediaSiteThemeSidebarsGestures', function(
       // Hammer doesn't remove this when destroyed.
       //
       // @see https://github.com/hammerjs/hammer.js/pull/965
-      $(document.documentElement).css('touch-action', '');
+      $(this.#hammer.input.element).css('touch-action', '');
 
       return Promise.resolve();
 
