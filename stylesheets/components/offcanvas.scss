@@ -7,10 +7,24 @@
 // the page content under the overlay. This is only applied in dark mode when
 // using the dark panel theme, as that theme has a pure black background.
 
+@use '../variables/colours'; // Configure colours.
+@use '../variables/general' as general-variables;
+@use 'sass:color';
 @use 'sass/helpers/colour';
 @use 'sass/variables/motion';
 
 .offcanvas-panel {
+
+  &--bottom#{&}--theme-dark#{&}--modal {
+
+    @include colour.on-dark-scheme {
+
+      border-top: general-variables.$divider-thickness solid
+        color.adjust(colours.$divider-on-dark, $lightness: -10%);
+
+    }
+
+  }
 
   &--bottom::before {
 
