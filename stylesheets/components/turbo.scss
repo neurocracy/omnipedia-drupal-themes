@@ -15,13 +15,13 @@
 // display.
 :root[data-gin-accent][data-gin-accent] {
 
-  --turbo-progress-colour: #{color.scale(
+  --refreshless-progress-bar-colour: #{color.scale(
     material-colour.$primary, $lightness: 35%, $saturation: 90%
   )};
 
   @include colour.on-dark-scheme {
 
-    --turbo-progress-colour: #{color.scale(
+    --refreshless-progress-bar-colour: #{color.scale(
       material-colour.$primary, $lightness: 25%, $saturation: 80%
     )};
 
