@@ -3,6 +3,7 @@
 // -----------------------------------------------------------------------------
 
 @use '../variables/colours'; // Configure colours.
+@use '../variables/general' as general-variables;
 @use 'material.common/material.colour' as material-colour;
 @use 'material.common/material.panel' as material-panel;
 @use 'material.common/material.shadow' as material-shadow;
@@ -18,7 +19,12 @@ $use-gradient: false;
 ///
 /// Whether to compile tooltip styles with a stroke along edge with arrow.
 ///
-$use-stroke: true;
+$use-stroke: false;
+
+///
+/// Whether to use a border around the entire tooltip, including the arrow.
+///
+$use-border: true;
 
 ///
 /// Whether to compile tooltip styles with an exaggerated shadow in dark mode.
@@ -151,17 +157,38 @@ $filter-on-dark:
 
 }
 
-// This adds a faint background gradient on tooltips using the dark Material
-// theme to attempt to have the tooltip contrast better against a dark page or
-// parent element. The gradient always starts at the edge of the tooltip that
-// has the arrow pointing to its triggering element and fades away from that
-// edge into the background colour.
 .tippy-tooltip.material-dark-theme.material-dark-theme { // Specificity.
 
   @include colour.on-dark-scheme {
 
+    @if ($use-border == true) {
+
+      --tooltip-background-colour: #{color.mix(
+        colour.$background-dark, colour.$foreground-on-dark, 95%,
+      )};
+
+      --tooltip-border-thickness: #{general-variables.$divider-thickness};
+
+      --tooltip-border-colour: #{colours.$divider-on-dark};
+
+      border: var(--tooltip-border-thickness) solid
+        var(--tooltip-border-colour);
+
+      .tippy-roundarrow.tippy-roundarrow svg { // Specificity.
+        stroke:       var(--tooltip-border-colour);
+        stroke-width: var(--tooltip-border-thickness);
+        fill:         var(--tooltip-background-colour);
+      }
+
+    }
+
     filter: $filter-on-dark;
 
+    // This adds a faint background gradient on tooltips using the dark Material
+    // theme to attempt to have the tooltip contrast better against a dark page
+    // or parent element. The gradient always starts at the edge of the tooltip
+    // that has the arrow pointing to its triggering element and fades away
+    // from that edge into the background colour.
     @if ($use-gradient == true) {
 
       background-repeat: no-repeat;
@@ -199,6 +226,36 @@ $filter-on-dark:
     &[x-placement^='left'] .tippy-tooltip.material-dark-theme,
     &[x-placement^='right'] .tippy-tooltip.material-dark-theme {
       background-size: var(--tooltip-gradient-distance-horizontal) 100%;
+    }
+
+  }
+
+  @if ($use-border == true) {
+
+    &[x-placement^='top'] .tippy-tooltip.material-dark-theme .tippy-roundarrow {
+      clip-path: polygon(0 var(--tooltip-border-thickness), 100% var(--tooltip-border-thickness), 100% 100%, 0% 100%);
+    }
+    &[x-placement^='bottom'] .tippy-tooltip.material-dark-theme .tippy-roundarrow {
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--tooltip-border-thickness)), 0% calc(100% - var(--tooltip-border-thickness)));
+    }
+    // @todo Replace all the magic numbers with more future proof values. These
+    //   hard coded like this right now because the percentage values no longer
+    //   match the <svg> itself as it's rotated 90 degrees in both these cases.
+    &[x-placement^='left'] .tippy-tooltip.material-dark-theme .tippy-roundarrow {
+      clip-path: polygon(
+        calc(10px - var(--tooltip-border-thickness)) -10px,
+        24px -10px,
+        24px 14px,
+        calc(10px - var(--tooltip-border-thickness)) 14px
+      );
+    }
+    &[x-placement^='right'] .tippy-tooltip.material-dark-theme .tippy-roundarrow {
+      clip-path: polygon(
+        0 -10px,
+        calc(14px + var(--tooltip-border-thickness)) -10px,
+        calc(14px + var(--tooltip-border-thickness)) 14px,
+        0 14px
+      );
     }
 
   }
