@@ -208,6 +208,17 @@ references:
     theme:
       stylesheets/components/references.css: {}
 
+refreshless:
+  css:
+    theme:
+      stylesheets/components/refreshless.css: {}
+  js:
+    javascript/refreshless.page_transition.js: { attributes: { defer: true } }
+  dependencies:
+    - ambientimpact_core/component.fastdom
+    - ambientimpact_core/framework
+    - core/once
+
 refreshless_ajax:
   js:
     javascript/refreshless_ajax.js: { attributes: { defer: true } }
@@ -253,12 +264,3 @@ tooltip:
   css:
     theme:
       stylesheets/components/tooltip.css: {}
-
-turbo:
-  css:
-    theme:
-      stylesheets/components/turbo.css: {}
-  js:
-    javascript/refreshless_turbo.js: { attributes: { defer: true } }
-  dependencies:
-    - ambientimpact_core/framework

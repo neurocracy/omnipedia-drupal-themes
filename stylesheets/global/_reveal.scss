@@ -67,8 +67,7 @@ $site-reveal-overlay-animation-delay: 0.3s;
     pointer-events: none;
     opacity: 0;
 
-    // Default transition in animation; plays on a full load and triggered
-    // during a RefreshLess visit.
+    // Default animation during a full load, i.e. not a RefreshLess load.
     animation-name:             reveal-overlay;
     animation-duration:         $reveal-overlay-animation-duration;
     animation-timing-function:  linear;
@@ -76,22 +75,10 @@ $site-reveal-overlay-animation-delay: 0.3s;
     animation-delay:            $site-reveal-overlay-animation-delay;
     animation-iteration-count:  1;
 
-    // Resets the animation-name and animation-delay in preparation for
-    // transitioning out; this is necessary so the browser plays the animation
-    // again but in reverse. The removal of the delay is also ideal, as it's not
-    // needed after the full page load.
-    html.refreshless--page-transition-in-progress & {
-      animation-delay: 0s;
+    // Remove the animation entirely when RefreshLess takes over page
+    // transitions so that this doesn't play when page content is swapped in.
+    html.refreshless--page-transition-handled & {
       animation-name: none;
-    }
-
-    // Transition out animation; reverses the animation and plays it faster.
-    html.refreshless--page-transition-out & {
-
-      animation-name:       reveal-overlay;
-      animation-fill-mode:  forwards;
-      animation-direction:  reverse;
-      animation-duration:   $reveal-overlay-animation-duration * 0.3;
     }
 
   }
