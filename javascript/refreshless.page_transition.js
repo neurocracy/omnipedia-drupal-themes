@@ -31,6 +31,13 @@ function(component, $) {
   const overlayActiveClass = `${overlayClass}--active`;
 
   /**
+   * Name of the property on the <html> element we save the instance to.
+   *
+   * @type {String}
+   */
+  const overlayPropertyName = 'OmnipediaRefreshlessPageTransition';
+
+  /**
    * Class applied to the <html> element when RefreshLess handling transitions.
    *
    * This is intended to disable the CSS reveal animation that otherwise plays
@@ -284,11 +291,15 @@ function(component, $) {
 
   }
 
-  $(once('omnipedia-refreshless-page-transition', 'html')).prop(
-    'OmnipediaRefreshlessPageTransition', new TransitionOverlay(
-      $('html'),
-    ),
-  );
+  // Note that this must be wrapped in this closure to ensure it only gets
+  // instantiated if once() actually returns an element, otherwise this could
+  // get instantiated more than once even if once() doesn't return an element.
+  // This can occur due to RefreshLess' additive aggregation still requiring
+  // more work because it can sometimes still include a library more than once
+  // in different aggregates.
+  $(once('omnipedia-refreshless-page-transition', 'html')).each(function() {
+    $(this).prop(overlayPropertyName, new TransitionOverlay($(this)));
+  });
 
 });
 });
