@@ -2,16 +2,15 @@
 //   Off-canvas panel component
 // -----------------------------------------------------------------------------
 
-// This exists primarily to add a faint, light-coloured gradient from the top of
-// the panel over the overlay to attempt to make the panel contrast a bit with
-// the page content under the overlay. This is only applied in dark mode when
-// using the dark panel theme, as that theme has a pure black background.
+// This exists primarily to add a faint, light-coloured glow from the top of the
+// panel over the overlay to attempt to make the panel contrast a bit with the
+// page content under the overlay. This is only applied in dark mode when using
+// the dark panel theme, as that theme has a pure black background.
 
 @use '../variables/colours'; // Configure colours.
 @use '../variables/general' as general-variables;
 @use 'sass:color';
 @use 'sass/helpers/colour';
-@use 'sass/variables/motion';
 
 .offcanvas-panel {
 
@@ -30,23 +29,23 @@
 
     content: '';
 
-    ///
-    /// The height of the off-canvas overlay gradient.
-    ///
-    --offcanvas-overlay-gradient-height: 30vh;
-
     display: block;
 
     position: absolute;
 
     width:  100%;
-    height: var(--offcanvas-overlay-gradient-height);
+    height: 100%;
 
-    top: calc(var(--offcanvas-overlay-gradient-height) * -1);
+    ///
+    /// The colour of the off-canvas overlay glow.
+    ///
+    --offcanvas-overlay-glow-colour: white;
 
     pointer-events: none;
 
     opacity: 0;
+
+    box-shadow: 0 -1rem 7rem 1rem var(--offcanvas-overlay-glow-colour);
 
     transition-property: opacity;
     transition-duration: 0.2s;
@@ -54,23 +53,10 @@
 
   }
 
-  &--bottom#{&}--theme-dark#{&}--modal::before {
-
-    @include colour.on-dark-scheme {
-      background-image: linear-gradient(
-        to bottom,
-        hsla(0, 0%, 100%, 0),
-        #{motion.$easing-accelerate},
-        white,
-      );
-    }
-
-  }
-
   &--bottom#{&}--theme-dark#{&}--modal#{&}--is-active::before {
 
     @include colour.on-dark-scheme {
-      opacity: 0.05;
+      opacity: 0.1;
     }
 
   }
