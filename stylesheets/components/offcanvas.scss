@@ -14,48 +14,44 @@
 
 .offcanvas-panel {
 
-  &--bottom#{&}--theme-dark#{&}--modal {
-
-    @include colour.on-dark-scheme {
-
-      border-top: general-variables.$divider-thickness solid
-        color.adjust(colours.$divider-on-dark, $lightness: -10%);
-
-    }
-
-  }
-
-  &--bottom::before {
-
-    content: '';
-
-    display: block;
-
-    position: absolute;
-
-    width:  100%;
-    height: 100%;
+  @include colour.on-dark-scheme {
 
     ///
     /// The colour of the off-canvas overlay glow.
     ///
     --offcanvas-overlay-glow-colour: white;
 
-    pointer-events: none;
+    &--bottom#{&}--theme-dark#{&}--modal {
 
-    opacity: 0;
+      border-top: general-variables.$divider-thickness solid
+        color.adjust(colours.$divider-on-dark, $lightness: -10%);
 
-    box-shadow: 0 -1rem 7rem 1rem var(--offcanvas-overlay-glow-colour);
+      &::before {
 
-    transition-property: opacity;
-    transition-duration: 0.2s;
-    transition-timing-function: linear;
+        content: '';
 
-  }
+        display: block;
 
-  &--bottom#{&}--theme-dark#{&}--modal#{&}--is-active::before {
+        position: absolute;
 
-    @include colour.on-dark-scheme {
+        width:  100%;
+        height: 100%;
+
+        pointer-events: none;
+
+        opacity: 0;
+
+        box-shadow: 0 -1rem 7rem 1rem var(--offcanvas-overlay-glow-colour);
+
+        transition-property: opacity;
+        transition-duration: 0.2s;
+        transition-timing-function: linear;
+
+      }
+
+    }
+
+    &--bottom#{&}--theme-dark#{&}--modal#{&}--is-active::before {
       opacity: 0.1;
     }
 
