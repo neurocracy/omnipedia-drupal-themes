@@ -83,7 +83,7 @@ Once those are defined, add the following to the `"dependencies"` section of
 your top-level `package.json`:
 
 ```json
-"drupal-omnipedia-site-theme": "workspace:^6"
+"drupal-omnipedia-site-theme": "workspace:^7"
 ```
 
 Then run `yarn install` and let Yarn do the rest.
