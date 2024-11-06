@@ -52,10 +52,6 @@ libraries-override:
   # Replace the Classy media embed error with our own.
   classy/media_embed_error: omnipedia_site_theme/media_embed_error
 
-  # Replace Commerce checkout libraries with our own.
-  commerce_checkout/form:       omnipedia_site_theme/commerce_checkout_form
-  commerce_checkout/login_pane: omnipedia_site_theme/commerce_checkout_login
-
 libraries-extend:
 
   ambientimpact_base/tooltip:
@@ -75,9 +71,6 @@ libraries-extend:
 
   classy/base:
     - omnipedia_site_theme/menu
-
-  commerce_checkout/checkout_progress:
-    - omnipedia_site_theme/commerce_checkout_progress
 
   eu_cookie_compliance/eu_cookie_compliance:
     # Workaround for Drupal 10.1 deprecating this and somehow not getting it to

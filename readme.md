@@ -149,3 +149,5 @@ The following major version bumps indicate breaking changes:
   * Increased [`omnipedia_content` to 7.x](https://github.com/neurocracy/drupal-omnipedia-content/tree/7.x) from 6.x.
 
   * Updated various stylesheets and JavaScript necessary for compatibility for the above.
+
+  * Removed all [Commerce](https://www.drupal.org/project/commerce) libraries and stylesheets. We haven't used Commerce in several years so these were unused.

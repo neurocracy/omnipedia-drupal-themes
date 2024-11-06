@@ -335,51 +335,6 @@ function omnipedia_site_theme_preprocess_page_title(array &$variables): void {
 }
 
 /**
- * Preprocess variables for the Commerce checkout order summary.
- *
- * Note that this doesn't seem to be picked up as a
- * \template_preprocess_commerce_checkout_pane__PANE(), likely because the order
- * summary has its own separate template.
- *
- * This attaches the 'omnipedia_site_theme/commerce_checkout_summary' library.
- *
- * @see \Drupal\commerce_checkout\Plugin\Commerce\CheckoutPane\OrderSummary
- */
-function omnipedia_site_theme_preprocess_commerce_checkout_order_summary(
-  array &$variables
-): void {
-  $variables['#attached']['library'][] =
-    'omnipedia_site_theme/commerce_checkout_summary';
-}
-
-/**
- * Preprocess variables for our billing info commerce-checkout-pane.html.twig.
- *
- * This attaches the 'omnipedia_site_theme/help' library.
- *
- * @see \Drupal\omnipedia_commerce\Plugin\Commerce\CheckoutPane\BillingInformationMessagePane
- */
-function omnipedia_site_theme_preprocess_commerce_checkout_pane__omnipedia_billing_information_message(
-  array &$variables
-): void {
-  $variables['#attached']['library'][] = 'omnipedia_site_theme/help';
-}
-
-/**
- * Preprocess variables for the Commerce review checkout pane.
- *
- * This attaches the 'omnipedia_site_theme/commerce_checkout_review' library.
- *
- * @see \Drupal\commerce_checkout\Plugin\Commerce\CheckoutPane\Review
- */
-function omnipedia_site_theme_preprocess_commerce_checkout_pane__review(
-  array &$variables
-): void {
-  $variables['#attached']['library'][] =
-    'omnipedia_site_theme/commerce_checkout_review';
-}
-
-/**
  * Prepares variables for the eu_cookie_compliance_popup_info template.
  *
  * @see \Drupal\omnipedia_site_theme\EuCookieCompliancePopUpInfoPreprocess
