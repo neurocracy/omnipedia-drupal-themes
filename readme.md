@@ -59,7 +59,7 @@ In your root `composer.json`, add the following to the `"repositories"` section:
 ### Installing
 
 Once you've completed all of the above, run `composer require
-"drupal/omnipedia_site_theme:^7.0@dev"` in the root of your project to have
+"drupal/omnipedia_site_theme:^8.0@dev"` in the root of your project to have
 Composer install this and its required dependencies for you.
 
 ## Front-end assets
@@ -83,7 +83,7 @@ Once those are defined, add the following to the `"dependencies"` section of
 your top-level `package.json`:
 
 ```json
-"drupal-omnipedia-site-theme": "workspace:^7"
+"drupal-omnipedia-site-theme": "workspace:^8"
 ```
 
 Then run `yarn install` and let Yarn do the rest.
@@ -139,3 +139,13 @@ The following major version bumps indicate breaking changes:
 * 7.x:
 
   * Much of the front-end JavaScript has been heavily reworked and modernized as object-oriented and self-contained so that they don't reference elements or other instances outside of behaviours. This makes them more robust and allows repeated detaching and re-attaching.
+
+* 8.x:
+
+  * Increased [`ambientimpact_base` theme to 7.x](https://github.com/Ambient-Impact/drupal-ambientimpact-base/tree/7.x) from 6.x.
+
+  * Increased [`drupal/ambientimpact_ux` to 2.x](https://github.com/Ambient-Impact/drupal-ambientimpact-ux/tree/2.x) from 1.x.
+
+  * Increased [`omnipedia_content` to 7.x](https://github.com/neurocracy/drupal-omnipedia-content/tree/7.x) from 6.x.
+
+  * Updated various stylesheets and JavaScript necessary for compatibility for the above.

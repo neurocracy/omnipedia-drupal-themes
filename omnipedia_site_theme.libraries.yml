@@ -4,6 +4,7 @@ global-styling:
       stylesheets/theme.css: {}
   dependencies:
     - ambientimpact_ux/component.material.ripple
+    - omnipedia_site_theme/table
 
 changes:
   css:
@@ -197,6 +198,8 @@ page_revision_history:
   css:
     theme:
       stylesheets/blocks/page_revision_history.css: {}
+  dependencies:
+    - omnipedia_site_theme/menu
 
 page_title:
   css:
@@ -260,7 +263,27 @@ site_branding:
     - ambientimpact_ux/component.headroom
     - omnipedia_site_theme/header
 
+table:
+  css:
+    theme:
+      stylesheets/elements/table.css: {}
+  dependencies:
+    - ambientimpact_base/table
+
 tooltip:
   css:
     theme:
       stylesheets/components/tooltip.css: {}
+  js:
+    javascript/tooltip.reparent.js: { attributes: { defer: true } }
+  dependencies:
+    - ambientimpact_core/component.fastdom
+    - ambientimpact_core/framework
+    - ambientimpact_ux/component.tooltip.events
+    - omnipedia_site_theme/tooltip.config
+
+tooltip.config:
+  js:
+    javascript/tooltip.config.js: { attributes: { defer: true } }
+  dependencies:
+    - ambientimpact_core/framework

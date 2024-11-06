@@ -12,7 +12,7 @@ footer {
 
   // This lays out menus (like the footer menu) horizontally, making use of the
   // *-gap properties in browsers that support them for flexbox.
-  .menu {
+  ul.menu {
 
     display: flex;
 

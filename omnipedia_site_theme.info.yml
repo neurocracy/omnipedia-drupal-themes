@@ -58,6 +58,12 @@ libraries-override:
 
 libraries-extend:
 
+  ambientimpact_base/tooltip:
+    - omnipedia_site_theme/tooltip
+
+  ambientimpact_base/tooltip_config:
+    - omnipedia_site_theme/tooltip.config
+
   ambientimpact_ux/component.offcanvas:
     - omnipedia_site_theme/offcanvas
     - omnipedia_site_theme/offcanvas_gestures

@@ -9,7 +9,6 @@
 @use 'material.common/material.shadow' as material-shadow;
 @use 'sass:color';
 @use 'sass/helpers/colour';
-@use 'tooltip/_tooltip' as tooltip;
 
 ///
 /// Whether to compile tooltip styles with a gradient background.
@@ -40,6 +39,11 @@ $gradient-colour-on-dark: color.adjust(
 );
 
 ///
+/// Tooltip Material shadow depth.
+///
+$shadow-depth: 2;
+
+///
 /// Tooltip stroke colour used along edge with arrow.
 ///
 $stroke-colour-on-dark: color.adjust(
@@ -51,12 +55,8 @@ $stroke-colour-on-dark: color.adjust(
 /// Tooltip filter property value on dark backgrounds.
 ///
 $filter-on-dark:
-  drop-shadow(material-shadow.filter-downward(
-    tooltip.$tooltip-shadow-depth
-  ))
-  drop-shadow(material-shadow.filter-ambient(
-    tooltip.$tooltip-shadow-depth
-  ));
+  drop-shadow(material-shadow.filter-downward($shadow-depth))
+  drop-shadow(material-shadow.filter-ambient($shadow-depth));
 
 @if ($use-exaggerated-shadow == true) {
 
@@ -148,16 +148,7 @@ $filter-on-dark:
 
 }
 
-.tippy-tooltip {
-
-  // This limits the properties to just those required for Tippy as it defaults
-  // to all which results in our gradient position being transitioned if/when
-  // the tooltip changes orientation.
-  transition-property: opacity, perspective, transform, visibility;
-
-}
-
-.tippy-tooltip.material-dark-theme.material-dark-theme { // Specificity.
+.tippy-box.tippy-box[data-theme~='material-dark'] { // Specificity.
 
   @include colour.on-dark-scheme {
 
@@ -174,7 +165,7 @@ $filter-on-dark:
       border: var(--tooltip-border-thickness) solid
         var(--tooltip-border-colour);
 
-      .tippy-roundarrow.tippy-roundarrow svg { // Specificity.
+      .tippy-svg-arrow.tippy-svg-arrow svg { // Specificity.
         stroke:       var(--tooltip-border-colour);
         stroke-width: var(--tooltip-border-thickness);
         fill:         var(--tooltip-background-colour);
@@ -199,32 +190,33 @@ $filter-on-dark:
         var(--tooltip-gradient-end-colour),
       );
 
-      .tippy-roundarrow.tippy-roundarrow svg { // Specificity.
+      .tippy-svg-arrow.tippy-svg-arrow svg { // Specificity.
         fill: var(--tooltip-gradient-start-colour);
+      }
+
+    }
+
+    @if ($use-stroke == true) {
+
+      .tippy-svg-arrow.tippy-svg-arrow svg { // Specificity.
+        fill: var(--tooltip-background-colour);
       }
 
     }
 
   }
 
-  &:not([data-animatefill]),
-  .tippy-backdrop {
-    background-color: var(--tooltip-background-colour);
-  }
-
-}
-
-.tippy-popper {
+  background-color: var(--tooltip-background-colour);
 
   @if ($use-gradient == true) {
 
-    &[x-placement^='top'] .tippy-tooltip.material-dark-theme,
-    &[x-placement^='bottom'] .tippy-tooltip.material-dark-theme {
+    &[data-placement^='top'],
+    &[data-placement^='bottom'] {
       background-size: 100% var(--tooltip-gradient-distance-vertical);
     }
 
-    &[x-placement^='left'] .tippy-tooltip.material-dark-theme,
-    &[x-placement^='right'] .tippy-tooltip.material-dark-theme {
+    &[data-placement^='left'],
+    &[data-placement^='right'] {
       background-size: var(--tooltip-gradient-distance-horizontal) 100%;
     }
 
@@ -232,35 +224,22 @@ $filter-on-dark:
 
   @if ($use-border == true) {
 
-    &[x-placement^='top'] .tippy-tooltip.material-dark-theme .tippy-roundarrow {
-      clip-path: polygon(0 var(--tooltip-border-thickness), 100% var(--tooltip-border-thickness), 100% 100%, 0% 100%);
-    }
-    &[x-placement^='bottom'] .tippy-tooltip.material-dark-theme .tippy-roundarrow {
-      clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--tooltip-border-thickness)), 0% calc(100% - var(--tooltip-border-thickness)));
-    }
-    // @todo Replace all the magic numbers with more future proof values. These
-    //   hard coded like this right now because the percentage values no longer
-    //   match the <svg> itself as it's rotated 90 degrees in both these cases.
-    &[x-placement^='left'] .tippy-tooltip.material-dark-theme .tippy-roundarrow {
+    .tippy-svg-arrow svg {
       clip-path: polygon(
-        calc(10px - var(--tooltip-border-thickness)) -10px,
-        24px -10px,
-        24px 14px,
-        calc(10px - var(--tooltip-border-thickness)) 14px
-      );
-    }
-    &[x-placement^='right'] .tippy-tooltip.material-dark-theme .tippy-roundarrow {
-      clip-path: polygon(
-        0 -10px,
-        calc(14px + var(--tooltip-border-thickness)) -10px,
-        calc(14px + var(--tooltip-border-thickness)) 14px,
-        0 14px
+        0     0,
+        100%  0,
+        100%  calc(100% - min(
+          var(--tooltip-border-thickness), var(--tooltip-arrow-bleed)
+        )),
+        0%    calc(100% - min(
+          var(--tooltip-border-thickness), var(--tooltip-arrow-bleed)
+        ))
       );
     }
 
   }
 
-  &[x-placement^='top'] .tippy-tooltip.material-dark-theme {
+  &[data-placement^='top'] {
 
     @if ($use-gradient == true) {
 
@@ -280,7 +259,7 @@ $filter-on-dark:
 
   }
 
-  &[x-placement^='bottom'] .tippy-tooltip.material-dark-theme {
+  &[data-placement^='bottom'] {
 
     @if ($use-gradient == true) {
 
@@ -300,7 +279,7 @@ $filter-on-dark:
 
   }
 
-  &[x-placement^='left'] .tippy-tooltip.material-dark-theme {
+  &[data-placement^='left'] {
 
     @if ($use-gradient == true) {
 
@@ -319,7 +298,7 @@ $filter-on-dark:
     }
 
   }
-  &[x-placement^='right'] .tippy-tooltip.material-dark-theme {
+  &[data-placement^='right'] {
 
     @if ($use-gradient == true) {
 

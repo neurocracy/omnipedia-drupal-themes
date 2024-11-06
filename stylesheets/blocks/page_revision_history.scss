@@ -10,6 +10,8 @@
 @use '../variables/colours';
 @use '../variables/general' as general-variables;
 @use 'base:elements/list';
+@use 'base:global/content';
+@use 'base:layout/vertical_spacing' as vertical-spacing;
 
 ///
 /// Omnipedia page revisions block line colour on light backgrounds.
@@ -127,6 +129,11 @@ $block-item-padding: general.$general-spacing;
           $block-line-colour-on-dark;
       }
 
+    }
+
+    // Overrides margin-top selector set via list.unlisted mixin.
+    &:not(.contextual-links):not(.links) &-item + &-item {
+      margin-top: calc(var(--menu-item-row-gap) * 1.5);
     }
 
     &-item-status {

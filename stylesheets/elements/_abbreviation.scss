@@ -2,12 +2,13 @@
 //   Abbreviation element partial
 // -----------------------------------------------------------------------------
 
-@use 'abbr';
 @use '../typography/config' as typography-config;
 
 .layout-container,
 .offcanvas-panel {
-  @include abbr.abbr {
+
+  abbr[title],
+  abbr[data-original-title] {
     text-underline-offset: typography-config.$text-decoration-offset;
 
     // This is to match our Wikimedia pseudo-links.
