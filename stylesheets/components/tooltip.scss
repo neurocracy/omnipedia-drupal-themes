@@ -173,6 +173,8 @@ $filter-on-dark:
 
     }
 
+    background-color: var(--tooltip-background-colour);
+
     filter: $filter-on-dark;
 
     // This adds a faint background gradient on tooltips using the dark Material
@@ -205,8 +207,6 @@ $filter-on-dark:
     }
 
   }
-
-  background-color: var(--tooltip-background-colour);
 
   @if ($use-gradient == true) {
 
