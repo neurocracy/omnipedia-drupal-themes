@@ -251,6 +251,7 @@ tooltip:
       stylesheets/components/tooltip.css: {}
   js:
     javascript/tooltip.reparent.js: { attributes: { defer: true } }
+    javascript/tooltip.nested_theme_switcher.js: { attributes: { defer: true } }
   dependencies:
     - ambientimpact_core/component.fastdom
     - ambientimpact_core/framework
