@@ -1,0 +1,8 @@
+// -----------------------------------------------------------------------------
+//   Scrollbar stylesheet
+// -----------------------------------------------------------------------------
+
+// Configure colours.
+@use '../variables/colours';
+// Output styles based on our colours.
+@use 'base:global/scrollbar';
