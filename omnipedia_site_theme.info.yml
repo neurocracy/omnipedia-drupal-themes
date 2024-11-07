@@ -52,6 +52,10 @@ libraries-override:
   # Replace the Classy media embed error with our own.
   classy/media_embed_error: omnipedia_site_theme/media_embed_error
 
+  ambientimpact_base/tooltip:
+    js:
+      javascript/tooltips.js: javascript/tooltip.title_attribute.js
+
 libraries-extend:
 
   ambientimpact_base/tooltip:
