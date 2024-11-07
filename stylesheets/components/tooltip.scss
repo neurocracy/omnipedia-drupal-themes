@@ -228,10 +228,10 @@ $filter-on-dark:
       clip-path: polygon(
         0     0,
         100%  0,
-        100%  calc(100% - min(
+        100%  calc(100% - max(
           var(--tooltip-border-thickness), var(--tooltip-arrow-bleed)
         )),
-        0%    calc(100% - min(
+        0%    calc(100% - max(
           var(--tooltip-border-thickness), var(--tooltip-arrow-bleed)
         ))
       );
