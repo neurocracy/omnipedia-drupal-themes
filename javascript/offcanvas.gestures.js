@@ -98,6 +98,13 @@ AmbientImpact.addComponent('OmnipediaSiteThemeOffcanvasGestures', function(
     },
     function(context, settings, trigger) {
 
+      /**
+       * Reference to the behaviour target element.
+       *
+       * @type {HTMLElement}
+       */
+      const behaviourTarget = this;
+
       $(this).off([
         `openOffcanvas.${eventNamespace}`,
         `closeOffcanvas.${eventNamespace}`,
