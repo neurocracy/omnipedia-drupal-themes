@@ -2,6 +2,8 @@
 //   Wiki node changes stylesheet
 // -----------------------------------------------------------------------------
 
+@use 'base:elements/list';
+
 .omnipedia-changes,
 .omnipedia-changes-help {
   &__diff {
@@ -18,4 +20,8 @@
       display: inline;
     }
   }
+}
+
+.omnipedia-changes-help__legend {
+  @include list.unlisted;
 }
