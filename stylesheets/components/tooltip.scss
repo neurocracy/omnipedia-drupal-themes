@@ -224,16 +224,38 @@ $filter-on-dark:
 
   @if ($use-border == true) {
 
+    ///
+    /// Additional space to add along tooltip tip edge to avoid clipping it.
+    ///
+    --tooltip-clip-buffer: 4px;
+
     .tippy-svg-arrow svg {
+      // This monstrosity attempts to clip both the bleed and border on that
+      // edge without resulting in sub-pixel rendering errors.
+      //
+      // @see https://excalidraw.com/#json=fA-ItnCTapNObzdef1hd8,KIESZ7vEM5QlcFxqtQCEXg
+      //   Excalidraw diagram.
       clip-path: polygon(
-        0     0,
-        100%  0,
-        100%  calc(100% - max(
-          var(--tooltip-border-thickness), var(--tooltip-arrow-bleed)
-        )),
-        0%    calc(100% - max(
-          var(--tooltip-border-thickness), var(--tooltip-arrow-bleed)
-        ))
+        0     calc(var(--tooltip-clip-buffer) * -1),
+        100%  calc(var(--tooltip-clip-buffer) * -1),
+        100%  calc(
+          100% - var(--tooltip-border-thickness) - var(--tooltip-arrow-bleed)
+        ),
+        calc(100% - var(--tooltip-border-thickness)) calc(
+          100% - var(--tooltip-border-thickness) - var(--tooltip-arrow-bleed)
+        ),
+        calc(100% - var(--tooltip-border-thickness)) calc(
+          100% - var(--tooltip-border-thickness)
+        ),
+        var(--tooltip-border-thickness) calc(
+          100% - var(--tooltip-border-thickness)
+        ),
+        var(--tooltip-border-thickness) calc(
+          100% - var(--tooltip-border-thickness) - var(--tooltip-arrow-bleed)
+        ),
+        0 calc(
+          100% - var(--tooltip-border-thickness) - var(--tooltip-arrow-bleed)
+        )
       );
     }
 
