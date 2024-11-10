@@ -64,15 +64,8 @@ $filter-on-dark:
   // barely register perceptually so we need to be much more heavy-handed to
   // highlight the edges of the tooltip against the content below it.
   $filter-on-dark:
-    drop-shadow(material-shadow.filter-downward(2))
-    drop-shadow(material-shadow.filter-downward(3))
-    drop-shadow(material-shadow.filter-ambient(2))
-    drop-shadow(material-shadow.filter-ambient(3))
-    drop-shadow(material-shadow.filter-ambient(3))
-    drop-shadow(material-shadow.filter-ambient(4))
-    drop-shadow(material-shadow.filter-ambient(4))
-    drop-shadow(material-shadow.filter-ambient(5))
-    drop-shadow(material-shadow.filter-ambient(5));
+    drop-shadow(0 2px var(--tooltip-shadow-spread) var(--tooltip-shadow-colour))
+    drop-shadow(0 0 var(--tooltip-shadow-spread) var(--tooltip-shadow-colour));
 
 }
 
@@ -143,6 +136,14 @@ $filter-on-dark:
     /// Tooltip stroke colour to enhance edge with arrow contrast.
     ///
     --tooltip-contrast-stroke-colour: #{$stroke-colour-on-dark};
+
+  }
+
+  @if ($use-exaggerated-shadow == true) {
+
+    --tooltip-shadow-colour: rgba(0, 0, 0, 1);
+
+    --tooltip-shadow-spread: 5px;
 
   }
 
