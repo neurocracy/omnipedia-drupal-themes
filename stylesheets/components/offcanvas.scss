@@ -19,7 +19,7 @@
     ///
     /// The colour of the off-canvas overlay glow.
     ///
-    --offcanvas-overlay-glow-colour: white;
+    --offcanvas-overlay-glow-colour: hsla(0deg, 0%, 100%, 0.1);
 
     &--bottom#{&}--theme-dark#{&}--modal {
 
@@ -41,18 +41,34 @@
 
         opacity: 0;
 
-        box-shadow: 0 -1rem 7rem 1rem var(--offcanvas-overlay-glow-colour);
+        ///
+        /// Faint glow for the panel.
+        ///
+        --glow: 0 -1rem 7rem 1rem var(--offcanvas-overlay-glow-colour);
+
+        ///
+        /// Drop shadow for the panel.
+        ///
+        --shadow: 0 -0.2rem 0.5rem black;
+
+        box-shadow: var(--shadow), var(--glow);
 
         transition-property: opacity;
         transition-duration: 0.2s;
         transition-timing-function: linear;
+
+        // Since this pseudo-element is layered on top of the panel, the panel's
+        // border gets covered by the shadow. We could try clip-path but it's
+        // simpler to just inherit the border as it'll be in the exact same
+        // location.
+        border-top: inherit;
 
       }
 
     }
 
     &--bottom#{&}--theme-dark#{&}--modal#{&}--is-active::before {
-      opacity: 0.1;
+      opacity: 1;
     }
 
   }
