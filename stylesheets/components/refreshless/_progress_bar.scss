@@ -6,6 +6,9 @@
 @use 'material.common/material.colour' as material-colour;
 @use 'sass:color';
 @use 'sass/helpers/colour';
+@use '../../layout/config' as layout-config; // Configure layout.
+@use 'sass/helpers/breakpoint';
+@use 'base:layout/breakpoints' as layout-breakpoints;
 
 :root,
 // Double attribute for specificity to fix a brief flash of the Gin accent
@@ -23,6 +26,10 @@
       material-colour.$primary, $lightness: 25%, $saturation: 80%,
     )};
 
+  }
+
+  @include breakpoint.on('<layout-with-both-sidebars') {
+    --refreshless-progress-bar-thickness: 4px;
   }
 
   --refreshless-progress-bar-empty-colour: white;
