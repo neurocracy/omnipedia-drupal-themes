@@ -1,0 +1,83 @@
+// -----------------------------------------------------------------------------
+//   RefreshLess inline progress bar component partial
+// -----------------------------------------------------------------------------
+
+@use '../../variables/colours'; // Configure colours.
+@use 'material.common/material.colour' as material-colour;
+@use 'sass:color';
+@use 'sass/helpers/colour';
+
+///
+/// RefreshLess inline progress bar keyframes.
+///
+@keyframes refreshless-inline-progress-bar {
+  0% {
+    background-size: 0% 100%;
+  }
+  5% {
+    background-size: 20% 100%;
+  }
+  100% {
+    background-size: 100% 100%;
+  }
+}
+
+:root {
+
+  --refreshless-inline-progress-bar-colour: #{color.scale(
+    color.mix(material-colour.$primary, colour.$background-light, 30%),
+    $lightness: 25%,
+  )};
+
+  @include colour.on-dark-scheme {
+
+    --refreshless-inline-progress-bar-colour: #{color.scale(
+      color.mix(material-colour.$primary, colour.$background-dark, 40%),
+      $saturation: -30%, $lightness: 10%,
+    )};
+
+  }
+
+}
+
+.refreshless-inline-progress-bar {
+
+  background-image: linear-gradient(
+    var(--refreshless-inline-progress-bar-colour),
+    var(--refreshless-inline-progress-bar-colour),
+  );
+
+  background-size: 0% 100%;
+
+  background-repeat: no-repeat;
+
+  will-change: background-size;
+
+  animation-name:             refreshless-inline-progress-bar;
+  animation-duration:         10s;
+  animation-timing-function:  var(--easing-decelerate, ease-in);
+  animation-delay:            var(--refreshless-progress-bar-delay, 0s);
+  animation-iteration-count:  1;
+  animation-fill-mode:        forwards;
+  animation-play-state:       paused;
+
+  &--active {
+    animation-play-state: running;
+  }
+
+  &--complete {
+
+    // animation-name: none;
+    // animation-fill-mode: none;
+    // animation-duration: 0s;
+    // animation-delay: 0s;
+
+    background-size: 100% 100%;
+
+    transition-duration:          0.5s !important;
+    transition-property:          background-size !important;
+    transition-timing-function:   var(--easing-decelerate, ease-in) !important;
+
+  }
+
+}
