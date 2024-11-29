@@ -38,7 +38,7 @@
 
 // This creates a bar in the empty area that the progress bar hasn't yet filled
 // to help with contrast.
-.turbo-progress-bar::after {
+.refreshless-document-progress-bar::after {
 
   content: '';
 

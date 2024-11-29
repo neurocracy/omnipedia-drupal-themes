@@ -17,6 +17,13 @@ function(component, $) {
   const eventNamespace = this.getName();
 
   /**
+   * FastDom instance.
+   *
+   * @type {FastDom}
+   */
+  const fastdom = aiFastDom.getInstance();
+
+  /**
    * Base class for the overlay.
    *
    * @type {String}
