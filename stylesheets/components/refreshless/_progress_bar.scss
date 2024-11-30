@@ -34,27 +34,31 @@
 
   }
 
+  // Redefine this as applying to background-size instead of width.
+  --refreshless-progress-bar-value-transition: background-size var(
+    --refreshless-progress-bar-transition-duration
+  ) ease-out;
+
 }
 
 // This creates a bar in the empty area that the progress bar hasn't yet filled
-// to help with contrast.
-.refreshless-document-progress-bar::after {
+// to give it better visibility and contrast compared to the default width
+// animation.
+.refreshless-document-progress-bar {
 
-  content: '';
-
-  display: block;
-
-  width:  100vw;
-  height: 100%;
-
-  position: absolute;
-
-  // This places it after and outside of the current width of the progress bar
-  // itself.
-  //
-  // @todo RTL.
-  left: 100%;
+  width: 100%;
 
   background-color: var(--refreshless-progress-bar-empty-colour);
+
+  background-image: linear-gradient(
+    var(--refreshless-progress-bar-colour),
+    var(--refreshless-progress-bar-colour),
+  );
+
+  background-size: var(--refreshless-progress-bar-computed-value) 100%;
+
+  background-repeat: no-repeat;
+
+  will-change: background-size;
 
 }
