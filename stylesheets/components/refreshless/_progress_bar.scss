@@ -6,6 +6,7 @@
 @use 'material.common/material.colour' as material-colour;
 @use 'sass:color';
 @use 'sass/helpers/colour';
+@use 'sass/helpers/selector';
 
 :root,
 // Double attribute for specificity to fix a brief flash of the Gin accent
@@ -56,6 +57,10 @@
   );
 
   background-size: var(--refreshless-progress-bar-computed-value) 100%;
+
+  @include selector.root-conditions(('[dir=rtl]'), 'html') {
+    background-position-x: right;
+  }
 
   background-repeat: no-repeat;
 
