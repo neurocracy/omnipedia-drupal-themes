@@ -153,6 +153,7 @@ function(component, $) {
       this.#$root.off([
         `refreshless:before-render.${eventNamespace}`,
         `refreshless:attach.${eventNamespace}`,
+        `turbo:load.${eventNamespace}`,
       ].join(' '));
 
     }
@@ -253,6 +254,15 @@ function(component, $) {
 
       });
 
+      // Attach a one-off load handler here rather than on attach as it can
+      // sometimes not trigger if set there. This tries to remove the overlay
+      // as late as possible to avoid any visible jank or layout jumps for a
+      // frame or two, which can still occasionally happen when loading some
+      // of the longer pages.
+      this.#$root.one(`turbo:load.${eventNamespace}`, async (event) => {
+        this.#loadHandler(event);
+      });
+
     }
 
     /**
@@ -279,9 +289,18 @@ function(component, $) {
 
       });
 
-      await fastdom.mutate(function() {
+    }
 
-        that.#$overlay.removeClass(overlayActiveClass);
+    /**
+     * Turbo load handler; removes overlay active class.
+     *
+     * @param {jQuery.Event} event
+     */
+    async #loadHandler(event) {
+
+      await fastdom.mutate(() => {
+
+        this.#$overlay.removeClass(overlayActiveClass);
 
       });
 
