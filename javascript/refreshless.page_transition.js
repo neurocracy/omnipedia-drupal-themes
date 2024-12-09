@@ -2,10 +2,10 @@
 //   Omnipedia - Site theme - RefreshLess page transition
 // -----------------------------------------------------------------------------
 
-AmbientImpact.on(['fastdom'], function(aiFastDom) {
+AmbientImpact.on(['fastdom'], (aiFastDom) => {
 AmbientImpact.addComponent(
   'OmnipediaSiteThemeRefreshLessPageTransition',
-function(component, $) {
+(component, $) => {
 
   'use strict';
 
@@ -14,7 +14,7 @@ function(component, $) {
    *
    * @type {String}
    */
-  const eventNamespace = this.getName();
+  const eventNamespace = component.getName();
 
   /**
    * FastDom instance.
@@ -103,18 +103,11 @@ function(component, $) {
      */
     destroy() {
 
-      /**
-       * Reference to the current instance.
-       *
-       * @type {TransitionOverlay}
-       */
-      const that = this;
-
       this.#unbindEventHandlers();
 
-      return fastdom.mutate(function() {
-        that.#$overlay.remove();
-        that.#$root.removeClass(pageTransitionHandledClass);
+      return fastdom.mutate(() => {
+        this.#$overlay.remove();
+        this.#$root.removeClass(pageTransitionHandledClass);
       });
 
     }
@@ -126,19 +119,12 @@ function(component, $) {
      */
     #bindEventHandlers() {
 
-      /**
-       * Reference to the current instance.
-       *
-       * @type {TransitionOverlay}
-       */
-      const that = this;
-
       this.#$root
-      .on(`refreshless:before-render.${eventNamespace}`, async function(event) {
-        await that.#beforeRenderHandler(event);
+      .on(`refreshless:before-render.${eventNamespace}`, async (event) => {
+        await this.#beforeRenderHandler(event);
       })
-      .on(`refreshless:attach.${eventNamespace}`, async function(event) {
-        await that.#attachHandler(event);
+      .on(`refreshless:attach.${eventNamespace}`, async (event) => {
+        await this.#attachHandler(event);
       });
 
     }
@@ -166,13 +152,6 @@ function(component, $) {
     async #beforeRenderHandler(event) {
 
       /**
-       * Reference to the current instance.
-       *
-       * @type {TransitionOverlay}
-       */
-      const that = this;
-
-      /**
        * Flag indicating whether the delay has been resolved.
        *
        * This is used by the failsafe timeout to avoid doing anything if the
@@ -185,24 +164,24 @@ function(component, $) {
       // Cancel any existing transition in handler.
       this.#$overlay.off(`transitionend.${eventNamespace}-in`);
 
-      await event.detail.delay(async function(resolve, reject) {
+      await event.detail.delay(async (resolve, reject) => {
 
         // This acts as a failsafe to resolve the delay if too much time has
         // passed if our transitionend event handler does not resolve in a
         // reasonable amount of time (or at all), the next page still renders,
         // even if a bit less smoothly.
-        setTimeout(async function() {
+        setTimeout(async () => {
 
           if (resolved === true) {
             return;
           }
 
           // Remove the event handler so it doesn't trigger erroneously later.
-          that.#$overlay.off(`transitionend.${eventNamespace}-out`);
+          this.#$overlay.off(`transitionend.${eventNamespace}-out`);
 
           await fastdom.mutate(function() {
 
-            that.#$overlay.removeClass(overlayActiveClass);
+            this.#$overlay.removeClass(overlayActiveClass);
 
           });
 
@@ -212,9 +191,7 @@ function(component, $) {
 
         }, failsafeTimeout);
 
-        that.#$overlay.on(`transitionend.${eventNamespace}-out`, function(
-          event,
-        ) {
+        this.#$overlay.on(`transitionend.${eventNamespace}-out`, (event) => {
 
           resolve();
 
@@ -227,11 +204,11 @@ function(component, $) {
         // Insert the overlay and indicate it's active only at this point, so
         // that we don't do it too early and risk it removing the full page load
         // fade in.
-        await fastdom.mutate(function() {
+        await fastdom.mutate(() => {
 
-          that.#$overlay.insertBefore(that.#$root.find('body'));
+          this.#$overlay.insertBefore(this.#$root.find('body'));
 
-          that.#$root.addClass(pageTransitionHandledClass);
+          this.#$root.addClass(pageTransitionHandledClass);
 
         });
 
@@ -245,11 +222,11 @@ function(component, $) {
         await new Promise(requestAnimationFrame);
         await new Promise(requestAnimationFrame);
 
-        await fastdom.mutate(function() {
+        await fastdom.mutate(() => {
 
           // console.log('Out start');
 
-          that.#$overlay.addClass(overlayActiveClass);
+          this.#$overlay.addClass(overlayActiveClass);
         });
 
       });
@@ -272,18 +249,11 @@ function(component, $) {
      */
     async #attachHandler(event) {
 
-      /**
-       * Reference to the current instance.
-       *
-       * @type {TransitionOverlay}
-       */
-      const that = this;
-
       // console.log('In start');
 
       this.#$overlay
       .off(`transitionend.${eventNamespace}-out`)
-      .on(`transitionend.${eventNamespace}-in`, async function(event) {
+      .on(`transitionend.${eventNamespace}-in`, async (event) => {
 
         // console.log('In done');
 
@@ -323,8 +293,8 @@ function(component, $) {
   // This can occur due to RefreshLess' additive aggregation still requiring
   // more work because it can sometimes still include a library more than once
   // in different aggregates.
-  $(once('omnipedia-refreshless-page-transition', 'html')).each(function() {
-    $(this).prop(overlayPropertyName, new TransitionOverlay($(this)));
+  $(once('omnipedia-refreshless-page-transition', 'html')).each((i, html) => {
+    $(html).prop(overlayPropertyName, new TransitionOverlay($(html)));
   });
 
 });
