@@ -193,6 +193,7 @@ refreshless:
       stylesheets/components/refreshless.css: {}
   js:
     javascript/refreshless.page_transition.js: { attributes: { defer: true } }
+    javascript/refreshless.progress.js: { attributes: { defer: true } }
   dependencies:
     - ambientimpact_core/component.fastdom
     - ambientimpact_core/framework
