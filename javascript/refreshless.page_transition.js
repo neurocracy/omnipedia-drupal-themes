@@ -228,7 +228,13 @@ AmbientImpact.addComponent(
       // frame or two, which can still occasionally happen when loading some
       // of the longer pages.
       this.#$root.one(`turbo:load.${eventNamespace}`, async (event) => {
+
+        // Let any rendering/layout/etc. settle for a frame before proceeding.
+        await new Promise(requestAnimationFrame);
+        await new Promise(requestAnimationFrame);
+
         this.#loadHandler(event);
+
       });
 
     }
