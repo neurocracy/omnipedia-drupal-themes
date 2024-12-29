@@ -187,7 +187,7 @@ AmbientImpact.addComponent(
 
         }, failsafeTimeout);
 
-        this.#$overlay.on(`transitionend.${eventNamespace}-out`, (event) => {
+        this.#$overlay.one(`transitionend.${eventNamespace}-out`, (event) => {
 
           resolve();
 
