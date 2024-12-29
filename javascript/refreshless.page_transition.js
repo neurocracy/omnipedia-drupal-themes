@@ -122,9 +122,6 @@ AmbientImpact.addComponent(
       this.#$root
       .on(`refreshless:before-render.${eventNamespace}`, async (event) => {
         await this.#beforeRenderHandler(event);
-      })
-      .on(`refreshless:attach.${eventNamespace}`, async (event) => {
-        await this.#attachHandler(event);
       });
 
     }
@@ -138,7 +135,6 @@ AmbientImpact.addComponent(
 
       this.#$root.off([
         `refreshless:before-render.${eventNamespace}`,
-        `refreshless:attach.${eventNamespace}`,
         `turbo:load.${eventNamespace}`,
       ].join(' '));
 
@@ -233,25 +229,6 @@ AmbientImpact.addComponent(
       // of the longer pages.
       this.#$root.one(`turbo:load.${eventNamespace}`, async (event) => {
         this.#loadHandler(event);
-      });
-
-    }
-
-    /**
-     * RefreshLess attach event handler.
-     *
-     * @param {jQuery.Event} event
-     */
-    async #attachHandler(event) {
-
-      // console.log('In start');
-
-      this.#$overlay
-      .off(`transitionend.${eventNamespace}-out`)
-      .on(`transitionend.${eventNamespace}-in`, async (event) => {
-
-        // console.log('In done');
-
       });
 
     }
