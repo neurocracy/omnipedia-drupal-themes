@@ -185,6 +185,7 @@ AmbientImpact.addComponent(
 
           });
 
+          console.warn('Omnipedia transition: failsafe triggered.');
 
           resolve();
 
