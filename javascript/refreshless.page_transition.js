@@ -211,7 +211,7 @@ AmbientImpact.addComponent(
         });
 
         // Ensure a new frame is rendered before adding the transition out class
-        // so the initialized class removes the existing animation-name.
+        // so the initialized class removes the existing transition.
         //
         // Note that by the first requestAnimationFrame, a new frame has not
         // been rendered yet, but indicates that one is about to be rendered;
