@@ -175,7 +175,7 @@ AmbientImpact.addComponent(
           // Remove the event handler so it doesn't trigger erroneously later.
           this.#$overlay.off(`transitionend.${eventNamespace}-out`);
 
-          await fastdom.mutate(function() {
+          await fastdom.mutate(() => {
 
             this.#$overlay.removeClass(overlayActiveClass);
 
