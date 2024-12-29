@@ -185,7 +185,6 @@ AmbientImpact.addComponent(
 
           });
 
-          // console.log('Failsafe');
 
           resolve();
 
@@ -196,8 +195,6 @@ AmbientImpact.addComponent(
           resolve();
 
           resolved = true;
-
-          // console.log('Out done');
 
         });
 
@@ -223,9 +220,6 @@ AmbientImpact.addComponent(
         await new Promise(requestAnimationFrame);
 
         await fastdom.mutate(() => {
-
-          // console.log('Out start');
-
           this.#$overlay.addClass(overlayActiveClass);
         });
 
