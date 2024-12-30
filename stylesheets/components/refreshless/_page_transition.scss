@@ -4,6 +4,27 @@
 
 @use 'sass/helpers/z-index';
 
+:root {
+
+  ///
+  /// RefreshLess page transition duration when entering a page.
+  ///
+  --refreshless-page-transition-in-duration: 0.1s;
+
+  ///
+  /// RefreshLess page transition duration when leaving a page.
+  ///
+  --refreshless-page-transition-out-duration: 0.3s;
+
+  ///
+  /// RefreshLess page transition overlay z-index.
+  ///
+  /// @todo This is ugly and should be fixed as part of a z-index manager
+  ///   refactor.
+  --refreshless-page-transition-overlay-z-index: #{z-index.get(modal) + 5};
+
+}
+
 .refreshless-page-transition-overlay {
 
   display:  block;
@@ -16,7 +37,7 @@
 
   transition-property: opacity;
   transition-timing-function: linear;
-  transition-duration: 0.3s;
+  transition-duration: var(--refreshless-page-transition-out-duration);
 
   top:  0;
   left: 0;
@@ -34,9 +55,7 @@
 
   }
 
-  // @todo This is ugly and should be fixed as part of a z-index manager
-  //   refactor.
-  z-index: z-index.get(modal) + 5;
+  z-index: var(--refreshless-page-transition-overlay-z-index);
 
   background-color: var(--background-colour);
 
@@ -46,7 +65,7 @@
 
     pointer-events: auto;
 
-    transition-duration: 0.1s;
+    transition-duration: var(--refreshless-page-transition-in-duration);
 
   }
 
