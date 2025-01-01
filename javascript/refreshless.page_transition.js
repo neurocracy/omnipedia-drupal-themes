@@ -135,7 +135,7 @@ AmbientImpact.addComponent(
 
       this.#$root.off([
         `refreshless:before-render.${eventNamespace}`,
-        `turbo:load.${eventNamespace}`,
+        `refreshless:load.${eventNamespace}`,
       ].join(' '));
 
     }
@@ -227,7 +227,7 @@ AmbientImpact.addComponent(
       // as late as possible to avoid any visible jank or layout jumps for a
       // frame or two, which can still occasionally happen when loading some
       // of the longer pages.
-      this.#$root.one(`turbo:load.${eventNamespace}`, async (event) => {
+      this.#$root.one(`refreshless:load.${eventNamespace}`, async (event) => {
 
         // Let any rendering/layout/etc. settle for a frame before proceeding.
         await new Promise(requestAnimationFrame);
